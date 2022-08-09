@@ -37,29 +37,38 @@ const naturalLanguageUnderstandingServiceOptions = {
 
 const naturalLanguageUnderstandingService = new NaturalLanguageUnderstandingV1(naturalLanguageUnderstandingServiceOptions);
 
-// dont actually create a request
-const createRequestMock = jest.spyOn(naturalLanguageUnderstandingService, 'createRequest');
-createRequestMock.mockImplementation(() => Promise.resolve());
+let createRequestMock = null;
+function mock_createRequest() {
+  if (!createRequestMock) {
+    createRequestMock = jest.spyOn(naturalLanguageUnderstandingService, 'createRequest');
+    createRequestMock.mockImplementation(() => Promise.resolve());
+  }
+}
 
 // dont actually construct an authenticator
 const getAuthenticatorMock = jest.spyOn(core, 'getAuthenticatorFromEnvironment');
 getAuthenticatorMock.mockImplementation(() => new NoAuthAuthenticator());
 
-afterEach(() => {
-  createRequestMock.mockClear();
-  getAuthenticatorMock.mockClear();
-});
-
 // used for the service construction tests
 let requiredGlobals;
-beforeEach(() => {
-  // these are changed when passed into the factory/constructor, so re-init
-  requiredGlobals = {
-    version: 'testString',
-  };
-});
 
 describe('NaturalLanguageUnderstandingV1', () => {
+
+  beforeEach(() => {
+    mock_createRequest();
+    // these are changed when passed into the factory/constructor, so re-init
+    requiredGlobals = {
+      version: 'testString',
+    };
+  });
+
+  afterEach(() => {
+    if (createRequestMock) {
+      createRequestMock.mockClear();
+    }
+    getAuthenticatorMock.mockClear();
+  });
+
   describe('the constructor', () => {
     test('use user-given service url', () => {
       let options = {
@@ -131,6 +140,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
       expect(getAuthenticatorMock).toHaveBeenCalled();
     });
   });
+
   describe('service-level tests', () => {
     describe('positive tests', () => {
       test('construct service with global params', () => {
@@ -140,6 +150,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
       });
     });
   });
+
   describe('analyze', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
@@ -235,7 +246,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         syntax: syntaxOptionsModel,
       };
 
-      test('should pass the right params to createRequest', () => {
+      function __analyzeTest() {
         // Construct the params object for operation analyze
         const features = featuresModel;
         const text = 'testString';
@@ -247,7 +258,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const returnAnalyzedText = false;
         const language = 'testString';
         const limitTextCharacters = 38;
-        const params = {
+        const analyzeParams = {
           features: features,
           text: text,
           html: html,
@@ -260,7 +271,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
           limitTextCharacters: limitTextCharacters,
         };
 
-        const analyzeResult = naturalLanguageUnderstandingService.analyze(params);
+        const analyzeResult = naturalLanguageUnderstandingService.analyze(analyzeParams);
 
         // all methods should return a Promise
         expectToBePromise(analyzeResult);
@@ -285,6 +296,21 @@ describe('NaturalLanguageUnderstandingV1', () => {
         expect(mockRequestOptions.body.language).toEqual(language);
         expect(mockRequestOptions.body.limit_text_characters).toEqual(limitTextCharacters);
         expect(mockRequestOptions.qs.version).toEqual(naturalLanguageUnderstandingServiceOptions.version);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __analyzeTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.enableRetries();
+        __analyzeTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.disableRetries();
+        __analyzeTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -292,7 +318,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const features = featuresModel;
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const analyzeParams = {
           features,
           headers: {
             Accept: userAccept,
@@ -300,13 +326,13 @@ describe('NaturalLanguageUnderstandingV1', () => {
           },
         };
 
-        naturalLanguageUnderstandingService.analyze(params);
+        naturalLanguageUnderstandingService.analyze(analyzeParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await naturalLanguageUnderstandingService.analyze({});
@@ -315,27 +341,28 @@ describe('NaturalLanguageUnderstandingV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const analyzePromise = naturalLanguageUnderstandingService.analyze();
-        expectToBePromise(analyzePromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await naturalLanguageUnderstandingService.analyze();
+        } catch (e) {
+          err = e;
+        }
 
-        analyzePromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listModels', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listModelsTest() {
         // Construct the params object for operation listModels
-        const params = {};
+        const listModelsParams = {};
 
-        const listModelsResult = naturalLanguageUnderstandingService.listModels(params);
+        const listModelsResult = naturalLanguageUnderstandingService.listModels(listModelsParams);
 
         // all methods should return a Promise
         expectToBePromise(listModelsResult);
@@ -350,20 +377,35 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(naturalLanguageUnderstandingServiceOptions.version);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listModelsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.enableRetries();
+        __listModelsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.disableRetries();
+        __listModelsTest();
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listModelsParams = {
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        naturalLanguageUnderstandingService.listModels(params);
+        naturalLanguageUnderstandingService.listModels(listModelsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
@@ -374,16 +416,17 @@ describe('NaturalLanguageUnderstandingV1', () => {
       });
     });
   });
+
   describe('deleteModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteModelTest() {
         // Construct the params object for operation deleteModel
         const modelId = 'testString';
-        const params = {
+        const deleteModelParams = {
           modelId: modelId,
         };
 
-        const deleteModelResult = naturalLanguageUnderstandingService.deleteModel(params);
+        const deleteModelResult = naturalLanguageUnderstandingService.deleteModel(deleteModelParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteModelResult);
@@ -399,6 +442,21 @@ describe('NaturalLanguageUnderstandingV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(naturalLanguageUnderstandingServiceOptions.version);
         expect(mockRequestOptions.path.model_id).toEqual(modelId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.enableRetries();
+        __deleteModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.disableRetries();
+        __deleteModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -406,7 +464,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const modelId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteModelParams = {
           modelId,
           headers: {
             Accept: userAccept,
@@ -414,13 +472,13 @@ describe('NaturalLanguageUnderstandingV1', () => {
           },
         };
 
-        naturalLanguageUnderstandingService.deleteModel(params);
+        naturalLanguageUnderstandingService.deleteModel(deleteModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await naturalLanguageUnderstandingService.deleteModel({});
@@ -429,23 +487,24 @@ describe('NaturalLanguageUnderstandingV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteModelPromise = naturalLanguageUnderstandingService.deleteModel();
-        expectToBePromise(deleteModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await naturalLanguageUnderstandingService.deleteModel();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('createSentimentModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __createSentimentModelTest() {
         // Construct the params object for operation createSentimentModel
         const language = 'testString';
         const trainingData = Buffer.from('This is a mock file.');
@@ -454,7 +513,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const modelVersion = 'testString';
         const workspaceId = 'testString';
         const versionDescription = 'testString';
-        const params = {
+        const createSentimentModelParams = {
           language: language,
           trainingData: trainingData,
           name: name,
@@ -464,7 +523,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
           versionDescription: versionDescription,
         };
 
-        const createSentimentModelResult = naturalLanguageUnderstandingService.createSentimentModel(params);
+        const createSentimentModelResult = naturalLanguageUnderstandingService.createSentimentModel(createSentimentModelParams);
 
         // all methods should return a Promise
         expectToBePromise(createSentimentModelResult);
@@ -487,6 +546,21 @@ describe('NaturalLanguageUnderstandingV1', () => {
         expect(mockRequestOptions.formData.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.formData.version_description).toEqual(versionDescription);
         expect(mockRequestOptions.qs.version).toEqual(naturalLanguageUnderstandingServiceOptions.version);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createSentimentModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.enableRetries();
+        __createSentimentModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.disableRetries();
+        __createSentimentModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -495,7 +569,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const trainingData = Buffer.from('This is a mock file.');
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const createSentimentModelParams = {
           language,
           trainingData,
           headers: {
@@ -504,13 +578,13 @@ describe('NaturalLanguageUnderstandingV1', () => {
           },
         };
 
-        naturalLanguageUnderstandingService.createSentimentModel(params);
+        naturalLanguageUnderstandingService.createSentimentModel(createSentimentModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await naturalLanguageUnderstandingService.createSentimentModel({});
@@ -519,27 +593,28 @@ describe('NaturalLanguageUnderstandingV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const createSentimentModelPromise = naturalLanguageUnderstandingService.createSentimentModel();
-        expectToBePromise(createSentimentModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await naturalLanguageUnderstandingService.createSentimentModel();
+        } catch (e) {
+          err = e;
+        }
 
-        createSentimentModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listSentimentModels', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listSentimentModelsTest() {
         // Construct the params object for operation listSentimentModels
-        const params = {};
+        const listSentimentModelsParams = {};
 
-        const listSentimentModelsResult = naturalLanguageUnderstandingService.listSentimentModels(params);
+        const listSentimentModelsResult = naturalLanguageUnderstandingService.listSentimentModels(listSentimentModelsParams);
 
         // all methods should return a Promise
         expectToBePromise(listSentimentModelsResult);
@@ -554,20 +629,35 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(naturalLanguageUnderstandingServiceOptions.version);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listSentimentModelsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.enableRetries();
+        __listSentimentModelsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.disableRetries();
+        __listSentimentModelsTest();
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listSentimentModelsParams = {
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        naturalLanguageUnderstandingService.listSentimentModels(params);
+        naturalLanguageUnderstandingService.listSentimentModels(listSentimentModelsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
@@ -578,16 +668,17 @@ describe('NaturalLanguageUnderstandingV1', () => {
       });
     });
   });
+
   describe('getSentimentModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getSentimentModelTest() {
         // Construct the params object for operation getSentimentModel
         const modelId = 'testString';
-        const params = {
+        const getSentimentModelParams = {
           modelId: modelId,
         };
 
-        const getSentimentModelResult = naturalLanguageUnderstandingService.getSentimentModel(params);
+        const getSentimentModelResult = naturalLanguageUnderstandingService.getSentimentModel(getSentimentModelParams);
 
         // all methods should return a Promise
         expectToBePromise(getSentimentModelResult);
@@ -603,6 +694,21 @@ describe('NaturalLanguageUnderstandingV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(naturalLanguageUnderstandingServiceOptions.version);
         expect(mockRequestOptions.path.model_id).toEqual(modelId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getSentimentModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.enableRetries();
+        __getSentimentModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.disableRetries();
+        __getSentimentModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -610,7 +716,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const modelId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getSentimentModelParams = {
           modelId,
           headers: {
             Accept: userAccept,
@@ -618,13 +724,13 @@ describe('NaturalLanguageUnderstandingV1', () => {
           },
         };
 
-        naturalLanguageUnderstandingService.getSentimentModel(params);
+        naturalLanguageUnderstandingService.getSentimentModel(getSentimentModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await naturalLanguageUnderstandingService.getSentimentModel({});
@@ -633,23 +739,24 @@ describe('NaturalLanguageUnderstandingV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getSentimentModelPromise = naturalLanguageUnderstandingService.getSentimentModel();
-        expectToBePromise(getSentimentModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await naturalLanguageUnderstandingService.getSentimentModel();
+        } catch (e) {
+          err = e;
+        }
 
-        getSentimentModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('updateSentimentModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __updateSentimentModelTest() {
         // Construct the params object for operation updateSentimentModel
         const modelId = 'testString';
         const language = 'testString';
@@ -659,7 +766,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const modelVersion = 'testString';
         const workspaceId = 'testString';
         const versionDescription = 'testString';
-        const params = {
+        const updateSentimentModelParams = {
           modelId: modelId,
           language: language,
           trainingData: trainingData,
@@ -670,7 +777,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
           versionDescription: versionDescription,
         };
 
-        const updateSentimentModelResult = naturalLanguageUnderstandingService.updateSentimentModel(params);
+        const updateSentimentModelResult = naturalLanguageUnderstandingService.updateSentimentModel(updateSentimentModelParams);
 
         // all methods should return a Promise
         expectToBePromise(updateSentimentModelResult);
@@ -694,6 +801,21 @@ describe('NaturalLanguageUnderstandingV1', () => {
         expect(mockRequestOptions.formData.version_description).toEqual(versionDescription);
         expect(mockRequestOptions.qs.version).toEqual(naturalLanguageUnderstandingServiceOptions.version);
         expect(mockRequestOptions.path.model_id).toEqual(modelId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __updateSentimentModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.enableRetries();
+        __updateSentimentModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.disableRetries();
+        __updateSentimentModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -703,7 +825,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const trainingData = Buffer.from('This is a mock file.');
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const updateSentimentModelParams = {
           modelId,
           language,
           trainingData,
@@ -713,13 +835,13 @@ describe('NaturalLanguageUnderstandingV1', () => {
           },
         };
 
-        naturalLanguageUnderstandingService.updateSentimentModel(params);
+        naturalLanguageUnderstandingService.updateSentimentModel(updateSentimentModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await naturalLanguageUnderstandingService.updateSentimentModel({});
@@ -728,30 +850,31 @@ describe('NaturalLanguageUnderstandingV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const updateSentimentModelPromise = naturalLanguageUnderstandingService.updateSentimentModel();
-        expectToBePromise(updateSentimentModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await naturalLanguageUnderstandingService.updateSentimentModel();
+        } catch (e) {
+          err = e;
+        }
 
-        updateSentimentModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteSentimentModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteSentimentModelTest() {
         // Construct the params object for operation deleteSentimentModel
         const modelId = 'testString';
-        const params = {
+        const deleteSentimentModelParams = {
           modelId: modelId,
         };
 
-        const deleteSentimentModelResult = naturalLanguageUnderstandingService.deleteSentimentModel(params);
+        const deleteSentimentModelResult = naturalLanguageUnderstandingService.deleteSentimentModel(deleteSentimentModelParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteSentimentModelResult);
@@ -767,6 +890,21 @@ describe('NaturalLanguageUnderstandingV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(naturalLanguageUnderstandingServiceOptions.version);
         expect(mockRequestOptions.path.model_id).toEqual(modelId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteSentimentModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.enableRetries();
+        __deleteSentimentModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.disableRetries();
+        __deleteSentimentModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -774,7 +912,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const modelId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteSentimentModelParams = {
           modelId,
           headers: {
             Accept: userAccept,
@@ -782,13 +920,13 @@ describe('NaturalLanguageUnderstandingV1', () => {
           },
         };
 
-        naturalLanguageUnderstandingService.deleteSentimentModel(params);
+        naturalLanguageUnderstandingService.deleteSentimentModel(deleteSentimentModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await naturalLanguageUnderstandingService.deleteSentimentModel({});
@@ -797,23 +935,24 @@ describe('NaturalLanguageUnderstandingV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteSentimentModelPromise = naturalLanguageUnderstandingService.deleteSentimentModel();
-        expectToBePromise(deleteSentimentModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await naturalLanguageUnderstandingService.deleteSentimentModel();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteSentimentModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('createCategoriesModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __createCategoriesModelTest() {
         // Construct the params object for operation createCategoriesModel
         const language = 'testString';
         const trainingData = Buffer.from('This is a mock file.');
@@ -823,7 +962,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const modelVersion = 'testString';
         const workspaceId = 'testString';
         const versionDescription = 'testString';
-        const params = {
+        const createCategoriesModelParams = {
           language: language,
           trainingData: trainingData,
           trainingDataContentType: trainingDataContentType,
@@ -834,7 +973,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
           versionDescription: versionDescription,
         };
 
-        const createCategoriesModelResult = naturalLanguageUnderstandingService.createCategoriesModel(params);
+        const createCategoriesModelResult = naturalLanguageUnderstandingService.createCategoriesModel(createCategoriesModelParams);
 
         // all methods should return a Promise
         expectToBePromise(createCategoriesModelResult);
@@ -857,6 +996,21 @@ describe('NaturalLanguageUnderstandingV1', () => {
         expect(mockRequestOptions.formData.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.formData.version_description).toEqual(versionDescription);
         expect(mockRequestOptions.qs.version).toEqual(naturalLanguageUnderstandingServiceOptions.version);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createCategoriesModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.enableRetries();
+        __createCategoriesModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.disableRetries();
+        __createCategoriesModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -865,7 +1019,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const trainingData = Buffer.from('This is a mock file.');
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const createCategoriesModelParams = {
           language,
           trainingData,
           headers: {
@@ -874,13 +1028,13 @@ describe('NaturalLanguageUnderstandingV1', () => {
           },
         };
 
-        naturalLanguageUnderstandingService.createCategoriesModel(params);
+        naturalLanguageUnderstandingService.createCategoriesModel(createCategoriesModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await naturalLanguageUnderstandingService.createCategoriesModel({});
@@ -889,27 +1043,28 @@ describe('NaturalLanguageUnderstandingV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const createCategoriesModelPromise = naturalLanguageUnderstandingService.createCategoriesModel();
-        expectToBePromise(createCategoriesModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await naturalLanguageUnderstandingService.createCategoriesModel();
+        } catch (e) {
+          err = e;
+        }
 
-        createCategoriesModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listCategoriesModels', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listCategoriesModelsTest() {
         // Construct the params object for operation listCategoriesModels
-        const params = {};
+        const listCategoriesModelsParams = {};
 
-        const listCategoriesModelsResult = naturalLanguageUnderstandingService.listCategoriesModels(params);
+        const listCategoriesModelsResult = naturalLanguageUnderstandingService.listCategoriesModels(listCategoriesModelsParams);
 
         // all methods should return a Promise
         expectToBePromise(listCategoriesModelsResult);
@@ -924,20 +1079,35 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(naturalLanguageUnderstandingServiceOptions.version);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listCategoriesModelsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.enableRetries();
+        __listCategoriesModelsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.disableRetries();
+        __listCategoriesModelsTest();
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listCategoriesModelsParams = {
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        naturalLanguageUnderstandingService.listCategoriesModels(params);
+        naturalLanguageUnderstandingService.listCategoriesModels(listCategoriesModelsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
@@ -948,16 +1118,17 @@ describe('NaturalLanguageUnderstandingV1', () => {
       });
     });
   });
+
   describe('getCategoriesModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getCategoriesModelTest() {
         // Construct the params object for operation getCategoriesModel
         const modelId = 'testString';
-        const params = {
+        const getCategoriesModelParams = {
           modelId: modelId,
         };
 
-        const getCategoriesModelResult = naturalLanguageUnderstandingService.getCategoriesModel(params);
+        const getCategoriesModelResult = naturalLanguageUnderstandingService.getCategoriesModel(getCategoriesModelParams);
 
         // all methods should return a Promise
         expectToBePromise(getCategoriesModelResult);
@@ -973,6 +1144,21 @@ describe('NaturalLanguageUnderstandingV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(naturalLanguageUnderstandingServiceOptions.version);
         expect(mockRequestOptions.path.model_id).toEqual(modelId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getCategoriesModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.enableRetries();
+        __getCategoriesModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.disableRetries();
+        __getCategoriesModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -980,7 +1166,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const modelId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getCategoriesModelParams = {
           modelId,
           headers: {
             Accept: userAccept,
@@ -988,13 +1174,13 @@ describe('NaturalLanguageUnderstandingV1', () => {
           },
         };
 
-        naturalLanguageUnderstandingService.getCategoriesModel(params);
+        naturalLanguageUnderstandingService.getCategoriesModel(getCategoriesModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await naturalLanguageUnderstandingService.getCategoriesModel({});
@@ -1003,23 +1189,24 @@ describe('NaturalLanguageUnderstandingV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getCategoriesModelPromise = naturalLanguageUnderstandingService.getCategoriesModel();
-        expectToBePromise(getCategoriesModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await naturalLanguageUnderstandingService.getCategoriesModel();
+        } catch (e) {
+          err = e;
+        }
 
-        getCategoriesModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('updateCategoriesModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __updateCategoriesModelTest() {
         // Construct the params object for operation updateCategoriesModel
         const modelId = 'testString';
         const language = 'testString';
@@ -1030,7 +1217,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const modelVersion = 'testString';
         const workspaceId = 'testString';
         const versionDescription = 'testString';
-        const params = {
+        const updateCategoriesModelParams = {
           modelId: modelId,
           language: language,
           trainingData: trainingData,
@@ -1042,7 +1229,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
           versionDescription: versionDescription,
         };
 
-        const updateCategoriesModelResult = naturalLanguageUnderstandingService.updateCategoriesModel(params);
+        const updateCategoriesModelResult = naturalLanguageUnderstandingService.updateCategoriesModel(updateCategoriesModelParams);
 
         // all methods should return a Promise
         expectToBePromise(updateCategoriesModelResult);
@@ -1066,6 +1253,21 @@ describe('NaturalLanguageUnderstandingV1', () => {
         expect(mockRequestOptions.formData.version_description).toEqual(versionDescription);
         expect(mockRequestOptions.qs.version).toEqual(naturalLanguageUnderstandingServiceOptions.version);
         expect(mockRequestOptions.path.model_id).toEqual(modelId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __updateCategoriesModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.enableRetries();
+        __updateCategoriesModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.disableRetries();
+        __updateCategoriesModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1075,7 +1277,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const trainingData = Buffer.from('This is a mock file.');
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const updateCategoriesModelParams = {
           modelId,
           language,
           trainingData,
@@ -1085,13 +1287,13 @@ describe('NaturalLanguageUnderstandingV1', () => {
           },
         };
 
-        naturalLanguageUnderstandingService.updateCategoriesModel(params);
+        naturalLanguageUnderstandingService.updateCategoriesModel(updateCategoriesModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await naturalLanguageUnderstandingService.updateCategoriesModel({});
@@ -1100,30 +1302,31 @@ describe('NaturalLanguageUnderstandingV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const updateCategoriesModelPromise = naturalLanguageUnderstandingService.updateCategoriesModel();
-        expectToBePromise(updateCategoriesModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await naturalLanguageUnderstandingService.updateCategoriesModel();
+        } catch (e) {
+          err = e;
+        }
 
-        updateCategoriesModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteCategoriesModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteCategoriesModelTest() {
         // Construct the params object for operation deleteCategoriesModel
         const modelId = 'testString';
-        const params = {
+        const deleteCategoriesModelParams = {
           modelId: modelId,
         };
 
-        const deleteCategoriesModelResult = naturalLanguageUnderstandingService.deleteCategoriesModel(params);
+        const deleteCategoriesModelResult = naturalLanguageUnderstandingService.deleteCategoriesModel(deleteCategoriesModelParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteCategoriesModelResult);
@@ -1139,6 +1342,21 @@ describe('NaturalLanguageUnderstandingV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(naturalLanguageUnderstandingServiceOptions.version);
         expect(mockRequestOptions.path.model_id).toEqual(modelId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteCategoriesModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.enableRetries();
+        __deleteCategoriesModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.disableRetries();
+        __deleteCategoriesModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1146,7 +1364,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const modelId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteCategoriesModelParams = {
           modelId,
           headers: {
             Accept: userAccept,
@@ -1154,13 +1372,13 @@ describe('NaturalLanguageUnderstandingV1', () => {
           },
         };
 
-        naturalLanguageUnderstandingService.deleteCategoriesModel(params);
+        naturalLanguageUnderstandingService.deleteCategoriesModel(deleteCategoriesModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await naturalLanguageUnderstandingService.deleteCategoriesModel({});
@@ -1169,23 +1387,31 @@ describe('NaturalLanguageUnderstandingV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteCategoriesModelPromise = naturalLanguageUnderstandingService.deleteCategoriesModel();
-        expectToBePromise(deleteCategoriesModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await naturalLanguageUnderstandingService.deleteCategoriesModel();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteCategoriesModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('createClassificationsModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      // Request models needed by this operation.
+
+      // ClassificationsTrainingParameters
+      const classificationsTrainingParametersModel = {
+        model_type: 'single_label',
+      };
+
+      function __createClassificationsModelTest() {
         // Construct the params object for operation createClassificationsModel
         const language = 'testString';
         const trainingData = Buffer.from('This is a mock file.');
@@ -1195,7 +1421,8 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const modelVersion = 'testString';
         const workspaceId = 'testString';
         const versionDescription = 'testString';
-        const params = {
+        const trainingParameters = classificationsTrainingParametersModel;
+        const createClassificationsModelParams = {
           language: language,
           trainingData: trainingData,
           trainingDataContentType: trainingDataContentType,
@@ -1204,9 +1431,10 @@ describe('NaturalLanguageUnderstandingV1', () => {
           modelVersion: modelVersion,
           workspaceId: workspaceId,
           versionDescription: versionDescription,
+          trainingParameters: trainingParameters,
         };
 
-        const createClassificationsModelResult = naturalLanguageUnderstandingService.createClassificationsModel(params);
+        const createClassificationsModelResult = naturalLanguageUnderstandingService.createClassificationsModel(createClassificationsModelParams);
 
         // all methods should return a Promise
         expectToBePromise(createClassificationsModelResult);
@@ -1228,7 +1456,23 @@ describe('NaturalLanguageUnderstandingV1', () => {
         expect(mockRequestOptions.formData.model_version).toEqual(modelVersion);
         expect(mockRequestOptions.formData.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.formData.version_description).toEqual(versionDescription);
+        expect(mockRequestOptions.formData.training_parameters).toEqual(trainingParameters);
         expect(mockRequestOptions.qs.version).toEqual(naturalLanguageUnderstandingServiceOptions.version);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createClassificationsModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.enableRetries();
+        __createClassificationsModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.disableRetries();
+        __createClassificationsModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1237,7 +1481,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const trainingData = Buffer.from('This is a mock file.');
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const createClassificationsModelParams = {
           language,
           trainingData,
           headers: {
@@ -1246,13 +1490,13 @@ describe('NaturalLanguageUnderstandingV1', () => {
           },
         };
 
-        naturalLanguageUnderstandingService.createClassificationsModel(params);
+        naturalLanguageUnderstandingService.createClassificationsModel(createClassificationsModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await naturalLanguageUnderstandingService.createClassificationsModel({});
@@ -1261,27 +1505,28 @@ describe('NaturalLanguageUnderstandingV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const createClassificationsModelPromise = naturalLanguageUnderstandingService.createClassificationsModel();
-        expectToBePromise(createClassificationsModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await naturalLanguageUnderstandingService.createClassificationsModel();
+        } catch (e) {
+          err = e;
+        }
 
-        createClassificationsModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('listClassificationsModels', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __listClassificationsModelsTest() {
         // Construct the params object for operation listClassificationsModels
-        const params = {};
+        const listClassificationsModelsParams = {};
 
-        const listClassificationsModelsResult = naturalLanguageUnderstandingService.listClassificationsModels(params);
+        const listClassificationsModelsResult = naturalLanguageUnderstandingService.listClassificationsModels(listClassificationsModelsParams);
 
         // all methods should return a Promise
         expectToBePromise(listClassificationsModelsResult);
@@ -1296,20 +1541,35 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(naturalLanguageUnderstandingServiceOptions.version);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listClassificationsModelsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.enableRetries();
+        __listClassificationsModelsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.disableRetries();
+        __listClassificationsModelsTest();
       });
 
       test('should prioritize user-given headers', () => {
         // parameters
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const listClassificationsModelsParams = {
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
           },
         };
 
-        naturalLanguageUnderstandingService.listClassificationsModels(params);
+        naturalLanguageUnderstandingService.listClassificationsModels(listClassificationsModelsParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
 
@@ -1320,16 +1580,17 @@ describe('NaturalLanguageUnderstandingV1', () => {
       });
     });
   });
+
   describe('getClassificationsModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __getClassificationsModelTest() {
         // Construct the params object for operation getClassificationsModel
         const modelId = 'testString';
-        const params = {
+        const getClassificationsModelParams = {
           modelId: modelId,
         };
 
-        const getClassificationsModelResult = naturalLanguageUnderstandingService.getClassificationsModel(params);
+        const getClassificationsModelResult = naturalLanguageUnderstandingService.getClassificationsModel(getClassificationsModelParams);
 
         // all methods should return a Promise
         expectToBePromise(getClassificationsModelResult);
@@ -1345,6 +1606,21 @@ describe('NaturalLanguageUnderstandingV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(naturalLanguageUnderstandingServiceOptions.version);
         expect(mockRequestOptions.path.model_id).toEqual(modelId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getClassificationsModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.enableRetries();
+        __getClassificationsModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.disableRetries();
+        __getClassificationsModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1352,7 +1628,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const modelId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const getClassificationsModelParams = {
           modelId,
           headers: {
             Accept: userAccept,
@@ -1360,13 +1636,13 @@ describe('NaturalLanguageUnderstandingV1', () => {
           },
         };
 
-        naturalLanguageUnderstandingService.getClassificationsModel(params);
+        naturalLanguageUnderstandingService.getClassificationsModel(getClassificationsModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await naturalLanguageUnderstandingService.getClassificationsModel({});
@@ -1375,23 +1651,31 @@ describe('NaturalLanguageUnderstandingV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const getClassificationsModelPromise = naturalLanguageUnderstandingService.getClassificationsModel();
-        expectToBePromise(getClassificationsModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await naturalLanguageUnderstandingService.getClassificationsModel();
+        } catch (e) {
+          err = e;
+        }
 
-        getClassificationsModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('updateClassificationsModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      // Request models needed by this operation.
+
+      // ClassificationsTrainingParameters
+      const classificationsTrainingParametersModel = {
+        model_type: 'single_label',
+      };
+
+      function __updateClassificationsModelTest() {
         // Construct the params object for operation updateClassificationsModel
         const modelId = 'testString';
         const language = 'testString';
@@ -1402,7 +1686,8 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const modelVersion = 'testString';
         const workspaceId = 'testString';
         const versionDescription = 'testString';
-        const params = {
+        const trainingParameters = classificationsTrainingParametersModel;
+        const updateClassificationsModelParams = {
           modelId: modelId,
           language: language,
           trainingData: trainingData,
@@ -1412,9 +1697,10 @@ describe('NaturalLanguageUnderstandingV1', () => {
           modelVersion: modelVersion,
           workspaceId: workspaceId,
           versionDescription: versionDescription,
+          trainingParameters: trainingParameters,
         };
 
-        const updateClassificationsModelResult = naturalLanguageUnderstandingService.updateClassificationsModel(params);
+        const updateClassificationsModelResult = naturalLanguageUnderstandingService.updateClassificationsModel(updateClassificationsModelParams);
 
         // all methods should return a Promise
         expectToBePromise(updateClassificationsModelResult);
@@ -1436,8 +1722,24 @@ describe('NaturalLanguageUnderstandingV1', () => {
         expect(mockRequestOptions.formData.model_version).toEqual(modelVersion);
         expect(mockRequestOptions.formData.workspace_id).toEqual(workspaceId);
         expect(mockRequestOptions.formData.version_description).toEqual(versionDescription);
+        expect(mockRequestOptions.formData.training_parameters).toEqual(trainingParameters);
         expect(mockRequestOptions.qs.version).toEqual(naturalLanguageUnderstandingServiceOptions.version);
         expect(mockRequestOptions.path.model_id).toEqual(modelId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __updateClassificationsModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.enableRetries();
+        __updateClassificationsModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.disableRetries();
+        __updateClassificationsModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1447,7 +1749,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const trainingData = Buffer.from('This is a mock file.');
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const updateClassificationsModelParams = {
           modelId,
           language,
           trainingData,
@@ -1457,13 +1759,13 @@ describe('NaturalLanguageUnderstandingV1', () => {
           },
         };
 
-        naturalLanguageUnderstandingService.updateClassificationsModel(params);
+        naturalLanguageUnderstandingService.updateClassificationsModel(updateClassificationsModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await naturalLanguageUnderstandingService.updateClassificationsModel({});
@@ -1472,30 +1774,31 @@ describe('NaturalLanguageUnderstandingV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const updateClassificationsModelPromise = naturalLanguageUnderstandingService.updateClassificationsModel();
-        expectToBePromise(updateClassificationsModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await naturalLanguageUnderstandingService.updateClassificationsModel();
+        } catch (e) {
+          err = e;
+        }
 
-        updateClassificationsModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
+
   describe('deleteClassificationsModel', () => {
     describe('positive tests', () => {
-      test('should pass the right params to createRequest', () => {
+      function __deleteClassificationsModelTest() {
         // Construct the params object for operation deleteClassificationsModel
         const modelId = 'testString';
-        const params = {
+        const deleteClassificationsModelParams = {
           modelId: modelId,
         };
 
-        const deleteClassificationsModelResult = naturalLanguageUnderstandingService.deleteClassificationsModel(params);
+        const deleteClassificationsModelResult = naturalLanguageUnderstandingService.deleteClassificationsModel(deleteClassificationsModelParams);
 
         // all methods should return a Promise
         expectToBePromise(deleteClassificationsModelResult);
@@ -1511,6 +1814,21 @@ describe('NaturalLanguageUnderstandingV1', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(naturalLanguageUnderstandingServiceOptions.version);
         expect(mockRequestOptions.path.model_id).toEqual(modelId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteClassificationsModelTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.enableRetries();
+        __deleteClassificationsModelTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        naturalLanguageUnderstandingService.disableRetries();
+        __deleteClassificationsModelTest();
       });
 
       test('should prioritize user-given headers', () => {
@@ -1518,7 +1836,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const modelId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
-        const params = {
+        const deleteClassificationsModelParams = {
           modelId,
           headers: {
             Accept: userAccept,
@@ -1526,13 +1844,13 @@ describe('NaturalLanguageUnderstandingV1', () => {
           },
         };
 
-        naturalLanguageUnderstandingService.deleteClassificationsModel(params);
+        naturalLanguageUnderstandingService.deleteClassificationsModel(deleteClassificationsModelParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
     });
 
     describe('negative tests', () => {
-      test('should enforce required parameters', async (done) => {
+      test('should enforce required parameters', async () => {
         let err;
         try {
           await naturalLanguageUnderstandingService.deleteClassificationsModel({});
@@ -1541,17 +1859,17 @@ describe('NaturalLanguageUnderstandingV1', () => {
         }
 
         expect(err.message).toMatch(/Missing required parameters/);
-        done();
       });
 
-      test('should reject promise when required params are not given', (done) => {
-        const deleteClassificationsModelPromise = naturalLanguageUnderstandingService.deleteClassificationsModel();
-        expectToBePromise(deleteClassificationsModelPromise);
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await naturalLanguageUnderstandingService.deleteClassificationsModel();
+        } catch (e) {
+          err = e;
+        }
 
-        deleteClassificationsModelPromise.catch((err) => {
-          expect(err.message).toMatch(/Missing required parameters/);
-          done();
-        });
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
