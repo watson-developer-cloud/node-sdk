@@ -280,6 +280,7 @@ namespace SpeechToTextV1 {
     speechDetectorSensitivity?: number;
     backgroundAudioSuppression?: number;
     lowLatency?: boolean;
+    characterInsertionBias?: number;
   }
 }
 
