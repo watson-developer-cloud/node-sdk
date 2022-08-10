@@ -149,6 +149,7 @@ namespace TextToSpeechV1 {
     watsonToken?: string;
     voice?: string;
     customizationId?: string;
+    spellOutMode?: string;
     xWatsonLearningOptOut?: boolean;
     xWatsonMetadata?: string;
   }
