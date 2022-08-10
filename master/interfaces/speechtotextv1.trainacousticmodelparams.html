@@ -93,6 +93,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.trainacousticmodelparams.html#customlanguagemodelid" class="tsd-kind-icon">custom<wbr>Language<wbr>Model<wbr>Id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.trainacousticmodelparams.html#customizationid" class="tsd-kind-icon">customization<wbr>Id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.trainacousticmodelparams.html#headers" class="tsd-kind-icon">headers</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.trainacousticmodelparams.html#strict" class="tsd-kind-icon">strict</a></li>
 							</ul>
 						</section>
 					</div>
@@ -106,7 +107,7 @@
 					<div class="tsd-signature tsd-kind-icon">custom<wbr>Language<wbr>Model<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L5523">speech-to-text/v1-generated.ts:5523</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L5694">speech-to-text/v1-generated.ts:5694</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -126,7 +127,7 @@
 					<div class="tsd-signature tsd-kind-icon">customization<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L5515">speech-to-text/v1-generated.ts:5515</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L5686">speech-to-text/v1-generated.ts:5686</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -142,9 +143,27 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">OutgoingHttpHeaders</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L5524">speech-to-text/v1-generated.ts:5524</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L5701">speech-to-text/v1-generated.ts:5701</a></li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="strict" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> strict</h3>
+					<div class="tsd-signature tsd-kind-icon">strict<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L5700">speech-to-text/v1-generated.ts:5700</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>If <code>false</code>, allows training of the custom acoustic model to proceed as long as the model contains at least
+								one valid audio resource. The method returns an array of <code>TrainingWarning</code> objects that lists any invalid
+								resources. By default (<code>true</code>), training of a custom acoustic model fails (status code 400) if the model
+							contains one or more invalid audio resources.</p>
+						</div>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -207,6 +226,10 @@
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="speechtotextv1.trainacousticmodelparams.html#headers" class="tsd-kind-icon">headers</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="speechtotextv1.trainacousticmodelparams.html#strict" class="tsd-kind-icon">strict</a>
 									</li>
 								</ul>
 							</li>

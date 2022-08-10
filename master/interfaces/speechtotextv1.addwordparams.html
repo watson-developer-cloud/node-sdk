@@ -109,7 +109,7 @@
 					<div class="tsd-signature tsd-kind-icon">customization<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L5228">speech-to-text/v1-generated.ts:5228</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L5399">speech-to-text/v1-generated.ts:5399</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -125,7 +125,7 @@
 					<div class="tsd-signature tsd-kind-icon">display<wbr>As<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L5262">speech-to-text/v1-generated.ts:5262</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L5433">speech-to-text/v1-generated.ts:5433</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -134,6 +134,8 @@
 								the word to have a spelling that is different from its usual representation or from its spelling in corpora
 							training data.</p>
 						</div>
+						<p> _For custom models that are based on next-generation models_, the service uses the spelling of the word as the
+						display-as value if you omit the field.</p>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
@@ -142,7 +144,7 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">OutgoingHttpHeaders</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L5263">speech-to-text/v1-generated.ts:5263</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L5434">speech-to-text/v1-generated.ts:5434</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -152,17 +154,17 @@
 					<div class="tsd-signature tsd-kind-icon">sounds<wbr>Like<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L5257">speech-to-text/v1-generated.ts:5257</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L5425">speech-to-text/v1-generated.ts:5425</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>_For a custom model that is based on a previous-generation model_, an array of sounds-like pronunciations
-								for the custom word. Specify how words that are difficult to pronounce, foreign words, acronyms, and so on can
-							be pronounced by users.</p>
+							<p>As array of sounds-like pronunciations for the custom word. Specify how words that are difficult to
+							pronounce, foreign words, acronyms, and so on can be pronounced by users.</p>
 							<ul>
-								<li>For a word that is not in the service&#39;s base vocabulary, omit the parameter to have the service automatically
-								generate a sounds-like pronunciation for the word.</li>
+								<li>_For custom models that are based on previous-generation models_, for a word that is not in the service&#39;s base
+									vocabulary, omit the parameter to have the service automatically generate a sounds-like pronunciation for the
+								word.</li>
 								<li>For a word that is in the service&#39;s base vocabulary, use the parameter to specify additional pronunciations
 									for the word. You cannot override the default pronunciation of a word; pronunciations you add augment the
 								pronunciation from the base vocabulary.</li>
@@ -170,8 +172,6 @@
 						</div>
 						<p> A word can have at most five sounds-like pronunciations. A pronunciation can include at most 40 characters not
 						including spaces.</p>
-						<p> _For a custom model that is based on a next-generation model_, omit this field. Custom models based on
-						next-generation models do not support the <code>sounds_like</code> field. The service ignores the field.</p>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
@@ -180,7 +180,7 @@
 					<div class="tsd-signature tsd-kind-icon">word<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L5241">speech-to-text/v1-generated.ts:5241</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L5412">speech-to-text/v1-generated.ts:5412</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -198,7 +198,7 @@
 					<div class="tsd-signature tsd-kind-icon">word<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L5234">speech-to-text/v1-generated.ts:5234</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L5405">speech-to-text/v1-generated.ts:5405</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">

@@ -95,8 +95,8 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.recognizeparams.html#audiometrics" class="tsd-kind-icon">audio<wbr>Metrics</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.recognizeparams.html#backgroundaudiosuppression" class="tsd-kind-icon">background<wbr>Audio<wbr>Suppression</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.recognizeparams.html#basemodelversion" class="tsd-kind-icon">base<wbr>Model<wbr>Version</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.recognizeparams.html#characterinsertionbias" class="tsd-kind-icon">character<wbr>Insertion<wbr>Bias</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.recognizeparams.html#contenttype" class="tsd-kind-icon">content<wbr>Type</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.recognizeparams.html#customizationid" class="tsd-kind-icon">customization<wbr>Id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.recognizeparams.html#customizationweight" class="tsd-kind-icon">customization<wbr>Weight</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.recognizeparams.html#endofphrasesilencetime" class="tsd-kind-icon">end<wbr>OfPhrase<wbr>Silence<wbr>Time</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.recognizeparams.html#grammarname" class="tsd-kind-icon">grammar<wbr>Name</a></li>
@@ -130,7 +130,7 @@
 					<div class="tsd-signature tsd-kind-icon">acoustic<wbr>Customization<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4104">speech-to-text/v1-generated.ts:4104</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4218">speech-to-text/v1-generated.ts:4218</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -149,7 +149,7 @@
 					<div class="tsd-signature tsd-kind-icon">audio<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ReadableStream</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Buffer</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4079">speech-to-text/v1-generated.ts:4079</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4184">speech-to-text/v1-generated.ts:4184</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -164,7 +164,7 @@
 					<div class="tsd-signature tsd-kind-icon">audio<wbr>Metrics<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4241">speech-to-text/v1-generated.ts:4241</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4350">speech-to-text/v1-generated.ts:4350</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -181,7 +181,7 @@
 					<div class="tsd-signature tsd-kind-icon">background<wbr>Audio<wbr>Suppression<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4305">speech-to-text/v1-generated.ts:4305</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4416">speech-to-text/v1-generated.ts:4416</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -196,7 +196,8 @@
 							<li><p>0.5 provides a reasonable level of audio suppression for general usage.</p>
 							</li>
 							<li><p>1.0 suppresses all audio (no audio is transcribed).</p>
-								<p>The values increase on a monotonic curve.</p>
+								<p>The values increase on a monotonic curve. Specifying one or two decimal places of precision (for example,
+								<code>0.55</code>) is typically more than sufficient.</p>
 								<p>The parameter is supported with all next-generation models and with most previous-generation models. See
 									[Background audio
 									suppression](<a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#detection-parameters-suppression">https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#detection-parameters-suppression</a>)
@@ -212,7 +213,7 @@
 					<div class="tsd-signature tsd-kind-icon">base<wbr>Model<wbr>Version<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4112">speech-to-text/v1-generated.ts:4112</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4226">speech-to-text/v1-generated.ts:4226</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -227,12 +228,46 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="characterinsertionbias" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> character<wbr>Insertion<wbr>Bias</h3>
+					<div class="tsd-signature tsd-kind-icon">character<wbr>Insertion<wbr>Bias<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4450">speech-to-text/v1-generated.ts:4450</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>For next-generation <code>Multimedia</code> and <code>Telephony</code> models, an indication of whether the service is biased to
+								recognize shorter or longer strings of characters when developing transcription hypotheses. By default, the
+								service is optimized for each individual model to balance its recognition of strings of different lengths. The
+							model-specific bias is equivalent to 0.0.</p>
+						</div>
+						<p> The value that you specify represents a change from a model&#39;s default bias. The allowable range of values is
+						-1.0 to 1.0.</p>
+						<ul>
+							<li><p>Negative values bias the service to favor hypotheses with shorter strings of characters.</p>
+							</li>
+							<li><p>Positive values bias the service to favor hypotheses with longer strings of characters.</p>
+								<p>As the value approaches -1.0 or 1.0, the impact of the parameter becomes more pronounced. To determine the most
+								effective value for your scenario, start by setting the value of the parameter to a small increment, such as</p>
+							</li>
+							<li><p>0.1, -0.05, 0.05, or 0.1, and assess how the value impacts the transcription results. Then experiment with
+								different values as necessary, adjusting the value by small increments.</p>
+								<p>The parameter is not available for previous-generation <code>Broadband</code> and <code>Narrowband</code> models.</p>
+								<p>See [Character insertion
+								bias](<a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-parsing#insertion-bias">https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-parsing#insertion-bias</a>).</p>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="contenttype" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> content<wbr>Type</h3>
 					<div class="tsd-signature tsd-kind-icon">content<wbr>Type<span class="tsd-signature-symbol">:</span> <a href="../enums/speechtotextv1.recognizeconstants.contenttype.html" class="tsd-signature-type">ContentType</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4083">speech-to-text/v1-generated.ts:4083</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4188">speech-to-text/v1-generated.ts:4188</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -243,29 +278,12 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="customizationid" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> customization<wbr>Id</h3>
-					<div class="tsd-signature tsd-kind-icon">customization<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4211">speech-to-text/v1-generated.ts:4211</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p><em>Deprecated.*</em> Use the <code>language_customization_id</code> parameter to specify the customization ID (GUID) of a
-								custom language model that is to be used with the recognition request. Do not specify both parameters with a
-							request.</p>
-						</div>
-					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="customizationweight" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> customization<wbr>Weight</h3>
 					<div class="tsd-signature tsd-kind-icon">customization<wbr>Weight<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4128">speech-to-text/v1-generated.ts:4128</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4242">speech-to-text/v1-generated.ts:4242</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -290,7 +308,7 @@
 					<div class="tsd-signature tsd-kind-icon">end<wbr>OfPhrase<wbr>Silence<wbr>Time<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4257">speech-to-text/v1-generated.ts:4257</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4366">speech-to-text/v1-generated.ts:4366</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -319,7 +337,7 @@
 					<div class="tsd-signature tsd-kind-icon">grammar<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4220">speech-to-text/v1-generated.ts:4220</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4329">speech-to-text/v1-generated.ts:4329</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -339,7 +357,7 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">OutgoingHttpHeaders</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4319">speech-to-text/v1-generated.ts:4319</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4451">speech-to-text/v1-generated.ts:4451</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -349,7 +367,7 @@
 					<div class="tsd-signature tsd-kind-icon">inactivity<wbr>Timeout<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4134">speech-to-text/v1-generated.ts:4134</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4248">speech-to-text/v1-generated.ts:4248</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -367,7 +385,7 @@
 					<div class="tsd-signature tsd-kind-icon">keywords<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4147">speech-to-text/v1-generated.ts:4147</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4261">speech-to-text/v1-generated.ts:4261</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -390,7 +408,7 @@
 					<div class="tsd-signature tsd-kind-icon">keywords<wbr>Threshold<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4154">speech-to-text/v1-generated.ts:4154</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4268">speech-to-text/v1-generated.ts:4268</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -409,7 +427,7 @@
 					<div class="tsd-signature tsd-kind-icon">language<wbr>Customization<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4097">speech-to-text/v1-generated.ts:4097</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4211">speech-to-text/v1-generated.ts:4211</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -429,7 +447,7 @@
 					<div class="tsd-signature tsd-kind-icon">low<wbr>Latency<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4318">speech-to-text/v1-generated.ts:4318</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4429">speech-to-text/v1-generated.ts:4429</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -439,11 +457,11 @@
 								results faster than previous-generation models. The <code>low_latency</code> parameter causes the models to produce results
 							even more quickly, though the results might be less accurate when the parameter is used.</p>
 						</div>
-						<p> The parameter is not available for previous-generation <code>Broadband</code> and <code>Narrowband</code> models. It is available only
-							for some next-generation models. For a list of next-generation models that support low latency, see <a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng#models-ng-supported">Supported
-								next-generation language
-						models</a>.</p>
+						<p> The parameter is not available for previous-generation <code>Broadband</code> and <code>Narrowband</code> models. It is available for
+						most next-generation models.</p>
 						<ul>
+							<li>For a list of next-generation models that support low latency, see [Supported next-generation language
+							models](<a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng#models-ng-supported">https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng#models-ng-supported</a>).</li>
 							<li>For more information about the <code>low_latency</code> parameter, see [Low
 							latency](<a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-interim#low-latency">https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-interim#low-latency</a>).</li>
 						</ul>
@@ -455,7 +473,7 @@
 					<div class="tsd-signature tsd-kind-icon">max<wbr>Alternatives<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4159">speech-to-text/v1-generated.ts:4159</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4273">speech-to-text/v1-generated.ts:4273</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -472,15 +490,24 @@
 					<div class="tsd-signature tsd-kind-icon">model<span class="tsd-signature-symbol">:</span> <a href="../enums/speechtotextv1.recognizeconstants.model.html" class="tsd-signature-type">Model</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4088">speech-to-text/v1-generated.ts:4088</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4202">speech-to-text/v1-generated.ts:4202</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The identifier of the model that is to be used for the recognition request. (<strong>Note:</strong> The model
-								<code>ar-AR_BroadbandModel</code> is deprecated; use <code>ar-MS_BroadbandModel</code> instead.) See <a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use">Using a model for speech
-							recognition</a>.</p>
+							<p>The model to use for speech recognition. If you omit the <code>model</code> parameter, the service uses the US English
+								<code>en-US_BroadbandModel</code> by default. (The model <code>ar-AR_BroadbandModel</code> is deprecated; use <code>ar-MS_BroadbandModel</code>
+							instead.)</p>
 						</div>
+						<p> <em>For IBM Cloud Pak for Data,</em> if you do not install the <code>en-US_BroadbandModel</code>, you must either specify a model
+						with the request or specify a new default model for your installation of the service.</p>
+						<p> <strong>See also:</strong></p>
+						<ul>
+							<li>[Using a model for speech
+							recognition](<a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use">https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use</a>)</li>
+							<li>[The default
+							model](<a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use#models-use-default">https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use#models-use-default</a>).</li>
+						</ul>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
@@ -489,7 +516,7 @@
 					<div class="tsd-signature tsd-kind-icon">profanity<wbr>Filter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4183">speech-to-text/v1-generated.ts:4183</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4297">speech-to-text/v1-generated.ts:4297</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -508,7 +535,7 @@
 					<div class="tsd-signature tsd-kind-icon">redaction<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4235">speech-to-text/v1-generated.ts:4235</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4344">speech-to-text/v1-generated.ts:4344</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -532,7 +559,7 @@
 					<div class="tsd-signature tsd-kind-icon">smart<wbr>Formatting<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4194">speech-to-text/v1-generated.ts:4194</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4308">speech-to-text/v1-generated.ts:4308</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -553,7 +580,7 @@
 					<div class="tsd-signature tsd-kind-icon">speaker<wbr>Labels<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4206">speech-to-text/v1-generated.ts:4206</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4320">speech-to-text/v1-generated.ts:4320</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -578,7 +605,7 @@
 					<div class="tsd-signature tsd-kind-icon">speech<wbr>Detector<wbr>Sensitivity<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4288">speech-to-text/v1-generated.ts:4288</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4398">speech-to-text/v1-generated.ts:4398</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -594,7 +621,8 @@
 							<li><p>0.5 (the default) provides a reasonable compromise for the level of sensitivity.</p>
 							</li>
 							<li><p>1.0 suppresses no audio (speech detection sensitivity is disabled).</p>
-								<p>The values increase on a monotonic curve.</p>
+								<p>The values increase on a monotonic curve. Specifying one or two decimal places of precision (for example,
+								<code>0.55</code>) is typically more than sufficient.</p>
 								<p>The parameter is supported with all next-generation models and with most previous-generation models. See [Speech
 									detector
 									sensitivity](<a href="https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#detection-parameters-sensitivity">https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#detection-parameters-sensitivity</a>)
@@ -610,7 +638,7 @@
 					<div class="tsd-signature tsd-kind-icon">split<wbr>Transcript<wbr>AtPhrase<wbr>End<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4270">speech-to-text/v1-generated.ts:4270</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4379">speech-to-text/v1-generated.ts:4379</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -632,7 +660,7 @@
 					<div class="tsd-signature tsd-kind-icon">timestamps<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4175">speech-to-text/v1-generated.ts:4175</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4289">speech-to-text/v1-generated.ts:4289</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -648,7 +676,7 @@
 					<div class="tsd-signature tsd-kind-icon">word<wbr>Alternatives<wbr>Threshold<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4166">speech-to-text/v1-generated.ts:4166</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4280">speech-to-text/v1-generated.ts:4280</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -667,7 +695,7 @@
 					<div class="tsd-signature tsd-kind-icon">word<wbr>Confidence<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/1b67d36/speech-to-text/v1-generated.ts#L4171">speech-to-text/v1-generated.ts:4171</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/8cce07c/speech-to-text/v1-generated.ts#L4285">speech-to-text/v1-generated.ts:4285</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -750,11 +778,11 @@
 									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="speechtotextv1.recognizeparams.html#contenttype" class="tsd-kind-icon">content<wbr>Type</a>
+										<a href="speechtotextv1.recognizeparams.html#characterinsertionbias" class="tsd-kind-icon">character<wbr>Insertion<wbr>Bias</a>
 									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
-										<a href="speechtotextv1.recognizeparams.html#customizationid" class="tsd-kind-icon">customization<wbr>Id</a>
+										<a href="speechtotextv1.recognizeparams.html#contenttype" class="tsd-kind-icon">content<wbr>Type</a>
 									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
