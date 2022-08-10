@@ -108,7 +108,7 @@
 					<div class="tsd-signature tsd-kind-icon">customization<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L2016">text-to-speech/v1-generated.ts:2016</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L2075">text-to-speech/v1-generated.ts:2075</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -127,7 +127,7 @@
 					<div class="tsd-signature tsd-kind-icon">format<span class="tsd-signature-symbol">:</span> <a href="../enums/texttospeechv1.getpronunciationconstants.format.html" class="tsd-signature-type">Format</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L2009">text-to-speech/v1-generated.ts:2009</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L2068">text-to-speech/v1-generated.ts:2068</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -143,7 +143,7 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">OutgoingHttpHeaders</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L2017">text-to-speech/v1-generated.ts:2017</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L2076">text-to-speech/v1-generated.ts:2076</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -153,7 +153,7 @@
 					<div class="tsd-signature tsd-kind-icon">text<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L2001">text-to-speech/v1-generated.ts:2001</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L2053">text-to-speech/v1-generated.ts:2053</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -168,14 +168,19 @@
 					<div class="tsd-signature tsd-kind-icon">voice<span class="tsd-signature-symbol">:</span> <a href="../enums/texttospeechv1.getpronunciationconstants.voice.html" class="tsd-signature-type">Voice</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L2005">text-to-speech/v1-generated.ts:2005</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L2064">text-to-speech/v1-generated.ts:2064</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>A voice that specifies the language in which the pronunciation is to be returned. All voices for the same
-							language (for example, <code>en-US</code>) return the same translation.</p>
+							<p>A voice that specifies the language in which the pronunciation is to be returned. If you omit the <code>voice</code>
+								parameter, the service uses the US English <code>en-US_MichaelV3Voice</code> by default. All voices for the same language
+							(for example, <code>en-US</code>) return the same translation.</p>
 						</div>
+						<p> <em>For IBM Cloud Pak for Data,</em> if you do not install the <code>en-US_MichaelV3Voice</code>, you must either specify a voice
+						with the request or specify a new default voice for your installation of the service.</p>
+						<p> <strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#specify-voice-default">The default
+						voice</a>.</p>
 					</div>
 				</section>
 			</section>

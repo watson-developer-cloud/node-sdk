@@ -68,7 +68,7 @@
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
 						<p>The IBM Watson&trade; Text to Speech service provides APIs that use IBM&#39;s speech-synthesis capabilities to synthesize
-							text into natural-sounding speech in a variety of languages, dialects, and voices. The service supports at least one
+							text into natural-sounding speech in a variety of languages, dialects, and voices.  The service supports at least one
 							male or female voice, sometimes both, for each language. The audio is streamed back to the client with minimal delay.
 						interfaces</p>
 					</div>
@@ -85,6 +85,12 @@
 					<p>The service also offers a Tune by Example feature that lets you define custom prompts. You can also define speaker
 						models to improve the quality of your custom prompts. The service support custom prompts only for US English custom
 					models and voices.</p>
+					<p>Effective 31 March 2022, all neural voices are deprecated. The deprecated voices remain available to existing users
+						until 31 March 2023, when they will be removed from the service and the documentation. The neural voices are
+						supported only for IBM Cloud; they are not available for IBM Cloud Pak for Data. All enhanced neural voices remain
+						available to all users. For more information, see the <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-31march2022">31 March 2022 service
+						update</a> in
+					the release notes for {{site.data.keyword.texttospeechshort}} for {{site.data.keyword.cloud_notm}}.{: deprecated}</p>
 					<p>API Version: 1.0.0
 					See: <a href="https://cloud.ibm.com/docs/text-to-speech">https://cloud.ibm.com/docs/text-to-speech</a></p>
 				</div>
@@ -164,6 +170,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#listspeakermodels" class="tsd-kind-icon">list<wbr>Speaker<wbr>Models</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#listvoices" class="tsd-kind-icon">list<wbr>Voices</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#listwords" class="tsd-kind-icon">list<wbr>Words</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="texttospeechv1.html#setdefaultheaders" class="tsd-kind-icon">set<wbr>Default<wbr>Headers</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="texttospeechv1.html#setenablegzipcompression" class="tsd-kind-icon">set<wbr>Enable<wbr>Gzip<wbr>Compression</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="texttospeechv1.html#setserviceurl" class="tsd-kind-icon">set<wbr>Service<wbr>Url</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="texttospeechv1.html#synthesize" class="tsd-kind-icon">synthesize</a></li>
@@ -186,7 +193,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides BaseService.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L61">text-to-speech/v1-generated.ts:61</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L68">text-to-speech/v1-generated.ts:68</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -230,7 +237,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#default_service_name">DEFAULT_SERVICE_NAME</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L61">text-to-speech/v1-generated.ts:61</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L68">text-to-speech/v1-generated.ts:68</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -241,7 +248,7 @@
 					<aside class="tsd-sources">
 						<p>Overrides <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#default_service_url">DEFAULT_SERVICE_URL</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L59">text-to-speech/v1-generated.ts:59</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L66">text-to-speech/v1-generated.ts:66</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -258,7 +265,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L1266">text-to-speech/v1-generated.ts:1266</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L1320">text-to-speech/v1-generated.ts:1320</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -423,7 +430,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L942">text-to-speech/v1-generated.ts:942</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L996">text-to-speech/v1-generated.ts:996</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -542,7 +549,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L794">text-to-speech/v1-generated.ts:794</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L848">text-to-speech/v1-generated.ts:848</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -640,7 +647,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L454">text-to-speech/v1-generated.ts:454</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L502">text-to-speech/v1-generated.ts:502</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -652,9 +659,12 @@
 								are used to create it.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsCreate">Creating a custom
 								model</a>.</p>
-								<p><strong>Note:</strong> The Arabic, Chinese, Czech, Dutch (Belgian and Netherlands), Australian English, Korean, and Swedish
-									languages and voices are supported only for IBM Cloud; they are deprecated for IBM Cloud Pak for Data. Also, the
-								<code>ar-AR</code> language identifier cannot be used to create a custom model; use the <code>ar-MS</code> identifier instead.</p>
+								<p><strong>Note:</strong> Effective 31 March 2022, all neural voices are deprecated. The deprecated voices remain available to
+									existing users until 31 March 2023, when they will be removed from the service and the documentation. The neural
+									voices are supported only for IBM Cloud; they are not available for IBM Cloud Pak for Data. All enhanced neural
+									voices remain available to all users. For more information, see the <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-31march2022">31 March 2022 service
+									update</a> in
+								the release notes.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<table class="params">
@@ -736,7 +746,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L1548">text-to-speech/v1-generated.ts:1548</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L1608">text-to-speech/v1-generated.ts:1608</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -856,7 +866,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L712">text-to-speech/v1-generated.ts:712</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L766">text-to-speech/v1-generated.ts:766</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -932,7 +942,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L1401">text-to-speech/v1-generated.ts:1401</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L1455">text-to-speech/v1-generated.ts:1455</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1018,7 +1028,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L1676">text-to-speech/v1-generated.ts:1676</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L1736">text-to-speech/v1-generated.ts:1736</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1100,7 +1110,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L1741">text-to-speech/v1-generated.ts:1741</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L1801">text-to-speech/v1-generated.ts:1801</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1181,7 +1191,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L1067">text-to-speech/v1-generated.ts:1067</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L1121">text-to-speech/v1-generated.ts:1121</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1264,7 +1274,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#disableretries">disableRetries</a></p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:109</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/es/lib/base-service.d.ts:116</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1287,7 +1297,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#enableretries">enableRetries</a></p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:105</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/es/lib/base-service.d.ts:112</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1333,7 +1343,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#getauthenticator">getAuthenticator</a></p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:82</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/es/lib/base-service.d.ts:83</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1355,7 +1365,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L655">text-to-speech/v1-generated.ts:655</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L709">text-to-speech/v1-generated.ts:709</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1433,7 +1443,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L1337">text-to-speech/v1-generated.ts:1337</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L1391">text-to-speech/v1-generated.ts:1391</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1518,7 +1528,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#gethttpclient">getHttpClient</a></p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:99</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/es/lib/base-service.d.ts:106</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1541,7 +1551,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L378">text-to-speech/v1-generated.ts:378</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L427">text-to-speech/v1-generated.ts:427</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1551,11 +1561,14 @@
 								<p>Gets the phonetic pronunciation for the specified word. You can request the pronunciation for a specific format.
 									You can also request the pronunciation for a specific voice to see the default translation for the language of that
 								voice or for a specific custom model to see the translation for that model.</p>
+								<p><strong>Note:</strong> Effective 31 March 2022, all neural voices are deprecated. The deprecated voices remain available to
+									existing users until 31 March 2023, when they will be removed from the service and the documentation. The neural
+									voices are supported only for IBM Cloud; they are not available for IBM Cloud Pak for Data. All enhanced neural
+									voices remain available to all users. For more information, see the <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-31march2022">31 March 2022 service
+									update</a> in
+								the release notes.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuWordsQueryLanguage">Querying a word from a
 								language</a>.</p>
-								<p><strong>Note:</strong> The Arabic, Chinese, Czech, Dutch (Belgian and Netherlands), Australian English, Korean, and Swedish
-									languages and voices are supported only for IBM Cloud; they are deprecated for IBM Cloud Pak for Data. Also, the
-								<code>ar-AR_OmarVoice</code> voice is deprecated; use the <code>ar-MS_OmarVoice</code> voice instead.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<table class="params">
@@ -1627,8 +1640,9 @@
 															<span class="tsd-signature-type">string</span>
 														</td>
 														<td>Optional</td>
-														<td>A voice that specifies the language in which the pronunciation is to be returned. All voices for the same
-														language (for example, &#x60;en-US&#x60;) return the same translation.</td>
+														<td>A voice that specifies the language in which the pronunciation is to be returned. If you omit the &#x60;voice&#x60;
+															parameter, the service uses the US English &#x60;en-US_MichaelV3Voice&#x60; by default. All voices for the same language
+														(for example, &#x60;en-US&#x60;) return the same translation.</td>
 													</tr>
 												</tbody>
 											</table>
@@ -1650,7 +1664,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L1612">text-to-speech/v1-generated.ts:1612</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L1672">text-to-speech/v1-generated.ts:1672</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1730,7 +1744,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L164">text-to-speech/v1-generated.ts:164</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L187">text-to-speech/v1-generated.ts:187</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1743,9 +1757,12 @@
 								method.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#listVoice">Listing a specific
 								voice</a>.</p>
-								<p><strong>Note:</strong> The Arabic, Chinese, Czech, Dutch (Belgian and Netherlands), Australian English, Korean, and Swedish
-									languages and voices are supported only for IBM Cloud; they are deprecated for IBM Cloud Pak for Data. Also, the
-								<code>ar-AR_OmarVoice</code> voice is deprecated; use the <code>ar-MS_OmarVoice</code> voice instead.</p>
+								<p><strong>Note:</strong> Effective 31 March 2022, all neural voices are deprecated. The deprecated voices remain available to
+									existing users until 31 March 2023, when they will be removed from the service and the documentation. The neural
+									voices are supported only for IBM Cloud; they are not available for IBM Cloud Pak for Data. All enhanced neural
+									voices remain available to all users. For more information, see the <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-31march2022">31 March 2022 service
+									update</a> in
+								the release notes.</p>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<table class="params">
@@ -1821,7 +1838,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L1008">text-to-speech/v1-generated.ts:1008</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L1062">text-to-speech/v1-generated.ts:1062</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1903,7 +1920,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L516">text-to-speech/v1-generated.ts:516</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L564">text-to-speech/v1-generated.ts:564</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1984,7 +2001,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L1131">text-to-speech/v1-generated.ts:1131</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L1185">text-to-speech/v1-generated.ts:1185</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2064,7 +2081,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L1461">text-to-speech/v1-generated.ts:1461</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L1515">text-to-speech/v1-generated.ts:1515</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2135,7 +2152,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L110">text-to-speech/v1-generated.ts:110</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L124">text-to-speech/v1-generated.ts:124</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2145,6 +2162,12 @@
 								<p>Lists all voices available for use with the service. The information includes the name, language, gender, and other
 									details about the voice. The ordering of the list of voices can change from call to call; do not rely on an
 								alphabetized or static list of voices. To see information about a specific voice, use the <a href="#getvoice">Get a voice</a>.</p>
+								<p><strong>Note:</strong> Effective 31 March 2022, all neural voices are deprecated. The deprecated voices remain available to
+									existing users until 31 March 2023, when they will be removed from the service and the documentation. The neural
+									voices are supported only for IBM Cloud; they are not available for IBM Cloud Pak for Data. All enhanced neural
+									voices remain available to all users. For more information, see the <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-31march2022">31 March 2022 service
+									update</a> in
+								the release notes.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#listVoices">Listing all available
 								voices</a>.</p>
 							</div>
@@ -2205,7 +2228,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L858">text-to-speech/v1-generated.ts:858</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L912">text-to-speech/v1-generated.ts:912</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2273,6 +2296,52 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="setdefaultheaders" class="tsd-anchor"></a>
+					<h3>set<wbr>Default<wbr>Headers</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Default<wbr>Headers<span class="tsd-signature-symbol">(</span>headers<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">OutgoingHttpHeaders</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#setdefaultheaders">setDefaultHeaders</a></p>
+								<ul>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/es/lib/base-service.d.ts:95</li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Set the HTTP headers to be sent in every request.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<table class="params">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Type</th>
+										<th>Attribute</th>
+										<th class="last">Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td><code>headers</code></td>
+										<td><span class="tsd-signature-type">OutgoingHttpHeaders</span></td>
+										<td></td>
+										<td>
+											<p>The map of headers to include in requests.
+											</p>
+											<p></p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="setenablegzipcompression" class="tsd-anchor"></a>
 					<h3>set<wbr>Enable<wbr>Gzip<wbr>Compression</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -2283,7 +2352,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#setenablegzipcompression">setEnableGzipCompression</a></p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:94</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/es/lib/base-service.d.ts:101</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2329,7 +2398,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="authorizationv1.html">AuthorizationV1</a>.<a href="authorizationv1.html#setserviceurl">setServiceUrl</a></p>
 								<ul>
-									<li>Defined in node_modules/ibm-cloud-sdk-core/lib/base-service.d.ts:88</li>
+									<li>Defined in node_modules/ibm-cloud-sdk-core/es/lib/base-service.d.ts:89</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2374,7 +2443,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L296">text-to-speech/v1-generated.ts:296</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L334">text-to-speech/v1-generated.ts:334</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2388,17 +2457,20 @@
 								array of bytes.</p>
 								<p><strong>See also:</strong> <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-usingHTTP#usingHTTP">The HTTP
 								interface</a>.</p>
-								<p><strong>Note:</strong> The Arabic, Chinese, Czech, Dutch (Belgian and Netherlands), Australian English, Korean, and Swedish
-									languages and voices are supported only for IBM Cloud; they are deprecated for IBM Cloud Pak for Data. Also, the
-								<code>ar-AR_OmarVoice</code> voice is deprecated; use the <code>ar-MS_OmarVoice</code> voice instead.</p>
+								<p><strong>Note:</strong> Effective 31 March 2022, all neural voices are deprecated. The deprecated voices remain available to
+									existing users until 31 March 2023, when they will be removed from the service and the documentation. The neural
+									voices are supported only for IBM Cloud; they are not available for IBM Cloud Pak for Data. All enhanced neural
+									voices remain available to all users. For more information, see the <a href="https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-31march2022">31 March 2022 service
+									update</a> in
+								the release notes.</p>
 								<a href="#audio-formats-accept-types" id="audio-formats-accept-types" style="color: inherit; text-decoration: none;">
 									<h3>Audio formats (accept types)</h3>
 								</a>
 								<p> The service can return audio in the following formats (MIME types).</p>
 								<ul>
 									<li>Where indicated, you can optionally specify the sampling rate (<code>rate</code>) of the audio. You must specify a sampling
-										rate for the <code>audio/l16</code> and <code>audio/mulaw</code> formats. A specified sampling rate must lie in the range of 8 kHz to 192
-									kHz. Some formats restrict the sampling rate to certain values, as noted.</li>
+										rate for the <code>audio/alaw</code>, <code>audio/l16</code>,  and <code>audio/mulaw</code> formats. A specified sampling rate must lie in the range
+									of 8 kHz to 192 kHz. Some formats restrict the sampling rate to certain values, as noted.</li>
 									<li>For the <code>audio/l16</code> format, you can optionally specify the endianness (<code>endianness</code>) of the audio:
 									<code>endianness=big-endian</code> or <code>endianness=little-endian</code>.</li>
 								</ul>
@@ -2406,6 +2478,7 @@
 									omit an audio format altogether, the service returns the audio in Ogg format with the Opus codec
 								(<code>audio/ogg;codecs=opus</code>). The service always returns single-channel audio.</p>
 								<ul>
+									<li><code>audio/alaw</code> - You must specify the <code>rate</code> of the audio.</li>
 									<li><code>audio/basic</code> - The service returns audio with a sampling rate of 8000 Hz.</li>
 									<li><code>audio/flac</code> - You can optionally specify the <code>rate</code> of the audio. The default sampling rate is 22,050 Hz.</li>
 									<li><code>audio/l16</code> - You must specify the <code>rate</code> of the audio. You can optionally specify the <code>endianness</code> of the audio.
@@ -2501,19 +2574,29 @@
 														<td></td>
 													</tr>
 													<tr>
+														<td><code>spellOutMode</code></td>
+														<td><a href="../enums/texttospeechv1.synthesizeconstants.spelloutmode.html" class="tsd-signature-type">SpellOutMode</a>
+															<span class="tsd-signature-symbol"> | </span>
+															<span class="tsd-signature-type">string</span>
+														</td>
+														<td>Optional</td>
+														<td>For German voices,* indicates how the service is to spell out strings of individual letters. To indicate
+															the pace of the spelling, specify one of the following values:
+															* &#x60;default&#x60; - The service reads the characters at the rate at which it synthesizes speech for the request. You
+															can also omit the parameter entirely to achieve the default behavior.
+															* &#x60;singles&#x60; - The service reads the characters one at a time, with a brief pause between each character.
+															* &#x60;pairs&#x60; - The service reads the characters two at a time, with a brief pause between each pair.
+														* &#x60;triples&#x60; - The service reads the characters three at a time, with a brief pause between each triplet.</td>
+													</tr>
+													<tr>
 														<td><code>voice</code></td>
 														<td><a href="../enums/texttospeechv1.synthesizeconstants.voice.html" class="tsd-signature-type">Voice</a>
 															<span class="tsd-signature-symbol"> | </span>
 															<span class="tsd-signature-type">string</span>
 														</td>
 														<td>Optional</td>
-														<td>The voice to use for synthesis. If you omit the &#x60;voice&#x60; parameter, the service uses a default voice, which
-															depends on the version of the service that you are using:
-															* _For IBM Cloud,_ the service always uses the US English &#x60;en-US_MichaelV3Voice&#x60; by default.
-															* _For IBM Cloud Pak for Data,_ the default voice depends on the voices that you installed. If you installed the
-															_enhanced neural voices_, the service uses the US English &#x60;en-US_MichaelV3Voice&#x60; by default; if that voice is
-															not installed, you must specify a voice. If you installed the _neural voices_, the service always uses the
-														Australian English &#x60;en-AU_MadisonVoice&#x60; by default.</td>
+														<td>The voice to use for speech synthesis. If you omit the &#x60;voice&#x60; parameter, the service uses the US English
+														&#x60;en-US_MichaelV3Voice&#x60; by default.</td>
 													</tr>
 												</tbody>
 											</table>
@@ -2535,7 +2618,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/text-to-speech/v1-generated.ts#L588">text-to-speech/v1-generated.ts:588</a></li>
+									<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/text-to-speech/v1-generated.ts#L642">text-to-speech/v1-generated.ts:642</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2841,6 +2924,10 @@
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="texttospeechv1.html#listwords" class="tsd-kind-icon">list<wbr>Words</a>
+							</li>
+							<!-- Unless the url is part of the exclusion list, render them -->
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="texttospeechv1.html#setdefaultheaders" class="tsd-kind-icon">set<wbr>Default<wbr>Headers</a>
 							</li>
 							<!-- Unless the url is part of the exclusion list, render them -->
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">

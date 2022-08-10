@@ -106,7 +106,7 @@
 					<div class="tsd-signature tsd-kind-icon">display_<wbr>as<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/speech-to-text/v1-generated.ts#L5981">speech-to-text/v1-generated.ts:5981</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/speech-to-text/v1-generated.ts#L6158">speech-to-text/v1-generated.ts:6158</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -115,6 +115,8 @@
 								the word to have a spelling that is different from its usual representation or from its spelling in corpora
 							training data.</p>
 						</div>
+						<p> _For custom models that are based on next-generation models_, the service uses the spelling of the word as the
+						display-as value if you omit the field.</p>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
@@ -123,17 +125,17 @@
 					<div class="tsd-signature tsd-kind-icon">sounds_<wbr>like<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/speech-to-text/v1-generated.ts#L5976">speech-to-text/v1-generated.ts:5976</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/speech-to-text/v1-generated.ts#L6150">speech-to-text/v1-generated.ts:6150</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>_For a custom model that is based on a previous-generation model_, an array of sounds-like pronunciations
-								for the custom word. Specify how words that are difficult to pronounce, foreign words, acronyms, and so on can
-							be pronounced by users.</p>
+							<p>As array of sounds-like pronunciations for the custom word. Specify how words that are difficult to
+							pronounce, foreign words, acronyms, and so on can be pronounced by users.</p>
 							<ul>
-								<li>For a word that is not in the service&#39;s base vocabulary, omit the parameter to have the service automatically
-								generate a sounds-like pronunciation for the word.</li>
+								<li>_For custom models that are based on previous-generation models_, for a word that is not in the service&#39;s base
+									vocabulary, omit the parameter to have the service automatically generate a sounds-like pronunciation for the
+								word.</li>
 								<li>For a word that is in the service&#39;s base vocabulary, use the parameter to specify additional pronunciations
 									for the word. You cannot override the default pronunciation of a word; pronunciations you add augment the
 								pronunciation from the base vocabulary.</li>
@@ -141,8 +143,6 @@
 						</div>
 						<p> A word can have at most five sounds-like pronunciations. A pronunciation can include at most 40 characters not
 						including spaces.</p>
-						<p> _For a custom model that is based on a next-generation model_, omit this field. Custom models based on
-						next-generation models do not support the <code>sounds_like</code> field. The service ignores the field.</p>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
@@ -151,7 +151,7 @@
 					<div class="tsd-signature tsd-kind-icon">word<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/speech-to-text/v1-generated.ts#L5960">speech-to-text/v1-generated.ts:5960</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/speech-to-text/v1-generated.ts#L6137">speech-to-text/v1-generated.ts:6137</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">

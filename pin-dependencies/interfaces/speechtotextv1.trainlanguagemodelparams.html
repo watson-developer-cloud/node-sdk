@@ -93,6 +93,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.trainlanguagemodelparams.html#customizationid" class="tsd-kind-icon">customization<wbr>Id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.trainlanguagemodelparams.html#customizationweight" class="tsd-kind-icon">customization<wbr>Weight</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.trainlanguagemodelparams.html#headers" class="tsd-kind-icon">headers</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.trainlanguagemodelparams.html#strict" class="tsd-kind-icon">strict</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="speechtotextv1.trainlanguagemodelparams.html#wordtypetoadd" class="tsd-kind-icon">word<wbr>Type<wbr>ToAdd</a></li>
 							</ul>
 						</section>
@@ -107,7 +108,7 @@
 					<div class="tsd-signature tsd-kind-icon">customization<wbr>Id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/speech-to-text/v1-generated.ts#L5041">speech-to-text/v1-generated.ts:5041</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/speech-to-text/v1-generated.ts#L5206">speech-to-text/v1-generated.ts:5206</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -123,7 +124,7 @@
 					<div class="tsd-signature tsd-kind-icon">customization<wbr>Weight<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/speech-to-text/v1-generated.ts#L5067">speech-to-text/v1-generated.ts:5067</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/speech-to-text/v1-generated.ts#L5232">speech-to-text/v1-generated.ts:5232</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -147,9 +148,27 @@
 					<div class="tsd-signature tsd-kind-icon">headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">OutgoingHttpHeaders</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/speech-to-text/v1-generated.ts#L5068">speech-to-text/v1-generated.ts:5068</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/speech-to-text/v1-generated.ts#L5239">speech-to-text/v1-generated.ts:5239</a></li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="strict" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> strict</h3>
+					<div class="tsd-signature tsd-kind-icon">strict<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/speech-to-text/v1-generated.ts#L5238">speech-to-text/v1-generated.ts:5238</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>If <code>false</code>, allows training of the custom language model to proceed as long as the model contains at least
+								one valid resource. The method returns an array of <code>TrainingWarning</code> objects that lists any invalid resources.
+								By default (<code>true</code>), training of a custom language model fails (status code 400) if the model contains one or
+							more invalid resources (corpus files, grammar files, or custom words).</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="wordtypetoadd" class="tsd-anchor"></a>
@@ -157,7 +176,7 @@
 					<div class="tsd-signature tsd-kind-icon">word<wbr>Type<wbr>ToAdd<span class="tsd-signature-symbol">:</span> <a href="../enums/speechtotextv1.trainlanguagemodelconstants.wordtypetoadd.html" class="tsd-signature-type">WordTypeToAdd</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/5b7ce67/speech-to-text/v1-generated.ts#L5052">speech-to-text/v1-generated.ts:5052</a></li>
+							<li>Defined in <a href="https://github.com/watson-developer-cloud/node-sdk/blob/a868354/speech-to-text/v1-generated.ts#L5217">speech-to-text/v1-generated.ts:5217</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -236,6 +255,10 @@
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
 										<a href="speechtotextv1.trainlanguagemodelparams.html#headers" class="tsd-kind-icon">headers</a>
+									</li>
+									<!-- Unless the url is part of the exclusion list, render them -->
+									<li class=" tsd-kind-property tsd-parent-kind-interface">
+										<a href="speechtotextv1.trainlanguagemodelparams.html#strict" class="tsd-kind-icon">strict</a>
 									</li>
 									<!-- Unless the url is part of the exclusion list, render them -->
 									<li class=" tsd-kind-property tsd-parent-kind-interface">
