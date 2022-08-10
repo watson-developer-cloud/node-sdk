@@ -1,3 +1,17 @@
+# [7.1.0](https://github.com/watson-developer-cloud/node-sdk/compare/v7.0.0...v7.1.0) (2022-08-10)
+
+
+### Features
+
+* **assistant-v1:** update models and add new methods ([e320105](https://github.com/watson-developer-cloud/node-sdk/commit/e320105607adcbd8700ebba16872d84de2fb6c9e))
+* **assistant-v2:** update models and add new methods ([0a66745](https://github.com/watson-developer-cloud/node-sdk/commit/0a667450dcc10d0794a198d6bcd72f0edd40930e))
+* **discovery-v2:** update models and add several new methods ([d8bf765](https://github.com/watson-developer-cloud/node-sdk/commit/d8bf765a9eed0645200e5e941c02128b8df6a67f))
+* **nlu:** add trainingParameters parameter ([6e3f676](https://github.com/watson-developer-cloud/node-sdk/commit/6e3f67688d2d9cb650e3c4a2c269d5a54f3d5626))
+* **package.json:** upgrade bm-cloud-sdk-core ([ab019de](https://github.com/watson-developer-cloud/node-sdk/commit/ab019de01ea3c6a16a11e324ab3461ad53931a78))
+* **stt:** update parameters ([3be4085](https://github.com/watson-developer-cloud/node-sdk/commit/3be40857df486670ef405d6aba23683b6527a469))
+* **tts:** add parameters ([a3ed589](https://github.com/watson-developer-cloud/node-sdk/commit/a3ed58939391d74eeccdda12397ff6361ce6ca60))
+* **wss:** add new websocket params ([8cce07c](https://github.com/watson-developer-cloud/node-sdk/commit/8cce07c8aed80c3b443bf4a650071e06f0ff274e))
+
 # [7.0.0](https://github.com/watson-developer-cloud/node-sdk/compare/v6.2.2...v7.0.0) (2022-03-21)
 
 
