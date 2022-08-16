@@ -93,19 +93,6 @@
 					<h3>Updating endpoint URLs from watsonplatform.net</h3>
 				</a>
 				<p>Watson API endpoint URLs at watsonplatform.net are changing and will not work after 26 May 2021. Update your calls to use the newer endpoint URLs. For more information, see <a href="https://cloud.ibm.com/docs/watson?topic=watson-endpoint-change">https://cloud.ibm.com/docs/watson?topic=watson-endpoint-change</a>.</p>
-				<a href="#personality-insights-deprecation" id="personality-insights-deprecation" style="color: inherit; text-decoration: none;">
-					<h3>Personality Insights deprecation</h3>
-				</a>
-				<p>IBM Watson™ Personality Insights is discontinued. For a period of one year from 1 December 2020, you will still be able to use Watson Personality Insights. However, as of 1 December 2021, the offering will no longer be available.</p>
-				<p>As an alternative, we encourage you to consider migrating to IBM Watson™ <a href="https://cloud.ibm.com/docs/natural-language-understanding">Natural Language Understanding</a>, a service on IBM Cloud® that uses deep learning to extract data and insights from text such as keywords, categories, sentiment, emotion, and syntax to provide insights for your business or industry. For more information, see About Natural Language Understanding.</p>
-				<a href="#visual-recognition-deprecation" id="visual-recognition-deprecation" style="color: inherit; text-decoration: none;">
-					<h3>Visual Recognition deprecation</h3>
-				</a>
-				<p>IBM Watson™ Visual Recognition is discontinued. Existing instances are supported until 1 December 2021, but as of 7 January 2021, you can&#39;t create instances. Any instance that is provisioned on 1 December 2021 will be deleted.</p>
-				<a href="#compare-and-comply-deprecation" id="compare-and-comply-deprecation" style="color: inherit; text-decoration: none;">
-					<h3>Compare and Comply deprecation</h3>
-				</a>
-				<p>IBM Watson™ Compare and Comply is discontinued. Existing instances are supported until 30 November 2021, but as of 1 December 2020, you can&#39;t create instances. Any instance that exists on 30 November 2021 will be deleted. Consider migrating to Watson Discovery Premium on IBM Cloud for your Compare and Comply use cases. To start the migration process, visit <a href="https://ibm.biz/contact-wdc-premium">https://ibm.biz/contact-wdc-premium</a>.</p>
 				<a href="#supporting-node-versions-10" id="supporting-node-versions-10" style="color: inherit; text-decoration: none;">
 					<h3>Supporting Node versions 10+</h3>
 				</a>
@@ -512,36 +499,6 @@ assistant.message(
   .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
     <span class="hljs-built_in">console</span>.log(err);
   });</code></pre>
-				<a href="#compare-comply" id="compare-comply" style="color: inherit; text-decoration: none;">
-					<h3>Compare Comply</h3>
-				</a>
-				<p><strong>IBM Watson™ Compare and Comply is discontinued. Existing instances are supported until 30 November 2021, but as of 1 December 2020, you can&#39;t create instances. Any instance that exists on 30 November 2021 will be deleted. Consider migrating to Watson Discovery Premium on IBM Cloud for your Compare and Comply use cases. To start the migration process, visit <a href="https://ibm.biz/contact-wdc-premium">https://ibm.biz/contact-wdc-premium</a>.</strong></p>
-				<p>Use the Compare Comply service to compare and classify documents.</p>
-				<pre><code class="language-js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>);
-<span class="hljs-keyword">const</span> CompareComplyV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;ibm-watson/compare-comply/v1&#x27;</span>);
-<span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;ibm-watson/auth&#x27;</span>);
-
-<span class="hljs-keyword">const</span> compareComply = <span class="hljs-keyword">new</span> CompareComplyV1({
-  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">&#x27;&lt;apikey&gt;&#x27;</span> }),
-  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">&#x27;https://api.us-south.compare-comply.watson.cloud.ibm.com&#x27;</span>,
-  <span class="hljs-attr">version</span>: <span class="hljs-string">&#x27;2018-12-06&#x27;</span>
-});
-
-compareComply.compareDocuments(
-  {
-      <span class="hljs-attr">file1</span>: fs.createReadStream(<span class="hljs-string">&#x27;&lt;path-to-file-1&gt;&#x27;</span>),
-      <span class="hljs-attr">file1Filename</span>: <span class="hljs-string">&#x27;&lt;filename-1&gt;&#x27;</span>,
-      <span class="hljs-attr">file1Label</span>: <span class="hljs-string">&#x27;file-1&#x27;</span>,
-      <span class="hljs-attr">file2</span>: fs.createReadStream(<span class="hljs-string">&#x27;&lt;path-to-file-2&gt;&#x27;</span>),
-      <span class="hljs-attr">file2Filename</span>: <span class="hljs-string">&#x27;&lt;filename-2&gt;&#x27;</span>,
-      <span class="hljs-attr">file2Label</span>: <span class="hljs-string">&#x27;file-2&#x27;</span>,
-  })
-  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(response.result, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
-  })
-  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
-    <span class="hljs-built_in">console</span>.log(err);
-  });</code></pre>
 				<a href="#discovery-v2" id="discovery-v2" style="color: inherit; text-decoration: none;">
 					<h3>Discovery v2</h3>
 				</a>
@@ -629,30 +586,6 @@ languageTranslator.identify(
   .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;error: &#x27;</span>, err);
   });</code></pre>
-				<a href="#natural-language-classifier" id="natural-language-classifier" style="color: inherit; text-decoration: none;">
-					<h3>Natural Language Classifier</h3>
-				</a>
-				<p>Use <a href="https://cloud.ibm.com/docs/natural-language-classifier/getting-started.html">Natural Language Classifier</a> service to create a classifier instance by providing a set of representative strings and a set of one or more correct classes for each as training. Then use the trained classifier to classify your new question for best matching answers or to retrieve next actions for your application.</p>
-				<pre><code class="language-js"><span class="hljs-keyword">const</span> NaturalLanguageClassifierV1 = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;ibm-watson/natural-language-classifier/v1&#x27;</span>);
-<span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;ibm-watson/auth&#x27;</span>);
-
-<span class="hljs-keyword">const</span> classifier = <span class="hljs-keyword">new</span> NaturalLanguageClassifierV1({
-  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">&#x27;&lt;apikey&gt;&#x27;</span> }),
-  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">&#x27;https://api.us-south.natural-language-classifier.watson.cloud.ibm.com&#x27;</span>
-});
-
-classifier.classify(
-  {
-    <span class="hljs-attr">text</span>: <span class="hljs-string">&#x27;Is it sunny?&#x27;</span>,
-    <span class="hljs-attr">classifierId</span>: <span class="hljs-string">&#x27;&lt;classifier-id&gt;&#x27;</span>
-  })
-  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(response.result, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
-  })
-  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;error: &#x27;</span>, err);
-  });</code></pre>
-				<p>See this <a href="https://github.com/watson-developer-cloud/node-sdk/blob/master/examples/natural_language_classifier.v1.js">example</a> to learn how to create a classifier.</p>
 				<a href="#natural-language-understanding" id="natural-language-understanding" style="color: inherit; text-decoration: none;">
 					<h3>Natural Language Understanding</h3>
 				</a>
@@ -674,35 +607,6 @@ nlu.analyze(
       <span class="hljs-attr">concepts</span>: {},
       <span class="hljs-attr">keywords</span>: {}
     }
-  })
-  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(response.result, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
-  })
-  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">&#x27;error: &#x27;</span>, err);
-  });</code></pre>
-				<a href="#personality-insights" id="personality-insights" style="color: inherit; text-decoration: none;">
-					<h3>Personality Insights</h3>
-				</a>
-				<p><strong>On 1 December 2021, Personality Insights will no longer be available.
-						Consider migrating to Watson Natural Language Understanding.
-				For more information, see <a href="https://github.com/watson-developer-cloud/node-sdk/tree/master#personality-insights-deprecation">https://github.com/watson-developer-cloud/node-sdk/tree/master#personality-insights-deprecation</a></strong></p>
-				<p>Analyze text in English and get a personality profile by using the
-				<a href="https://www.ibm.com/watson/services/personality-insights/">Personality Insights</a> service.</p>
-				<pre><code class="language-js"><span class="hljs-keyword">const</span> PersonalityInsightsV3 = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;ibm-watson/personality-insights/v3&#x27;</span>);
-<span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;ibm-watson/auth&#x27;</span>);
-
-<span class="hljs-keyword">const</span> personalityInsights = <span class="hljs-keyword">new</span> PersonalityInsightsV3({
-  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">&#x27;&lt;apikey&gt;&#x27;</span> }),
-  <span class="hljs-attr">version</span>: <span class="hljs-string">&#x27;2016-10-19&#x27;</span>,
-  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">&#x27;https://api.us-south.personality-insights.watson.cloud.ibm.com&#x27;</span>
-});
-
-personalityInsights.profile(
-  {
-    <span class="hljs-attr">content</span>: <span class="hljs-string">&#x27;Enter more than 100 unique words here...&#x27;</span>,
-    <span class="hljs-attr">contentType</span>: <span class="hljs-string">&#x27;text/plain&#x27;</span>,
-    <span class="hljs-attr">consumptionPreferences</span>: <span class="hljs-literal">true</span>
   })
   .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
     <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(response.result, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
@@ -783,86 +687,6 @@ textToSpeech
 textToSpeech.synthesizeUsingWebSocket(params);
 synthStream.pipe(fs.createWriteStream(<span class="hljs-string">&#x27;./audio.ogg&#x27;</span>));
 <span class="hljs-comment">// see more information in examples/text_to_speech_websocket.js</span></code></pre>
-				<a href="#tone-analyzer" id="tone-analyzer" style="color: inherit; text-decoration: none;">
-					<h3>Tone Analyzer</h3>
-				</a>
-				<p>Use the <a href="https://www.ibm.com/watson/services/tone-analyzer/">Tone Analyzer</a> service to analyze the
-				emotion, writing and social tones of a text.</p>
-				<pre><code class="language-js"><span class="hljs-keyword">const</span> ToneAnalyzerV3 = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;ibm-watson/tone-analyzer/v3&#x27;</span>);
-<span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;ibm-watson/auth&#x27;</span>);
-
-<span class="hljs-keyword">const</span> toneAnalyzer = <span class="hljs-keyword">new</span> ToneAnalyzerV3({
-  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">&#x27;&lt;apikey&gt;&#x27;</span> }),
-  <span class="hljs-attr">version</span>: <span class="hljs-string">&#x27;2016-05-19&#x27;</span>,
-  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">&#x27;https://api.us-south.tone-analyzer.watson.cloud.ibm.com&#x27;</span>
-});
-
-toneAnalyzer.tone(
-  {
-    <span class="hljs-attr">toneInput</span>: <span class="hljs-string">&#x27;Greetings from Watson Developer Cloud!&#x27;</span>,
-    <span class="hljs-attr">contentType</span>: <span class="hljs-string">&#x27;text/plain&#x27;</span>
-  })
-  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(response.result, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
-  })
-  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
-    <span class="hljs-built_in">console</span>.log(err);
-  });</code></pre>
-				<a href="#visual-recognition-v4" id="visual-recognition-v4" style="color: inherit; text-decoration: none;">
-					<h3>Visual Recognition v4</h3>
-				</a>
-				<p><strong>IBM Watson™ Visual Recognition is discontinued. Existing instances are supported until 1 December 2021, but as of 7 January 2021, you can&#39;t create instances. Any instance that is provisioned on 1 December 2021 will be deleted.</strong></p>
-				<p>Use the <a href="https://www.ibm.com/watson/services/visual-recognition/">Visual Recognition</a> service to recognize the
-				following picture.</p>
-				<pre><code class="language-js"><span class="hljs-keyword">const</span> VisualRecognitionV4 = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;ibm-watson/visual-recognition/v4&#x27;</span>);
-<span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;ibm-watson/auth&#x27;</span>);
-
-<span class="hljs-keyword">const</span> visualRecognition = <span class="hljs-keyword">new</span> VisualRecognitionV4({
-  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">&#x27;https://api.us-south.visual-recognition.watson.cloud.ibm.com&#x27;</span>,
-  <span class="hljs-attr">version</span>: <span class="hljs-string">&#x27;2019-02-11&#x27;</span>,
-  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">&#x27;&lt;apikey&gt;&#x27;</span> }),
-});
-
-<span class="hljs-keyword">const</span> params = {
-  <span class="hljs-attr">collectionIds</span>: [<span class="hljs-string">&#x27;&lt;collectionId1&#x27;</span>,<span class="hljs-string">&#x27;collectionId2&#x27;</span>,<span class="hljs-string">&#x27;collectionId3&#x27;</span>],
-  <span class="hljs-attr">features</span>: <span class="hljs-string">&#x27;objects&#x27;</span>
-};
-
-visualRecognition.classify(params)
-  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
-    <span class="hljs-keyword">const</span> image = response.result.images[<span class="hljs-number">0</span>]
-    <span class="hljs-keyword">const</span> detectedObjects = image.objects.collections[<span class="hljs-number">0</span>].objects
-    <span class="hljs-built_in">console</span>.log(detectedObjects)
-  })
-  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
-    <span class="hljs-built_in">console</span>.log(err);
-  });</code></pre>
-				<a href="#visual-recognition-v3" id="visual-recognition-v3" style="color: inherit; text-decoration: none;">
-					<h3>Visual Recognition v3</h3>
-				</a>
-				<p>Use the <a href="https://www.ibm.com/watson/services/visual-recognition/">Visual Recognition</a> service to recognize the
-				following picture.</p>
-				<pre><code class="language-js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>);
-<span class="hljs-keyword">const</span> VisualRecognitionV3 = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;ibm-watson/visual-recognition/v3&#x27;</span>);
-<span class="hljs-keyword">const</span> { IamAuthenticator } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;ibm-watson/auth&#x27;</span>);
-
-<span class="hljs-keyword">const</span> visualRecognition = <span class="hljs-keyword">new</span> VisualRecognitionV3({
-  <span class="hljs-attr">serviceUrl</span>: <span class="hljs-string">&#x27;https://api.us-south.visual-recognition.watson.cloud.ibm.com&#x27;</span>,
-  <span class="hljs-attr">version</span>: <span class="hljs-string">&#x27;2018-03-19&#x27;</span>,
-  <span class="hljs-attr">authenticator</span>: <span class="hljs-keyword">new</span> IamAuthenticator({ <span class="hljs-attr">apikey</span>: <span class="hljs-string">&#x27;&lt;apikey&gt;&#x27;</span> }),
-});
-
-<span class="hljs-keyword">const</span> params = {
-  <span class="hljs-attr">imagesFile</span>: fs.createReadStream(<span class="hljs-string">&#x27;./resources/car.png&#x27;</span>)
-};
-
-visualRecognition.classify(params)
-  .then(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> {
-    <span class="hljs-built_in">console</span>.log(<span class="hljs-built_in">JSON</span>.stringify(response.result, <span class="hljs-literal">null</span>, <span class="hljs-number">2</span>));
-  })
-  .catch(<span class="hljs-function"><span class="hljs-params">err</span> =&gt;</span> {
-    <span class="hljs-built_in">console</span>.log(err);
-  });</code></pre>
 				<a href="#unauthenticated-requests" id="unauthenticated-requests" style="color: inherit; text-decoration: none;">
 					<h2>Unauthenticated requests</h2>
 				</a>
@@ -938,10 +762,6 @@ visualRecognition.classify(params)
 					</li>
 					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class=" tsd-kind-class">
-						<a href="classes/comparecomplyv1.html" class="tsd-kind-icon">Compare<wbr>Comply<wbr>V1</a>
-					</li>
-					<!-- Unless the url is part of the exclusion list, render them -->
-					<li class=" tsd-kind-class">
 						<a href="classes/discoveryv1.html" class="tsd-kind-icon">Discovery<wbr>V1</a>
 					</li>
 					<!-- Unless the url is part of the exclusion list, render them -->
@@ -950,15 +770,7 @@ visualRecognition.classify(params)
 					</li>
 					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class=" tsd-kind-class">
-						<a href="classes/naturallanguageclassifierv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Classifier<wbr>V1</a>
-					</li>
-					<!-- Unless the url is part of the exclusion list, render them -->
-					<li class=" tsd-kind-class">
 						<a href="classes/naturallanguageunderstandingv1.html" class="tsd-kind-icon">Natural<wbr>Language<wbr>Understanding<wbr>V1</a>
-					</li>
-					<!-- Unless the url is part of the exclusion list, render them -->
-					<li class=" tsd-kind-class">
-						<a href="classes/personalityinsightsv3.html" class="tsd-kind-icon">Personality<wbr>Insights<wbr>V3</a>
 					</li>
 					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class=" tsd-kind-class">
@@ -971,14 +783,6 @@ visualRecognition.classify(params)
 					<!-- Unless the url is part of the exclusion list, render them -->
 					<li class=" tsd-kind-class">
 						<a href="classes/texttospeechv1.html" class="tsd-kind-icon">Text<wbr>ToSpeech<wbr>V1</a>
-					</li>
-					<!-- Unless the url is part of the exclusion list, render them -->
-					<li class=" tsd-kind-class">
-						<a href="classes/toneanalyzerv3.html" class="tsd-kind-icon">Tone<wbr>Analyzer<wbr>V3</a>
-					</li>
-					<!-- Unless the url is part of the exclusion list, render them -->
-					<li class=" tsd-kind-class">
-						<a href="classes/visualrecognitionv3.html" class="tsd-kind-icon">Visual<wbr>Recognition<wbr>V3</a>
 					</li>
 					<!-- Unless the url is part of the exclusion list, render them -->
 					<!-- Unless the url is part of the exclusion list, render them -->
