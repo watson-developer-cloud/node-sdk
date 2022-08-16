@@ -1,3 +1,10 @@
+## [7.1.1](https://github.com/watson-developer-cloud/node-sdk/compare/v7.1.0...v7.1.1) (2022-08-16)
+
+
+### Bug Fixes
+
+* **package.json:** rollback core version ([f74c48c](https://github.com/watson-developer-cloud/node-sdk/commit/f74c48c128e562b682b1c2571df1a569ffb4bc32))
+
 # [7.1.0](https://github.com/watson-developer-cloud/node-sdk/compare/v7.0.0...v7.1.0) (2022-08-10)
 
 
