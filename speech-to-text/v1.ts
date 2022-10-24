@@ -53,7 +53,9 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
     const self = this;
 
     try {
-      const res = await self.listCorpora(params)
+      const res = await self.listCorpora({
+        customizationId: params?.customizationId
+      })
       const result = res.result;
       if (!result.corpora.length) {
         const sttError: SpeechToTextV1.SpeechToTextError = new Error(
@@ -86,7 +88,9 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
       options,
       async (done) => {
         try {
-          const res = await self.listCorpora(params);
+          const res = await self.listCorpora({
+            customizationId: params?.customizationId
+          });
           const corpora = res.result;
           
           if (corpora !== undefined && isProcessing(corpora)) {
@@ -180,7 +184,9 @@ class SpeechToTextV1 extends GeneratedSpeechToTextV1 {
       options,
       async (done) => {
         try {
-          const res = await self.getLanguageModel(params);
+          const res = await self.getLanguageModel({
+            customizationId: params?.customizationId
+          });
           const customization = res.result;
             if (
               customization.status === 'pending' ||

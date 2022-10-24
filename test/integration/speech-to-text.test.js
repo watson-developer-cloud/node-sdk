@@ -154,7 +154,7 @@ describe('speech to text integration', () => {
         customizationId,
         corpusName: 'test_corpus_1',
         corpusFile: fs.createReadStream(
-          path.join(__dirname, '../resources/speech_to_test/corpus-short-1.txt')
+          path.join(__dirname, '../resources/speech_to_text/corpus-short-1.txt')
         ),
       };
       await speechToText.addCorpus(params);
@@ -165,7 +165,7 @@ describe('speech to text integration', () => {
         customizationId,
         corpusName: 'test_corpus_2',
         corpusFile: fs.readFileSync(
-          path.join(__dirname, '../resources/speech_to_test/corpus-short-2.txt')
+          path.join(__dirname, '../resources/speech_to_text/corpus-short-2.txt')
         ),
       };
       await speechToText.whenCustomizationReady({ customizationId, interval: 1000, times: 300 });
@@ -177,9 +177,9 @@ describe('speech to text integration', () => {
         customizationId,
         corpusName: 'test_corpus_3',
         corpusFile: fs
-          .readFileSync(path.join(__dirname, '../resources/speech_to_test/corpus-short-2.txt'))
+          .readFileSync(path.join(__dirname, '../resources/speech_to_text/corpus-short-2.txt'))
           .toString(),
-        allow_overwrite: true,
+        allowOverwrite: true,
       };
 
       await speechToText.whenCustomizationReady({ customizationId, interval: 1000, times: 300 });
@@ -313,7 +313,7 @@ describe('speech to text integration', () => {
           grammarName,
           grammarFile: path.join(__dirname, '../resources/confirm.abnf'),
           contentType: 'application/srgs',
-          allow_overwrite: true,
+          allowOverwrite: true,
         };
         const res = await speechToText.addGrammar(params);
         expect(res).toEqual({});
