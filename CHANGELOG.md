@@ -1,3 +1,10 @@
+## [7.1.2](https://github.com/watson-developer-cloud/node-sdk/compare/v7.1.1...v7.1.2) (2022-10-25)
+
+
+### Bug Fixes
+
+* **deps:** upgrade core version to address file-type vulnerability ([c724fc3](https://github.com/watson-developer-cloud/node-sdk/commit/c724fc3a6bb6646c1bb8565f1fdaec69bff33666))
+
 ## [7.1.1](https://github.com/watson-developer-cloud/node-sdk/compare/v7.1.0...v7.1.1) (2022-08-16)
 
 
