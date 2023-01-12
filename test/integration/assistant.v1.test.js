@@ -168,7 +168,7 @@ describe('assistant v1 integration', () => {
       const res = await assistant.message(params);
       const { result } = res || {};
       expect(result).toBeDefined();
-      expect(result.context.system.dialog_stack).toEqual([{"dialog_node": "root"}]);
+      expect(result.context.system.dialog_stack).toEqual([{ dialog_node: 'root' }]);
     });
 
     it('dialog_stack with 2016-07-11 version', async () => {
@@ -187,7 +187,7 @@ describe('assistant v1 integration', () => {
       const res = await assistant.message(params);
       const { result } = res || {};
       expect(result).toBeDefined();
-      expect(result.context.system.dialog_stack).toEqual(["root"]);
+      expect(result.context.system.dialog_stack).toEqual(['root']);
     });
   });
 
@@ -670,7 +670,6 @@ describe('assistant v1 integration', () => {
         entity: testEntities[0].entity,
         newEntity: testEntitiesUpdate.entity,
         newValues: testEntitiesUpdate.values,
-        fuzzyMatch: false,
       };
 
       const res = await assistant.updateEntity(params);
@@ -804,7 +803,6 @@ describe('assistant v1 integration', () => {
         workspaceId: workspace1.workspaceId,
         entity: testEntitiesUpdate.entity,
         value: testValueUpdate.value,
-        _export: true,
       };
 
       const res = await assistant.listSynonyms(params);
@@ -821,7 +819,6 @@ describe('assistant v1 integration', () => {
         workspaceId: workspace1.workspaceId,
         entity: testEntitiesUpdate.entity,
         value: testValueUpdate.value,
-        _export: true,
         pageLimit: 1,
       };
 
@@ -877,7 +874,6 @@ describe('assistant v1 integration', () => {
 
       const params = {
         workspaceId: workspace1.workspaceId,
-        _export: true,
         pageLimit: 1,
       };
 
