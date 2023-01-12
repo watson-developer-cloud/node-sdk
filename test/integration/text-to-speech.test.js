@@ -6,6 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const wav = require('wav');
 const authHelper = require('../resources/auth_helper.js');
+const { fail } = require('assert');
 const describe = authHelper.describe; // this runs describe.skip if there is no auth.js file :)
 const TWENTY_SECONDS = 20000;
 
@@ -53,7 +54,13 @@ describe('text to speech_integration', () => {
       });
 
       synthStream.on('close', (code, reason) => {
-        done();
+        if (code === 1000) {
+          done();
+        } else if (code === undefined) {
+          // Do nothing: this is in order to prevent done() being called twice
+        } else {
+          fail();
+        }
       });
     });
   });

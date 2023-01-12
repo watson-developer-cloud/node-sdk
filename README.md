@@ -19,15 +19,6 @@ Node.js client library to use the Watson APIs.
 On 9 August 2021, IBM announced the deprecation of the Natural Language Classifier service. The service will no longer be available from 8 August 2022. As of 9 September 2021, you will not be able to create new instances. Existing instances will be supported until 8 August 2022. Any instance that still exists on that date will be deleted.
 
 As an alternative, we encourage you to consider migrating to the Natural Language Understanding service on IBM Cloud that uses deep learning to extract data and insights from text such as keywords, categories, sentiment, emotion, and syntax, along with advanced multi-label text classification capabilities, to provide even richer insights for your business or industry. For more information, see [Migrating to Natural Language Understanding](https://cloud.ibm.com/docs/natural-language-classifier?topic=natural-language-classifier-migrating).
-
-### Major version 6 released
-Version v6.0.0 of the SDK has been released and includes a number of breaking changes - see what's changed in the [migration guide](MIGRATION-V6.md).
-### Updating endpoint URLs from watsonplatform.net
-Watson API endpoint URLs at watsonplatform.net are changing and will not work after 26 May 2021. Update your calls to use the newer endpoint URLs. For more information, see https://cloud.ibm.com/docs/watson?topic=watson-endpoint-change.
-
-### Supporting Node versions 10+
-The SDK will no longer be tested with Node versions 6 and 8. Support will be officially dropped in v5.
-
 ### Package Rename
 This package has been moved under the name `ibm-watson`. The package is still available at `watson-developer-cloud`, but that will no longer receive updates. Use `ibm-watson` to stay up to date.
 
@@ -35,7 +26,7 @@ This package has been moved under the name `ibm-watson`. The package is still av
 * You need an [IBM Cloud][ibm-cloud-onboarding] account.
 
 ## Prerequisites
-- **Node >=10**: This SDK is tested with Node versions 10 and up. It may work on previous versions but this is not officially supported.
+- **Node >=14**: This SDK is tested with Node versions 14 and up. It may work on previous versions but this is not officially supported.
 
 ## Installation
 

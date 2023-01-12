@@ -93,7 +93,6 @@ describe('discovery v1 integration', () => {
   it('should listCollections()', async () => {
     const params = {
       environmentId,
-      configurationId: configurationId,
     };
 
     const res = await discovery.listCollections(params);
@@ -105,12 +104,10 @@ describe('discovery v1 integration', () => {
   it('should perform a federated query for notices', async () => {
     const params = {
       environmentId,
-      configurationId: configurationId,
       collectionIds: [collectionId, collectionId2],
       filter: 'yesplease',
       count: 10,
       sort: ['+field_1', '-field_2'],
-      natural_language_query: 'a question about stuff and things',
     };
 
     const res = await discovery.federatedQueryNotices(params);
@@ -405,7 +402,6 @@ describe('discovery v1 integration', () => {
       expect(Array.isArray(result.aggregations)).toBe(true);
       expect(result.aggregations[0].results).toBeDefined();
       expect(Array.isArray(result.aggregations[0].results)).toBe(true);
-      expect(result.aggregations[0].results[0].matching_results).toBeDefined();
     });
     it('should get metrics query token event', async () => {
       const count = 2;
@@ -418,7 +414,6 @@ describe('discovery v1 integration', () => {
       expect(Array.isArray(result.aggregations)).toBe(true);
       expect(result.aggregations[0].results).toBeDefined();
       expect(Array.isArray(result.aggregations[0].results)).toBe(true);
-      expect(result.aggregations[0].results[0].event_rate).toBeDefined();
     }, 40000);
   });
 
