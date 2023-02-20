@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2022.
+ * (C) Copyright IBM Corp. 2018, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -188,9 +188,9 @@ describe('SpeechToTextV1', () => {
     describe('positive tests', () => {
       function __getModelTest() {
         // Construct the params object for operation getModel
-        const modelId = 'ar-AR_BroadbandModel';
+        const modelId = 'ar-MS_BroadbandModel';
         const getModelParams = {
-          modelId: modelId,
+          modelId,
         };
 
         const getModelResult = speechToTextService.getModel(getModelParams);
@@ -227,7 +227,7 @@ describe('SpeechToTextV1', () => {
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const modelId = 'ar-AR_BroadbandModel';
+        const modelId = 'ar-MS_BroadbandModel';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const getModelParams = {
@@ -299,32 +299,32 @@ describe('SpeechToTextV1', () => {
         const lowLatency = false;
         const characterInsertionBias = 36.0;
         const recognizeParams = {
-          audio: audio,
-          contentType: contentType,
-          model: model,
-          languageCustomizationId: languageCustomizationId,
-          acousticCustomizationId: acousticCustomizationId,
-          baseModelVersion: baseModelVersion,
-          customizationWeight: customizationWeight,
-          inactivityTimeout: inactivityTimeout,
-          keywords: keywords,
-          keywordsThreshold: keywordsThreshold,
-          maxAlternatives: maxAlternatives,
-          wordAlternativesThreshold: wordAlternativesThreshold,
-          wordConfidence: wordConfidence,
-          timestamps: timestamps,
-          profanityFilter: profanityFilter,
-          smartFormatting: smartFormatting,
-          speakerLabels: speakerLabels,
-          grammarName: grammarName,
-          redaction: redaction,
-          audioMetrics: audioMetrics,
-          endOfPhraseSilenceTime: endOfPhraseSilenceTime,
-          splitTranscriptAtPhraseEnd: splitTranscriptAtPhraseEnd,
-          speechDetectorSensitivity: speechDetectorSensitivity,
-          backgroundAudioSuppression: backgroundAudioSuppression,
-          lowLatency: lowLatency,
-          characterInsertionBias: characterInsertionBias,
+          audio,
+          contentType,
+          model,
+          languageCustomizationId,
+          acousticCustomizationId,
+          baseModelVersion,
+          customizationWeight,
+          inactivityTimeout,
+          keywords,
+          keywordsThreshold,
+          maxAlternatives,
+          wordAlternativesThreshold,
+          wordConfidence,
+          timestamps,
+          profanityFilter,
+          smartFormatting,
+          speakerLabels,
+          grammarName,
+          redaction,
+          audioMetrics,
+          endOfPhraseSilenceTime,
+          splitTranscriptAtPhraseEnd,
+          speechDetectorSensitivity,
+          backgroundAudioSuppression,
+          lowLatency,
+          characterInsertionBias,
         };
 
         const recognizeResult = speechToTextService.recognize(recognizeParams);
@@ -434,8 +434,8 @@ describe('SpeechToTextV1', () => {
         const callbackUrl = 'testString';
         const userSecret = 'testString';
         const registerCallbackParams = {
-          callbackUrl: callbackUrl,
-          userSecret: userSecret,
+          callbackUrl,
+          userSecret,
         };
 
         const registerCallbackResult = speechToTextService.registerCallback(registerCallbackParams);
@@ -520,7 +520,7 @@ describe('SpeechToTextV1', () => {
         // Construct the params object for operation unregisterCallback
         const callbackUrl = 'testString';
         const unregisterCallbackParams = {
-          callbackUrl: callbackUrl,
+          callbackUrl,
         };
 
         const unregisterCallbackResult = speechToTextService.unregisterCallback(unregisterCallbackParams);
@@ -635,38 +635,38 @@ describe('SpeechToTextV1', () => {
         const lowLatency = false;
         const characterInsertionBias = 36.0;
         const createJobParams = {
-          audio: audio,
-          contentType: contentType,
-          model: model,
-          callbackUrl: callbackUrl,
-          events: events,
-          userToken: userToken,
-          resultsTtl: resultsTtl,
-          languageCustomizationId: languageCustomizationId,
-          acousticCustomizationId: acousticCustomizationId,
-          baseModelVersion: baseModelVersion,
-          customizationWeight: customizationWeight,
-          inactivityTimeout: inactivityTimeout,
-          keywords: keywords,
-          keywordsThreshold: keywordsThreshold,
-          maxAlternatives: maxAlternatives,
-          wordAlternativesThreshold: wordAlternativesThreshold,
-          wordConfidence: wordConfidence,
-          timestamps: timestamps,
-          profanityFilter: profanityFilter,
-          smartFormatting: smartFormatting,
-          speakerLabels: speakerLabels,
-          grammarName: grammarName,
-          redaction: redaction,
-          processingMetrics: processingMetrics,
-          processingMetricsInterval: processingMetricsInterval,
-          audioMetrics: audioMetrics,
-          endOfPhraseSilenceTime: endOfPhraseSilenceTime,
-          splitTranscriptAtPhraseEnd: splitTranscriptAtPhraseEnd,
-          speechDetectorSensitivity: speechDetectorSensitivity,
-          backgroundAudioSuppression: backgroundAudioSuppression,
-          lowLatency: lowLatency,
-          characterInsertionBias: characterInsertionBias,
+          audio,
+          contentType,
+          model,
+          callbackUrl,
+          events,
+          userToken,
+          resultsTtl,
+          languageCustomizationId,
+          acousticCustomizationId,
+          baseModelVersion,
+          customizationWeight,
+          inactivityTimeout,
+          keywords,
+          keywordsThreshold,
+          maxAlternatives,
+          wordAlternativesThreshold,
+          wordConfidence,
+          timestamps,
+          profanityFilter,
+          smartFormatting,
+          speakerLabels,
+          grammarName,
+          redaction,
+          processingMetrics,
+          processingMetricsInterval,
+          audioMetrics,
+          endOfPhraseSilenceTime,
+          splitTranscriptAtPhraseEnd,
+          speechDetectorSensitivity,
+          backgroundAudioSuppression,
+          lowLatency,
+          characterInsertionBias,
         };
 
         const createJobResult = speechToTextService.createJob(createJobParams);
@@ -841,7 +841,7 @@ describe('SpeechToTextV1', () => {
         // Construct the params object for operation checkJob
         const id = 'testString';
         const checkJobParams = {
-          id: id,
+          id,
         };
 
         const checkJobResult = speechToTextService.checkJob(checkJobParams);
@@ -925,7 +925,7 @@ describe('SpeechToTextV1', () => {
         // Construct the params object for operation deleteJob
         const id = 'testString';
         const deleteJobParams = {
-          id: id,
+          id,
         };
 
         const deleteJobResult = speechToTextService.deleteJob(deleteJobParams);
@@ -1012,10 +1012,10 @@ describe('SpeechToTextV1', () => {
         const dialect = 'testString';
         const description = 'testString';
         const createLanguageModelParams = {
-          name: name,
-          baseModelName: baseModelName,
-          dialect: dialect,
-          description: description,
+          name,
+          baseModelName,
+          dialect,
+          description,
         };
 
         const createLanguageModelResult = speechToTextService.createLanguageModel(createLanguageModelParams);
@@ -1102,9 +1102,9 @@ describe('SpeechToTextV1', () => {
     describe('positive tests', () => {
       function __listLanguageModelsTest() {
         // Construct the params object for operation listLanguageModels
-        const language = 'ar-AR';
+        const language = 'ar-MS';
         const listLanguageModelsParams = {
-          language: language,
+          language,
         };
 
         const listLanguageModelsResult = speechToTextService.listLanguageModels(listLanguageModelsParams);
@@ -1168,7 +1168,7 @@ describe('SpeechToTextV1', () => {
         // Construct the params object for operation getLanguageModel
         const customizationId = 'testString';
         const getLanguageModelParams = {
-          customizationId: customizationId,
+          customizationId,
         };
 
         const getLanguageModelResult = speechToTextService.getLanguageModel(getLanguageModelParams);
@@ -1252,7 +1252,7 @@ describe('SpeechToTextV1', () => {
         // Construct the params object for operation deleteLanguageModel
         const customizationId = 'testString';
         const deleteLanguageModelParams = {
-          customizationId: customizationId,
+          customizationId,
         };
 
         const deleteLanguageModelResult = speechToTextService.deleteLanguageModel(deleteLanguageModelParams);
@@ -1339,10 +1339,10 @@ describe('SpeechToTextV1', () => {
         const customizationWeight = 72.5;
         const strict = true;
         const trainLanguageModelParams = {
-          customizationId: customizationId,
-          wordTypeToAdd: wordTypeToAdd,
-          customizationWeight: customizationWeight,
-          strict: strict,
+          customizationId,
+          wordTypeToAdd,
+          customizationWeight,
+          strict,
         };
 
         const trainLanguageModelResult = speechToTextService.trainLanguageModel(trainLanguageModelParams);
@@ -1429,7 +1429,7 @@ describe('SpeechToTextV1', () => {
         // Construct the params object for operation resetLanguageModel
         const customizationId = 'testString';
         const resetLanguageModelParams = {
-          customizationId: customizationId,
+          customizationId,
         };
 
         const resetLanguageModelResult = speechToTextService.resetLanguageModel(resetLanguageModelParams);
@@ -1513,7 +1513,7 @@ describe('SpeechToTextV1', () => {
         // Construct the params object for operation upgradeLanguageModel
         const customizationId = 'testString';
         const upgradeLanguageModelParams = {
-          customizationId: customizationId,
+          customizationId,
         };
 
         const upgradeLanguageModelResult = speechToTextService.upgradeLanguageModel(upgradeLanguageModelParams);
@@ -1597,7 +1597,7 @@ describe('SpeechToTextV1', () => {
         // Construct the params object for operation listCorpora
         const customizationId = 'testString';
         const listCorporaParams = {
-          customizationId: customizationId,
+          customizationId,
         };
 
         const listCorporaResult = speechToTextService.listCorpora(listCorporaParams);
@@ -1684,10 +1684,10 @@ describe('SpeechToTextV1', () => {
         const corpusFile = Buffer.from('This is a mock file.');
         const allowOverwrite = false;
         const addCorpusParams = {
-          customizationId: customizationId,
-          corpusName: corpusName,
-          corpusFile: corpusFile,
-          allowOverwrite: allowOverwrite,
+          customizationId,
+          corpusName,
+          corpusFile,
+          allowOverwrite,
         };
 
         const addCorpusResult = speechToTextService.addCorpus(addCorpusParams);
@@ -1780,8 +1780,8 @@ describe('SpeechToTextV1', () => {
         const customizationId = 'testString';
         const corpusName = 'testString';
         const getCorpusParams = {
-          customizationId: customizationId,
-          corpusName: corpusName,
+          customizationId,
+          corpusName,
         };
 
         const getCorpusResult = speechToTextService.getCorpus(getCorpusParams);
@@ -1869,8 +1869,8 @@ describe('SpeechToTextV1', () => {
         const customizationId = 'testString';
         const corpusName = 'testString';
         const deleteCorpusParams = {
-          customizationId: customizationId,
-          corpusName: corpusName,
+          customizationId,
+          corpusName,
         };
 
         const deleteCorpusResult = speechToTextService.deleteCorpus(deleteCorpusParams);
@@ -1959,9 +1959,9 @@ describe('SpeechToTextV1', () => {
         const wordType = 'all';
         const sort = 'alphabetical';
         const listWordsParams = {
-          customizationId: customizationId,
-          wordType: wordType,
-          sort: sort,
+          customizationId,
+          wordType,
+          sort,
         };
 
         const listWordsResult = speechToTextService.listWords(listWordsParams);
@@ -2057,8 +2057,8 @@ describe('SpeechToTextV1', () => {
         const customizationId = 'testString';
         const words = [customWordModel];
         const addWordsParams = {
-          customizationId: customizationId,
-          words: words,
+          customizationId,
+          words,
         };
 
         const addWordsResult = speechToTextService.addWords(addWordsParams);
@@ -2149,11 +2149,11 @@ describe('SpeechToTextV1', () => {
         const soundsLike = ['testString'];
         const displayAs = 'testString';
         const addWordParams = {
-          customizationId: customizationId,
-          wordName: wordName,
-          word: word,
-          soundsLike: soundsLike,
-          displayAs: displayAs,
+          customizationId,
+          wordName,
+          word,
+          soundsLike,
+          displayAs,
         };
 
         const addWordResult = speechToTextService.addWord(addWordParams);
@@ -2244,8 +2244,8 @@ describe('SpeechToTextV1', () => {
         const customizationId = 'testString';
         const wordName = 'testString';
         const getWordParams = {
-          customizationId: customizationId,
-          wordName: wordName,
+          customizationId,
+          wordName,
         };
 
         const getWordResult = speechToTextService.getWord(getWordParams);
@@ -2333,8 +2333,8 @@ describe('SpeechToTextV1', () => {
         const customizationId = 'testString';
         const wordName = 'testString';
         const deleteWordParams = {
-          customizationId: customizationId,
-          wordName: wordName,
+          customizationId,
+          wordName,
         };
 
         const deleteWordResult = speechToTextService.deleteWord(deleteWordParams);
@@ -2421,7 +2421,7 @@ describe('SpeechToTextV1', () => {
         // Construct the params object for operation listGrammars
         const customizationId = 'testString';
         const listGrammarsParams = {
-          customizationId: customizationId,
+          customizationId,
         };
 
         const listGrammarsResult = speechToTextService.listGrammars(listGrammarsParams);
@@ -2509,11 +2509,11 @@ describe('SpeechToTextV1', () => {
         const contentType = 'application/srgs';
         const allowOverwrite = false;
         const addGrammarParams = {
-          customizationId: customizationId,
-          grammarName: grammarName,
-          grammarFile: grammarFile,
-          contentType: contentType,
-          allowOverwrite: allowOverwrite,
+          customizationId,
+          grammarName,
+          grammarFile,
+          contentType,
+          allowOverwrite,
         };
 
         const addGrammarResult = speechToTextService.addGrammar(addGrammarParams);
@@ -2608,8 +2608,8 @@ describe('SpeechToTextV1', () => {
         const customizationId = 'testString';
         const grammarName = 'testString';
         const getGrammarParams = {
-          customizationId: customizationId,
-          grammarName: grammarName,
+          customizationId,
+          grammarName,
         };
 
         const getGrammarResult = speechToTextService.getGrammar(getGrammarParams);
@@ -2697,8 +2697,8 @@ describe('SpeechToTextV1', () => {
         const customizationId = 'testString';
         const grammarName = 'testString';
         const deleteGrammarParams = {
-          customizationId: customizationId,
-          grammarName: grammarName,
+          customizationId,
+          grammarName,
         };
 
         const deleteGrammarResult = speechToTextService.deleteGrammar(deleteGrammarParams);
@@ -2784,12 +2784,12 @@ describe('SpeechToTextV1', () => {
       function __createAcousticModelTest() {
         // Construct the params object for operation createAcousticModel
         const name = 'testString';
-        const baseModelName = 'ar-AR_BroadbandModel';
+        const baseModelName = 'ar-MS_BroadbandModel';
         const description = 'testString';
         const createAcousticModelParams = {
-          name: name,
-          baseModelName: baseModelName,
-          description: description,
+          name,
+          baseModelName,
+          description,
         };
 
         const createAcousticModelResult = speechToTextService.createAcousticModel(createAcousticModelParams);
@@ -2829,7 +2829,7 @@ describe('SpeechToTextV1', () => {
       test('should prioritize user-given headers', () => {
         // parameters
         const name = 'testString';
-        const baseModelName = 'ar-AR_BroadbandModel';
+        const baseModelName = 'ar-MS_BroadbandModel';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const createAcousticModelParams = {
@@ -2875,9 +2875,9 @@ describe('SpeechToTextV1', () => {
     describe('positive tests', () => {
       function __listAcousticModelsTest() {
         // Construct the params object for operation listAcousticModels
-        const language = 'ar-AR';
+        const language = 'ar-MS';
         const listAcousticModelsParams = {
-          language: language,
+          language,
         };
 
         const listAcousticModelsResult = speechToTextService.listAcousticModels(listAcousticModelsParams);
@@ -2941,7 +2941,7 @@ describe('SpeechToTextV1', () => {
         // Construct the params object for operation getAcousticModel
         const customizationId = 'testString';
         const getAcousticModelParams = {
-          customizationId: customizationId,
+          customizationId,
         };
 
         const getAcousticModelResult = speechToTextService.getAcousticModel(getAcousticModelParams);
@@ -3025,7 +3025,7 @@ describe('SpeechToTextV1', () => {
         // Construct the params object for operation deleteAcousticModel
         const customizationId = 'testString';
         const deleteAcousticModelParams = {
-          customizationId: customizationId,
+          customizationId,
         };
 
         const deleteAcousticModelResult = speechToTextService.deleteAcousticModel(deleteAcousticModelParams);
@@ -3111,9 +3111,9 @@ describe('SpeechToTextV1', () => {
         const customLanguageModelId = 'testString';
         const strict = true;
         const trainAcousticModelParams = {
-          customizationId: customizationId,
-          customLanguageModelId: customLanguageModelId,
-          strict: strict,
+          customizationId,
+          customLanguageModelId,
+          strict,
         };
 
         const trainAcousticModelResult = speechToTextService.trainAcousticModel(trainAcousticModelParams);
@@ -3199,7 +3199,7 @@ describe('SpeechToTextV1', () => {
         // Construct the params object for operation resetAcousticModel
         const customizationId = 'testString';
         const resetAcousticModelParams = {
-          customizationId: customizationId,
+          customizationId,
         };
 
         const resetAcousticModelResult = speechToTextService.resetAcousticModel(resetAcousticModelParams);
@@ -3285,9 +3285,9 @@ describe('SpeechToTextV1', () => {
         const customLanguageModelId = 'testString';
         const force = false;
         const upgradeAcousticModelParams = {
-          customizationId: customizationId,
-          customLanguageModelId: customLanguageModelId,
-          force: force,
+          customizationId,
+          customLanguageModelId,
+          force,
         };
 
         const upgradeAcousticModelResult = speechToTextService.upgradeAcousticModel(upgradeAcousticModelParams);
@@ -3373,7 +3373,7 @@ describe('SpeechToTextV1', () => {
         // Construct the params object for operation listAudio
         const customizationId = 'testString';
         const listAudioParams = {
-          customizationId: customizationId,
+          customizationId,
         };
 
         const listAudioResult = speechToTextService.listAudio(listAudioParams);
@@ -3462,12 +3462,12 @@ describe('SpeechToTextV1', () => {
         const containedContentType = 'audio/alaw';
         const allowOverwrite = false;
         const addAudioParams = {
-          customizationId: customizationId,
-          audioName: audioName,
-          audioResource: audioResource,
-          contentType: contentType,
-          containedContentType: containedContentType,
-          allowOverwrite: allowOverwrite,
+          customizationId,
+          audioName,
+          audioResource,
+          contentType,
+          containedContentType,
+          allowOverwrite,
         };
 
         const addAudioResult = speechToTextService.addAudio(addAudioParams);
@@ -3561,8 +3561,8 @@ describe('SpeechToTextV1', () => {
         const customizationId = 'testString';
         const audioName = 'testString';
         const getAudioParams = {
-          customizationId: customizationId,
-          audioName: audioName,
+          customizationId,
+          audioName,
         };
 
         const getAudioResult = speechToTextService.getAudio(getAudioParams);
@@ -3650,8 +3650,8 @@ describe('SpeechToTextV1', () => {
         const customizationId = 'testString';
         const audioName = 'testString';
         const deleteAudioParams = {
-          customizationId: customizationId,
-          audioName: audioName,
+          customizationId,
+          audioName,
         };
 
         const deleteAudioResult = speechToTextService.deleteAudio(deleteAudioParams);
@@ -3738,7 +3738,7 @@ describe('SpeechToTextV1', () => {
         // Construct the params object for operation deleteUserData
         const customerId = 'testString';
         const deleteUserDataParams = {
-          customerId: customerId,
+          customerId,
         };
 
         const deleteUserDataResult = speechToTextService.deleteUserData(deleteUserDataParams);

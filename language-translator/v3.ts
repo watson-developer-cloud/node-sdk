@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2022.
+ * (C) Copyright IBM Corp. 2018, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.53.0-9710cac3-20220713-193508
+ * IBM OpenAPI SDK Code Generator Version: 3.64.1-cee95189-20230124-211647
  */
 
 import * as extend from 'extend';
@@ -606,8 +606,8 @@ class LanguageTranslatorV3 extends BaseService {
   /**
    * Get model details.
    *
-   * Gets information about a translation model, including training status for custom models. Use this API call to poll
-   * the status of your customization request. A successfully completed training has a status of `available`.
+   * Gets information about a translation model, including training status for custom models. Use this method to poll
+   * the status of your customization request. A successfully completed training request has a status of `available`.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.modelId - Model ID of the model to get.
@@ -718,18 +718,42 @@ class LanguageTranslatorV3 extends BaseService {
   /**
    * Translate document.
    *
-   * Submit a document for translation. You can submit the document contents in the `file` parameter, or you can
-   * reference a previously submitted document by document ID. The maximum file size for document translation is
-   * * 20 MB for service instances on the Standard, Advanced, and Premium plans
-   * * 2 MB for service instances on the Lite plan
+   * Submit a document for translation. You can submit the document contents in the `file` parameter, or you can specify
+   * a previously submitted document by document ID. The maximum file size for document translation is
+   * * **2 MB** for service instances on the Lite plan
+   * * **20 MB** for service instances on the Standard plan
+   * * **50 MB** for service instances on the Advanced plan
+   * * **150 MB** for service instances on the Premium plan
+   *
+   * You can specify the format of the file to be translated in one of two ways:
+   * * By specifying the appropriate file extension for the format.
+   * * By specifying the content type (MIME type) of the format as the `type` of the `file` parameter.
+   *
+   * In some cases, especially for subtitle file formats, you must use either the file extension or the content type.
+   * For more information about all supported file formats, their file extensions and content types, and how and when to
+   * specify the file extension or content type, see [Supported file
+   * formats](https://cloud.ibm.com/docs/language-translator?topic=language-translator-document-translator-tutorial#supported-file-formats).
+   *
    *
    * **Note:** When translating a previously submitted document, the target language must be different from the target
    * language of the original request when the document was initially submitted.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {NodeJS.ReadableStream | Buffer} params.file - The contents of the source file to translate. The maximum
-   * file size for document translation is 20 MB for service instances on the Standard, Advanced, and Premium plans, and
-   * 2 MB for service instances on the Lite plan. For more information, see [Supported file
+   * file size for document translation is
+   * * **2 MB** for service instances on the Lite plan
+   * * **20 MB** for service instances on the Standard plan
+   * * **50 MB** for service instances on the Advanced plan
+   * * **150 MB** for service instances on the Premium plan
+   *
+   * You can specify the format of the file to be translated in one of two ways:
+   * * By specifying the appropriate file extension for the format.
+   * * By specifying the content type (MIME type) of the format as the `type` of the `file` parameter.
+   *
+   * In some cases, especially for subtitle file formats, you must use either the file extension or the content type.
+   *
+   * For more information about all supported file formats, their file extensions and content types, and how and when to
+   * specify the file extension or content type, see [Supported file
    * formats](https://cloud.ibm.com/docs/language-translator?topic=language-translator-document-translator-tutorial#supported-file-formats).
    * @param {string} params.filename - The filename for file.
    * @param {string} [params.fileContentType] - The content type of file.
@@ -867,11 +891,11 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.documentId - Document ID of the document to delete.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.Empty>>}
+   * @returns {Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.EmptyObject>>}
    */
   public deleteDocument(
     params: LanguageTranslatorV3.DeleteDocumentParams
-  ): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.Empty>> {
+  ): Promise<LanguageTranslatorV3.Response<LanguageTranslatorV3.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['documentId'];
     const _validParams = ['documentId', 'headers'];
@@ -1008,7 +1032,7 @@ namespace LanguageTranslatorV3 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty {}
+  export interface EmptyObject {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -1156,9 +1180,21 @@ namespace LanguageTranslatorV3 {
 
   /** Parameters for the `translateDocument` operation. */
   export interface TranslateDocumentParams {
-    /** The contents of the source file to translate. The maximum file size for document translation is 20 MB for
-     *  service instances on the Standard, Advanced, and Premium plans, and 2 MB for service instances on the Lite plan.
-     *  For more information, see [Supported file
+    /** The contents of the source file to translate. The maximum file size for document translation is
+     *  * **2 MB** for service instances on the Lite plan
+     *  * **20 MB** for service instances on the Standard plan
+     *  * **50 MB** for service instances on the Advanced plan
+     *  * **150 MB** for service instances on the Premium plan
+     *
+     *  You can specify the format of the file to be translated in one of two ways:
+     *  * By specifying the appropriate file extension for the format.
+     *  * By specifying the content type (MIME type) of the format as the `type` of the `file` parameter.
+     *
+     *  In some cases, especially for subtitle file formats, you must use either the file extension or the content type.
+     *
+     *
+     *  For more information about all supported file formats, their file extensions and content types, and how and when
+     *  to specify the file extension or content type, see [Supported file
      *  formats](https://cloud.ibm.com/docs/language-translator?topic=language-translator-document-translator-tutorial#supported-file-formats).
      */
     file: NodeJS.ReadableStream | Buffer;
@@ -1189,22 +1225,25 @@ namespace LanguageTranslatorV3 {
   export namespace TranslateDocumentConstants {
     /** The content type of file. */
     export enum FileContentType {
-      APPLICATION_POWERPOINT = 'application/powerpoint',
       APPLICATION_MSPOWERPOINT = 'application/mspowerpoint',
-      APPLICATION_X_RTF = 'application/x-rtf',
-      APPLICATION_JSON = 'application/json',
-      APPLICATION_XML = 'application/xml',
+      APPLICATION_MSWORD = 'application/msword',
+      APPLICATION_OCTET_STREAM = 'application/octet-stream',
+      APPLICATION_PDF = 'application/pdf',
+      APPLICATION_POWERPOINT = 'application/powerpoint',
+      APPLICATION_RTF = 'application/rtf',
+      APPLICATION_TTAF_XML = 'application/ttaf+xml',
+      APPLICATION_TTML_XML = 'application/ttml+xml',
+      APPLICATION_VND_OASIS_OPENDOCUMENT_PRESENTATION = 'application/vnd.oasis.opendocument.presentation',
+      APPLICATION_VND_OASIS_OPENDOCUMENT_SPREADSHEET = 'application/vnd.oasis.opendocument.spreadsheet',
+      APPLICATION_VND_OASIS_OPENDOCUMENT_TEXT = 'application/vnd.oasis.opendocument.text',
       APPLICATION_VND_MS_EXCEL = 'application/vnd.ms-excel',
-      APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_SPREADSHEETML_SHEET = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       APPLICATION_VND_MS_POWERPOINT = 'application/vnd.ms-powerpoint',
       APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_PRESENTATION = 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-      APPLICATION_MSWORD = 'application/msword',
+      APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_SPREADSHEETML_SHEET = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-      APPLICATION_VND_OASIS_OPENDOCUMENT_SPREADSHEET = 'application/vnd.oasis.opendocument.spreadsheet',
-      APPLICATION_VND_OASIS_OPENDOCUMENT_PRESENTATION = 'application/vnd.oasis.opendocument.presentation',
-      APPLICATION_VND_OASIS_OPENDOCUMENT_TEXT = 'application/vnd.oasis.opendocument.text',
-      APPLICATION_PDF = 'application/pdf',
-      APPLICATION_RTF = 'application/rtf',
+      APPLICATION_X_RTF = 'application/x-rtf',
+      APPLICATION_XHTML_XML = 'application/xhtml+xml',
+      APPLICATION_XML = 'application/xml',
       TEXT_HTML = 'text/html',
       TEXT_JSON = 'text/json',
       TEXT_PLAIN = 'text/plain',
@@ -1212,7 +1251,6 @@ namespace LanguageTranslatorV3 {
       TEXT_RTF = 'text/rtf',
       TEXT_SBV = 'text/sbv',
       TEXT_SRT = 'text/srt',
-      TEXT_VTT = 'text/vtt',
       TEXT_XML = 'text/xml',
     }
   }
