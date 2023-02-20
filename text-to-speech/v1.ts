@@ -150,6 +150,8 @@ namespace TextToSpeechV1 {
     voice?: string;
     customizationId?: string;
     spellOutMode?: string;
+    ratePercentage?: number;
+    pitchPercentage?: number;
     xWatsonLearningOptOut?: boolean;
     xWatsonMetadata?: string;
   }

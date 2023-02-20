@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2020.
+ * (C) Copyright IBM Corp. 2018, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,6 +62,8 @@ class SynthesizeStream extends Readable {
    * @param {string} [options.watsonToken] - Valid Watson authentication token (for Cloud Foundry)
    * @param {string} [options.voice] - The voice to use for the synthesis (default='en-US_MichaelVoice')
    * @param {string} [options.customizationId] - The customization ID (GUID) of a custom voice model that is to be used for the synthesis
+   * @param {number} [options.ratePercentage] - The percentage change from the default speaking rate of the voice that is used for speech synthesis.
+   * @param {number} [options.pitchPercentage] - The percentage change from the default speaking pitch of the voice that is used for speech synthesis.
    * @param {boolean} [options.xWatsonLearningOptOut] - Indicates whether IBM can use data that is sent over the connection to improve the service for future users (default=false)
    * @param {string} [options.xWatsonMetadata] - Associates a customer ID with all data that is passed over the connection. The parameter accepts the argument customer_id={id}, where {id} is a random or generic string that is to be associated with the data
    * @constructor
@@ -82,6 +84,8 @@ class SynthesizeStream extends Readable {
       'watson-token',
       'voice',
       'customization_id',
+      'rate_percentage',
+      'pitch_percentage',
       'x-watson-learning-opt-out',
       'x-watson-metadata',
     ];
