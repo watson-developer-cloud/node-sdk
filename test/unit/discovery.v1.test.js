@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2022.
+ * (C) Copyright IBM Corp. 2018, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -160,9 +160,9 @@ describe('DiscoveryV1', () => {
         const description = 'testString';
         const size = 'LT';
         const createEnvironmentParams = {
-          name: name,
-          description: description,
-          size: size,
+          name,
+          description,
+          size,
         };
 
         const createEnvironmentResult = discoveryService.createEnvironment(createEnvironmentParams);
@@ -249,7 +249,7 @@ describe('DiscoveryV1', () => {
         // Construct the params object for operation listEnvironments
         const name = 'testString';
         const listEnvironmentsParams = {
-          name: name,
+          name,
         };
 
         const listEnvironmentsResult = discoveryService.listEnvironments(listEnvironmentsParams);
@@ -314,7 +314,7 @@ describe('DiscoveryV1', () => {
         // Construct the params object for operation getEnvironment
         const environmentId = 'testString';
         const getEnvironmentParams = {
-          environmentId: environmentId,
+          environmentId,
         };
 
         const getEnvironmentResult = discoveryService.getEnvironment(getEnvironmentParams);
@@ -402,10 +402,10 @@ describe('DiscoveryV1', () => {
         const description = 'testString';
         const size = 'S';
         const updateEnvironmentParams = {
-          environmentId: environmentId,
-          name: name,
-          description: description,
-          size: size,
+          environmentId,
+          name,
+          description,
+          size,
         };
 
         const updateEnvironmentResult = discoveryService.updateEnvironment(updateEnvironmentParams);
@@ -493,7 +493,7 @@ describe('DiscoveryV1', () => {
         // Construct the params object for operation deleteEnvironment
         const environmentId = 'testString';
         const deleteEnvironmentParams = {
-          environmentId: environmentId,
+          environmentId,
         };
 
         const deleteEnvironmentResult = discoveryService.deleteEnvironment(deleteEnvironmentParams);
@@ -579,8 +579,8 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const collectionIds = ['testString'];
         const listFieldsParams = {
-          environmentId: environmentId,
-          collectionIds: collectionIds,
+          environmentId,
+          collectionIds,
         };
 
         const listFieldsResult = discoveryService.listFields(listFieldsParams);
@@ -795,7 +795,7 @@ describe('DiscoveryV1', () => {
         entities: nluEnrichmentEntitiesModel,
         sentiment: nluEnrichmentSentimentModel,
         emotion: nluEnrichmentEmotionModel,
-        categories: { 'key1': 'testString' },
+        categories: { foo: 'bar' },
         semantic_roles: nluEnrichmentSemanticRolesModel,
         relations: nluEnrichmentRelationsModel,
         concepts: nluEnrichmentConceptsModel,
@@ -891,13 +891,13 @@ describe('DiscoveryV1', () => {
         const normalizations = [normalizationOperationModel];
         const source = sourceModel;
         const createConfigurationParams = {
-          environmentId: environmentId,
-          name: name,
-          description: description,
-          conversions: conversions,
-          enrichments: enrichments,
-          normalizations: normalizations,
-          source: source,
+          environmentId,
+          name,
+          description,
+          conversions,
+          enrichments,
+          normalizations,
+          source,
         };
 
         const createConfigurationResult = discoveryService.createConfiguration(createConfigurationParams);
@@ -991,8 +991,8 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const name = 'testString';
         const listConfigurationsParams = {
-          environmentId: environmentId,
-          name: name,
+          environmentId,
+          name,
         };
 
         const listConfigurationsResult = discoveryService.listConfigurations(listConfigurationsParams);
@@ -1079,8 +1079,8 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const configurationId = 'testString';
         const getConfigurationParams = {
-          environmentId: environmentId,
-          configurationId: configurationId,
+          environmentId,
+          configurationId,
         };
 
         const getConfigurationResult = discoveryService.getConfiguration(getConfigurationParams);
@@ -1295,7 +1295,7 @@ describe('DiscoveryV1', () => {
         entities: nluEnrichmentEntitiesModel,
         sentiment: nluEnrichmentSentimentModel,
         emotion: nluEnrichmentEmotionModel,
-        categories: { 'key1': 'testString' },
+        categories: { foo: 'bar' },
         semantic_roles: nluEnrichmentSemanticRolesModel,
         relations: nluEnrichmentRelationsModel,
         concepts: nluEnrichmentConceptsModel,
@@ -1392,14 +1392,14 @@ describe('DiscoveryV1', () => {
         const normalizations = [normalizationOperationModel];
         const source = sourceModel;
         const updateConfigurationParams = {
-          environmentId: environmentId,
-          configurationId: configurationId,
-          name: name,
-          description: description,
-          conversions: conversions,
-          enrichments: enrichments,
-          normalizations: normalizations,
-          source: source,
+          environmentId,
+          configurationId,
+          name,
+          description,
+          conversions,
+          enrichments,
+          normalizations,
+          source,
         };
 
         const updateConfigurationResult = discoveryService.updateConfiguration(updateConfigurationParams);
@@ -1496,8 +1496,8 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const configurationId = 'testString';
         const deleteConfigurationParams = {
-          environmentId: environmentId,
-          configurationId: configurationId,
+          environmentId,
+          configurationId,
         };
 
         const deleteConfigurationResult = discoveryService.deleteConfiguration(deleteConfigurationParams);
@@ -1589,11 +1589,11 @@ describe('DiscoveryV1', () => {
         const configurationId = 'testString';
         const language = 'en';
         const createCollectionParams = {
-          environmentId: environmentId,
-          name: name,
-          description: description,
-          configurationId: configurationId,
-          language: language,
+          environmentId,
+          name,
+          description,
+          configurationId,
+          language,
         };
 
         const createCollectionResult = discoveryService.createCollection(createCollectionParams);
@@ -1685,8 +1685,8 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const name = 'testString';
         const listCollectionsParams = {
-          environmentId: environmentId,
-          name: name,
+          environmentId,
+          name,
         };
 
         const listCollectionsResult = discoveryService.listCollections(listCollectionsParams);
@@ -1773,8 +1773,8 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const collectionId = 'testString';
         const getCollectionParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
+          environmentId,
+          collectionId,
         };
 
         const getCollectionResult = discoveryService.getCollection(getCollectionParams);
@@ -1866,11 +1866,11 @@ describe('DiscoveryV1', () => {
         const description = 'testString';
         const configurationId = 'testString';
         const updateCollectionParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
-          name: name,
-          description: description,
-          configurationId: configurationId,
+          environmentId,
+          collectionId,
+          name,
+          description,
+          configurationId,
         };
 
         const updateCollectionResult = discoveryService.updateCollection(updateCollectionParams);
@@ -1964,8 +1964,8 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const collectionId = 'testString';
         const deleteCollectionParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
+          environmentId,
+          collectionId,
         };
 
         const deleteCollectionResult = discoveryService.deleteCollection(deleteCollectionParams);
@@ -2054,8 +2054,8 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const collectionId = 'testString';
         const listCollectionFieldsParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
+          environmentId,
+          collectionId,
         };
 
         const listCollectionFieldsResult = discoveryService.listCollectionFields(listCollectionFieldsParams);
@@ -2144,8 +2144,8 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const collectionId = 'testString';
         const listExpansionsParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
+          environmentId,
+          collectionId,
         };
 
         const listExpansionsResult = discoveryService.listExpansions(listExpansionsParams);
@@ -2243,9 +2243,9 @@ describe('DiscoveryV1', () => {
         const collectionId = 'testString';
         const expansions = [expansionModel];
         const createExpansionsParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
-          expansions: expansions,
+          environmentId,
+          collectionId,
+          expansions,
         };
 
         const createExpansionsResult = discoveryService.createExpansions(createExpansionsParams);
@@ -2337,8 +2337,8 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const collectionId = 'testString';
         const deleteExpansionsParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
+          environmentId,
+          collectionId,
         };
 
         const deleteExpansionsResult = discoveryService.deleteExpansions(deleteExpansionsParams);
@@ -2427,8 +2427,8 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const collectionId = 'testString';
         const getTokenizationDictionaryStatusParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
+          environmentId,
+          collectionId,
         };
 
         const getTokenizationDictionaryStatusResult = discoveryService.getTokenizationDictionaryStatus(getTokenizationDictionaryStatusParams);
@@ -2528,9 +2528,9 @@ describe('DiscoveryV1', () => {
         const collectionId = 'testString';
         const tokenizationRules = [tokenDictRuleModel];
         const createTokenizationDictionaryParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
-          tokenizationRules: tokenizationRules,
+          environmentId,
+          collectionId,
+          tokenizationRules,
         };
 
         const createTokenizationDictionaryResult = discoveryService.createTokenizationDictionary(createTokenizationDictionaryParams);
@@ -2620,8 +2620,8 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const collectionId = 'testString';
         const deleteTokenizationDictionaryParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
+          environmentId,
+          collectionId,
         };
 
         const deleteTokenizationDictionaryResult = discoveryService.deleteTokenizationDictionary(deleteTokenizationDictionaryParams);
@@ -2710,8 +2710,8 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const collectionId = 'testString';
         const getStopwordListStatusParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
+          environmentId,
+          collectionId,
         };
 
         const getStopwordListStatusResult = discoveryService.getStopwordListStatus(getStopwordListStatusParams);
@@ -2802,10 +2802,10 @@ describe('DiscoveryV1', () => {
         const stopwordFile = Buffer.from('This is a mock file.');
         const stopwordFilename = 'testString';
         const createStopwordListParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
-          stopwordFile: stopwordFile,
-          stopwordFilename: stopwordFilename,
+          environmentId,
+          collectionId,
+          stopwordFile,
+          stopwordFilename,
         };
 
         const createStopwordListResult = discoveryService.createStopwordList(createStopwordListParams);
@@ -2901,8 +2901,8 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const collectionId = 'testString';
         const deleteStopwordListParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
+          environmentId,
+          collectionId,
         };
 
         const deleteStopwordListResult = discoveryService.deleteStopwordList(deleteStopwordListParams);
@@ -2995,12 +2995,12 @@ describe('DiscoveryV1', () => {
         const fileContentType = 'application/json';
         const metadata = 'testString';
         const addDocumentParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
-          file: file,
-          filename: filename,
-          fileContentType: fileContentType,
-          metadata: metadata,
+          environmentId,
+          collectionId,
+          file,
+          filename,
+          fileContentType,
+          metadata,
         };
 
         const addDocumentResult = discoveryService.addDocument(addDocumentParams);
@@ -3094,9 +3094,9 @@ describe('DiscoveryV1', () => {
         const collectionId = 'testString';
         const documentId = 'testString';
         const getDocumentStatusParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
-          documentId: documentId,
+          environmentId,
+          collectionId,
+          documentId,
         };
 
         const getDocumentStatusResult = discoveryService.getDocumentStatus(getDocumentStatusParams);
@@ -3193,13 +3193,13 @@ describe('DiscoveryV1', () => {
         const fileContentType = 'application/json';
         const metadata = 'testString';
         const updateDocumentParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
-          documentId: documentId,
-          file: file,
-          filename: filename,
-          fileContentType: fileContentType,
-          metadata: metadata,
+          environmentId,
+          collectionId,
+          documentId,
+          file,
+          filename,
+          fileContentType,
+          metadata,
         };
 
         const updateDocumentResult = discoveryService.updateDocument(updateDocumentParams);
@@ -3296,9 +3296,9 @@ describe('DiscoveryV1', () => {
         const collectionId = 'testString';
         const documentId = 'testString';
         const deleteDocumentParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
-          documentId: documentId,
+          environmentId,
+          collectionId,
+          documentId,
         };
 
         const deleteDocumentResult = discoveryService.deleteDocument(deleteDocumentParams);
@@ -3411,29 +3411,29 @@ describe('DiscoveryV1', () => {
         const spellingSuggestions = false;
         const xWatsonLoggingOptOut = false;
         const queryParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
-          filter: filter,
-          query: query,
-          naturalLanguageQuery: naturalLanguageQuery,
-          passages: passages,
-          aggregation: aggregation,
-          count: count,
-          _return: _return,
-          offset: offset,
-          sort: sort,
-          highlight: highlight,
-          passagesFields: passagesFields,
-          passagesCount: passagesCount,
-          passagesCharacters: passagesCharacters,
-          deduplicate: deduplicate,
-          deduplicateField: deduplicateField,
-          similar: similar,
-          similarDocumentIds: similarDocumentIds,
-          similarFields: similarFields,
-          bias: bias,
-          spellingSuggestions: spellingSuggestions,
-          xWatsonLoggingOptOut: xWatsonLoggingOptOut,
+          environmentId,
+          collectionId,
+          filter,
+          query,
+          naturalLanguageQuery,
+          passages,
+          aggregation,
+          count,
+          _return,
+          offset,
+          sort,
+          highlight,
+          passagesFields,
+          passagesCount,
+          passagesCharacters,
+          deduplicate,
+          deduplicateField,
+          similar,
+          similarDocumentIds,
+          similarFields,
+          bias,
+          spellingSuggestions,
+          xWatsonLoggingOptOut,
         };
 
         const queryResult = discoveryService.query(queryParams);
@@ -3560,25 +3560,25 @@ describe('DiscoveryV1', () => {
         const similarDocumentIds = ['testString'];
         const similarFields = ['testString'];
         const queryNoticesParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
-          filter: filter,
-          query: query,
-          naturalLanguageQuery: naturalLanguageQuery,
-          passages: passages,
-          aggregation: aggregation,
-          count: count,
-          _return: _return,
-          offset: offset,
-          sort: sort,
-          highlight: highlight,
-          passagesFields: passagesFields,
-          passagesCount: passagesCount,
-          passagesCharacters: passagesCharacters,
-          deduplicateField: deduplicateField,
-          similar: similar,
-          similarDocumentIds: similarDocumentIds,
-          similarFields: similarFields,
+          environmentId,
+          collectionId,
+          filter,
+          query,
+          naturalLanguageQuery,
+          passages,
+          aggregation,
+          count,
+          _return,
+          offset,
+          sort,
+          highlight,
+          passagesFields,
+          passagesCount,
+          passagesCharacters,
+          deduplicateField,
+          similar,
+          similarDocumentIds,
+          similarFields,
         };
 
         const queryNoticesResult = discoveryService.queryNotices(queryNoticesParams);
@@ -3704,28 +3704,28 @@ describe('DiscoveryV1', () => {
         const bias = 'testString';
         const xWatsonLoggingOptOut = false;
         const federatedQueryParams = {
-          environmentId: environmentId,
-          collectionIds: collectionIds,
-          filter: filter,
-          query: query,
-          naturalLanguageQuery: naturalLanguageQuery,
-          passages: passages,
-          aggregation: aggregation,
-          count: count,
-          _return: _return,
-          offset: offset,
-          sort: sort,
-          highlight: highlight,
-          passagesFields: passagesFields,
-          passagesCount: passagesCount,
-          passagesCharacters: passagesCharacters,
-          deduplicate: deduplicate,
-          deduplicateField: deduplicateField,
-          similar: similar,
-          similarDocumentIds: similarDocumentIds,
-          similarFields: similarFields,
-          bias: bias,
-          xWatsonLoggingOptOut: xWatsonLoggingOptOut,
+          environmentId,
+          collectionIds,
+          filter,
+          query,
+          naturalLanguageQuery,
+          passages,
+          aggregation,
+          count,
+          _return,
+          offset,
+          sort,
+          highlight,
+          passagesFields,
+          passagesCount,
+          passagesCharacters,
+          deduplicate,
+          deduplicateField,
+          similar,
+          similarDocumentIds,
+          similarFields,
+          bias,
+          xWatsonLoggingOptOut,
         };
 
         const federatedQueryResult = discoveryService.federatedQuery(federatedQueryParams);
@@ -3847,21 +3847,21 @@ describe('DiscoveryV1', () => {
         const similarDocumentIds = ['testString'];
         const similarFields = ['testString'];
         const federatedQueryNoticesParams = {
-          environmentId: environmentId,
-          collectionIds: collectionIds,
-          filter: filter,
-          query: query,
-          naturalLanguageQuery: naturalLanguageQuery,
-          aggregation: aggregation,
-          count: count,
-          _return: _return,
-          offset: offset,
-          sort: sort,
-          highlight: highlight,
-          deduplicateField: deduplicateField,
-          similar: similar,
-          similarDocumentIds: similarDocumentIds,
-          similarFields: similarFields,
+          environmentId,
+          collectionIds,
+          filter,
+          query,
+          naturalLanguageQuery,
+          aggregation,
+          count,
+          _return,
+          offset,
+          sort,
+          highlight,
+          deduplicateField,
+          similar,
+          similarDocumentIds,
+          similarFields,
         };
 
         const federatedQueryNoticesResult = discoveryService.federatedQueryNotices(federatedQueryNoticesParams);
@@ -3966,11 +3966,11 @@ describe('DiscoveryV1', () => {
         const field = 'testString';
         const count = 38;
         const getAutocompletionParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
-          prefix: prefix,
-          field: field,
-          count: count,
+          environmentId,
+          collectionId,
+          prefix,
+          field,
+          count,
         };
 
         const getAutocompletionResult = discoveryService.getAutocompletion(getAutocompletionParams);
@@ -4064,8 +4064,8 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const collectionId = 'testString';
         const listTrainingDataParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
+          environmentId,
+          collectionId,
         };
 
         const listTrainingDataResult = discoveryService.listTrainingData(listTrainingDataParams);
@@ -4166,11 +4166,11 @@ describe('DiscoveryV1', () => {
         const filter = 'testString';
         const examples = [trainingExampleModel];
         const addTrainingDataParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
-          naturalLanguageQuery: naturalLanguageQuery,
-          filter: filter,
-          examples: examples,
+          environmentId,
+          collectionId,
+          naturalLanguageQuery,
+          filter,
+          examples,
         };
 
         const addTrainingDataResult = discoveryService.addTrainingData(addTrainingDataParams);
@@ -4262,8 +4262,8 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const collectionId = 'testString';
         const deleteAllTrainingDataParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
+          environmentId,
+          collectionId,
         };
 
         const deleteAllTrainingDataResult = discoveryService.deleteAllTrainingData(deleteAllTrainingDataParams);
@@ -4353,9 +4353,9 @@ describe('DiscoveryV1', () => {
         const collectionId = 'testString';
         const queryId = 'testString';
         const getTrainingDataParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
-          queryId: queryId,
+          environmentId,
+          collectionId,
+          queryId,
         };
 
         const getTrainingDataResult = discoveryService.getTrainingData(getTrainingDataParams);
@@ -4448,9 +4448,9 @@ describe('DiscoveryV1', () => {
         const collectionId = 'testString';
         const queryId = 'testString';
         const deleteTrainingDataParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
-          queryId: queryId,
+          environmentId,
+          collectionId,
+          queryId,
         };
 
         const deleteTrainingDataResult = discoveryService.deleteTrainingData(deleteTrainingDataParams);
@@ -4543,9 +4543,9 @@ describe('DiscoveryV1', () => {
         const collectionId = 'testString';
         const queryId = 'testString';
         const listTrainingExamplesParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
-          queryId: queryId,
+          environmentId,
+          collectionId,
+          queryId,
         };
 
         const listTrainingExamplesResult = discoveryService.listTrainingExamples(listTrainingExamplesParams);
@@ -4641,12 +4641,12 @@ describe('DiscoveryV1', () => {
         const crossReference = 'testString';
         const relevance = 38;
         const createTrainingExampleParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
-          queryId: queryId,
-          documentId: documentId,
-          crossReference: crossReference,
-          relevance: relevance,
+          environmentId,
+          collectionId,
+          queryId,
+          documentId,
+          crossReference,
+          relevance,
         };
 
         const createTrainingExampleResult = discoveryService.createTrainingExample(createTrainingExampleParams);
@@ -4743,10 +4743,10 @@ describe('DiscoveryV1', () => {
         const queryId = 'testString';
         const exampleId = 'testString';
         const deleteTrainingExampleParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
-          queryId: queryId,
-          exampleId: exampleId,
+          environmentId,
+          collectionId,
+          queryId,
+          exampleId,
         };
 
         const deleteTrainingExampleResult = discoveryService.deleteTrainingExample(deleteTrainingExampleParams);
@@ -4845,12 +4845,12 @@ describe('DiscoveryV1', () => {
         const crossReference = 'testString';
         const relevance = 38;
         const updateTrainingExampleParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
-          queryId: queryId,
-          exampleId: exampleId,
-          crossReference: crossReference,
-          relevance: relevance,
+          environmentId,
+          collectionId,
+          queryId,
+          exampleId,
+          crossReference,
+          relevance,
         };
 
         const updateTrainingExampleResult = discoveryService.updateTrainingExample(updateTrainingExampleParams);
@@ -4949,10 +4949,10 @@ describe('DiscoveryV1', () => {
         const queryId = 'testString';
         const exampleId = 'testString';
         const getTrainingExampleParams = {
-          environmentId: environmentId,
-          collectionId: collectionId,
-          queryId: queryId,
-          exampleId: exampleId,
+          environmentId,
+          collectionId,
+          queryId,
+          exampleId,
         };
 
         const getTrainingExampleResult = discoveryService.getTrainingExample(getTrainingExampleParams);
@@ -5046,7 +5046,7 @@ describe('DiscoveryV1', () => {
         // Construct the params object for operation deleteUserData
         const customerId = 'testString';
         const deleteUserDataParams = {
-          customerId: customerId,
+          customerId,
         };
 
         const deleteUserDataResult = discoveryService.deleteUserData(deleteUserDataParams);
@@ -5144,8 +5144,8 @@ describe('DiscoveryV1', () => {
         const type = 'click';
         const data = eventDataModel;
         const createEventParams = {
-          type: type,
-          data: data,
+          type,
+          data,
         };
 
         const createEventResult = discoveryService.createEvent(createEventParams);
@@ -5237,11 +5237,11 @@ describe('DiscoveryV1', () => {
         const offset = 38;
         const sort = ['testString'];
         const queryLogParams = {
-          filter: filter,
-          query: query,
-          count: count,
-          offset: offset,
-          sort: sort,
+          filter,
+          query,
+          count,
+          offset,
+          sort,
         };
 
         const queryLogResult = discoveryService.queryLog(queryLogParams);
@@ -5312,9 +5312,9 @@ describe('DiscoveryV1', () => {
         const endTime = '2019-01-01T12:00:00.000Z';
         const resultType = 'document';
         const getMetricsQueryParams = {
-          startTime: startTime,
-          endTime: endTime,
-          resultType: resultType,
+          startTime,
+          endTime,
+          resultType,
         };
 
         const getMetricsQueryResult = discoveryService.getMetricsQuery(getMetricsQueryParams);
@@ -5383,9 +5383,9 @@ describe('DiscoveryV1', () => {
         const endTime = '2019-01-01T12:00:00.000Z';
         const resultType = 'document';
         const getMetricsQueryEventParams = {
-          startTime: startTime,
-          endTime: endTime,
-          resultType: resultType,
+          startTime,
+          endTime,
+          resultType,
         };
 
         const getMetricsQueryEventResult = discoveryService.getMetricsQueryEvent(getMetricsQueryEventParams);
@@ -5454,9 +5454,9 @@ describe('DiscoveryV1', () => {
         const endTime = '2019-01-01T12:00:00.000Z';
         const resultType = 'document';
         const getMetricsQueryNoResultsParams = {
-          startTime: startTime,
-          endTime: endTime,
-          resultType: resultType,
+          startTime,
+          endTime,
+          resultType,
         };
 
         const getMetricsQueryNoResultsResult = discoveryService.getMetricsQueryNoResults(getMetricsQueryNoResultsParams);
@@ -5525,9 +5525,9 @@ describe('DiscoveryV1', () => {
         const endTime = '2019-01-01T12:00:00.000Z';
         const resultType = 'document';
         const getMetricsEventRateParams = {
-          startTime: startTime,
-          endTime: endTime,
-          resultType: resultType,
+          startTime,
+          endTime,
+          resultType,
         };
 
         const getMetricsEventRateResult = discoveryService.getMetricsEventRate(getMetricsEventRateParams);
@@ -5594,7 +5594,7 @@ describe('DiscoveryV1', () => {
         // Construct the params object for operation getMetricsQueryTokenEvent
         const count = 38;
         const getMetricsQueryTokenEventParams = {
-          count: count,
+          count,
         };
 
         const getMetricsQueryTokenEventResult = discoveryService.getMetricsQueryTokenEvent(getMetricsQueryTokenEventParams);
@@ -5659,7 +5659,7 @@ describe('DiscoveryV1', () => {
         // Construct the params object for operation listCredentials
         const environmentId = 'testString';
         const listCredentialsParams = {
-          environmentId: environmentId,
+          environmentId,
         };
 
         const listCredentialsResult = discoveryService.listCredentials(listCredentialsParams);
@@ -5778,10 +5778,10 @@ describe('DiscoveryV1', () => {
         const credentialDetails = credentialDetailsModel;
         const status = statusDetailsModel;
         const createCredentialsParams = {
-          environmentId: environmentId,
-          sourceType: sourceType,
-          credentialDetails: credentialDetails,
-          status: status,
+          environmentId,
+          sourceType,
+          credentialDetails,
+          status,
         };
 
         const createCredentialsResult = discoveryService.createCredentials(createCredentialsParams);
@@ -5870,8 +5870,8 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const credentialId = 'testString';
         const getCredentialsParams = {
-          environmentId: environmentId,
-          credentialId: credentialId,
+          environmentId,
+          credentialId,
         };
 
         const getCredentialsResult = discoveryService.getCredentials(getCredentialsParams);
@@ -5994,11 +5994,11 @@ describe('DiscoveryV1', () => {
         const credentialDetails = credentialDetailsModel;
         const status = statusDetailsModel;
         const updateCredentialsParams = {
-          environmentId: environmentId,
-          credentialId: credentialId,
-          sourceType: sourceType,
-          credentialDetails: credentialDetails,
-          status: status,
+          environmentId,
+          credentialId,
+          sourceType,
+          credentialDetails,
+          status,
         };
 
         const updateCredentialsResult = discoveryService.updateCredentials(updateCredentialsParams);
@@ -6090,8 +6090,8 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const credentialId = 'testString';
         const deleteCredentialsParams = {
-          environmentId: environmentId,
-          credentialId: credentialId,
+          environmentId,
+          credentialId,
         };
 
         const deleteCredentialsResult = discoveryService.deleteCredentials(deleteCredentialsParams);
@@ -6179,7 +6179,7 @@ describe('DiscoveryV1', () => {
         // Construct the params object for operation listGateways
         const environmentId = 'testString';
         const listGatewaysParams = {
-          environmentId: environmentId,
+          environmentId,
         };
 
         const listGatewaysResult = discoveryService.listGateways(listGatewaysParams);
@@ -6265,8 +6265,8 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const name = 'testString';
         const createGatewayParams = {
-          environmentId: environmentId,
-          name: name,
+          environmentId,
+          name,
         };
 
         const createGatewayResult = discoveryService.createGateway(createGatewayParams);
@@ -6353,8 +6353,8 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const gatewayId = 'testString';
         const getGatewayParams = {
-          environmentId: environmentId,
-          gatewayId: gatewayId,
+          environmentId,
+          gatewayId,
         };
 
         const getGatewayResult = discoveryService.getGateway(getGatewayParams);
@@ -6443,8 +6443,8 @@ describe('DiscoveryV1', () => {
         const environmentId = 'testString';
         const gatewayId = 'testString';
         const deleteGatewayParams = {
-          environmentId: environmentId,
-          gatewayId: gatewayId,
+          environmentId,
+          gatewayId,
         };
 
         const deleteGatewayResult = discoveryService.deleteGateway(deleteGatewayParams);
