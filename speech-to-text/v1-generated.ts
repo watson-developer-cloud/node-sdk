@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2017, 2022.
+ * (C) Copyright IBM Corp. 2017, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.53.0-9710cac3-20220713-193508
+ * IBM OpenAPI SDK Code Generator Version: 3.64.1-cee95189-20230124-211647
  */
 
 import * as extend from 'extend';
@@ -31,7 +31,7 @@ import { getSdkHeaders } from '../lib/common';
 
 /**
  * The IBM Watson&trade; Speech to Text service provides APIs that use IBM's speech-recognition capabilities to produce
- * transcripts of spoken audio.  The service can transcribe speech from various languages and audio formats. In addition
+ * transcripts of spoken audio. The service can transcribe speech from various languages and audio formats. In addition
  * to basic transcription, the service can produce detailed information about many different aspects of the audio. It
  * returns all JSON response content in the UTF-8 character set.
  *
@@ -41,9 +41,9 @@ import { getSdkHeaders } from '../lib/common';
  * minimum sampling rates of 8 kHz. The next-generation models offer high throughput and greater transcription accuracy.
  *
  *
- * Effective 15 March 2022, previous-generation models for all languages other than Arabic and Japanese are deprecated.
- * The deprecated models remain available until 15 September 2022, when they will be removed from the service and the
- * documentation. You must migrate to the equivalent next-generation model by the end of service date. For more
+ * Effective **15 March 2022**, previous-generation models for all languages other than Arabic and Japanese are
+ * deprecated. The deprecated models remain available until **31 July 2023**, when they will be removed from the service
+ * and the documentation. You must migrate to the equivalent next-generation model by the end of service date. For more
  * information, see [Migrating to next-generation
  * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-migrate).{: deprecated}
  *
@@ -162,8 +162,7 @@ class SpeechToTextV1 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.modelId - The identifier of the model in the form of its name from the output of the [List
-   * models](#listmodels) method. (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel`
-   * instead.).
+   * models](#listmodels) method.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechModel>>}
    */
@@ -287,14 +286,13 @@ class SpeechToTextV1 extends BaseService {
    * previous-generation models. Next-generation models do not support the following parameters:
    * * `acoustic_customization_id`
    * * `keywords` and `keywords_threshold`
-   * * `max_alternatives`
    * * `processing_metrics` and `processing_metrics_interval`
    * * `word_alternatives_threshold`
    *
-   * **Important:** Effective 15 March 2022, previous-generation models for all languages other than Arabic and Japanese
-   * are deprecated. The deprecated models remain available until 15 September 2022, when they will be removed from the
-   * service and the documentation. You must migrate to the equivalent next-generation model by the end of service date.
-   * For more information, see [Migrating to next-generation
+   * **Important:** Effective **15 March 2022**, previous-generation models for all languages other than Arabic and
+   * Japanese are deprecated. The deprecated models remain available until **31 July 2023**, when they will be removed
+   * from the service and the documentation. You must migrate to the equivalent next-generation model by the end of
+   * service date. For more information, see [Migrating to next-generation
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-migrate).
    *
    * **See also:**
@@ -324,15 +322,14 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} [params.contentType] - The format (MIME type) of the audio. For more information about specifying
    * an audio format, see **Audio formats (content types)** in the method description.
    * @param {string} [params.model] - The model to use for speech recognition. If you omit the `model` parameter, the
-   * service uses the US English `en-US_BroadbandModel` by default. (The model `ar-AR_BroadbandModel` is deprecated; use
-   * `ar-MS_BroadbandModel` instead.)
+   * service uses the US English `en-US_BroadbandModel` by default.
    *
    * _For IBM Cloud Pak for Data,_ if you do not install the `en-US_BroadbandModel`, you must either specify a model
    * with the request or specify a new default model for your installation of the service.
    *
    * **See also:**
    * * [Using a model for speech recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use)
-   * * [The default
+   * * [Using the default
    * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use#models-use-default).
    * @param {string} [params.languageCustomizationId] - The customization ID (GUID) of a custom language model that is
    * to be used with the recognition request. The base model of the specified custom language model must match the model
@@ -714,11 +711,11 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.callbackUrl - The callback URL that is to be unregistered.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
+   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>>}
    */
   public unregisterCallback(
     params: SpeechToTextV1.UnregisterCallbackParams
-  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['callbackUrl'];
     const _validParams = ['callbackUrl', 'headers'];
@@ -854,14 +851,13 @@ class SpeechToTextV1 extends BaseService {
    * previous-generation models. Next-generation models do not support the following parameters:
    * * `acoustic_customization_id`
    * * `keywords` and `keywords_threshold`
-   * * `max_alternatives`
    * * `processing_metrics` and `processing_metrics_interval`
    * * `word_alternatives_threshold`
    *
-   * **Important:** Effective 15 March 2022, previous-generation models for all languages other than Arabic and Japanese
-   * are deprecated. The deprecated models remain available until 15 September 2022, when they will be removed from the
-   * service and the documentation. You must migrate to the equivalent next-generation model by the end of service date.
-   * For more information, see  [Migrating to next-generation
+   * **Important:** Effective **15 March 2022**, previous-generation models for all languages other than Arabic and
+   * Japanese are deprecated. The deprecated models remain available until **31 July 2023**, when they will be removed
+   * from the service and the documentation. You must migrate to the equivalent next-generation model by the end of
+   * service date. For more information, see  [Migrating to next-generation
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-migrate).
    *
    * **See also:**
@@ -874,15 +870,14 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} [params.contentType] - The format (MIME type) of the audio. For more information about specifying
    * an audio format, see **Audio formats (content types)** in the method description.
    * @param {string} [params.model] - The model to use for speech recognition. If you omit the `model` parameter, the
-   * service uses the US English `en-US_BroadbandModel` by default. (The model `ar-AR_BroadbandModel` is deprecated; use
-   * `ar-MS_BroadbandModel` instead.)
+   * service uses the US English `en-US_BroadbandModel` by default.
    *
    * _For IBM Cloud Pak for Data,_ if you do not install the `en-US_BroadbandModel`, you must either specify a model
    * with the request or specify a new default model for your installation of the service.
    *
    * **See also:**
    * * [Using a model for speech recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use)
-   * * [The default
+   * * [Using the default
    * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use#models-use-default).
    * @param {string} [params.callbackUrl] - A URL to which callback notifications are to be sent. The URL must already
    * be successfully allowlisted by using the [Register a callback](#registercallback) method. You can include the same
@@ -1347,11 +1342,11 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} params.id - The identifier of the asynchronous job that is to be used for the request. You must
    * make the request with credentials for the instance of the service that owns the job.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
+   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>>}
    */
   public deleteJob(
     params: SpeechToTextV1.DeleteJobParams
-  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['id'];
     const _validParams = ['id', 'headers'];
@@ -1404,10 +1399,10 @@ class SpeechToTextV1 extends BaseService {
    * attempt to create more than 1024 models. You do not lose any models, but you cannot create any more until your
    * model count is below the limit.
    *
-   * **Important:** Effective 15 March 2022, previous-generation models for all languages other than Arabic and Japanese
-   * are deprecated. The deprecated models remain available until 15 September 2022, when they will be removed from the
-   * service and the documentation. You must migrate to the equivalent next-generation model by the end of service date.
-   * For more information, see [Migrating to next-generation
+   * **Important:** Effective **15 March 2022**, previous-generation models for all languages other than Arabic and
+   * Japanese are deprecated. The deprecated models remain available until **31 July 2023**, when they will be removed
+   * from the service and the documentation. You must migrate to the equivalent next-generation model by the end of
+   * service date. For more information, see [Migrating to next-generation
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-migrate).
    *
    * **See also:**
@@ -1417,9 +1412,13 @@ class SpeechToTextV1 extends BaseService {
    * customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-support).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.name - A user-defined name for the new custom language model. Use a name that is unique
-   * among all custom language models that you own. Use a localized name that matches the language of the custom model.
-   * Use a name that describes the domain of the custom model, such as `Medical custom model` or `Legal custom model`.
+   * @param {string} params.name - A user-defined name for the new custom language model. Use a localized name that
+   * matches the language of the custom model. Use a name that describes the domain of the custom model, such as
+   * `Medical custom model` or `Legal custom model`. Use a name that is unique among all custom language models that you
+   * own.
+   *
+   * Include a maximum of 256 characters in the name. Do not use backslashes, slashes, colons, equal signs, ampersands,
+   * or question marks in the name.
    * @param {string} params.baseModelName - The name of the base language model that is to be customized by the new
    * custom language model. The new custom model can be used only with the base model that it customizes.
    *
@@ -1440,8 +1439,8 @@ class SpeechToTextV1 extends BaseService {
    * * `es-US` for Mexican (North American) Spanish (`es-MX` models)
    *
    * All values that you pass for the `dialect` field are case-insensitive.
-   * @param {string} [params.description] - A description of the new custom language model. Use a localized description
-   * that matches the language of the custom model.
+   * @param {string} [params.description] - A recommended description of the new custom language model. Use a localized
+   * description that matches the language of the custom model. Include a maximum of 128 characters in the description.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.LanguageModel>>}
    */
@@ -1509,8 +1508,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} [params.language] - The identifier of the language for which custom language or custom acoustic
    * models are to be returned. Specify the five-character language identifier; for example, specify `en-US` to see all
    * custom language or custom acoustic models that are based on US English models. Omit the parameter to see all custom
-   * language or custom acoustic models that are owned by the requesting credentials. (**Note:** The identifier `ar-AR`
-   * is deprecated; use `ar-MS` instead.)
+   * language or custom acoustic models that are owned by the requesting credentials.
    *
    * To determine the languages for which customization is available, see [Language support for
    * customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-support).
@@ -1638,11 +1636,11 @@ class SpeechToTextV1 extends BaseService {
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
+   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>>}
    */
   public deleteLanguageModel(
     params: SpeechToTextV1.DeleteLanguageModelParams
-  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId'];
     const _validParams = ['customizationId', 'headers'];
@@ -1696,10 +1694,13 @@ class SpeechToTextV1 extends BaseService {
    * response code to indicate that the training process has begun.
    *
    * You can monitor the status of the training by using the [Get a custom language model](#getlanguagemodel) method to
-   * poll the model's status. Use a loop to check the status every 10 seconds. The method returns a `LanguageModel`
-   * object that includes `status` and `progress` fields. A status of `available` means that the custom model is trained
-   * and ready to use. The service cannot accept subsequent training requests or requests to add new resources until the
-   * existing request completes.
+   * poll the model's status. Use a loop to check the status every 10 seconds. If you added custom words directly to a
+   * custom model that is based on a next-generation model, allow for some minutes of extra training time for the model.
+   *
+   *
+   * The method returns a `LanguageModel` object that includes `status` and `progress` fields. A status of `available`
+   * means that the custom model is trained and ready to use. The service cannot accept subsequent training requests or
+   * requests to add new resources until the existing request completes.
    *
    * **See also:**
    * * [Train the custom language
@@ -1819,11 +1820,11 @@ class SpeechToTextV1 extends BaseService {
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
+   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>>}
    */
   public resetLanguageModel(
     params: SpeechToTextV1.ResetLanguageModelParams
-  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId'];
     const _validParams = ['customizationId', 'headers'];
@@ -1891,11 +1892,11 @@ class SpeechToTextV1 extends BaseService {
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
+   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>>}
    */
   public upgradeLanguageModel(
     params: SpeechToTextV1.UpgradeLanguageModelParams
-  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId'];
     const _validParams = ['customizationId', 'headers'];
@@ -2077,11 +2078,11 @@ class SpeechToTextV1 extends BaseService {
    * same name. If `false`, the request fails if a corpus with the same name already exists. The parameter has no effect
    * if a corpus with the same name does not already exist.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
+   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>>}
    */
   public addCorpus(
     params: SpeechToTextV1.AddCorpusParams
-  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId', 'corpusName', 'corpusFile'];
     const _validParams = ['customizationId', 'corpusName', 'corpusFile', 'allowOverwrite', 'headers'];
@@ -2221,11 +2222,11 @@ class SpeechToTextV1 extends BaseService {
    * custom model.
    * @param {string} params.corpusName - The name of the corpus for the custom language model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
+   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>>}
    */
   public deleteCorpus(
     params: SpeechToTextV1.DeleteCorpusParams
-  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId', 'corpusName'];
     const _validParams = ['customizationId', 'corpusName', 'headers'];
@@ -2422,11 +2423,11 @@ class SpeechToTextV1 extends BaseService {
    * @param {CustomWord[]} params.words - An array of `CustomWord` objects that provides information about each custom
    * word that is to be added to or updated in the custom language model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
+   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>>}
    */
   public addWords(
     params: SpeechToTextV1.AddWordsParams
-  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId', 'words'];
     const _validParams = ['customizationId', 'words', 'headers'];
@@ -2547,11 +2548,11 @@ class SpeechToTextV1 extends BaseService {
    * _For custom models that are based on next-generation models_, the service uses the spelling of the word as the
    * display-as value if you omit the field.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
+   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>>}
    */
   public addWord(
     params: SpeechToTextV1.AddWordParams
-  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId', 'wordName'];
     const _validParams = ['customizationId', 'wordName', 'word', 'soundsLike', 'displayAs', 'headers'];
@@ -2682,11 +2683,11 @@ class SpeechToTextV1 extends BaseService {
    * the word if it includes non-ASCII characters. For more information, see [Character
    * encoding](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corporaWords#charEncoding).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
+   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>>}
    */
   public deleteWord(
     params: SpeechToTextV1.DeleteWordParams
-  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId', 'wordName'];
     const _validParams = ['customizationId', 'wordName', 'headers'];
@@ -2861,11 +2862,11 @@ class SpeechToTextV1 extends BaseService {
    * same name. If `false`, the request fails if a grammar with the same name already exists. The parameter has no
    * effect if a grammar with the same name does not already exist.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
+   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>>}
    */
   public addGrammar(
     params: SpeechToTextV1.AddGrammarParams
-  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId', 'grammarName', 'grammarFile', 'contentType'];
     const _validParams = ['customizationId', 'grammarName', 'grammarFile', 'contentType', 'allowOverwrite', 'headers'];
@@ -3000,11 +3001,11 @@ class SpeechToTextV1 extends BaseService {
    * custom model.
    * @param {string} params.grammarName - The name of the grammar for the custom language model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
+   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>>}
    */
   public deleteGrammar(
     params: SpeechToTextV1.DeleteGrammarParams
-  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId', 'grammarName'];
     const _validParams = ['customizationId', 'grammarName', 'headers'];
@@ -3062,28 +3063,30 @@ class SpeechToTextV1 extends BaseService {
    * **Note:** Acoustic model customization is supported only for use with previous-generation models. It is not
    * supported for next-generation models.
    *
-   * **Important:** Effective 15 March 2022, previous-generation models for all languages other than Arabic and Japanese
-   * are deprecated. The deprecated models remain available until 15 September 2022, when they will be removed from the
-   * service and the documentation. You must migrate to the equivalent next-generation model by the end of service date.
-   * For more information, see [Migrating to next-generation
+   * **Important:** Effective **15 March 2022**, previous-generation models for all languages other than Arabic and
+   * Japanese are deprecated. The deprecated models remain available until **31 July 2023**, when they will be removed
+   * from the service and the documentation. You must migrate to the equivalent next-generation model by the end of
+   * service date. For more information, see [Migrating to next-generation
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-migrate).
    *
    * **See also:** [Create a custom acoustic
    * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-acoustic#createModel-acoustic).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.name - A user-defined name for the new custom acoustic model. Use a name that is unique
-   * among all custom acoustic models that you own. Use a localized name that matches the language of the custom model.
-   * Use a name that describes the acoustic environment of the custom model, such as `Mobile custom model` or `Noisy car
-   * custom model`.
+   * @param {string} params.name - A user-defined name for the new custom acoustic model. Use a localized name that
+   * matches the language of the custom model. Use a name that describes the acoustic environment of the custom model,
+   * such as `Mobile custom model` or `Noisy car custom model`. Use a name that is unique among all custom acoustic
+   * models that you own.
+   *
+   * Include a maximum of 256 characters in the name. Do not use backslashes, slashes, colons, equal signs, ampersands,
+   * or question marks in the name.
    * @param {string} params.baseModelName - The name of the base language model that is to be customized by the new
-   * custom acoustic model. The new custom model can be used only with the base model that it customizes. (**Note:** The
-   * model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.)
+   * custom acoustic model. The new custom model can be used only with the base model that it customizes.
    *
    * To determine whether a base model supports acoustic model customization, refer to [Language support for
    * customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-support).
-   * @param {string} [params.description] - A description of the new custom acoustic model. Use a localized description
-   * that matches the language of the custom model.
+   * @param {string} [params.description] - A recommended description of the new custom acoustic model. Use a localized
+   * description that matches the language of the custom model. Include a maximum of 128 characters in the description.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.AcousticModel>>}
    */
@@ -3150,8 +3153,7 @@ class SpeechToTextV1 extends BaseService {
    * @param {string} [params.language] - The identifier of the language for which custom language or custom acoustic
    * models are to be returned. Specify the five-character language identifier; for example, specify `en-US` to see all
    * custom language or custom acoustic models that are based on US English models. Omit the parameter to see all custom
-   * language or custom acoustic models that are owned by the requesting credentials. (**Note:** The identifier `ar-AR`
-   * is deprecated; use `ar-MS` instead.)
+   * language or custom acoustic models that are owned by the requesting credentials.
    *
    * To determine the languages for which customization is available, see [Language support for
    * customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-support).
@@ -3279,11 +3281,11 @@ class SpeechToTextV1 extends BaseService {
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
+   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>>}
    */
   public deleteAcousticModel(
     params: SpeechToTextV1.DeleteAcousticModelParams
-  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId'];
     const _validParams = ['customizationId', 'headers'];
@@ -3366,7 +3368,11 @@ class SpeechToTextV1 extends BaseService {
    *  Training can fail to start for the following reasons:
    * * The service is currently handling another request for the custom model, such as another training request or a
    * request to add audio resources to the model.
-   * * The custom model contains less than 10 minutes or more than 200 hours of audio data.
+   * * The custom model contains less than 10 minutes of audio that includes speech, not silence.
+   * * The custom model contains more than 50 hours of audio (for IBM Cloud) or more that 200 hours of audio (for IBM
+   * Cloud Pak for Data). **Note:** For IBM Cloud, the maximum hours of audio for a custom acoustic model was reduced
+   * from 200 to 50 hours in August and September 2022. For more information, see [Maximum hours of
+   * audio](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-audioResources#audioMaximum).
    * * You passed a custom language model with the `custom_language_model_id` query parameter that is not in the
    * available state. A custom language model must be fully trained and available to be used to train a custom acoustic
    * model.
@@ -3462,11 +3468,11 @@ class SpeechToTextV1 extends BaseService {
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
+   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>>}
    */
   public resetAcousticModel(
     params: SpeechToTextV1.ResetAcousticModelParams
-  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId'];
     const _validParams = ['customizationId', 'headers'];
@@ -3550,11 +3556,11 @@ class SpeechToTextV1 extends BaseService {
    * input data modified since last training`. See [Upgrading a custom acoustic
    * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-upgrade#custom-upgrade-acoustic).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
+   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>>}
    */
   public upgradeAcousticModel(
     params: SpeechToTextV1.UpgradeAcousticModelParams
-  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId'];
     const _validParams = ['customizationId', 'customLanguageModelId', 'force', 'headers'];
@@ -3681,10 +3687,13 @@ class SpeechToTextV1 extends BaseService {
    *
    * You can use this method to add any number of audio resources to a custom model by calling the method once for each
    * audio or archive file. You can add multiple different audio resources at the same time. You must add a minimum of
-   * 10 minutes and a maximum of 200 hours of audio that includes speech, not just silence, to a custom acoustic model
-   * before you can train it. No audio resource, audio- or archive-type, can be larger than 100 MB. To add an audio
-   * resource that has the same name as an existing audio resource, set the `allow_overwrite` parameter to `true`;
-   * otherwise, the request fails.
+   * 10 minutes of audio that includes speech, not just silence, to a custom acoustic model before you can train it. No
+   * audio resource, audio- or archive-type, can be larger than 100 MB. To add an audio resource that has the same name
+   * as an existing audio resource, set the `allow_overwrite` parameter to `true`; otherwise, the request fails. A
+   * custom model can contain no more than 50 hours of audio (for IBM Cloud) or 200 hours of audio (for IBM Cloud Pak
+   * for Data). **Note:** For IBM Cloud, the maximum hours of audio for a custom acoustic model was reduced from 200 to
+   * 50 hours in August and September 2022. For more information, see [Maximum hours of
+   * audio](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-audioResources#audioMaximum).
    *
    * The method is asynchronous. It can take several seconds or minutes to complete depending on the duration of the
    * audio and, in the case of an archive file, the total number of audio files being processed. The service returns a
@@ -3796,11 +3805,11 @@ class SpeechToTextV1 extends BaseService {
    * resource with the same name. If `false`, the request fails if an audio resource with the same name already exists.
    * The parameter has no effect if an audio resource with the same name does not already exist.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
+   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>>}
    */
   public addAudio(
     params: SpeechToTextV1.AddAudioParams
-  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId', 'audioName', 'audioResource'];
     const _validParams = ['customizationId', 'audioName', 'audioResource', 'contentType', 'containedContentType', 'allowOverwrite', 'headers'];
@@ -3949,11 +3958,11 @@ class SpeechToTextV1 extends BaseService {
    * custom model.
    * @param {string} params.audioName - The name of the audio resource for the custom acoustic model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
+   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>>}
    */
   public deleteAudio(
     params: SpeechToTextV1.DeleteAudioParams
-  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId', 'audioName'];
     const _validParams = ['customizationId', 'audioName', 'headers'];
@@ -4017,11 +4026,11 @@ class SpeechToTextV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customerId - The customer ID for which all data is to be deleted.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>>}
+   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>>}
    */
   public deleteUserData(
     params: SpeechToTextV1.DeleteUserDataParams
-  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.Empty>> {
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customerId'];
     const _validParams = ['customerId', 'headers'];
@@ -4078,7 +4087,7 @@ namespace SpeechToTextV1 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty {}
+  export interface EmptyObject {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -4097,7 +4106,7 @@ namespace SpeechToTextV1 {
   /** Parameters for the `getModel` operation. */
   export interface GetModelParams {
     /** The identifier of the model in the form of its name from the output of the [List models](#listmodels)
-     *  method. (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.).
+     *  method.
      */
     modelId: GetModelConstants.ModelId | string;
     headers?: OutgoingHttpHeaders;
@@ -4105,9 +4114,8 @@ namespace SpeechToTextV1 {
 
   /** Constants for the `getModel` operation. */
   export namespace GetModelConstants {
-    /** The identifier of the model in the form of its name from the output of the [List models](#listmodels) method. (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.). */
+    /** The identifier of the model in the form of its name from the output of the [List models](#listmodels) method. */
     export enum ModelId {
-      AR_AR_BROADBANDMODEL = 'ar-AR_BroadbandModel',
       AR_MS_BROADBANDMODEL = 'ar-MS_BroadbandModel',
       AR_MS_TELEPHONY = 'ar-MS_Telephony',
       CS_CZ_TELEPHONY = 'cs-CZ_Telephony',
@@ -4146,6 +4154,7 @@ namespace SpeechToTextV1 {
       ES_PE_BROADBANDMODEL = 'es-PE_BroadbandModel',
       ES_PE_NARROWBANDMODEL = 'es-PE_NarrowbandModel',
       FR_CA_BROADBANDMODEL = 'fr-CA_BroadbandModel',
+      FR_CA_MULTIMEDIA = 'fr-CA_Multimedia',
       FR_CA_NARROWBANDMODEL = 'fr-CA_NarrowbandModel',
       FR_CA_TELEPHONY = 'fr-CA_Telephony',
       FR_FR_BROADBANDMODEL = 'fr-FR_BroadbandModel',
@@ -4166,12 +4175,14 @@ namespace SpeechToTextV1 {
       KO_KR_TELEPHONY = 'ko-KR_Telephony',
       NL_BE_TELEPHONY = 'nl-BE_Telephony',
       NL_NL_BROADBANDMODEL = 'nl-NL_BroadbandModel',
+      NL_NL_MULTIMEDIA = 'nl-NL_Multimedia',
       NL_NL_NARROWBANDMODEL = 'nl-NL_NarrowbandModel',
       NL_NL_TELEPHONY = 'nl-NL_Telephony',
       PT_BR_BROADBANDMODEL = 'pt-BR_BroadbandModel',
       PT_BR_MULTIMEDIA = 'pt-BR_Multimedia',
       PT_BR_NARROWBANDMODEL = 'pt-BR_NarrowbandModel',
       PT_BR_TELEPHONY = 'pt-BR_Telephony',
+      SV_SE_TELEPHONY = 'sv-SE_Telephony',
       ZH_CN_BROADBANDMODEL = 'zh-CN_BroadbandModel',
       ZH_CN_NARROWBANDMODEL = 'zh-CN_NarrowbandModel',
       ZH_CN_TELEPHONY = 'zh-CN_Telephony',
@@ -4187,8 +4198,7 @@ namespace SpeechToTextV1 {
      */
     contentType?: RecognizeConstants.ContentType | string;
     /** The model to use for speech recognition. If you omit the `model` parameter, the service uses the US English
-     *  `en-US_BroadbandModel` by default. (The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel`
-     *  instead.)
+     *  `en-US_BroadbandModel` by default.
      *
      *  _For IBM Cloud Pak for Data,_ if you do not install the `en-US_BroadbandModel`, you must either specify a model
      *  with the request or specify a new default model for your installation of the service.
@@ -4196,7 +4206,7 @@ namespace SpeechToTextV1 {
      *  **See also:**
      *  * [Using a model for speech
      *  recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use)
-     *  * [The default
+     *  * [Using the default
      *  model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use#models-use-default).
      */
     model?: RecognizeConstants.Model | string;
@@ -4472,9 +4482,8 @@ namespace SpeechToTextV1 {
       AUDIO_WEBM_CODECS_OPUS = 'audio/webm;codecs=opus',
       AUDIO_WEBM_CODECS_VORBIS = 'audio/webm;codecs=vorbis',
     }
-    /** The model to use for speech recognition. If you omit the `model` parameter, the service uses the US English `en-US_BroadbandModel` by default. (The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) _For IBM Cloud Pak for Data,_ if you do not install the `en-US_BroadbandModel`, you must either specify a model with the request or specify a new default model for your installation of the service. **See also:** * [Using a model for speech recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use) * [The default model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use#models-use-default). */
+    /** The model to use for speech recognition. If you omit the `model` parameter, the service uses the US English `en-US_BroadbandModel` by default. _For IBM Cloud Pak for Data,_ if you do not install the `en-US_BroadbandModel`, you must either specify a model with the request or specify a new default model for your installation of the service. **See also:** * [Using a model for speech recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use) * [Using the default model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use#models-use-default). */
     export enum Model {
-      AR_AR_BROADBANDMODEL = 'ar-AR_BroadbandModel',
       AR_MS_BROADBANDMODEL = 'ar-MS_BroadbandModel',
       AR_MS_TELEPHONY = 'ar-MS_Telephony',
       CS_CZ_TELEPHONY = 'cs-CZ_Telephony',
@@ -4513,6 +4522,7 @@ namespace SpeechToTextV1 {
       ES_PE_BROADBANDMODEL = 'es-PE_BroadbandModel',
       ES_PE_NARROWBANDMODEL = 'es-PE_NarrowbandModel',
       FR_CA_BROADBANDMODEL = 'fr-CA_BroadbandModel',
+      FR_CA_MULTIMEDIA = 'fr-CA_Multimedia',
       FR_CA_NARROWBANDMODEL = 'fr-CA_NarrowbandModel',
       FR_CA_TELEPHONY = 'fr-CA_Telephony',
       FR_FR_BROADBANDMODEL = 'fr-FR_BroadbandModel',
@@ -4533,12 +4543,14 @@ namespace SpeechToTextV1 {
       KO_KR_TELEPHONY = 'ko-KR_Telephony',
       NL_BE_TELEPHONY = 'nl-BE_Telephony',
       NL_NL_BROADBANDMODEL = 'nl-NL_BroadbandModel',
+      NL_NL_MULTIMEDIA = 'nl-NL_Multimedia',
       NL_NL_NARROWBANDMODEL = 'nl-NL_NarrowbandModel',
       NL_NL_TELEPHONY = 'nl-NL_Telephony',
       PT_BR_BROADBANDMODEL = 'pt-BR_BroadbandModel',
       PT_BR_MULTIMEDIA = 'pt-BR_Multimedia',
       PT_BR_NARROWBANDMODEL = 'pt-BR_NarrowbandModel',
       PT_BR_TELEPHONY = 'pt-BR_Telephony',
+      SV_SE_TELEPHONY = 'sv-SE_Telephony',
       ZH_CN_BROADBANDMODEL = 'zh-CN_BroadbandModel',
       ZH_CN_NARROWBANDMODEL = 'zh-CN_NarrowbandModel',
       ZH_CN_TELEPHONY = 'zh-CN_Telephony',
@@ -4577,8 +4589,7 @@ namespace SpeechToTextV1 {
      */
     contentType?: CreateJobConstants.ContentType | string;
     /** The model to use for speech recognition. If you omit the `model` parameter, the service uses the US English
-     *  `en-US_BroadbandModel` by default. (The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel`
-     *  instead.)
+     *  `en-US_BroadbandModel` by default.
      *
      *  _For IBM Cloud Pak for Data,_ if you do not install the `en-US_BroadbandModel`, you must either specify a model
      *  with the request or specify a new default model for your installation of the service.
@@ -4586,7 +4597,7 @@ namespace SpeechToTextV1 {
      *  **See also:**
      *  * [Using a model for speech
      *  recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use)
-     *  * [The default
+     *  * [Using the default
      *  model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use#models-use-default).
      */
     model?: CreateJobConstants.Model | string;
@@ -4921,9 +4932,8 @@ namespace SpeechToTextV1 {
       AUDIO_WEBM_CODECS_OPUS = 'audio/webm;codecs=opus',
       AUDIO_WEBM_CODECS_VORBIS = 'audio/webm;codecs=vorbis',
     }
-    /** The model to use for speech recognition. If you omit the `model` parameter, the service uses the US English `en-US_BroadbandModel` by default. (The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) _For IBM Cloud Pak for Data,_ if you do not install the `en-US_BroadbandModel`, you must either specify a model with the request or specify a new default model for your installation of the service. **See also:** * [Using a model for speech recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use) * [The default model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use#models-use-default). */
+    /** The model to use for speech recognition. If you omit the `model` parameter, the service uses the US English `en-US_BroadbandModel` by default. _For IBM Cloud Pak for Data,_ if you do not install the `en-US_BroadbandModel`, you must either specify a model with the request or specify a new default model for your installation of the service. **See also:** * [Using a model for speech recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use) * [Using the default model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use#models-use-default). */
     export enum Model {
-      AR_AR_BROADBANDMODEL = 'ar-AR_BroadbandModel',
       AR_MS_BROADBANDMODEL = 'ar-MS_BroadbandModel',
       AR_MS_TELEPHONY = 'ar-MS_Telephony',
       CS_CZ_TELEPHONY = 'cs-CZ_Telephony',
@@ -4962,6 +4972,7 @@ namespace SpeechToTextV1 {
       ES_PE_BROADBANDMODEL = 'es-PE_BroadbandModel',
       ES_PE_NARROWBANDMODEL = 'es-PE_NarrowbandModel',
       FR_CA_BROADBANDMODEL = 'fr-CA_BroadbandModel',
+      FR_CA_MULTIMEDIA = 'fr-CA_Multimedia',
       FR_CA_NARROWBANDMODEL = 'fr-CA_NarrowbandModel',
       FR_CA_TELEPHONY = 'fr-CA_Telephony',
       FR_FR_BROADBANDMODEL = 'fr-FR_BroadbandModel',
@@ -4982,12 +4993,14 @@ namespace SpeechToTextV1 {
       KO_KR_TELEPHONY = 'ko-KR_Telephony',
       NL_BE_TELEPHONY = 'nl-BE_Telephony',
       NL_NL_BROADBANDMODEL = 'nl-NL_BroadbandModel',
+      NL_NL_MULTIMEDIA = 'nl-NL_Multimedia',
       NL_NL_NARROWBANDMODEL = 'nl-NL_NarrowbandModel',
       NL_NL_TELEPHONY = 'nl-NL_Telephony',
       PT_BR_BROADBANDMODEL = 'pt-BR_BroadbandModel',
       PT_BR_MULTIMEDIA = 'pt-BR_Multimedia',
       PT_BR_NARROWBANDMODEL = 'pt-BR_NarrowbandModel',
       PT_BR_TELEPHONY = 'pt-BR_Telephony',
+      SV_SE_TELEPHONY = 'sv-SE_Telephony',
       ZH_CN_BROADBANDMODEL = 'zh-CN_BroadbandModel',
       ZH_CN_NARROWBANDMODEL = 'zh-CN_NarrowbandModel',
       ZH_CN_TELEPHONY = 'zh-CN_Telephony',
@@ -5026,9 +5039,12 @@ namespace SpeechToTextV1 {
 
   /** Parameters for the `createLanguageModel` operation. */
   export interface CreateLanguageModelParams {
-    /** A user-defined name for the new custom language model. Use a name that is unique among all custom language
-     *  models that you own. Use a localized name that matches the language of the custom model. Use a name that
-     *  describes the domain of the custom model, such as `Medical custom model` or `Legal custom model`.
+    /** A user-defined name for the new custom language model. Use a localized name that matches the language of the
+     *  custom model. Use a name that describes the domain of the custom model, such as `Medical custom model` or `Legal
+     *  custom model`. Use a name that is unique among all custom language models that you own.
+     *
+     *  Include a maximum of 256 characters in the name. Do not use backslashes, slashes, colons, equal signs,
+     *  ampersands, or question marks in the name.
      */
     name: string;
     /** The name of the base language model that is to be customized by the new custom language model. The new
@@ -5054,8 +5070,8 @@ namespace SpeechToTextV1 {
      *  All values that you pass for the `dialect` field are case-insensitive.
      */
     dialect?: string;
-    /** A description of the new custom language model. Use a localized description that matches the language of the
-     *  custom model.
+    /** A recommended description of the new custom language model. Use a localized description that matches the
+     *  language of the custom model. Include a maximum of 128 characters in the description.
      */
     description?: string;
     headers?: OutgoingHttpHeaders;
@@ -5102,6 +5118,7 @@ namespace SpeechToTextV1 {
       ES_PE_BROADBANDMODEL = 'es-PE_BroadbandModel',
       ES_PE_NARROWBANDMODEL = 'es-PE_NarrowbandModel',
       FR_CA_BROADBANDMODEL = 'fr-CA_BroadbandModel',
+      FR_CA_MULTIMEDIA = 'fr-CA_Multimedia',
       FR_CA_NARROWBANDMODEL = 'fr-CA_NarrowbandModel',
       FR_CA_TELEPHONY = 'fr-CA_Telephony',
       FR_FR_BROADBANDMODEL = 'fr-FR_BroadbandModel',
@@ -5122,12 +5139,14 @@ namespace SpeechToTextV1 {
       KO_KR_TELEPHONY = 'ko-KR_Telephony',
       NL_BE_TELEPHONY = 'nl-BE_Telephony',
       NL_NL_BROADBANDMODEL = 'nl-NL_BroadbandModel',
+      NL_NL_MULTIMEDIA = 'nl-NL_Multimedia',
       NL_NL_NARROWBANDMODEL = 'nl-NL_NarrowbandModel',
       NL_NL_TELEPHONY = 'nl-NL_Telephony',
       PT_BR_BROADBANDMODEL = 'pt-BR_BroadbandModel',
       PT_BR_MULTIMEDIA = 'pt-BR_Multimedia',
       PT_BR_NARROWBANDMODEL = 'pt-BR_NarrowbandModel',
       PT_BR_TELEPHONY = 'pt-BR_Telephony',
+      SV_SE_TELEPHONY = 'sv-SE_Telephony',
       ZH_CN_TELEPHONY = 'zh-CN_Telephony',
     }
   }
@@ -5137,8 +5156,7 @@ namespace SpeechToTextV1 {
     /** The identifier of the language for which custom language or custom acoustic models are to be returned.
      *  Specify the five-character language identifier; for example, specify `en-US` to see all custom language or
      *  custom acoustic models that are based on US English models. Omit the parameter to see all custom language or
-     *  custom acoustic models that are owned by the requesting credentials. (**Note:** The identifier `ar-AR` is
-     *  deprecated; use `ar-MS` instead.)
+     *  custom acoustic models that are owned by the requesting credentials.
      *
      *  To determine the languages for which customization is available, see [Language support for
      *  customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-support).
@@ -5149,9 +5167,8 @@ namespace SpeechToTextV1 {
 
   /** Constants for the `listLanguageModels` operation. */
   export namespace ListLanguageModelsConstants {
-    /** The identifier of the language for which custom language or custom acoustic models are to be returned. Specify the five-character language identifier; for example, specify `en-US` to see all custom language or custom acoustic models that are based on US English models. Omit the parameter to see all custom language or custom acoustic models that are owned by the requesting credentials. (**Note:** The identifier `ar-AR` is deprecated; use `ar-MS` instead.) To determine the languages for which customization is available, see [Language support for customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-support). */
+    /** The identifier of the language for which custom language or custom acoustic models are to be returned. Specify the five-character language identifier; for example, specify `en-US` to see all custom language or custom acoustic models that are based on US English models. Omit the parameter to see all custom language or custom acoustic models that are owned by the requesting credentials. To determine the languages for which customization is available, see [Language support for customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-support). */
     export enum Language {
-      AR_AR = 'ar-AR',
       AR_MS = 'ar-MS',
       CS_CZ = 'cs-CZ',
       DE_DE = 'de-DE',
@@ -5176,6 +5193,7 @@ namespace SpeechToTextV1 {
       NL_BE = 'nl-BE',
       NL_NL = 'nl-NL',
       PT_BR = 'pt-BR',
+      SV_SE = 'sv-SE',
       ZH_CN = 'zh-CN',
     }
   }
@@ -5545,22 +5563,23 @@ namespace SpeechToTextV1 {
 
   /** Parameters for the `createAcousticModel` operation. */
   export interface CreateAcousticModelParams {
-    /** A user-defined name for the new custom acoustic model. Use a name that is unique among all custom acoustic
-     *  models that you own. Use a localized name that matches the language of the custom model. Use a name that
-     *  describes the acoustic environment of the custom model, such as `Mobile custom model` or `Noisy car custom
-     *  model`.
+    /** A user-defined name for the new custom acoustic model. Use a localized name that matches the language of the
+     *  custom model. Use a name that describes the acoustic environment of the custom model, such as `Mobile custom
+     *  model` or `Noisy car custom model`. Use a name that is unique among all custom acoustic models that you own.
+     *
+     *  Include a maximum of 256 characters in the name. Do not use backslashes, slashes, colons, equal signs,
+     *  ampersands, or question marks in the name.
      */
     name: string;
     /** The name of the base language model that is to be customized by the new custom acoustic model. The new
-     *  custom model can be used only with the base model that it customizes. (**Note:** The model
-     *  `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.)
+     *  custom model can be used only with the base model that it customizes.
      *
      *  To determine whether a base model supports acoustic model customization, refer to [Language support for
      *  customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-support).
      */
     baseModelName: CreateAcousticModelConstants.BaseModelName | string;
-    /** A description of the new custom acoustic model. Use a localized description that matches the language of the
-     *  custom model.
+    /** A recommended description of the new custom acoustic model. Use a localized description that matches the
+     *  language of the custom model. Include a maximum of 128 characters in the description.
      */
     description?: string;
     headers?: OutgoingHttpHeaders;
@@ -5568,9 +5587,8 @@ namespace SpeechToTextV1 {
 
   /** Constants for the `createAcousticModel` operation. */
   export namespace CreateAcousticModelConstants {
-    /** The name of the base language model that is to be customized by the new custom acoustic model. The new custom model can be used only with the base model that it customizes. (**Note:** The model `ar-AR_BroadbandModel` is deprecated; use `ar-MS_BroadbandModel` instead.) To determine whether a base model supports acoustic model customization, refer to [Language support for customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-support). */
+    /** The name of the base language model that is to be customized by the new custom acoustic model. The new custom model can be used only with the base model that it customizes. To determine whether a base model supports acoustic model customization, refer to [Language support for customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-support). */
     export enum BaseModelName {
-      AR_AR_BROADBANDMODEL = 'ar-AR_BroadbandModel',
       AR_MS_BROADBANDMODEL = 'ar-MS_BroadbandModel',
       DE_DE_BROADBANDMODEL = 'de-DE_BroadbandModel',
       DE_DE_NARROWBANDMODEL = 'de-DE_NarrowbandModel',
@@ -5617,8 +5635,7 @@ namespace SpeechToTextV1 {
     /** The identifier of the language for which custom language or custom acoustic models are to be returned.
      *  Specify the five-character language identifier; for example, specify `en-US` to see all custom language or
      *  custom acoustic models that are based on US English models. Omit the parameter to see all custom language or
-     *  custom acoustic models that are owned by the requesting credentials. (**Note:** The identifier `ar-AR` is
-     *  deprecated; use `ar-MS` instead.)
+     *  custom acoustic models that are owned by the requesting credentials.
      *
      *  To determine the languages for which customization is available, see [Language support for
      *  customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-support).
@@ -5629,9 +5646,8 @@ namespace SpeechToTextV1 {
 
   /** Constants for the `listAcousticModels` operation. */
   export namespace ListAcousticModelsConstants {
-    /** The identifier of the language for which custom language or custom acoustic models are to be returned. Specify the five-character language identifier; for example, specify `en-US` to see all custom language or custom acoustic models that are based on US English models. Omit the parameter to see all custom language or custom acoustic models that are owned by the requesting credentials. (**Note:** The identifier `ar-AR` is deprecated; use `ar-MS` instead.) To determine the languages for which customization is available, see [Language support for customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-support). */
+    /** The identifier of the language for which custom language or custom acoustic models are to be returned. Specify the five-character language identifier; for example, specify `en-US` to see all custom language or custom acoustic models that are based on US English models. Omit the parameter to see all custom language or custom acoustic models that are owned by the requesting credentials. To determine the languages for which customization is available, see [Language support for customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-support). */
     export enum Language {
-      AR_AR = 'ar-AR',
       AR_MS = 'ar-MS',
       CS_CZ = 'cs-CZ',
       DE_DE = 'de-DE',
@@ -5656,6 +5672,7 @@ namespace SpeechToTextV1 {
       NL_BE = 'nl-BE',
       NL_NL = 'nl-NL',
       PT_BR = 'pt-BR',
+      SV_SE = 'sv-SE',
       ZH_CN = 'zh-CN',
     }
   }

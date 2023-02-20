@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2022.
+ * (C) Copyright IBM Corp. 2018, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -222,10 +222,10 @@ describe('LanguageTranslatorV3', () => {
         const source = 'testString';
         const target = 'testString';
         const translateParams = {
-          text: text,
-          modelId: modelId,
-          source: source,
-          target: target,
+          text,
+          modelId,
+          source,
+          target,
         };
 
         const translateResult = languageTranslatorService.translate(translateParams);
@@ -374,7 +374,7 @@ describe('LanguageTranslatorV3', () => {
         // Construct the params object for operation identify
         const text = 'testString';
         const identifyParams = {
-          text: text,
+          text,
         };
 
         const identifyResult = languageTranslatorService.identify(identifyParams);
@@ -461,9 +461,9 @@ describe('LanguageTranslatorV3', () => {
         const target = 'testString';
         const _default = true;
         const listModelsParams = {
-          source: source,
-          target: target,
-          _default: _default,
+          source,
+          target,
+          _default,
         };
 
         const listModelsResult = languageTranslatorService.listModels(listModelsParams);
@@ -535,12 +535,12 @@ describe('LanguageTranslatorV3', () => {
         const parallelCorpusContentType = 'application/x-tmx+xml';
         const name = 'testString';
         const createModelParams = {
-          baseModelId: baseModelId,
-          forcedGlossary: forcedGlossary,
-          forcedGlossaryContentType: forcedGlossaryContentType,
-          parallelCorpus: parallelCorpus,
-          parallelCorpusContentType: parallelCorpusContentType,
-          name: name,
+          baseModelId,
+          forcedGlossary,
+          forcedGlossaryContentType,
+          parallelCorpus,
+          parallelCorpusContentType,
+          name,
         };
 
         const createModelResult = languageTranslatorService.createModel(createModelParams);
@@ -630,7 +630,7 @@ describe('LanguageTranslatorV3', () => {
         // Construct the params object for operation deleteModel
         const modelId = 'testString';
         const deleteModelParams = {
-          modelId: modelId,
+          modelId,
         };
 
         const deleteModelResult = languageTranslatorService.deleteModel(deleteModelParams);
@@ -715,7 +715,7 @@ describe('LanguageTranslatorV3', () => {
         // Construct the params object for operation getModel
         const modelId = 'testString';
         const getModelParams = {
-          modelId: modelId,
+          modelId,
         };
 
         const getModelResult = languageTranslatorService.getModel(getModelParams);
@@ -861,19 +861,19 @@ describe('LanguageTranslatorV3', () => {
         // Construct the params object for operation translateDocument
         const file = Buffer.from('This is a mock file.');
         const filename = 'testString';
-        const fileContentType = 'application/powerpoint';
+        const fileContentType = 'application/mspowerpoint';
         const modelId = 'testString';
         const source = 'testString';
         const target = 'testString';
         const documentId = 'testString';
         const translateDocumentParams = {
-          file: file,
-          filename: filename,
-          fileContentType: fileContentType,
-          modelId: modelId,
-          source: source,
-          target: target,
-          documentId: documentId,
+          file,
+          filename,
+          fileContentType,
+          modelId,
+          source,
+          target,
+          documentId,
         };
 
         const translateDocumentResult = languageTranslatorService.translateDocument(translateDocumentParams);
@@ -966,7 +966,7 @@ describe('LanguageTranslatorV3', () => {
         // Construct the params object for operation getDocumentStatus
         const documentId = 'testString';
         const getDocumentStatusParams = {
-          documentId: documentId,
+          documentId,
         };
 
         const getDocumentStatusResult = languageTranslatorService.getDocumentStatus(getDocumentStatusParams);
@@ -1051,7 +1051,7 @@ describe('LanguageTranslatorV3', () => {
         // Construct the params object for operation deleteDocument
         const documentId = 'testString';
         const deleteDocumentParams = {
-          documentId: documentId,
+          documentId,
         };
 
         const deleteDocumentResult = languageTranslatorService.deleteDocument(deleteDocumentParams);
@@ -1137,8 +1137,8 @@ describe('LanguageTranslatorV3', () => {
         const documentId = 'testString';
         const accept = 'application/powerpoint';
         const getTranslatedDocumentParams = {
-          documentId: documentId,
-          accept: accept,
+          documentId,
+          accept,
         };
 
         const getTranslatedDocumentResult = languageTranslatorService.getTranslatedDocument(getTranslatedDocumentParams);
