@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2018, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.53.0-9710cac3-20220713-193508
+ * IBM OpenAPI SDK Code Generator Version: 3.64.1-cee95189-20230124-211647
  */
 
 import * as extend from 'extend';
@@ -1318,11 +1318,11 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environmentId - The ID of the environment.
    * @param {string} params.collectionId - The ID of the collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Empty>>}
+   * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.EmptyObject>>}
    */
   public deleteExpansions(
     params: DiscoveryV1.DeleteExpansionsParams
-  ): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['environmentId', 'collectionId'];
     const _validParams = ['environmentId', 'collectionId', 'headers'];
@@ -1503,11 +1503,11 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environmentId - The ID of the environment.
    * @param {string} params.collectionId - The ID of the collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Empty>>}
+   * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.EmptyObject>>}
    */
   public deleteTokenizationDictionary(
     params: DiscoveryV1.DeleteTokenizationDictionaryParams
-  ): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['environmentId', 'collectionId'];
     const _validParams = ['environmentId', 'collectionId', 'headers'];
@@ -1692,11 +1692,11 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environmentId - The ID of the environment.
    * @param {string} params.collectionId - The ID of the collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Empty>>}
+   * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.EmptyObject>>}
    */
   public deleteStopwordList(
     params: DiscoveryV1.DeleteStopwordListParams
-  ): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['environmentId', 'collectionId'];
     const _validParams = ['environmentId', 'collectionId', 'headers'];
@@ -2763,11 +2763,11 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.environmentId - The ID of the environment.
    * @param {string} params.collectionId - The ID of the collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Empty>>}
+   * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.EmptyObject>>}
    */
   public deleteAllTrainingData(
     params: DiscoveryV1.DeleteAllTrainingDataParams
-  ): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['environmentId', 'collectionId'];
     const _validParams = ['environmentId', 'collectionId', 'headers'];
@@ -2883,11 +2883,11 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.collectionId - The ID of the collection.
    * @param {string} params.queryId - The ID of the query used for training.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Empty>>}
+   * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.EmptyObject>>}
    */
   public deleteTrainingData(
     params: DiscoveryV1.DeleteTrainingDataParams
-  ): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['environmentId', 'collectionId', 'queryId'];
     const _validParams = ['environmentId', 'collectionId', 'queryId', 'headers'];
@@ -3077,11 +3077,11 @@ class DiscoveryV1 extends BaseService {
    * @param {string} params.queryId - The ID of the query used for training.
    * @param {string} params.exampleId - The ID of the document as it is indexed.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Empty>>}
+   * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.EmptyObject>>}
    */
   public deleteTrainingExample(
     params: DiscoveryV1.DeleteTrainingExampleParams
-  ): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['environmentId', 'collectionId', 'queryId', 'exampleId'];
     const _validParams = ['environmentId', 'collectionId', 'queryId', 'exampleId', 'headers'];
@@ -3279,11 +3279,11 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customerId - The customer ID for which all data is to be deleted.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.Empty>>}
+   * @returns {Promise<DiscoveryV1.Response<DiscoveryV1.EmptyObject>>}
    */
   public deleteUserData(
     params: DiscoveryV1.DeleteUserDataParams
-  ): Promise<DiscoveryV1.Response<DiscoveryV1.Empty>> {
+  ): Promise<DiscoveryV1.Response<DiscoveryV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customerId'];
     const _validParams = ['customerId', 'headers'];
@@ -4363,7 +4363,7 @@ namespace DiscoveryV1 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty {}
+  export interface EmptyObject {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -5939,7 +5939,9 @@ namespace DiscoveryV1 {
      *  features support all languages, automatic detection is recommended.
      */
     language?: string;
-    /** The element extraction model to use, which can be `contract` only. The `elements` enrichment is deprecated. */
+    /** Deprecated: The element extraction model to use, which can be `contract` only. The `elements` enrichment is
+     *  deprecated.
+     */
     model?: string;
   }
 
@@ -6465,7 +6467,7 @@ namespace DiscoveryV1 {
     heading?: PdfHeadingDetection;
   }
 
-  /** An aggregation produced by  Discovery to analyze the input provided. */
+  /** An aggregation produced by Discovery to analyze the input provided. */
   export interface QueryAggregation {
     /** The type of aggregation command used. For example: term, filter, max, min, etc. */
     type: string;

@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2022.
+ * (C) Copyright IBM Corp. 2018, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -237,7 +237,7 @@ describe('AssistantV1', () => {
       // Context
       const contextModel = {
         conversation_id: 'testString',
-        system: { 'key1': 'testString' },
+        system: { foo: 'bar' },
         metadata: messageContextMetadataModel,
         foo: 'testString',
       };
@@ -263,31 +263,15 @@ describe('AssistantV1', () => {
         source: logMessageSourceModel,
       };
 
-      // DialogNodeOutputOptionsElementValue
-      const dialogNodeOutputOptionsElementValueModel = {
-        input: messageInputModel,
-        intents: [runtimeIntentModel],
-        entities: [runtimeEntityModel],
-      };
-
-      // DialogNodeOutputOptionsElement
-      const dialogNodeOutputOptionsElementModel = {
-        label: 'testString',
-        value: dialogNodeOutputOptionsElementValueModel,
-      };
-
       // ResponseGenericChannel
       const responseGenericChannelModel = {
         channel: 'chat',
       };
 
-      // RuntimeResponseGenericRuntimeResponseTypeOption
+      // RuntimeResponseGenericRuntimeResponseTypeText
       const runtimeResponseGenericModel = {
-        response_type: 'option',
-        title: 'testString',
-        description: 'testString',
-        preference: 'dropdown',
-        options: [dialogNodeOutputOptionsElementModel],
+        response_type: 'text',
+        text: 'testString',
         channels: [responseGenericChannelModel],
       };
 
@@ -312,15 +296,15 @@ describe('AssistantV1', () => {
         const userId = 'testString';
         const nodesVisitedDetails = false;
         const messageParams = {
-          workspaceId: workspaceId,
-          input: input,
-          intents: intents,
-          entities: entities,
-          alternateIntents: alternateIntents,
-          context: context,
-          output: output,
-          userId: userId,
-          nodesVisitedDetails: nodesVisitedDetails,
+          workspaceId,
+          input,
+          intents,
+          entities,
+          alternateIntents,
+          context,
+          output,
+          userId,
+          nodesVisitedDetails,
         };
 
         const messageResult = assistantService.message(messageParams);
@@ -421,8 +405,8 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const input = [bulkClassifyUtteranceModel];
         const bulkClassifyParams = {
-          workspaceId: workspaceId,
-          input: input,
+          workspaceId,
+          input,
         };
 
         const bulkClassifyResult = assistantService.bulkClassify(bulkClassifyParams);
@@ -512,11 +496,11 @@ describe('AssistantV1', () => {
         const cursor = 'testString';
         const includeAudit = false;
         const listWorkspacesParams = {
-          pageLimit: pageLimit,
-          includeCount: includeCount,
-          sort: sort,
-          cursor: cursor,
-          includeAudit: includeAudit,
+          pageLimit,
+          includeCount,
+          sort,
+          cursor,
+          includeAudit,
         };
 
         const listWorkspacesResult = assistantService.listWorkspaces(listWorkspacesParams);
@@ -583,20 +567,23 @@ describe('AssistantV1', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
 
+      // DialogNodeOutputTextValuesElement
+      const dialogNodeOutputTextValuesElementModel = {
+        text: 'testString',
+      };
+
       // ResponseGenericChannel
       const responseGenericChannelModel = {
         channel: 'chat',
       };
 
-      // DialogNodeOutputGenericDialogNodeOutputResponseTypeAudio
+      // DialogNodeOutputGenericDialogNodeOutputResponseTypeText
       const dialogNodeOutputGenericModel = {
-        response_type: 'audio',
-        source: 'testString',
-        title: 'testString',
-        description: 'testString',
+        response_type: 'text',
+        values: [dialogNodeOutputTextValuesElementModel],
+        selection_policy: 'sequential',
+        delimiter: '\n',
         channels: [responseGenericChannelModel],
-        channel_options: { foo: 'bar' },
-        alt_text: 'testString',
       };
 
       // DialogNodeOutputModifiers
@@ -607,14 +594,14 @@ describe('AssistantV1', () => {
       // DialogNodeOutput
       const dialogNodeOutputModel = {
         generic: [dialogNodeOutputGenericModel],
-        integrations: { 'key1': { 'key1': 'testString' } },
+        integrations: { 'key1': { foo: 'bar' } },
         modifiers: dialogNodeOutputModifiersModel,
         foo: 'testString',
       };
 
       // DialogNodeContext
       const dialogNodeContextModel = {
-        integrations: { 'key1': { 'key1': 'testString' } },
+        integrations: { 'key1': { foo: 'bar' } },
         foo: 'testString',
       };
 
@@ -629,7 +616,7 @@ describe('AssistantV1', () => {
       const dialogNodeActionModel = {
         name: 'testString',
         type: 'client',
-        parameters: { 'key1': 'testString' },
+        parameters: { foo: 'bar' },
         result_variable: 'testString',
         credentials: 'testString',
       };
@@ -643,7 +630,7 @@ describe('AssistantV1', () => {
         previous_sibling: 'testString',
         output: dialogNodeOutputModel,
         context: dialogNodeContextModel,
-        metadata: { 'key1': 'testString' },
+        metadata: { foo: 'bar' },
         next_step: dialogNodeNextStepModel,
         title: 'testString',
         type: 'standard',
@@ -690,14 +677,14 @@ describe('AssistantV1', () => {
 
       // WorkspaceSystemSettingsNlp
       const workspaceSystemSettingsNlpModel = {
-        model: 'baseline',
+        model: 'testString',
       };
 
       // WorkspaceSystemSettings
       const workspaceSystemSettingsModel = {
         tooling: workspaceSystemSettingsToolingModel,
         disambiguation: workspaceSystemSettingsDisambiguationModel,
-        human_agent_assist: { 'key1': 'testString' },
+        human_agent_assist: { foo: 'bar' },
         spelling_suggestions: false,
         spelling_auto_correct: false,
         system_entities: workspaceSystemSettingsSystemEntitiesModel,
@@ -741,7 +728,7 @@ describe('AssistantV1', () => {
       // CreateValue
       const createValueModel = {
         value: 'testString',
-        metadata: { 'key1': 'testString' },
+        metadata: { foo: 'bar' },
         type: 'synonyms',
         synonyms: ['testString'],
         patterns: ['testString'],
@@ -751,7 +738,7 @@ describe('AssistantV1', () => {
       const createEntityModel = {
         entity: 'testString',
         description: 'testString',
-        metadata: { 'key1': 'testString' },
+        metadata: { foo: 'bar' },
         fuzzy_match: true,
         values: [createValueModel],
       };
@@ -763,7 +750,7 @@ describe('AssistantV1', () => {
         const language = 'testString';
         const dialogNodes = [dialogNodeModel];
         const counterexamples = [counterexampleModel];
-        const metadata = { 'key1': 'testString' };
+        const metadata = { foo: 'bar' };
         const learningOptOut = false;
         const systemSettings = workspaceSystemSettingsModel;
         const webhooks = [webhookModel];
@@ -771,18 +758,18 @@ describe('AssistantV1', () => {
         const entities = [createEntityModel];
         const includeAudit = false;
         const createWorkspaceParams = {
-          name: name,
-          description: description,
-          language: language,
-          dialogNodes: dialogNodes,
-          counterexamples: counterexamples,
-          metadata: metadata,
-          learningOptOut: learningOptOut,
-          systemSettings: systemSettings,
-          webhooks: webhooks,
-          intents: intents,
-          entities: entities,
-          includeAudit: includeAudit,
+          name,
+          description,
+          language,
+          dialogNodes,
+          counterexamples,
+          metadata,
+          learningOptOut,
+          systemSettings,
+          webhooks,
+          intents,
+          entities,
+          includeAudit,
         };
 
         const createWorkspaceResult = assistantService.createWorkspace(createWorkspaceParams);
@@ -861,10 +848,10 @@ describe('AssistantV1', () => {
         const includeAudit = false;
         const sort = 'stable';
         const getWorkspaceParams = {
-          workspaceId: workspaceId,
-          _export: _export,
-          includeAudit: includeAudit,
-          sort: sort,
+          workspaceId,
+          _export,
+          includeAudit,
+          sort,
         };
 
         const getWorkspaceResult = assistantService.getWorkspace(getWorkspaceParams);
@@ -950,20 +937,23 @@ describe('AssistantV1', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
 
+      // DialogNodeOutputTextValuesElement
+      const dialogNodeOutputTextValuesElementModel = {
+        text: 'testString',
+      };
+
       // ResponseGenericChannel
       const responseGenericChannelModel = {
         channel: 'chat',
       };
 
-      // DialogNodeOutputGenericDialogNodeOutputResponseTypeAudio
+      // DialogNodeOutputGenericDialogNodeOutputResponseTypeText
       const dialogNodeOutputGenericModel = {
-        response_type: 'audio',
-        source: 'testString',
-        title: 'testString',
-        description: 'testString',
+        response_type: 'text',
+        values: [dialogNodeOutputTextValuesElementModel],
+        selection_policy: 'sequential',
+        delimiter: '\n',
         channels: [responseGenericChannelModel],
-        channel_options: { foo: 'bar' },
-        alt_text: 'testString',
       };
 
       // DialogNodeOutputModifiers
@@ -974,14 +964,14 @@ describe('AssistantV1', () => {
       // DialogNodeOutput
       const dialogNodeOutputModel = {
         generic: [dialogNodeOutputGenericModel],
-        integrations: { 'key1': { 'key1': 'testString' } },
+        integrations: { 'key1': { foo: 'bar' } },
         modifiers: dialogNodeOutputModifiersModel,
         foo: 'testString',
       };
 
       // DialogNodeContext
       const dialogNodeContextModel = {
-        integrations: { 'key1': { 'key1': 'testString' } },
+        integrations: { 'key1': { foo: 'bar' } },
         foo: 'testString',
       };
 
@@ -996,7 +986,7 @@ describe('AssistantV1', () => {
       const dialogNodeActionModel = {
         name: 'testString',
         type: 'client',
-        parameters: { 'key1': 'testString' },
+        parameters: { foo: 'bar' },
         result_variable: 'testString',
         credentials: 'testString',
       };
@@ -1010,7 +1000,7 @@ describe('AssistantV1', () => {
         previous_sibling: 'testString',
         output: dialogNodeOutputModel,
         context: dialogNodeContextModel,
-        metadata: { 'key1': 'testString' },
+        metadata: { foo: 'bar' },
         next_step: dialogNodeNextStepModel,
         title: 'testString',
         type: 'standard',
@@ -1057,14 +1047,14 @@ describe('AssistantV1', () => {
 
       // WorkspaceSystemSettingsNlp
       const workspaceSystemSettingsNlpModel = {
-        model: 'baseline',
+        model: 'testString',
       };
 
       // WorkspaceSystemSettings
       const workspaceSystemSettingsModel = {
         tooling: workspaceSystemSettingsToolingModel,
         disambiguation: workspaceSystemSettingsDisambiguationModel,
-        human_agent_assist: { 'key1': 'testString' },
+        human_agent_assist: { foo: 'bar' },
         spelling_suggestions: false,
         spelling_auto_correct: false,
         system_entities: workspaceSystemSettingsSystemEntitiesModel,
@@ -1108,7 +1098,7 @@ describe('AssistantV1', () => {
       // CreateValue
       const createValueModel = {
         value: 'testString',
-        metadata: { 'key1': 'testString' },
+        metadata: { foo: 'bar' },
         type: 'synonyms',
         synonyms: ['testString'],
         patterns: ['testString'],
@@ -1118,7 +1108,7 @@ describe('AssistantV1', () => {
       const createEntityModel = {
         entity: 'testString',
         description: 'testString',
-        metadata: { 'key1': 'testString' },
+        metadata: { foo: 'bar' },
         fuzzy_match: true,
         values: [createValueModel],
       };
@@ -1131,7 +1121,7 @@ describe('AssistantV1', () => {
         const language = 'testString';
         const dialogNodes = [dialogNodeModel];
         const counterexamples = [counterexampleModel];
-        const metadata = { 'key1': 'testString' };
+        const metadata = { foo: 'bar' };
         const learningOptOut = false;
         const systemSettings = workspaceSystemSettingsModel;
         const webhooks = [webhookModel];
@@ -1140,20 +1130,20 @@ describe('AssistantV1', () => {
         const append = false;
         const includeAudit = false;
         const updateWorkspaceParams = {
-          workspaceId: workspaceId,
-          name: name,
-          description: description,
-          language: language,
-          dialogNodes: dialogNodes,
-          counterexamples: counterexamples,
-          metadata: metadata,
-          learningOptOut: learningOptOut,
-          systemSettings: systemSettings,
-          webhooks: webhooks,
-          intents: intents,
-          entities: entities,
-          append: append,
-          includeAudit: includeAudit,
+          workspaceId,
+          name,
+          description,
+          language,
+          dialogNodes,
+          counterexamples,
+          metadata,
+          learningOptOut,
+          systemSettings,
+          webhooks,
+          intents,
+          entities,
+          append,
+          includeAudit,
         };
 
         const updateWorkspaceResult = assistantService.updateWorkspace(updateWorkspaceParams);
@@ -1251,7 +1241,7 @@ describe('AssistantV1', () => {
         // Construct the params object for operation deleteWorkspace
         const workspaceId = 'testString';
         const deleteWorkspaceParams = {
-          workspaceId: workspaceId,
+          workspaceId,
         };
 
         const deleteWorkspaceResult = assistantService.deleteWorkspace(deleteWorkspaceParams);
@@ -1334,20 +1324,23 @@ describe('AssistantV1', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
 
+      // DialogNodeOutputTextValuesElement
+      const dialogNodeOutputTextValuesElementModel = {
+        text: 'testString',
+      };
+
       // ResponseGenericChannel
       const responseGenericChannelModel = {
         channel: 'chat',
       };
 
-      // DialogNodeOutputGenericDialogNodeOutputResponseTypeAudio
+      // DialogNodeOutputGenericDialogNodeOutputResponseTypeText
       const dialogNodeOutputGenericModel = {
-        response_type: 'audio',
-        source: 'testString',
-        title: 'testString',
-        description: 'testString',
+        response_type: 'text',
+        values: [dialogNodeOutputTextValuesElementModel],
+        selection_policy: 'sequential',
+        delimiter: '\n',
         channels: [responseGenericChannelModel],
-        channel_options: { foo: 'bar' },
-        alt_text: 'testString',
       };
 
       // DialogNodeOutputModifiers
@@ -1358,14 +1351,14 @@ describe('AssistantV1', () => {
       // DialogNodeOutput
       const dialogNodeOutputModel = {
         generic: [dialogNodeOutputGenericModel],
-        integrations: { 'key1': { 'key1': 'testString' } },
+        integrations: { 'key1': { foo: 'bar' } },
         modifiers: dialogNodeOutputModifiersModel,
         foo: 'testString',
       };
 
       // DialogNodeContext
       const dialogNodeContextModel = {
-        integrations: { 'key1': { 'key1': 'testString' } },
+        integrations: { 'key1': { foo: 'bar' } },
         foo: 'testString',
       };
 
@@ -1380,7 +1373,7 @@ describe('AssistantV1', () => {
       const dialogNodeActionModel = {
         name: 'testString',
         type: 'client',
-        parameters: { 'key1': 'testString' },
+        parameters: { foo: 'bar' },
         result_variable: 'testString',
         credentials: 'testString',
       };
@@ -1394,7 +1387,7 @@ describe('AssistantV1', () => {
         previous_sibling: 'testString',
         output: dialogNodeOutputModel,
         context: dialogNodeContextModel,
-        metadata: { 'key1': 'testString' },
+        metadata: { foo: 'bar' },
         next_step: dialogNodeNextStepModel,
         title: 'testString',
         type: 'standard',
@@ -1441,14 +1434,14 @@ describe('AssistantV1', () => {
 
       // WorkspaceSystemSettingsNlp
       const workspaceSystemSettingsNlpModel = {
-        model: 'baseline',
+        model: 'testString',
       };
 
       // WorkspaceSystemSettings
       const workspaceSystemSettingsModel = {
         tooling: workspaceSystemSettingsToolingModel,
         disambiguation: workspaceSystemSettingsDisambiguationModel,
-        human_agent_assist: { 'key1': 'testString' },
+        human_agent_assist: { foo: 'bar' },
         spelling_suggestions: false,
         spelling_auto_correct: false,
         system_entities: workspaceSystemSettingsSystemEntitiesModel,
@@ -1492,7 +1485,7 @@ describe('AssistantV1', () => {
       // CreateValue
       const createValueModel = {
         value: 'testString',
-        metadata: { 'key1': 'testString' },
+        metadata: { foo: 'bar' },
         type: 'synonyms',
         synonyms: ['testString'],
         patterns: ['testString'],
@@ -1502,7 +1495,7 @@ describe('AssistantV1', () => {
       const createEntityModel = {
         entity: 'testString',
         description: 'testString',
-        metadata: { 'key1': 'testString' },
+        metadata: { foo: 'bar' },
         fuzzy_match: true,
         values: [createValueModel],
       };
@@ -1514,24 +1507,24 @@ describe('AssistantV1', () => {
         const language = 'testString';
         const dialogNodes = [dialogNodeModel];
         const counterexamples = [counterexampleModel];
-        const metadata = { 'key1': 'testString' };
+        const metadata = { foo: 'bar' };
         const learningOptOut = false;
         const systemSettings = workspaceSystemSettingsModel;
         const webhooks = [webhookModel];
         const intents = [createIntentModel];
         const entities = [createEntityModel];
         const createWorkspaceAsyncParams = {
-          name: name,
-          description: description,
-          language: language,
-          dialogNodes: dialogNodes,
-          counterexamples: counterexamples,
-          metadata: metadata,
-          learningOptOut: learningOptOut,
-          systemSettings: systemSettings,
-          webhooks: webhooks,
-          intents: intents,
-          entities: entities,
+          name,
+          description,
+          language,
+          dialogNodes,
+          counterexamples,
+          metadata,
+          learningOptOut,
+          systemSettings,
+          webhooks,
+          intents,
+          entities,
         };
 
         const createWorkspaceAsyncResult = assistantService.createWorkspaceAsync(createWorkspaceAsyncParams);
@@ -1604,20 +1597,23 @@ describe('AssistantV1', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
 
+      // DialogNodeOutputTextValuesElement
+      const dialogNodeOutputTextValuesElementModel = {
+        text: 'testString',
+      };
+
       // ResponseGenericChannel
       const responseGenericChannelModel = {
         channel: 'chat',
       };
 
-      // DialogNodeOutputGenericDialogNodeOutputResponseTypeAudio
+      // DialogNodeOutputGenericDialogNodeOutputResponseTypeText
       const dialogNodeOutputGenericModel = {
-        response_type: 'audio',
-        source: 'testString',
-        title: 'testString',
-        description: 'testString',
+        response_type: 'text',
+        values: [dialogNodeOutputTextValuesElementModel],
+        selection_policy: 'sequential',
+        delimiter: '\n',
         channels: [responseGenericChannelModel],
-        channel_options: { foo: 'bar' },
-        alt_text: 'testString',
       };
 
       // DialogNodeOutputModifiers
@@ -1628,14 +1624,14 @@ describe('AssistantV1', () => {
       // DialogNodeOutput
       const dialogNodeOutputModel = {
         generic: [dialogNodeOutputGenericModel],
-        integrations: { 'key1': { 'key1': 'testString' } },
+        integrations: { 'key1': { foo: 'bar' } },
         modifiers: dialogNodeOutputModifiersModel,
         foo: 'testString',
       };
 
       // DialogNodeContext
       const dialogNodeContextModel = {
-        integrations: { 'key1': { 'key1': 'testString' } },
+        integrations: { 'key1': { foo: 'bar' } },
         foo: 'testString',
       };
 
@@ -1650,7 +1646,7 @@ describe('AssistantV1', () => {
       const dialogNodeActionModel = {
         name: 'testString',
         type: 'client',
-        parameters: { 'key1': 'testString' },
+        parameters: { foo: 'bar' },
         result_variable: 'testString',
         credentials: 'testString',
       };
@@ -1664,7 +1660,7 @@ describe('AssistantV1', () => {
         previous_sibling: 'testString',
         output: dialogNodeOutputModel,
         context: dialogNodeContextModel,
-        metadata: { 'key1': 'testString' },
+        metadata: { foo: 'bar' },
         next_step: dialogNodeNextStepModel,
         title: 'testString',
         type: 'standard',
@@ -1711,14 +1707,14 @@ describe('AssistantV1', () => {
 
       // WorkspaceSystemSettingsNlp
       const workspaceSystemSettingsNlpModel = {
-        model: 'baseline',
+        model: 'testString',
       };
 
       // WorkspaceSystemSettings
       const workspaceSystemSettingsModel = {
         tooling: workspaceSystemSettingsToolingModel,
         disambiguation: workspaceSystemSettingsDisambiguationModel,
-        human_agent_assist: { 'key1': 'testString' },
+        human_agent_assist: { foo: 'bar' },
         spelling_suggestions: false,
         spelling_auto_correct: false,
         system_entities: workspaceSystemSettingsSystemEntitiesModel,
@@ -1762,7 +1758,7 @@ describe('AssistantV1', () => {
       // CreateValue
       const createValueModel = {
         value: 'testString',
-        metadata: { 'key1': 'testString' },
+        metadata: { foo: 'bar' },
         type: 'synonyms',
         synonyms: ['testString'],
         patterns: ['testString'],
@@ -1772,7 +1768,7 @@ describe('AssistantV1', () => {
       const createEntityModel = {
         entity: 'testString',
         description: 'testString',
-        metadata: { 'key1': 'testString' },
+        metadata: { foo: 'bar' },
         fuzzy_match: true,
         values: [createValueModel],
       };
@@ -1785,7 +1781,7 @@ describe('AssistantV1', () => {
         const language = 'testString';
         const dialogNodes = [dialogNodeModel];
         const counterexamples = [counterexampleModel];
-        const metadata = { 'key1': 'testString' };
+        const metadata = { foo: 'bar' };
         const learningOptOut = false;
         const systemSettings = workspaceSystemSettingsModel;
         const webhooks = [webhookModel];
@@ -1793,19 +1789,19 @@ describe('AssistantV1', () => {
         const entities = [createEntityModel];
         const append = false;
         const updateWorkspaceAsyncParams = {
-          workspaceId: workspaceId,
-          name: name,
-          description: description,
-          language: language,
-          dialogNodes: dialogNodes,
-          counterexamples: counterexamples,
-          metadata: metadata,
-          learningOptOut: learningOptOut,
-          systemSettings: systemSettings,
-          webhooks: webhooks,
-          intents: intents,
-          entities: entities,
-          append: append,
+          workspaceId,
+          name,
+          description,
+          language,
+          dialogNodes,
+          counterexamples,
+          metadata,
+          learningOptOut,
+          systemSettings,
+          webhooks,
+          intents,
+          entities,
+          append,
         };
 
         const updateWorkspaceAsyncResult = assistantService.updateWorkspaceAsync(updateWorkspaceAsyncParams);
@@ -1905,10 +1901,10 @@ describe('AssistantV1', () => {
         const sort = 'stable';
         const verbose = false;
         const exportWorkspaceAsyncParams = {
-          workspaceId: workspaceId,
-          includeAudit: includeAudit,
-          sort: sort,
-          verbose: verbose,
+          workspaceId,
+          includeAudit,
+          sort,
+          verbose,
         };
 
         const exportWorkspaceAsyncResult = assistantService.exportWorkspaceAsync(exportWorkspaceAsyncParams);
@@ -2002,13 +1998,13 @@ describe('AssistantV1', () => {
         const cursor = 'testString';
         const includeAudit = false;
         const listIntentsParams = {
-          workspaceId: workspaceId,
-          _export: _export,
-          pageLimit: pageLimit,
-          includeCount: includeCount,
-          sort: sort,
-          cursor: cursor,
-          includeAudit: includeAudit,
+          workspaceId,
+          _export,
+          pageLimit,
+          includeCount,
+          sort,
+          cursor,
+          includeAudit,
         };
 
         const listIntentsResult = assistantService.listIntents(listIntentsParams);
@@ -2117,11 +2113,11 @@ describe('AssistantV1', () => {
         const examples = [exampleModel];
         const includeAudit = false;
         const createIntentParams = {
-          workspaceId: workspaceId,
-          intent: intent,
-          description: description,
-          examples: examples,
-          includeAudit: includeAudit,
+          workspaceId,
+          intent,
+          description,
+          examples,
+          includeAudit,
         };
 
         const createIntentResult = assistantService.createIntent(createIntentParams);
@@ -2215,10 +2211,10 @@ describe('AssistantV1', () => {
         const _export = false;
         const includeAudit = false;
         const getIntentParams = {
-          workspaceId: workspaceId,
-          intent: intent,
-          _export: _export,
-          includeAudit: includeAudit,
+          workspaceId,
+          intent,
+          _export,
+          includeAudit,
         };
 
         const getIntentResult = assistantService.getIntent(getIntentParams);
@@ -2328,13 +2324,13 @@ describe('AssistantV1', () => {
         const append = false;
         const includeAudit = false;
         const updateIntentParams = {
-          workspaceId: workspaceId,
-          intent: intent,
-          newIntent: newIntent,
-          newDescription: newDescription,
-          newExamples: newExamples,
-          append: append,
-          includeAudit: includeAudit,
+          workspaceId,
+          intent,
+          newIntent,
+          newDescription,
+          newExamples,
+          append,
+          includeAudit,
         };
 
         const updateIntentResult = assistantService.updateIntent(updateIntentParams);
@@ -2428,8 +2424,8 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const intent = 'testString';
         const deleteIntentParams = {
-          workspaceId: workspaceId,
-          intent: intent,
+          workspaceId,
+          intent,
         };
 
         const deleteIntentResult = assistantService.deleteIntent(deleteIntentParams);
@@ -2523,13 +2519,13 @@ describe('AssistantV1', () => {
         const cursor = 'testString';
         const includeAudit = false;
         const listExamplesParams = {
-          workspaceId: workspaceId,
-          intent: intent,
-          pageLimit: pageLimit,
-          includeCount: includeCount,
-          sort: sort,
-          cursor: cursor,
-          includeAudit: includeAudit,
+          workspaceId,
+          intent,
+          pageLimit,
+          includeCount,
+          sort,
+          cursor,
+          includeAudit,
         };
 
         const listExamplesResult = assistantService.listExamples(listExamplesParams);
@@ -2634,11 +2630,11 @@ describe('AssistantV1', () => {
         const mentions = [mentionModel];
         const includeAudit = false;
         const createExampleParams = {
-          workspaceId: workspaceId,
-          intent: intent,
-          text: text,
-          mentions: mentions,
-          includeAudit: includeAudit,
+          workspaceId,
+          intent,
+          text,
+          mentions,
+          includeAudit,
         };
 
         const createExampleResult = assistantService.createExample(createExampleParams);
@@ -2734,10 +2730,10 @@ describe('AssistantV1', () => {
         const text = 'testString';
         const includeAudit = false;
         const getExampleParams = {
-          workspaceId: workspaceId,
-          intent: intent,
-          text: text,
-          includeAudit: includeAudit,
+          workspaceId,
+          intent,
+          text,
+          includeAudit,
         };
 
         const getExampleResult = assistantService.getExample(getExampleParams);
@@ -2842,12 +2838,12 @@ describe('AssistantV1', () => {
         const newMentions = [mentionModel];
         const includeAudit = false;
         const updateExampleParams = {
-          workspaceId: workspaceId,
-          intent: intent,
-          text: text,
-          newText: newText,
-          newMentions: newMentions,
-          includeAudit: includeAudit,
+          workspaceId,
+          intent,
+          text,
+          newText,
+          newMentions,
+          includeAudit,
         };
 
         const updateExampleResult = assistantService.updateExample(updateExampleParams);
@@ -2943,9 +2939,9 @@ describe('AssistantV1', () => {
         const intent = 'testString';
         const text = 'testString';
         const deleteExampleParams = {
-          workspaceId: workspaceId,
-          intent: intent,
-          text: text,
+          workspaceId,
+          intent,
+          text,
         };
 
         const deleteExampleResult = assistantService.deleteExample(deleteExampleParams);
@@ -3041,12 +3037,12 @@ describe('AssistantV1', () => {
         const cursor = 'testString';
         const includeAudit = false;
         const listCounterexamplesParams = {
-          workspaceId: workspaceId,
-          pageLimit: pageLimit,
-          includeCount: includeCount,
-          sort: sort,
-          cursor: cursor,
-          includeAudit: includeAudit,
+          workspaceId,
+          pageLimit,
+          includeCount,
+          sort,
+          cursor,
+          includeAudit,
         };
 
         const listCounterexamplesResult = assistantService.listCounterexamples(listCounterexamplesParams);
@@ -3138,9 +3134,9 @@ describe('AssistantV1', () => {
         const text = 'testString';
         const includeAudit = false;
         const createCounterexampleParams = {
-          workspaceId: workspaceId,
-          text: text,
-          includeAudit: includeAudit,
+          workspaceId,
+          text,
+          includeAudit,
         };
 
         const createCounterexampleResult = assistantService.createCounterexample(createCounterexampleParams);
@@ -3231,9 +3227,9 @@ describe('AssistantV1', () => {
         const text = 'testString';
         const includeAudit = false;
         const getCounterexampleParams = {
-          workspaceId: workspaceId,
-          text: text,
-          includeAudit: includeAudit,
+          workspaceId,
+          text,
+          includeAudit,
         };
 
         const getCounterexampleResult = assistantService.getCounterexample(getCounterexampleParams);
@@ -3325,10 +3321,10 @@ describe('AssistantV1', () => {
         const newText = 'testString';
         const includeAudit = false;
         const updateCounterexampleParams = {
-          workspaceId: workspaceId,
-          text: text,
-          newText: newText,
-          includeAudit: includeAudit,
+          workspaceId,
+          text,
+          newText,
+          includeAudit,
         };
 
         const updateCounterexampleResult = assistantService.updateCounterexample(updateCounterexampleParams);
@@ -3419,8 +3415,8 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const text = 'testString';
         const deleteCounterexampleParams = {
-          workspaceId: workspaceId,
-          text: text,
+          workspaceId,
+          text,
         };
 
         const deleteCounterexampleResult = assistantService.deleteCounterexample(deleteCounterexampleParams);
@@ -3514,13 +3510,13 @@ describe('AssistantV1', () => {
         const cursor = 'testString';
         const includeAudit = false;
         const listEntitiesParams = {
-          workspaceId: workspaceId,
-          _export: _export,
-          pageLimit: pageLimit,
-          includeCount: includeCount,
-          sort: sort,
-          cursor: cursor,
-          includeAudit: includeAudit,
+          workspaceId,
+          _export,
+          pageLimit,
+          includeCount,
+          sort,
+          cursor,
+          includeAudit,
         };
 
         const listEntitiesResult = assistantService.listEntities(listEntitiesParams);
@@ -3612,7 +3608,7 @@ describe('AssistantV1', () => {
       // CreateValue
       const createValueModel = {
         value: 'testString',
-        metadata: { 'key1': 'testString' },
+        metadata: { foo: 'bar' },
         type: 'synonyms',
         synonyms: ['testString'],
         patterns: ['testString'],
@@ -3623,18 +3619,18 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const entity = 'testString';
         const description = 'testString';
-        const metadata = { 'key1': 'testString' };
+        const metadata = { foo: 'bar' };
         const fuzzyMatch = true;
         const values = [createValueModel];
         const includeAudit = false;
         const createEntityParams = {
-          workspaceId: workspaceId,
-          entity: entity,
-          description: description,
-          metadata: metadata,
-          fuzzyMatch: fuzzyMatch,
-          values: values,
-          includeAudit: includeAudit,
+          workspaceId,
+          entity,
+          description,
+          metadata,
+          fuzzyMatch,
+          values,
+          includeAudit,
         };
 
         const createEntityResult = assistantService.createEntity(createEntityParams);
@@ -3730,10 +3726,10 @@ describe('AssistantV1', () => {
         const _export = false;
         const includeAudit = false;
         const getEntityParams = {
-          workspaceId: workspaceId,
-          entity: entity,
-          _export: _export,
-          includeAudit: includeAudit,
+          workspaceId,
+          entity,
+          _export,
+          includeAudit,
         };
 
         const getEntityResult = assistantService.getEntity(getEntityParams);
@@ -3824,7 +3820,7 @@ describe('AssistantV1', () => {
       // CreateValue
       const createValueModel = {
         value: 'testString',
-        metadata: { 'key1': 'testString' },
+        metadata: { foo: 'bar' },
         type: 'synonyms',
         synonyms: ['testString'],
         patterns: ['testString'],
@@ -3836,21 +3832,21 @@ describe('AssistantV1', () => {
         const entity = 'testString';
         const newEntity = 'testString';
         const newDescription = 'testString';
-        const newMetadata = { 'key1': 'testString' };
+        const newMetadata = { foo: 'bar' };
         const newFuzzyMatch = true;
         const newValues = [createValueModel];
         const append = false;
         const includeAudit = false;
         const updateEntityParams = {
-          workspaceId: workspaceId,
-          entity: entity,
-          newEntity: newEntity,
-          newDescription: newDescription,
-          newMetadata: newMetadata,
-          newFuzzyMatch: newFuzzyMatch,
-          newValues: newValues,
-          append: append,
-          includeAudit: includeAudit,
+          workspaceId,
+          entity,
+          newEntity,
+          newDescription,
+          newMetadata,
+          newFuzzyMatch,
+          newValues,
+          append,
+          includeAudit,
         };
 
         const updateEntityResult = assistantService.updateEntity(updateEntityParams);
@@ -3946,8 +3942,8 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const entity = 'testString';
         const deleteEntityParams = {
-          workspaceId: workspaceId,
-          entity: entity,
+          workspaceId,
+          entity,
         };
 
         const deleteEntityResult = assistantService.deleteEntity(deleteEntityParams);
@@ -4038,10 +4034,10 @@ describe('AssistantV1', () => {
         const _export = false;
         const includeAudit = false;
         const listMentionsParams = {
-          workspaceId: workspaceId,
-          entity: entity,
-          _export: _export,
-          includeAudit: includeAudit,
+          workspaceId,
+          entity,
+          _export,
+          includeAudit,
         };
 
         const listMentionsResult = assistantService.listMentions(listMentionsParams);
@@ -4138,14 +4134,14 @@ describe('AssistantV1', () => {
         const cursor = 'testString';
         const includeAudit = false;
         const listValuesParams = {
-          workspaceId: workspaceId,
-          entity: entity,
-          _export: _export,
-          pageLimit: pageLimit,
-          includeCount: includeCount,
-          sort: sort,
-          cursor: cursor,
-          includeAudit: includeAudit,
+          workspaceId,
+          entity,
+          _export,
+          pageLimit,
+          includeCount,
+          sort,
+          cursor,
+          includeAudit,
         };
 
         const listValuesResult = assistantService.listValues(listValuesParams);
@@ -4240,20 +4236,20 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const entity = 'testString';
         const value = 'testString';
-        const metadata = { 'key1': 'testString' };
+        const metadata = { foo: 'bar' };
         const type = 'synonyms';
         const synonyms = ['testString'];
         const patterns = ['testString'];
         const includeAudit = false;
         const createValueParams = {
-          workspaceId: workspaceId,
-          entity: entity,
-          value: value,
-          metadata: metadata,
-          type: type,
-          synonyms: synonyms,
-          patterns: patterns,
-          includeAudit: includeAudit,
+          workspaceId,
+          entity,
+          value,
+          metadata,
+          type,
+          synonyms,
+          patterns,
+          includeAudit,
         };
 
         const createValueResult = assistantService.createValue(createValueParams);
@@ -4353,11 +4349,11 @@ describe('AssistantV1', () => {
         const _export = false;
         const includeAudit = false;
         const getValueParams = {
-          workspaceId: workspaceId,
-          entity: entity,
-          value: value,
-          _export: _export,
-          includeAudit: includeAudit,
+          workspaceId,
+          entity,
+          value,
+          _export,
+          includeAudit,
         };
 
         const getValueResult = assistantService.getValue(getValueParams);
@@ -4452,23 +4448,23 @@ describe('AssistantV1', () => {
         const entity = 'testString';
         const value = 'testString';
         const newValue = 'testString';
-        const newMetadata = { 'key1': 'testString' };
+        const newMetadata = { foo: 'bar' };
         const newType = 'synonyms';
         const newSynonyms = ['testString'];
         const newPatterns = ['testString'];
         const append = false;
         const includeAudit = false;
         const updateValueParams = {
-          workspaceId: workspaceId,
-          entity: entity,
-          value: value,
-          newValue: newValue,
-          newMetadata: newMetadata,
-          newType: newType,
-          newSynonyms: newSynonyms,
-          newPatterns: newPatterns,
-          append: append,
-          includeAudit: includeAudit,
+          workspaceId,
+          entity,
+          value,
+          newValue,
+          newMetadata,
+          newType,
+          newSynonyms,
+          newPatterns,
+          append,
+          includeAudit,
         };
 
         const updateValueResult = assistantService.updateValue(updateValueParams);
@@ -4568,9 +4564,9 @@ describe('AssistantV1', () => {
         const entity = 'testString';
         const value = 'testString';
         const deleteValueParams = {
-          workspaceId: workspaceId,
-          entity: entity,
-          value: value,
+          workspaceId,
+          entity,
+          value,
         };
 
         const deleteValueResult = assistantService.deleteValue(deleteValueParams);
@@ -4668,14 +4664,14 @@ describe('AssistantV1', () => {
         const cursor = 'testString';
         const includeAudit = false;
         const listSynonymsParams = {
-          workspaceId: workspaceId,
-          entity: entity,
-          value: value,
-          pageLimit: pageLimit,
-          includeCount: includeCount,
-          sort: sort,
-          cursor: cursor,
-          includeAudit: includeAudit,
+          workspaceId,
+          entity,
+          value,
+          pageLimit,
+          includeCount,
+          sort,
+          cursor,
+          includeAudit,
         };
 
         const listSynonymsResult = assistantService.listSynonyms(listSynonymsParams);
@@ -4775,11 +4771,11 @@ describe('AssistantV1', () => {
         const synonym = 'testString';
         const includeAudit = false;
         const createSynonymParams = {
-          workspaceId: workspaceId,
-          entity: entity,
-          value: value,
-          synonym: synonym,
-          includeAudit: includeAudit,
+          workspaceId,
+          entity,
+          value,
+          synonym,
+          includeAudit,
         };
 
         const createSynonymResult = assistantService.createSynonym(createSynonymParams);
@@ -4878,11 +4874,11 @@ describe('AssistantV1', () => {
         const synonym = 'testString';
         const includeAudit = false;
         const getSynonymParams = {
-          workspaceId: workspaceId,
-          entity: entity,
-          value: value,
-          synonym: synonym,
-          includeAudit: includeAudit,
+          workspaceId,
+          entity,
+          value,
+          synonym,
+          includeAudit,
         };
 
         const getSynonymResult = assistantService.getSynonym(getSynonymParams);
@@ -4982,12 +4978,12 @@ describe('AssistantV1', () => {
         const newSynonym = 'testString';
         const includeAudit = false;
         const updateSynonymParams = {
-          workspaceId: workspaceId,
-          entity: entity,
-          value: value,
-          synonym: synonym,
-          newSynonym: newSynonym,
-          includeAudit: includeAudit,
+          workspaceId,
+          entity,
+          value,
+          synonym,
+          newSynonym,
+          includeAudit,
         };
 
         const updateSynonymResult = assistantService.updateSynonym(updateSynonymParams);
@@ -5086,10 +5082,10 @@ describe('AssistantV1', () => {
         const value = 'testString';
         const synonym = 'testString';
         const deleteSynonymParams = {
-          workspaceId: workspaceId,
-          entity: entity,
-          value: value,
-          synonym: synonym,
+          workspaceId,
+          entity,
+          value,
+          synonym,
         };
 
         const deleteSynonymResult = assistantService.deleteSynonym(deleteSynonymParams);
@@ -5188,12 +5184,12 @@ describe('AssistantV1', () => {
         const cursor = 'testString';
         const includeAudit = false;
         const listDialogNodesParams = {
-          workspaceId: workspaceId,
-          pageLimit: pageLimit,
-          includeCount: includeCount,
-          sort: sort,
-          cursor: cursor,
-          includeAudit: includeAudit,
+          workspaceId,
+          pageLimit,
+          includeCount,
+          sort,
+          cursor,
+          includeAudit,
         };
 
         const listDialogNodesResult = assistantService.listDialogNodes(listDialogNodesParams);
@@ -5281,20 +5277,23 @@ describe('AssistantV1', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
 
+      // DialogNodeOutputTextValuesElement
+      const dialogNodeOutputTextValuesElementModel = {
+        text: 'testString',
+      };
+
       // ResponseGenericChannel
       const responseGenericChannelModel = {
         channel: 'chat',
       };
 
-      // DialogNodeOutputGenericDialogNodeOutputResponseTypeAudio
+      // DialogNodeOutputGenericDialogNodeOutputResponseTypeText
       const dialogNodeOutputGenericModel = {
-        response_type: 'audio',
-        source: 'testString',
-        title: 'testString',
-        description: 'testString',
+        response_type: 'text',
+        values: [dialogNodeOutputTextValuesElementModel],
+        selection_policy: 'sequential',
+        delimiter: '\n',
         channels: [responseGenericChannelModel],
-        channel_options: { foo: 'bar' },
-        alt_text: 'testString',
       };
 
       // DialogNodeOutputModifiers
@@ -5305,14 +5304,14 @@ describe('AssistantV1', () => {
       // DialogNodeOutput
       const dialogNodeOutputModel = {
         generic: [dialogNodeOutputGenericModel],
-        integrations: { 'key1': { 'key1': 'testString' } },
+        integrations: { 'key1': { foo: 'bar' } },
         modifiers: dialogNodeOutputModifiersModel,
         foo: 'testString',
       };
 
       // DialogNodeContext
       const dialogNodeContextModel = {
-        integrations: { 'key1': { 'key1': 'testString' } },
+        integrations: { 'key1': { foo: 'bar' } },
         foo: 'testString',
       };
 
@@ -5327,7 +5326,7 @@ describe('AssistantV1', () => {
       const dialogNodeActionModel = {
         name: 'testString',
         type: 'client',
-        parameters: { 'key1': 'testString' },
+        parameters: { foo: 'bar' },
         result_variable: 'testString',
         credentials: 'testString',
       };
@@ -5342,7 +5341,7 @@ describe('AssistantV1', () => {
         const previousSibling = 'testString';
         const output = dialogNodeOutputModel;
         const context = dialogNodeContextModel;
-        const metadata = { 'key1': 'testString' };
+        const metadata = { foo: 'bar' };
         const nextStep = dialogNodeNextStepModel;
         const title = 'testString';
         const type = 'standard';
@@ -5356,27 +5355,27 @@ describe('AssistantV1', () => {
         const disambiguationOptOut = false;
         const includeAudit = false;
         const createDialogNodeParams = {
-          workspaceId: workspaceId,
-          dialogNode: dialogNode,
-          description: description,
-          conditions: conditions,
-          parent: parent,
-          previousSibling: previousSibling,
-          output: output,
-          context: context,
-          metadata: metadata,
-          nextStep: nextStep,
-          title: title,
-          type: type,
-          eventName: eventName,
-          variable: variable,
-          actions: actions,
-          digressIn: digressIn,
-          digressOut: digressOut,
-          digressOutSlots: digressOutSlots,
-          userLabel: userLabel,
-          disambiguationOptOut: disambiguationOptOut,
-          includeAudit: includeAudit,
+          workspaceId,
+          dialogNode,
+          description,
+          conditions,
+          parent,
+          previousSibling,
+          output,
+          context,
+          metadata,
+          nextStep,
+          title,
+          type,
+          eventName,
+          variable,
+          actions,
+          digressIn,
+          digressOut,
+          digressOutSlots,
+          userLabel,
+          disambiguationOptOut,
+          includeAudit,
         };
 
         const createDialogNodeResult = assistantService.createDialogNode(createDialogNodeParams);
@@ -5485,9 +5484,9 @@ describe('AssistantV1', () => {
         const dialogNode = 'testString';
         const includeAudit = false;
         const getDialogNodeParams = {
-          workspaceId: workspaceId,
-          dialogNode: dialogNode,
-          includeAudit: includeAudit,
+          workspaceId,
+          dialogNode,
+          includeAudit,
         };
 
         const getDialogNodeResult = assistantService.getDialogNode(getDialogNodeParams);
@@ -5574,20 +5573,23 @@ describe('AssistantV1', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
 
+      // DialogNodeOutputTextValuesElement
+      const dialogNodeOutputTextValuesElementModel = {
+        text: 'testString',
+      };
+
       // ResponseGenericChannel
       const responseGenericChannelModel = {
         channel: 'chat',
       };
 
-      // DialogNodeOutputGenericDialogNodeOutputResponseTypeAudio
+      // DialogNodeOutputGenericDialogNodeOutputResponseTypeText
       const dialogNodeOutputGenericModel = {
-        response_type: 'audio',
-        source: 'testString',
-        title: 'testString',
-        description: 'testString',
+        response_type: 'text',
+        values: [dialogNodeOutputTextValuesElementModel],
+        selection_policy: 'sequential',
+        delimiter: '\n',
         channels: [responseGenericChannelModel],
-        channel_options: { foo: 'bar' },
-        alt_text: 'testString',
       };
 
       // DialogNodeOutputModifiers
@@ -5598,14 +5600,14 @@ describe('AssistantV1', () => {
       // DialogNodeOutput
       const dialogNodeOutputModel = {
         generic: [dialogNodeOutputGenericModel],
-        integrations: { 'key1': { 'key1': 'testString' } },
+        integrations: { 'key1': { foo: 'bar' } },
         modifiers: dialogNodeOutputModifiersModel,
         foo: 'testString',
       };
 
       // DialogNodeContext
       const dialogNodeContextModel = {
-        integrations: { 'key1': { 'key1': 'testString' } },
+        integrations: { 'key1': { foo: 'bar' } },
         foo: 'testString',
       };
 
@@ -5620,7 +5622,7 @@ describe('AssistantV1', () => {
       const dialogNodeActionModel = {
         name: 'testString',
         type: 'client',
-        parameters: { 'key1': 'testString' },
+        parameters: { foo: 'bar' },
         result_variable: 'testString',
         credentials: 'testString',
       };
@@ -5636,7 +5638,7 @@ describe('AssistantV1', () => {
         const newPreviousSibling = 'testString';
         const newOutput = dialogNodeOutputModel;
         const newContext = dialogNodeContextModel;
-        const newMetadata = { 'key1': 'testString' };
+        const newMetadata = { foo: 'bar' };
         const newNextStep = dialogNodeNextStepModel;
         const newTitle = 'testString';
         const newType = 'standard';
@@ -5650,28 +5652,28 @@ describe('AssistantV1', () => {
         const newDisambiguationOptOut = false;
         const includeAudit = false;
         const updateDialogNodeParams = {
-          workspaceId: workspaceId,
-          dialogNode: dialogNode,
-          newDialogNode: newDialogNode,
-          newDescription: newDescription,
-          newConditions: newConditions,
-          newParent: newParent,
-          newPreviousSibling: newPreviousSibling,
-          newOutput: newOutput,
-          newContext: newContext,
-          newMetadata: newMetadata,
-          newNextStep: newNextStep,
-          newTitle: newTitle,
-          newType: newType,
-          newEventName: newEventName,
-          newVariable: newVariable,
-          newActions: newActions,
-          newDigressIn: newDigressIn,
-          newDigressOut: newDigressOut,
-          newDigressOutSlots: newDigressOutSlots,
-          newUserLabel: newUserLabel,
-          newDisambiguationOptOut: newDisambiguationOptOut,
-          includeAudit: includeAudit,
+          workspaceId,
+          dialogNode,
+          newDialogNode,
+          newDescription,
+          newConditions,
+          newParent,
+          newPreviousSibling,
+          newOutput,
+          newContext,
+          newMetadata,
+          newNextStep,
+          newTitle,
+          newType,
+          newEventName,
+          newVariable,
+          newActions,
+          newDigressIn,
+          newDigressOut,
+          newDigressOutSlots,
+          newUserLabel,
+          newDisambiguationOptOut,
+          includeAudit,
         };
 
         const updateDialogNodeResult = assistantService.updateDialogNode(updateDialogNodeParams);
@@ -5780,8 +5782,8 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const dialogNode = 'testString';
         const deleteDialogNodeParams = {
-          workspaceId: workspaceId,
-          dialogNode: dialogNode,
+          workspaceId,
+          dialogNode,
         };
 
         const deleteDialogNodeResult = assistantService.deleteDialogNode(deleteDialogNodeParams);
@@ -5873,11 +5875,11 @@ describe('AssistantV1', () => {
         const pageLimit = 38;
         const cursor = 'testString';
         const listLogsParams = {
-          workspaceId: workspaceId,
-          sort: sort,
-          filter: filter,
-          pageLimit: pageLimit,
-          cursor: cursor,
+          workspaceId,
+          sort,
+          filter,
+          pageLimit,
+          cursor,
         };
 
         const listLogsResult = assistantService.listLogs(listLogsParams);
@@ -5969,10 +5971,10 @@ describe('AssistantV1', () => {
         const pageLimit = 38;
         const cursor = 'testString';
         const listAllLogsParams = {
-          filter: filter,
-          sort: sort,
-          pageLimit: pageLimit,
-          cursor: cursor,
+          filter,
+          sort,
+          pageLimit,
+          cursor,
         };
 
         const listAllLogsResult = assistantService.listAllLogs(listAllLogsParams);
@@ -6060,7 +6062,7 @@ describe('AssistantV1', () => {
         // Construct the params object for operation deleteUserData
         const customerId = 'testString';
         const deleteUserDataParams = {
-          customerId: customerId,
+          customerId,
         };
 
         const deleteUserDataResult = assistantService.deleteUserData(deleteUserDataParams);

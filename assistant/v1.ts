@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2022.
+ * (C) Copyright IBM Corp. 2018, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.53.0-9710cac3-20220713-193508
+ * IBM OpenAPI SDK Code Generator Version: 3.64.1-cee95189-20230124-211647
  */
 
 import * as extend from 'extend';
@@ -592,11 +592,11 @@ class AssistantV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
+   * @returns {Promise<AssistantV1.Response<AssistantV1.EmptyObject>>}
    */
   public deleteWorkspace(
     params: AssistantV1.DeleteWorkspaceParams
-  ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
+  ): Promise<AssistantV1.Response<AssistantV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId'];
     const _validParams = ['workspaceId', 'headers'];
@@ -1221,11 +1221,11 @@ class AssistantV1 extends BaseService {
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.intent - The intent name.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
+   * @returns {Promise<AssistantV1.Response<AssistantV1.EmptyObject>>}
    */
   public deleteIntent(
     params: AssistantV1.DeleteIntentParams
-  ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
+  ): Promise<AssistantV1.Response<AssistantV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'intent'];
     const _validParams = ['workspaceId', 'intent', 'headers'];
@@ -1577,11 +1577,11 @@ class AssistantV1 extends BaseService {
    * @param {string} params.intent - The intent name.
    * @param {string} params.text - The text of the user input example.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
+   * @returns {Promise<AssistantV1.Response<AssistantV1.EmptyObject>>}
    */
   public deleteExample(
     params: AssistantV1.DeleteExampleParams
-  ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
+  ): Promise<AssistantV1.Response<AssistantV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'intent', 'text'];
     const _validParams = ['workspaceId', 'intent', 'text', 'headers'];
@@ -1918,11 +1918,11 @@ class AssistantV1 extends BaseService {
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.text - The text of a user input counterexample (for example, `What are you wearing?`).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
+   * @returns {Promise<AssistantV1.Response<AssistantV1.EmptyObject>>}
    */
   public deleteCounterexample(
     params: AssistantV1.DeleteCounterexampleParams
-  ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
+  ): Promise<AssistantV1.Response<AssistantV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'text'];
     const _validParams = ['workspaceId', 'text', 'headers'];
@@ -2296,11 +2296,11 @@ class AssistantV1 extends BaseService {
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.entity - The name of the entity.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
+   * @returns {Promise<AssistantV1.Response<AssistantV1.EmptyObject>>}
    */
   public deleteEntity(
     params: AssistantV1.DeleteEntityParams
-  ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
+  ): Promise<AssistantV1.Response<AssistantV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'entity'];
     const _validParams = ['workspaceId', 'entity', 'headers'];
@@ -2765,11 +2765,11 @@ class AssistantV1 extends BaseService {
    * @param {string} params.entity - The name of the entity.
    * @param {string} params.value - The text of the entity value.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
+   * @returns {Promise<AssistantV1.Response<AssistantV1.EmptyObject>>}
    */
   public deleteValue(
     params: AssistantV1.DeleteValueParams
-  ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
+  ): Promise<AssistantV1.Response<AssistantV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'entity', 'value'];
     const _validParams = ['workspaceId', 'entity', 'value', 'headers'];
@@ -3126,11 +3126,11 @@ class AssistantV1 extends BaseService {
    * @param {string} params.value - The text of the entity value.
    * @param {string} params.synonym - The text of the synonym.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
+   * @returns {Promise<AssistantV1.Response<AssistantV1.EmptyObject>>}
    */
   public deleteSynonym(
     params: AssistantV1.DeleteSynonymParams
-  ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
+  ): Promise<AssistantV1.Response<AssistantV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
     const _validParams = ['workspaceId', 'entity', 'value', 'synonym', 'headers'];
@@ -3574,11 +3574,11 @@ class AssistantV1 extends BaseService {
    * @param {string} params.workspaceId - Unique identifier of the workspace.
    * @param {string} params.dialogNode - The dialog node ID (for example, `node_1_1479323581900`).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
+   * @returns {Promise<AssistantV1.Response<AssistantV1.EmptyObject>>}
    */
   public deleteDialogNode(
     params: AssistantV1.DeleteDialogNodeParams
-  ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
+  ): Promise<AssistantV1.Response<AssistantV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'dialogNode'];
     const _validParams = ['workspaceId', 'dialogNode', 'headers'];
@@ -3790,11 +3790,11 @@ class AssistantV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customerId - The customer ID for which all data is to be deleted.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<AssistantV1.Response<AssistantV1.Empty>>}
+   * @returns {Promise<AssistantV1.Response<AssistantV1.EmptyObject>>}
    */
   public deleteUserData(
     params: AssistantV1.DeleteUserDataParams
-  ): Promise<AssistantV1.Response<AssistantV1.Empty>> {
+  ): Promise<AssistantV1.Response<AssistantV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customerId'];
     const _validParams = ['customerId', 'headers'];
@@ -3861,7 +3861,7 @@ namespace AssistantV1 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty {}
+  export interface EmptyObject {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -5197,7 +5197,9 @@ namespace AssistantV1 {
 
   /** State information for the conversation. To maintain state, include the context from the previous response. */
   export interface Context {
-    /** The unique identifier of the conversation. */
+    /** The unique identifier of the conversation. The conversation ID cannot contain any of the following
+     *  characters: `+` `=` `&&` `||` `>` `<` `!` `(` `)` `{` `}` `[` `]` `^` `"` `~` `*` `?` `:` `\` `/`.
+     */
     conversation_id?: string;
     /** For internal use only. */
     system?: JsonObject;
@@ -5224,7 +5226,9 @@ namespace AssistantV1 {
   export interface CounterexampleCollection {
     /** An array of objects describing the examples marked as irrelevant input. */
     counterexamples: Counterexample[];
-    /** The pagination data for the returned objects. */
+    /** The pagination data for the returned objects. For more information about using pagination, see
+     *  [Pagination](#pagination).
+     */
     pagination: Pagination;
   }
 
@@ -5382,7 +5386,9 @@ namespace AssistantV1 {
   export interface DialogNodeCollection {
     /** An array of objects describing the dialog nodes defined for the workspace. */
     dialog_nodes: DialogNode[];
-    /** The pagination data for the returned objects. */
+    /** The pagination data for the returned objects. For more information about using pagination, see
+     *  [Pagination](#pagination).
+     */
     pagination: Pagination;
   }
 
@@ -5508,6 +5514,9 @@ namespace AssistantV1 {
     label: string;
     /** An object defining the message input, intents, and entities to be sent to the Watson Assistant service if
      *  the user selects the corresponding disambiguation option.
+     *
+     *   **Note:** These properties must be included in the request body of the next message sent to the assistant. Do
+     *  not modify or remove any of the included properties.
      */
     value: DialogSuggestionValue;
     /** The dialog output that will be returned from the Watson Assistant service if the user selects the
@@ -5520,7 +5529,7 @@ namespace AssistantV1 {
     dialog_node?: string;
   }
 
-  /** An object defining the message input, intents, and entities to be sent to the Watson Assistant service if the user selects the corresponding disambiguation option. */
+  /** An object defining the message input, intents, and entities to be sent to the Watson Assistant service if the user selects the corresponding disambiguation option. **Note:** These properties must be included in the request body of the next message sent to the assistant. Do not modify or remove any of the included properties. */
   export interface DialogSuggestionValue {
     /** An input object that includes the input text. */
     input?: MessageInput;
@@ -5556,7 +5565,9 @@ namespace AssistantV1 {
   export interface EntityCollection {
     /** An array of objects describing the entities defined for the workspace. */
     entities: Entity[];
-    /** The pagination data for the returned objects. */
+    /** The pagination data for the returned objects. For more information about using pagination, see
+     *  [Pagination](#pagination).
+     */
     pagination: Pagination;
   }
 
@@ -5576,7 +5587,9 @@ namespace AssistantV1 {
   export interface EntityMentionCollection {
     /** An array of objects describing the entity mentions defined for an entity. */
     examples: EntityMention[];
-    /** The pagination data for the returned objects. */
+    /** The pagination data for the returned objects. For more information about using pagination, see
+     *  [Pagination](#pagination).
+     */
     pagination: Pagination;
   }
 
@@ -5599,7 +5612,9 @@ namespace AssistantV1 {
   export interface ExampleCollection {
     /** An array of objects describing the examples defined for the intent. */
     examples: Example[];
-    /** The pagination data for the returned objects. */
+    /** The pagination data for the returned objects. For more information about using pagination, see
+     *  [Pagination](#pagination).
+     */
     pagination: Pagination;
   }
 
@@ -5624,7 +5639,9 @@ namespace AssistantV1 {
   export interface IntentCollection {
     /** An array of objects describing the intents defined for the workspace. */
     intents: Intent[];
-    /** The pagination data for the returned objects. */
+    /** The pagination data for the returned objects. For more information about using pagination, see
+     *  [Pagination](#pagination).
+     */
     pagination: Pagination;
   }
 
@@ -5650,7 +5667,9 @@ namespace AssistantV1 {
   export interface LogCollection {
     /** An array of objects describing log events. */
     logs: Log[];
-    /** The pagination data for the returned objects. */
+    /** The pagination data for the returned objects. For more information about using pagination, see
+     *  [Pagination](#pagination).
+     */
     pagination: LogPagination;
   }
 
@@ -5674,7 +5693,7 @@ namespace AssistantV1 {
     dialog_node?: string;
   }
 
-  /** The pagination data for the returned objects. */
+  /** The pagination data for the returned objects. For more information about using pagination, see [Pagination](#pagination). */
   export interface LogPagination {
     /** The URL that will return the next page of results, if any. */
     next_url?: string;
@@ -5824,7 +5843,7 @@ namespace AssistantV1 {
     [propName: string]: any;
   }
 
-  /** The pagination data for the returned objects. */
+  /** The pagination data for the returned objects. For more information about using pagination, see [Pagination](#pagination). */
   export interface Pagination {
     /** The URL that will return the same page of results. */
     refresh_url: string;
@@ -5844,7 +5863,10 @@ namespace AssistantV1 {
 
   /** ResponseGenericChannel. */
   export interface ResponseGenericChannel {
-    /** A channel for which the response is intended. */
+    /** A channel for which the response is intended.
+     *
+     *   **Note:** On IBM Cloud Pak for Data, only `chat` is supported.
+     */
     channel?: string;
   }
 
@@ -6021,7 +6043,9 @@ namespace AssistantV1 {
   export interface SynonymCollection {
     /** An array of synonyms. */
     synonyms: Synonym[];
-    /** The pagination data for the returned objects. */
+    /** The pagination data for the returned objects. For more information about using pagination, see
+     *  [Pagination](#pagination).
+     */
     pagination: Pagination;
   }
 
@@ -6058,7 +6082,9 @@ namespace AssistantV1 {
   export interface ValueCollection {
     /** An array of entity values. */
     values: Value[];
-    /** The pagination data for the returned objects. */
+    /** The pagination data for the returned objects. For more information about using pagination, see
+     *  [Pagination](#pagination).
+     */
     pagination: Pagination;
   }
 
@@ -6134,7 +6160,9 @@ namespace AssistantV1 {
   export interface WorkspaceCollection {
     /** An array of objects describing the workspaces associated with the service instance. */
     workspaces: Workspace[];
-    /** The pagination data for the returned objects. */
+    /** The pagination data for the returned objects. For more information about using pagination, see
+     *  [Pagination](#pagination).
+     */
     pagination: Pagination;
   }
 
@@ -6200,10 +6228,13 @@ namespace AssistantV1 {
 
   /** Workspace settings related to the version of the training algorithms currently used by the skill. */
   export interface WorkspaceSystemSettingsNlp {
-    /** The policy the skill follows for selecting the algorithm version to use:
+    /** The policy the skill follows for selecting the algorithm version to use. For more information, see the
+     *  [documentation](/docs/watson-assistant?topic=watson-assistant-algorithm-version).
      *
-     *   - `baseline`: the latest mature version
-     *   - `beta`: the latest beta version.
+     *   On IBM Cloud, you can specify `latest`, `previous`, or `beta`.
+     *
+     *   On IBM Cloud Pak for Data, you can specify either `beta` or the date of the version you want to use, in
+     *  `YYYY-MM-DD` format.
      */
     model?: string;
   }
@@ -6254,6 +6285,8 @@ namespace AssistantV1 {
   export interface DialogNodeOutputGenericDialogNodeOutputResponseTypeChannelTransfer extends DialogNodeOutputGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
+     *
+     *   **Note:** The `channel_transfer` response type is not supported on IBM Cloud Pak for Data.
      */
     response_type: string;
     /** The message to display to the user when initiating a channel transfer. */
@@ -6465,6 +6498,8 @@ namespace AssistantV1 {
   export interface RuntimeResponseGenericRuntimeResponseTypeChannelTransfer extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
+     *
+     *   **Note:** The `channel_transfer` response type is not supported on IBM Cloud Pak for Data.
      */
     response_type: string;
     /** The message to display to the user when initiating a channel transfer. */
