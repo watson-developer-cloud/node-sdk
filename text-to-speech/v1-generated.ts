@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2017, 2022.
+ * (C) Copyright IBM Corp. 2017, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.53.0-9710cac3-20220713-193508
+ * IBM OpenAPI SDK Code Generator Version: 3.64.1-cee95189-20230124-211647
  */
 
 import * as extend from 'extend';
@@ -31,7 +31,7 @@ import { getSdkHeaders } from '../lib/common';
 
 /**
  * The IBM Watson&trade; Text to Speech service provides APIs that use IBM's speech-synthesis capabilities to synthesize
- * text into natural-sounding speech in a variety of languages, dialects, and voices.  The service supports at least one
+ * text into natural-sounding speech in a variety of languages, dialects, and voices. The service supports at least one
  * male or female voice, sometimes both, for each language. The audio is streamed back to the client with minimal delay.
  *
  *
@@ -51,10 +51,9 @@ import { getSdkHeaders } from '../lib/common';
  * models to improve the quality of your custom prompts. The service support custom prompts only for US English custom
  * models and voices.
  *
- * Effective 31 March 2022, all neural voices are deprecated. The deprecated voices remain available to existing users
- * until 31 March 2023, when they will be removed from the service and the documentation. The neural voices are
- * supported only for IBM Cloud; they are not available for IBM Cloud Pak for Data. All enhanced neural voices remain
- * available to all users. For more information, see the [31 March 2022 service
+ * Effective **31 March 2022**, all *neural voices* are deprecated. The deprecated voices remain available to existing
+ * users until 31 March 2023, when they will be removed from the service and the documentation. *No enhanced neural
+ * voices or expressive neural voices are deprecated.* For more information, see the [31 March 2022 service
  * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-31march2022) in
  * the release notes for {{site.data.keyword.texttospeechshort}} for {{site.data.keyword.cloud_notm}}.{: deprecated}
  *
@@ -107,15 +106,15 @@ class TextToSpeechV1 extends BaseService {
    * alphabetized or static list of voices. To see information about a specific voice, use the [Get a voice](#getvoice).
    *
    *
-   * **Note:** Effective 31 March 2022, all neural voices are deprecated. The deprecated voices remain available to
-   * existing users until 31 March 2023, when they will be removed from the service and the documentation. The neural
-   * voices are supported only for IBM Cloud; they are not available for IBM Cloud Pak for Data. All enhanced neural
-   * voices remain available to all users. For more information, see the [31 March 2022 service
+   * **Note:** Effective **31 March 2022**, all *neural voices* are deprecated. The deprecated voices remain available
+   * to existing users until 31 March 2023, when they will be removed from the service and the documentation. *No
+   * enhanced neural voices or expressive neural voices are deprecated.* For more information, see the [31 March 2022
+   * service
    * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-31march2022) in
    * the release notes.
    *
-   * **See also:** [Listing all available
-   * voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#listVoices).
+   * **See also:** [Listing all
+   * voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices-list#list-all-voices).
    *
    * @param {Object} [params] - The parameters to send to the service.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -167,12 +166,12 @@ class TextToSpeechV1 extends BaseService {
    * method.
    *
    * **See also:** [Listing a specific
-   * voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#listVoice).
+   * voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices-list#list-specific-voice).
    *
-   * **Note:** Effective 31 March 2022, all neural voices are deprecated. The deprecated voices remain available to
-   * existing users until 31 March 2023, when they will be removed from the service and the documentation. The neural
-   * voices are supported only for IBM Cloud; they are not available for IBM Cloud Pak for Data. All enhanced neural
-   * voices remain available to all users. For more information, see the [31 March 2022 service
+   * **Note:** Effective **31 March 2022**, all *neural voices* are deprecated. The deprecated voices remain available
+   * to existing users until 31 March 2023, when they will be removed from the service and the documentation. *No
+   * enhanced neural voices or expressive neural voices are deprecated.* For more information, see the [31 March 2022
+   * service
    * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-31march2022) in
    * the release notes.
    *
@@ -247,10 +246,10 @@ class TextToSpeechV1 extends BaseService {
    * **See also:** [The HTTP
    * interface](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-usingHTTP#usingHTTP).
    *
-   * **Note:** Effective 31 March 2022, all neural voices are deprecated. The deprecated voices remain available to
-   * existing users until 31 March 2023, when they will be removed from the service and the documentation. The neural
-   * voices are supported only for IBM Cloud; they are not available for IBM Cloud Pak for Data. All enhanced neural
-   * voices remain available to all users. For more information, see the [31 March 2022 service
+   * **Note:** Effective **31 March 2022**, all *neural voices* are deprecated. The deprecated voices remain available
+   * to existing users until 31 March 2023, when they will be removed from the service and the documentation. *No
+   * enhanced neural voices or expressive neural voices are deprecated.* For more information, see the [31 March 2022
+   * service
    * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-31march2022) in
    * the release notes.
    *
@@ -291,6 +290,11 @@ class TextToSpeechV1 extends BaseService {
    * For more information about specifying an audio format, including additional details about some of the formats, see
    * [Using audio formats](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-audio-formats).
    *
+   * **Note:** By default, the service returns audio in the Ogg audio format with the Opus codec
+   * (`audio/ogg;codecs=opus`). However, the Ogg audio format is not supported with the Safari browser. If you are using
+   * the service with the Safari browser, you must use the `Accept` request header or the `accept` query parameter
+   * specify a different format in which you want the service to return the audio.
+   *
    * ### Warning messages
    *
    *  If a request includes invalid query parameters, the service returns a `Warnings` response header that provides
@@ -310,8 +314,9 @@ class TextToSpeechV1 extends BaseService {
    * with the request or specify a new default voice for your installation of the service.
    *
    * **See also:**
-   * * [Using languages and voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices)
-   * * [The default voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#specify-voice-default).
+   * * [Languages and voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices)
+   * * [Using the default
+   * voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices-use#specify-voice-default).
    * @param {string} [params.customizationId] - The customization ID (GUID) of a custom model to use for the synthesis.
    * If a custom model is specified, it works only if it matches the language of the indicated voice. You must make the
    * request with credentials for the instance of the service that owns the custom model. Omit the parameter to use the
@@ -324,10 +329,34 @@ class TextToSpeechV1 extends BaseService {
    * * `pairs` - The service reads the characters two at a time, with a brief pause between each pair.
    * * `triples` - The service reads the characters three at a time, with a brief pause between each triplet.
    *
-   * The parameter is available only for IBM Cloud.
-   *
-   * **See also:** [Specifying how strings are spelled
+   * For more information, see [Specifying how strings are spelled
    * out](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-synthesis-params#params-spell-out-mode).
+   * @param {number} [params.ratePercentage] - The percentage change from the default speaking rate of the voice that is
+   * used for speech synthesis. Each voice has a default speaking rate that is optimized to represent a normal rate of
+   * speech. The parameter accepts an integer that represents the percentage change from the voice's default rate:
+   * * Specify a signed negative integer to reduce the speaking rate by that percentage. For example, -10 reduces the
+   * rate by ten percent.
+   * * Specify an unsigned or signed positive integer to increase the speaking rate by that percentage. For example, 10
+   * and +10 increase the rate by ten percent.
+   * * Specify 0 or omit the parameter to get the default speaking rate for the voice.
+   *
+   * The parameter affects the rate for an entire request.
+   *
+   * For more information, see [Modifying the speaking
+   * rate](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-synthesis-params#params-rate-percentage).
+   * @param {number} [params.pitchPercentage] - The percentage change from the default speaking pitch of the voice that
+   * is used for speech synthesis. Each voice has a default speaking pitch that is optimized to represent a normal tone
+   * of voice. The parameter accepts an integer that represents the percentage change from the voice's default tone:
+   * * Specify a signed negative integer to lower the voice's pitch by that percentage. For example, -5 reduces the tone
+   * by five percent.
+   * * Specify an unsigned or signed positive integer to increase the voice's pitch by that percentage. For example, 5
+   * and +5 increase the tone by five percent.
+   * * Specify 0 or omit the parameter to get the default speaking pitch for the voice.
+   *
+   * The parameter affects the pitch for an entire request.
+   *
+   * For more information, see [Modifying the speaking
+   * pitch](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-synthesis-params#params-pitch-percentage).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<NodeJS.ReadableStream>>}
    */
@@ -336,7 +365,7 @@ class TextToSpeechV1 extends BaseService {
   ): Promise<TextToSpeechV1.Response<NodeJS.ReadableStream>> {
     const _params = { ...params };
     const _requiredParams = ['text'];
-    const _validParams = ['text', 'accept', 'voice', 'customizationId', 'spellOutMode', 'headers'];
+    const _validParams = ['text', 'accept', 'voice', 'customizationId', 'spellOutMode', 'ratePercentage', 'pitchPercentage', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -350,6 +379,8 @@ class TextToSpeechV1 extends BaseService {
       'voice': _params.voice,
       'customization_id': _params.customizationId,
       'spell_out_mode': _params.spellOutMode,
+      'rate_percentage': _params.ratePercentage,
+      'pitch_percentage': _params.pitchPercentage,
     };
 
     const sdkHeaders = getSdkHeaders(
@@ -392,10 +423,10 @@ class TextToSpeechV1 extends BaseService {
    * You can also request the pronunciation for a specific voice to see the default translation for the language of that
    * voice or for a specific custom model to see the translation for that model.
    *
-   * **Note:** Effective 31 March 2022, all neural voices are deprecated. The deprecated voices remain available to
-   * existing users until 31 March 2023, when they will be removed from the service and the documentation. The neural
-   * voices are supported only for IBM Cloud; they are not available for IBM Cloud Pak for Data. All enhanced neural
-   * voices remain available to all users. For more information, see the [31 March 2022 service
+   * **Note:** Effective **31 March 2022**, all *neural voices* are deprecated. The deprecated voices remain available
+   * to existing users until 31 March 2023, when they will be removed from the service and the documentation. *No
+   * enhanced neural voices or expressive neural voices are deprecated.* For more information, see the [31 March 2022
+   * service
    * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-31march2022) in
    * the release notes.
    *
@@ -411,8 +442,8 @@ class TextToSpeechV1 extends BaseService {
    * _For IBM Cloud Pak for Data,_ if you do not install the `en-US_MichaelV3Voice`, you must either specify a voice
    * with the request or specify a new default voice for your installation of the service.
    *
-   * **See also:** [The default
-   * voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#specify-voice-default).
+   * **See also:** [Using the default
+   * voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices-use#specify-voice-default).
    * @param {string} [params.format] - The phoneme format in which to return the pronunciation. The Arabic, Chinese,
    * Dutch, Australian English, and Korean languages support only IPA. Omit the parameter to obtain the pronunciation in
    * the default format.
@@ -482,20 +513,25 @@ class TextToSpeechV1 extends BaseService {
    * **See also:** [Creating a custom
    * model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsCreate).
    *
-   * **Note:** Effective 31 March 2022, all neural voices are deprecated. The deprecated voices remain available to
-   * existing users until 31 March 2023, when they will be removed from the service and the documentation. The neural
-   * voices are supported only for IBM Cloud; they are not available for IBM Cloud Pak for Data. All enhanced neural
-   * voices remain available to all users. For more information, see the [31 March 2022 service
+   * **Note:** Effective **31 March 2022**, all *neural voices* are deprecated. The deprecated voices remain available
+   * to existing users until 31 March 2023, when they will be removed from the service and the documentation. *No
+   * enhanced neural voices or expressive neural voices are deprecated.* For more information, see the [31 March 2022
+   * service
    * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-31march2022) in
    * the release notes.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.name - The name of the new custom model.
+   * @param {string} params.name - The name of the new custom model. Use a localized name that matches the language of
+   * the custom model. Use a name that describes the purpose of the custom model, such as `Medical custom model` or
+   * `Legal custom model`. Use a name that is unique among all custom models that you own.
+   *
+   * Include a maximum of 256 characters in the name. Do not use backslashes, slashes, colons, equal signs, ampersands,
+   * or question marks in the name.
    * @param {string} [params.language] - The language of the new custom model. You create a custom model for a specific
    * language, not for a specific voice. A custom model can be used with any voice for its specified language. Omit the
    * parameter to use the the default language, `en-US`.
-   * @param {string} [params.description] - A description of the new custom model. Specifying a description is
-   * recommended.
+   * @param {string} [params.description] - A recommended description of the new custom model. Use a localized
+   * description that matches the language of the custom model. Include a maximum of 128 characters in the description.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.CustomModel>>}
    */
@@ -637,11 +673,11 @@ class TextToSpeechV1 extends BaseService {
    * @param {Word[]} [params.words] - An array of `Word` objects that provides the words and their translations that are
    * to be added or updated for the custom model. Pass an empty array to make no additions or updates.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>>}
+   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.EmptyObject>>}
    */
   public updateCustomModel(
     params: TextToSpeechV1.UpdateCustomModelParams
-  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId'];
     const _validParams = ['customizationId', 'name', 'description', 'words', 'headers'];
@@ -761,11 +797,11 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} params.customizationId - The customization ID (GUID) of the custom model. You must make the request
    * with credentials for the instance of the service that owns the custom model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>>}
+   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.EmptyObject>>}
    */
   public deleteCustomModel(
     params: TextToSpeechV1.DeleteCustomModelParams
-  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId'];
     const _validParams = ['customizationId', 'headers'];
@@ -843,11 +879,11 @@ class TextToSpeechV1 extends BaseService {
    * translation from the custom model. The words are listed in alphabetical order, with uppercase letters listed before
    * lowercase letters. The array is empty if the custom model contains no words.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>>}
+   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.EmptyObject>>}
    */
   public addWords(
     params: TextToSpeechV1.AddWordsParams
-  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId', 'words'];
     const _validParams = ['customizationId', 'words', 'headers'];
@@ -991,11 +1027,11 @@ class TextToSpeechV1 extends BaseService {
    * For more information, see [Working with Japanese
    * entries](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-rules#jaNotes).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>>}
+   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.EmptyObject>>}
    */
   public addWord(
     params: TextToSpeechV1.AddWordParams
-  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId', 'word', 'translation'];
     const _validParams = ['customizationId', 'word', 'translation', 'partOfSpeech', 'headers'];
@@ -1116,11 +1152,11 @@ class TextToSpeechV1 extends BaseService {
    * with credentials for the instance of the service that owns the custom model.
    * @param {string} params.word - The word that is to be deleted from the custom model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>>}
+   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.EmptyObject>>}
    */
   public deleteWord(
     params: TextToSpeechV1.DeleteWordParams
-  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId', 'word'];
     const _validParams = ['customizationId', 'word', 'headers'];
@@ -1450,11 +1486,11 @@ class TextToSpeechV1 extends BaseService {
    * with credentials for the instance of the service that owns the custom model.
    * @param {string} params.promptId - The identifier (name) of the prompt that is to be deleted.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>>}
+   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.EmptyObject>>}
    */
   public deleteCustomPrompt(
     params: TextToSpeechV1.DeleteCustomPromptParams
-  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId', 'promptId'];
     const _validParams = ['customizationId', 'promptId', 'headers'];
@@ -1731,11 +1767,11 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} params.speakerId - The speaker ID (GUID) of the speaker model. You must make the request with
    * service credentials for the instance of the service that owns the speaker model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>>}
+   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.EmptyObject>>}
    */
   public deleteSpeakerModel(
     params: TextToSpeechV1.DeleteSpeakerModelParams
-  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['speakerId'];
     const _validParams = ['speakerId', 'headers'];
@@ -1796,11 +1832,11 @@ class TextToSpeechV1 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customerId - The customer ID for which all data is to be deleted.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>>}
+   * @returns {Promise<TextToSpeechV1.Response<TextToSpeechV1.EmptyObject>>}
    */
   public deleteUserData(
     params: TextToSpeechV1.DeleteUserDataParams
-  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Empty>> {
+  ): Promise<TextToSpeechV1.Response<TextToSpeechV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customerId'];
     const _validParams = ['customerId', 'headers'];
@@ -1857,7 +1893,7 @@ namespace TextToSpeechV1 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty {}
+  export interface EmptyObject {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -1900,11 +1936,15 @@ namespace TextToSpeechV1 {
       EN_GB_CHARLOTTEV3VOICE = 'en-GB_CharlotteV3Voice',
       EN_GB_JAMESV3VOICE = 'en-GB_JamesV3Voice',
       EN_GB_KATEV3VOICE = 'en-GB_KateV3Voice',
+      EN_US_ALLISONEXPRESSIVE = 'en-US_AllisonExpressive',
       EN_US_ALLISONV3VOICE = 'en-US_AllisonV3Voice',
       EN_US_EMILYV3VOICE = 'en-US_EmilyV3Voice',
+      EN_US_EMMAEXPRESSIVE = 'en-US_EmmaExpressive',
       EN_US_HENRYV3VOICE = 'en-US_HenryV3Voice',
       EN_US_KEVINV3VOICE = 'en-US_KevinV3Voice',
+      EN_US_LISAEXPRESSIVE = 'en-US_LisaExpressive',
       EN_US_LISAV3VOICE = 'en-US_LisaV3Voice',
+      EN_US_MICHAELEXPRESSIVE = 'en-US_MichaelExpressive',
       EN_US_MICHAELV3VOICE = 'en-US_MichaelV3Voice',
       EN_US_OLIVIAV3VOICE = 'en-US_OliviaV3Voice',
       ES_ES_ENRIQUEV3VOICE = 'es-ES_EnriqueV3Voice',
@@ -1948,9 +1988,9 @@ namespace TextToSpeechV1 {
      *  with the request or specify a new default voice for your installation of the service.
      *
      *  **See also:**
-     *  * [Using languages and voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices)
-     *  * [The default
-     *  voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#specify-voice-default).
+     *  * [Languages and voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices)
+     *  * [Using the default
+     *  voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices-use#specify-voice-default).
      */
     voice?: SynthesizeConstants.Voice | string;
     /** The customization ID (GUID) of a custom model to use for the synthesis. If a custom model is specified, it
@@ -1967,12 +2007,40 @@ namespace TextToSpeechV1 {
      *  * `pairs` - The service reads the characters two at a time, with a brief pause between each pair.
      *  * `triples` - The service reads the characters three at a time, with a brief pause between each triplet.
      *
-     *  The parameter is available only for IBM Cloud.
-     *
-     *  **See also:** [Specifying how strings are spelled
+     *  For more information, see [Specifying how strings are spelled
      *  out](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-synthesis-params#params-spell-out-mode).
      */
     spellOutMode?: SynthesizeConstants.SpellOutMode | string;
+    /** The percentage change from the default speaking rate of the voice that is used for speech synthesis. Each
+     *  voice has a default speaking rate that is optimized to represent a normal rate of speech. The parameter accepts
+     *  an integer that represents the percentage change from the voice's default rate:
+     *  * Specify a signed negative integer to reduce the speaking rate by that percentage. For example, -10 reduces the
+     *  rate by ten percent.
+     *  * Specify an unsigned or signed positive integer to increase the speaking rate by that percentage. For example,
+     *  10 and +10 increase the rate by ten percent.
+     *  * Specify 0 or omit the parameter to get the default speaking rate for the voice.
+     *
+     *  The parameter affects the rate for an entire request.
+     *
+     *  For more information, see [Modifying the speaking
+     *  rate](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-synthesis-params#params-rate-percentage).
+     */
+    ratePercentage?: number;
+    /** The percentage change from the default speaking pitch of the voice that is used for speech synthesis. Each
+     *  voice has a default speaking pitch that is optimized to represent a normal tone of voice. The parameter accepts
+     *  an integer that represents the percentage change from the voice's default tone:
+     *  * Specify a signed negative integer to lower the voice's pitch by that percentage. For example, -5 reduces the
+     *  tone by five percent.
+     *  * Specify an unsigned or signed positive integer to increase the voice's pitch by that percentage. For example,
+     *  5 and +5 increase the tone by five percent.
+     *  * Specify 0 or omit the parameter to get the default speaking pitch for the voice.
+     *
+     *  The parameter affects the pitch for an entire request.
+     *
+     *  For more information, see [Modifying the speaking
+     *  pitch](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-synthesis-params#params-pitch-percentage).
+     */
+    pitchPercentage?: number;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -1995,7 +2063,7 @@ namespace TextToSpeechV1 {
       AUDIO_WEBM_CODECS_OPUS = 'audio/webm;codecs=opus',
       AUDIO_WEBM_CODECS_VORBIS = 'audio/webm;codecs=vorbis',
     }
-    /** The voice to use for speech synthesis. If you omit the `voice` parameter, the service uses the US English `en-US_MichaelV3Voice` by default. _For IBM Cloud Pak for Data,_ if you do not install the `en-US_MichaelV3Voice`, you must either specify a voice with the request or specify a new default voice for your installation of the service. **See also:** * [Using languages and voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices) * [The default voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#specify-voice-default). */
+    /** The voice to use for speech synthesis. If you omit the `voice` parameter, the service uses the US English `en-US_MichaelV3Voice` by default. _For IBM Cloud Pak for Data,_ if you do not install the `en-US_MichaelV3Voice`, you must either specify a voice with the request or specify a new default voice for your installation of the service. **See also:** * [Languages and voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices) * [Using the default voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices-use#specify-voice-default). */
     export enum Voice {
       AR_MS_OMARVOICE = 'ar-MS_OmarVoice',
       CS_CZ_ALENAVOICE = 'cs-CZ_AlenaVoice',
@@ -2008,11 +2076,15 @@ namespace TextToSpeechV1 {
       EN_GB_CHARLOTTEV3VOICE = 'en-GB_CharlotteV3Voice',
       EN_GB_JAMESV3VOICE = 'en-GB_JamesV3Voice',
       EN_GB_KATEV3VOICE = 'en-GB_KateV3Voice',
+      EN_US_ALLISONEXPRESSIVE = 'en-US_AllisonExpressive',
       EN_US_ALLISONV3VOICE = 'en-US_AllisonV3Voice',
       EN_US_EMILYV3VOICE = 'en-US_EmilyV3Voice',
+      EN_US_EMMAEXPRESSIVE = 'en-US_EmmaExpressive',
       EN_US_HENRYV3VOICE = 'en-US_HenryV3Voice',
       EN_US_KEVINV3VOICE = 'en-US_KevinV3Voice',
+      EN_US_LISAEXPRESSIVE = 'en-US_LisaExpressive',
       EN_US_LISAV3VOICE = 'en-US_LisaV3Voice',
+      EN_US_MICHAELEXPRESSIVE = 'en-US_MichaelExpressive',
       EN_US_MICHAELV3VOICE = 'en-US_MichaelV3Voice',
       EN_US_OLIVIAV3VOICE = 'en-US_OliviaV3Voice',
       ES_ES_ENRIQUEV3VOICE = 'es-ES_EnriqueV3Voice',
@@ -2038,7 +2110,7 @@ namespace TextToSpeechV1 {
       ZH_CN_WANGWEIVOICE = 'zh-CN_WangWeiVoice',
       ZH_CN_ZHANGJINGVOICE = 'zh-CN_ZhangJingVoice',
     }
-    /** *For German voices,* indicates how the service is to spell out strings of individual letters. To indicate the pace of the spelling, specify one of the following values: * `default` - The service reads the characters at the rate at which it synthesizes speech for the request. You can also omit the parameter entirely to achieve the default behavior. * `singles` - The service reads the characters one at a time, with a brief pause between each character. * `pairs` - The service reads the characters two at a time, with a brief pause between each pair. * `triples` - The service reads the characters three at a time, with a brief pause between each triplet. The parameter is available only for IBM Cloud. **See also:** [Specifying how strings are spelled out](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-synthesis-params#params-spell-out-mode). */
+    /** *For German voices,* indicates how the service is to spell out strings of individual letters. To indicate the pace of the spelling, specify one of the following values: * `default` - The service reads the characters at the rate at which it synthesizes speech for the request. You can also omit the parameter entirely to achieve the default behavior. * `singles` - The service reads the characters one at a time, with a brief pause between each character. * `pairs` - The service reads the characters two at a time, with a brief pause between each pair. * `triples` - The service reads the characters three at a time, with a brief pause between each triplet. For more information, see [Specifying how strings are spelled out](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-synthesis-params#params-spell-out-mode). */
     export enum SpellOutMode {
       DEFAULT = 'default',
       SINGLES = 'singles',
@@ -2058,8 +2130,8 @@ namespace TextToSpeechV1 {
      *  _For IBM Cloud Pak for Data,_ if you do not install the `en-US_MichaelV3Voice`, you must either specify a voice
      *  with the request or specify a new default voice for your installation of the service.
      *
-     *  **See also:** [The default
-     *  voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#specify-voice-default).
+     *  **See also:** [Using the default
+     *  voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices-use#specify-voice-default).
      */
     voice?: GetPronunciationConstants.Voice | string;
     /** The phoneme format in which to return the pronunciation. The Arabic, Chinese, Dutch, Australian English, and
@@ -2078,7 +2150,7 @@ namespace TextToSpeechV1 {
 
   /** Constants for the `getPronunciation` operation. */
   export namespace GetPronunciationConstants {
-    /** A voice that specifies the language in which the pronunciation is to be returned. If you omit the `voice` parameter, the service uses the US English `en-US_MichaelV3Voice` by default. All voices for the same language (for example, `en-US`) return the same translation. _For IBM Cloud Pak for Data,_ if you do not install the `en-US_MichaelV3Voice`, you must either specify a voice with the request or specify a new default voice for your installation of the service. **See also:** [The default voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices#specify-voice-default). */
+    /** A voice that specifies the language in which the pronunciation is to be returned. If you omit the `voice` parameter, the service uses the US English `en-US_MichaelV3Voice` by default. All voices for the same language (for example, `en-US`) return the same translation. _For IBM Cloud Pak for Data,_ if you do not install the `en-US_MichaelV3Voice`, you must either specify a voice with the request or specify a new default voice for your installation of the service. **See also:** [Using the default voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices-use#specify-voice-default). */
     export enum Voice {
       AR_MS_OMARVOICE = 'ar-MS_OmarVoice',
       CS_CZ_ALENAVOICE = 'cs-CZ_AlenaVoice',
@@ -2091,11 +2163,15 @@ namespace TextToSpeechV1 {
       EN_GB_CHARLOTTEV3VOICE = 'en-GB_CharlotteV3Voice',
       EN_GB_JAMESV3VOICE = 'en-GB_JamesV3Voice',
       EN_GB_KATEV3VOICE = 'en-GB_KateV3Voice',
+      EN_US_ALLISONEXPRESSIVE = 'en-US_AllisonExpressive',
       EN_US_ALLISONV3VOICE = 'en-US_AllisonV3Voice',
       EN_US_EMILYV3VOICE = 'en-US_EmilyV3Voice',
+      EN_US_EMMAEXPRESSIVE = 'en-US_EmmaExpressive',
       EN_US_HENRYV3VOICE = 'en-US_HenryV3Voice',
       EN_US_KEVINV3VOICE = 'en-US_KevinV3Voice',
+      EN_US_LISAEXPRESSIVE = 'en-US_LisaExpressive',
       EN_US_LISAV3VOICE = 'en-US_LisaV3Voice',
+      EN_US_MICHAELEXPRESSIVE = 'en-US_MichaelExpressive',
       EN_US_MICHAELV3VOICE = 'en-US_MichaelV3Voice',
       EN_US_OLIVIAV3VOICE = 'en-US_OliviaV3Voice',
       ES_ES_ENRIQUEV3VOICE = 'es-ES_EnriqueV3Voice',
@@ -2130,14 +2206,22 @@ namespace TextToSpeechV1 {
 
   /** Parameters for the `createCustomModel` operation. */
   export interface CreateCustomModelParams {
-    /** The name of the new custom model. */
+    /** The name of the new custom model. Use a localized name that matches the language of the custom model. Use a
+     *  name that describes the purpose of the custom model, such as `Medical custom model` or `Legal custom model`. Use
+     *  a name that is unique among all custom models that you own.
+     *
+     *  Include a maximum of 256 characters in the name. Do not use backslashes, slashes, colons, equal signs,
+     *  ampersands, or question marks in the name.
+     */
     name: string;
     /** The language of the new custom model. You create a custom model for a specific language, not for a specific
      *  voice. A custom model can be used with any voice for its specified language. Omit the parameter to use the the
      *  default language, `en-US`.
      */
     language?: CreateCustomModelConstants.Language | string;
-    /** A description of the new custom model. Specifying a description is recommended. */
+    /** A recommended description of the new custom model. Use a localized description that matches the language of
+     *  the custom model. Include a maximum of 128 characters in the description.
+     */
     description?: string;
     headers?: OutgoingHttpHeaders;
   }

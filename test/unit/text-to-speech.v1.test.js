@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2022.
+ * (C) Copyright IBM Corp. 2018, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -191,8 +191,8 @@ describe('TextToSpeechV1', () => {
         const voice = 'ar-MS_OmarVoice';
         const customizationId = 'testString';
         const getVoiceParams = {
-          voice: voice,
-          customizationId: customizationId,
+          voice,
+          customizationId,
         };
 
         const getVoiceResult = textToSpeechService.getVoice(getVoiceParams);
@@ -280,12 +280,16 @@ describe('TextToSpeechV1', () => {
         const voice = 'en-US_MichaelV3Voice';
         const customizationId = 'testString';
         const spellOutMode = 'default';
+        const ratePercentage = 38;
+        const pitchPercentage = 38;
         const synthesizeParams = {
-          text: text,
-          accept: accept,
-          voice: voice,
-          customizationId: customizationId,
-          spellOutMode: spellOutMode,
+          text,
+          accept,
+          voice,
+          customizationId,
+          spellOutMode,
+          ratePercentage,
+          pitchPercentage,
         };
 
         const synthesizeResult = textToSpeechService.synthesize(synthesizeParams);
@@ -307,6 +311,8 @@ describe('TextToSpeechV1', () => {
         expect(mockRequestOptions.qs.voice).toEqual(voice);
         expect(mockRequestOptions.qs.customization_id).toEqual(customizationId);
         expect(mockRequestOptions.qs.spell_out_mode).toEqual(spellOutMode);
+        expect(mockRequestOptions.qs.rate_percentage).toEqual(ratePercentage);
+        expect(mockRequestOptions.qs.pitch_percentage).toEqual(pitchPercentage);
         expect(mockRequestOptions.responseType).toBe('stream');
       }
 
@@ -377,10 +383,10 @@ describe('TextToSpeechV1', () => {
         const format = 'ipa';
         const customizationId = 'testString';
         const getPronunciationParams = {
-          text: text,
-          voice: voice,
-          format: format,
-          customizationId: customizationId,
+          text,
+          voice,
+          format,
+          customizationId,
         };
 
         const getPronunciationResult = textToSpeechService.getPronunciation(getPronunciationParams);
@@ -469,9 +475,9 @@ describe('TextToSpeechV1', () => {
         const language = 'en-US';
         const description = 'testString';
         const createCustomModelParams = {
-          name: name,
-          language: language,
-          description: description,
+          name,
+          language,
+          description,
         };
 
         const createCustomModelResult = textToSpeechService.createCustomModel(createCustomModelParams);
@@ -557,7 +563,7 @@ describe('TextToSpeechV1', () => {
         // Construct the params object for operation listCustomModels
         const language = 'ar-MS';
         const listCustomModelsParams = {
-          language: language,
+          language,
         };
 
         const listCustomModelsResult = textToSpeechService.listCustomModels(listCustomModelsParams);
@@ -633,10 +639,10 @@ describe('TextToSpeechV1', () => {
         const description = 'testString';
         const words = [wordModel];
         const updateCustomModelParams = {
-          customizationId: customizationId,
-          name: name,
-          description: description,
-          words: words,
+          customizationId,
+          name,
+          description,
+          words,
         };
 
         const updateCustomModelResult = textToSpeechService.updateCustomModel(updateCustomModelParams);
@@ -723,7 +729,7 @@ describe('TextToSpeechV1', () => {
         // Construct the params object for operation getCustomModel
         const customizationId = 'testString';
         const getCustomModelParams = {
-          customizationId: customizationId,
+          customizationId,
         };
 
         const getCustomModelResult = textToSpeechService.getCustomModel(getCustomModelParams);
@@ -807,7 +813,7 @@ describe('TextToSpeechV1', () => {
         // Construct the params object for operation deleteCustomModel
         const customizationId = 'testString';
         const deleteCustomModelParams = {
-          customizationId: customizationId,
+          customizationId,
         };
 
         const deleteCustomModelResult = textToSpeechService.deleteCustomModel(deleteCustomModelParams);
@@ -901,8 +907,8 @@ describe('TextToSpeechV1', () => {
         const customizationId = 'testString';
         const words = [wordModel];
         const addWordsParams = {
-          customizationId: customizationId,
-          words: words,
+          customizationId,
+          words,
         };
 
         const addWordsResult = textToSpeechService.addWords(addWordsParams);
@@ -989,7 +995,7 @@ describe('TextToSpeechV1', () => {
         // Construct the params object for operation listWords
         const customizationId = 'testString';
         const listWordsParams = {
-          customizationId: customizationId,
+          customizationId,
         };
 
         const listWordsResult = textToSpeechService.listWords(listWordsParams);
@@ -1076,10 +1082,10 @@ describe('TextToSpeechV1', () => {
         const translation = 'testString';
         const partOfSpeech = 'Dosi';
         const addWordParams = {
-          customizationId: customizationId,
-          word: word,
-          translation: translation,
-          partOfSpeech: partOfSpeech,
+          customizationId,
+          word,
+          translation,
+          partOfSpeech,
         };
 
         const addWordResult = textToSpeechService.addWord(addWordParams);
@@ -1171,8 +1177,8 @@ describe('TextToSpeechV1', () => {
         const customizationId = 'testString';
         const word = 'testString';
         const getWordParams = {
-          customizationId: customizationId,
-          word: word,
+          customizationId,
+          word,
         };
 
         const getWordResult = textToSpeechService.getWord(getWordParams);
@@ -1260,8 +1266,8 @@ describe('TextToSpeechV1', () => {
         const customizationId = 'testString';
         const word = 'testString';
         const deleteWordParams = {
-          customizationId: customizationId,
-          word: word,
+          customizationId,
+          word,
         };
 
         const deleteWordResult = textToSpeechService.deleteWord(deleteWordParams);
@@ -1348,7 +1354,7 @@ describe('TextToSpeechV1', () => {
         // Construct the params object for operation listCustomPrompts
         const customizationId = 'testString';
         const listCustomPromptsParams = {
-          customizationId: customizationId,
+          customizationId,
         };
 
         const listCustomPromptsResult = textToSpeechService.listCustomPrompts(listCustomPromptsParams);
@@ -1443,10 +1449,10 @@ describe('TextToSpeechV1', () => {
         const metadata = promptMetadataModel;
         const file = Buffer.from('This is a mock file.');
         const addCustomPromptParams = {
-          customizationId: customizationId,
-          promptId: promptId,
-          metadata: metadata,
-          file: file,
+          customizationId,
+          promptId,
+          metadata,
+          file,
         };
 
         const addCustomPromptResult = textToSpeechService.addCustomPrompt(addCustomPromptParams);
@@ -1541,8 +1547,8 @@ describe('TextToSpeechV1', () => {
         const customizationId = 'testString';
         const promptId = 'testString';
         const getCustomPromptParams = {
-          customizationId: customizationId,
-          promptId: promptId,
+          customizationId,
+          promptId,
         };
 
         const getCustomPromptResult = textToSpeechService.getCustomPrompt(getCustomPromptParams);
@@ -1630,8 +1636,8 @@ describe('TextToSpeechV1', () => {
         const customizationId = 'testString';
         const promptId = 'testString';
         const deleteCustomPromptParams = {
-          customizationId: customizationId,
-          promptId: promptId,
+          customizationId,
+          promptId,
         };
 
         const deleteCustomPromptResult = textToSpeechService.deleteCustomPrompt(deleteCustomPromptParams);
@@ -1779,8 +1785,8 @@ describe('TextToSpeechV1', () => {
         const speakerName = 'testString';
         const audio = Buffer.from('This is a mock file.');
         const createSpeakerModelParams = {
-          speakerName: speakerName,
-          audio: audio,
+          speakerName,
+          audio,
         };
 
         const createSpeakerModelResult = textToSpeechService.createSpeakerModel(createSpeakerModelParams);
@@ -1867,7 +1873,7 @@ describe('TextToSpeechV1', () => {
         // Construct the params object for operation getSpeakerModel
         const speakerId = 'testString';
         const getSpeakerModelParams = {
-          speakerId: speakerId,
+          speakerId,
         };
 
         const getSpeakerModelResult = textToSpeechService.getSpeakerModel(getSpeakerModelParams);
@@ -1951,7 +1957,7 @@ describe('TextToSpeechV1', () => {
         // Construct the params object for operation deleteSpeakerModel
         const speakerId = 'testString';
         const deleteSpeakerModelParams = {
-          speakerId: speakerId,
+          speakerId,
         };
 
         const deleteSpeakerModelResult = textToSpeechService.deleteSpeakerModel(deleteSpeakerModelParams);
@@ -2035,7 +2041,7 @@ describe('TextToSpeechV1', () => {
         // Construct the params object for operation deleteUserData
         const customerId = 'testString';
         const deleteUserDataParams = {
-          customerId: customerId,
+          customerId,
         };
 
         const deleteUserDataResult = textToSpeechService.deleteUserData(deleteUserDataParams);
