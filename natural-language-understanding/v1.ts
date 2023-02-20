@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2017, 2022.
+ * (C) Copyright IBM Corp. 2017, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.53.0-9710cac3-20220713-193508
+ * IBM OpenAPI SDK Code Generator Version: 3.64.1-cee95189-20230124-211647
  */
 
 import * as extend from 'extend';
@@ -289,335 +289,6 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
     const parameters = {
       options: {
         url: '/v1/models/{model_id}',
-        method: 'DELETE',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Accept': 'application/json',
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-  /*************************
-   * manageSentimentModels
-   ************************/
-
-  /**
-   * Create sentiment model.
-   *
-   * (Beta) Creates a custom sentiment model by uploading training data and associated metadata. The model begins the
-   * training and deploying process and is ready to use when the `status` is `available`.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.language - The 2-letter language code of this model.
-   * @param {NodeJS.ReadableStream | Buffer} params.trainingData - Training data in CSV format. For more information,
-   * see [Sentiment training data
-   * requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-custom-sentiment#sentiment-training-data-requirements).
-   * @param {string} [params.name] - An optional name for the model.
-   * @param {string} [params.description] - An optional description of the model.
-   * @param {string} [params.modelVersion] - An optional version string.
-   * @param {string} [params.workspaceId] - ID of the Watson Knowledge Studio workspace that deployed this model to
-   * Natural Language Understanding.
-   * @param {string} [params.versionDescription] - The description of the version.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.SentimentModel>>}
-   */
-  public createSentimentModel(
-    params: NaturalLanguageUnderstandingV1.CreateSentimentModelParams
-  ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.SentimentModel>> {
-    const _params = { ...params };
-    const _requiredParams = ['language', 'trainingData'];
-    const _validParams = ['language', 'trainingData', 'name', 'description', 'modelVersion', 'workspaceId', 'versionDescription', 'headers'];
-    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
-    if (_validationErrors) {
-      return Promise.reject(_validationErrors);
-    }
-
-    const formData = {
-      'language': _params.language,
-      'training_data': {
-        data: _params.trainingData,
-        contentType: 'text/csv',
-      },
-      'name': _params.name,
-      'description': _params.description,
-      'model_version': _params.modelVersion,
-      'workspace_id': _params.workspaceId,
-      'version_description': _params.versionDescription,
-    };
-
-    const query = {
-      'version': this.version,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createSentimentModel'
-    );
-
-    const parameters = {
-      options: {
-        url: '/v1/models/sentiment',
-        method: 'POST',
-        qs: query,
-        formData
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Accept': 'application/json',
-            'Content-Type': 'multipart/form-data',
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
-  /**
-   * List sentiment models.
-   *
-   * (Beta) Returns all custom sentiment models associated with this service instance.
-   *
-   * @param {Object} [params] - The parameters to send to the service.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListSentimentModelsResponse>>}
-   */
-  public listSentimentModels(
-    params?: NaturalLanguageUnderstandingV1.ListSentimentModelsParams
-  ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListSentimentModelsResponse>> {
-    const _params = { ...params };
-    const _requiredParams = [];
-    const _validParams = ['headers'];
-    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
-    if (_validationErrors) {
-      return Promise.reject(_validationErrors);
-    }
-
-    const query = {
-      'version': this.version,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listSentimentModels'
-    );
-
-    const parameters = {
-      options: {
-        url: '/v1/models/sentiment',
-        method: 'GET',
-        qs: query,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Accept': 'application/json',
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
-  /**
-   * Get sentiment model details.
-   *
-   * (Beta) Returns the status of the sentiment model with the given model ID.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.modelId - ID of the model.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.SentimentModel>>}
-   */
-  public getSentimentModel(
-    params: NaturalLanguageUnderstandingV1.GetSentimentModelParams
-  ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.SentimentModel>> {
-    const _params = { ...params };
-    const _requiredParams = ['modelId'];
-    const _validParams = ['modelId', 'headers'];
-    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
-    if (_validationErrors) {
-      return Promise.reject(_validationErrors);
-    }
-
-    const query = {
-      'version': this.version,
-    };
-
-    const path = {
-      'model_id': _params.modelId,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getSentimentModel'
-    );
-
-    const parameters = {
-      options: {
-        url: '/v1/models/sentiment/{model_id}',
-        method: 'GET',
-        qs: query,
-        path,
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Accept': 'application/json',
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
-  /**
-   * Update sentiment model.
-   *
-   * (Beta) Overwrites the training data associated with this custom sentiment model and retrains the model. The new
-   * model replaces the current deployment.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.modelId - ID of the model.
-   * @param {string} params.language - The 2-letter language code of this model.
-   * @param {NodeJS.ReadableStream | Buffer} params.trainingData - Training data in CSV format. For more information,
-   * see [Sentiment training data
-   * requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-custom-sentiment#sentiment-training-data-requirements).
-   * @param {string} [params.name] - An optional name for the model.
-   * @param {string} [params.description] - An optional description of the model.
-   * @param {string} [params.modelVersion] - An optional version string.
-   * @param {string} [params.workspaceId] - ID of the Watson Knowledge Studio workspace that deployed this model to
-   * Natural Language Understanding.
-   * @param {string} [params.versionDescription] - The description of the version.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.SentimentModel>>}
-   */
-  public updateSentimentModel(
-    params: NaturalLanguageUnderstandingV1.UpdateSentimentModelParams
-  ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.SentimentModel>> {
-    const _params = { ...params };
-    const _requiredParams = ['modelId', 'language', 'trainingData'];
-    const _validParams = ['modelId', 'language', 'trainingData', 'name', 'description', 'modelVersion', 'workspaceId', 'versionDescription', 'headers'];
-    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
-    if (_validationErrors) {
-      return Promise.reject(_validationErrors);
-    }
-
-    const formData = {
-      'language': _params.language,
-      'training_data': {
-        data: _params.trainingData,
-        contentType: 'text/csv',
-      },
-      'name': _params.name,
-      'description': _params.description,
-      'model_version': _params.modelVersion,
-      'workspace_id': _params.workspaceId,
-      'version_description': _params.versionDescription,
-    };
-
-    const query = {
-      'version': this.version,
-    };
-
-    const path = {
-      'model_id': _params.modelId,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'updateSentimentModel'
-    );
-
-    const parameters = {
-      options: {
-        url: '/v1/models/sentiment/{model_id}',
-        method: 'PUT',
-        qs: query,
-        path,
-        formData
-      },
-      defaultOptions: extend(true, {}, this.baseOptions, {
-        headers: extend(
-          true,
-          sdkHeaders,
-          {
-            'Accept': 'application/json',
-            'Content-Type': 'multipart/form-data',
-          },
-          _params.headers
-        ),
-      }),
-    };
-
-    return this.createRequest(parameters);
-  }
-
-  /**
-   * Delete sentiment model.
-   *
-   * (Beta) Un-deploys the custom sentiment model with the given model ID and deletes all associated customer data,
-   * including any training data or binary artifacts.
-   *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.modelId - ID of the model.
-   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>>}
-   */
-  public deleteSentimentModel(
-    params: NaturalLanguageUnderstandingV1.DeleteSentimentModelParams
-  ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>> {
-    const _params = { ...params };
-    const _requiredParams = ['modelId'];
-    const _validParams = ['modelId', 'headers'];
-    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
-    if (_validationErrors) {
-      return Promise.reject(_validationErrors);
-    }
-
-    const query = {
-      'version': this.version,
-    };
-
-    const path = {
-      'model_id': _params.modelId,
-    };
-
-    const sdkHeaders = getSdkHeaders(
-      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteSentimentModel'
-    );
-
-    const parameters = {
-      options: {
-        url: '/v1/models/sentiment/{model_id}',
         method: 'DELETE',
         qs: query,
         path,
@@ -1331,7 +1002,7 @@ namespace NaturalLanguageUnderstandingV1 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty {}
+  export interface EmptyObject {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -1385,69 +1056,6 @@ namespace NaturalLanguageUnderstandingV1 {
   /** Parameters for the `deleteModel` operation. */
   export interface DeleteModelParams {
     /** Model ID of the model to delete. */
-    modelId: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `createSentimentModel` operation. */
-  export interface CreateSentimentModelParams {
-    /** The 2-letter language code of this model. */
-    language: string;
-    /** Training data in CSV format. For more information, see [Sentiment training data
-     *  requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-custom-sentiment#sentiment-training-data-requirements).
-     */
-    trainingData: NodeJS.ReadableStream | Buffer;
-    /** An optional name for the model. */
-    name?: string;
-    /** An optional description of the model. */
-    description?: string;
-    /** An optional version string. */
-    modelVersion?: string;
-    /** ID of the Watson Knowledge Studio workspace that deployed this model to Natural Language Understanding. */
-    workspaceId?: string;
-    /** The description of the version. */
-    versionDescription?: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `listSentimentModels` operation. */
-  export interface ListSentimentModelsParams {
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `getSentimentModel` operation. */
-  export interface GetSentimentModelParams {
-    /** ID of the model. */
-    modelId: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `updateSentimentModel` operation. */
-  export interface UpdateSentimentModelParams {
-    /** ID of the model. */
-    modelId: string;
-    /** The 2-letter language code of this model. */
-    language: string;
-    /** Training data in CSV format. For more information, see [Sentiment training data
-     *  requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-custom-sentiment#sentiment-training-data-requirements).
-     */
-    trainingData: NodeJS.ReadableStream | Buffer;
-    /** An optional name for the model. */
-    name?: string;
-    /** An optional description of the model. */
-    description?: string;
-    /** An optional version string. */
-    modelVersion?: string;
-    /** ID of the Watson Knowledge Studio workspace that deployed this model to Natural Language Understanding. */
-    workspaceId?: string;
-    /** The description of the version. */
-    versionDescription?: string;
-    headers?: OutgoingHttpHeaders;
-  }
-
-  /** Parameters for the `deleteSentimentModel` operation. */
-  export interface DeleteSentimentModelParams {
-    /** ID of the model. */
     modelId: string;
     headers?: OutgoingHttpHeaders;
   }
@@ -2017,6 +1625,8 @@ namespace NaturalLanguageUnderstandingV1 {
     /** (Experimental) Returns a summary of content.
      *
      *  Supported languages: English only.
+     *
+     *  Supported regions: Dallas region only.
      */
     summarization?: SummarizationOptions;
     /** Returns a hierarchical taxonomy of the content. The top three categories are returned by default.
@@ -2078,11 +1688,6 @@ namespace NaturalLanguageUnderstandingV1 {
     models?: Model[];
   }
 
-  /** ListSentimentModelsResponse. */
-  export interface ListSentimentModelsResponse {
-    models?: SentimentModel[];
-  }
-
   /** Model. */
   export interface Model {
     /** When the status is `available`, the model is ready to use. */
@@ -2097,7 +1702,7 @@ namespace NaturalLanguageUnderstandingV1 {
     workspace_id?: string;
     /** The model version, if it was manually provided in Watson Knowledge Studio. */
     model_version?: string;
-    /** Deprecated — use `model_version`. */
+    /** Deprecated: Deprecated — use `model_version`. */
     version?: string;
     /** The description of the version, if it was manually provided in Watson Knowledge Studio. */
     version_description?: string;
@@ -2229,37 +1834,6 @@ namespace NaturalLanguageUnderstandingV1 {
     location?: number[];
   }
 
-  /** SentimentModel. */
-  export interface SentimentModel {
-    /** The service features that are supported by the custom model. */
-    features?: string[];
-    /** When the status is `available`, the model is ready to use. */
-    status?: string;
-    /** Unique model ID. */
-    model_id?: string;
-    /** dateTime indicating when the model was created. */
-    created?: string;
-    /** dateTime of last successful model training. */
-    last_trained?: string;
-    /** dateTime of last successful model deployment. */
-    last_deployed?: string;
-    /** A name for the model. */
-    name?: string;
-    /** An optional map of metadata key-value pairs to store with this model. */
-    user_metadata?: JsonObject;
-    /** The 2-letter language code of this model. */
-    language?: string;
-    /** An optional description of the model. */
-    description?: string;
-    /** An optional version string. */
-    model_version?: string;
-    notices?: Notice[];
-    /** ID of the Watson Knowledge Studio workspace that deployed this model to Natural Language Understanding. */
-    workspace_id?: string;
-    /** The description of the version. */
-    version_description?: string;
-  }
-
   /** Analyzes the general sentiment of your content or the sentiment toward specific target phrases. You can analyze sentiment for detected entities with `entities.sentiment` and for keywords with `keywords.sentiment`. Supported languages: Arabic, English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish. */
   export interface SentimentOptions {
     /** Set this to `false` to hide document-level sentiment results. */
@@ -2282,7 +1856,7 @@ namespace NaturalLanguageUnderstandingV1 {
     targets?: TargetedSentimentResults[];
   }
 
-  /** (Experimental) Returns a summary of content. Supported languages: English only. */
+  /** (Experimental) Returns a summary of content. Supported languages: English only. Supported regions: Dallas region only. */
   export interface SummarizationOptions {
     /** Maximum number of summary sentences to return. */
     limit?: number;
