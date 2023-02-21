@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2019, 2022.
+ * (C) Copyright IBM Corp. 2019, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -260,9 +260,9 @@ describe('DiscoveryV2', () => {
         const type = 'document_retrieval';
         const defaultQueryParameters = defaultQueryParamsModel;
         const createProjectParams = {
-          name: name,
-          type: type,
-          defaultQueryParameters: defaultQueryParameters,
+          name,
+          type,
+          defaultQueryParameters,
         };
 
         const createProjectResult = discoveryService.createProject(createProjectParams);
@@ -351,7 +351,7 @@ describe('DiscoveryV2', () => {
         // Construct the params object for operation getProject
         const projectId = 'testString';
         const getProjectParams = {
-          projectId: projectId,
+          projectId,
         };
 
         const getProjectResult = discoveryService.getProject(getProjectParams);
@@ -437,8 +437,8 @@ describe('DiscoveryV2', () => {
         const projectId = 'testString';
         const name = 'testString';
         const updateProjectParams = {
-          projectId: projectId,
-          name: name,
+          projectId,
+          name,
         };
 
         const updateProjectResult = discoveryService.updateProject(updateProjectParams);
@@ -524,7 +524,7 @@ describe('DiscoveryV2', () => {
         // Construct the params object for operation deleteProject
         const projectId = 'testString';
         const deleteProjectParams = {
-          projectId: projectId,
+          projectId,
         };
 
         const deleteProjectResult = discoveryService.deleteProject(deleteProjectParams);
@@ -610,8 +610,8 @@ describe('DiscoveryV2', () => {
         const projectId = 'testString';
         const collectionIds = ['testString'];
         const listFieldsParams = {
-          projectId: projectId,
-          collectionIds: collectionIds,
+          projectId,
+          collectionIds,
         };
 
         const listFieldsResult = discoveryService.listFields(listFieldsParams);
@@ -697,7 +697,7 @@ describe('DiscoveryV2', () => {
         // Construct the params object for operation listCollections
         const projectId = 'testString';
         const listCollectionsParams = {
-          projectId: projectId,
+          projectId,
         };
 
         const listCollectionsResult = discoveryService.listCollections(listCollectionsParams);
@@ -786,12 +786,6 @@ describe('DiscoveryV2', () => {
         fields: ['testString'],
       };
 
-      // CollectionDetailsSmartDocumentUnderstanding
-      const collectionDetailsSmartDocumentUnderstandingModel = {
-        enabled: true,
-        model: 'custom',
-      };
-
       function __createCollectionTest() {
         // Construct the params object for operation createCollection
         const projectId = 'testString';
@@ -799,14 +793,12 @@ describe('DiscoveryV2', () => {
         const description = 'testString';
         const language = 'en';
         const enrichments = [collectionEnrichmentModel];
-        const smartDocumentUnderstanding = collectionDetailsSmartDocumentUnderstandingModel;
         const createCollectionParams = {
-          projectId: projectId,
-          name: name,
-          description: description,
-          language: language,
-          enrichments: enrichments,
-          smartDocumentUnderstanding: smartDocumentUnderstanding,
+          projectId,
+          name,
+          description,
+          language,
+          enrichments,
         };
 
         const createCollectionResult = discoveryService.createCollection(createCollectionParams);
@@ -827,7 +819,6 @@ describe('DiscoveryV2', () => {
         expect(mockRequestOptions.body.description).toEqual(description);
         expect(mockRequestOptions.body.language).toEqual(language);
         expect(mockRequestOptions.body.enrichments).toEqual(enrichments);
-        expect(mockRequestOptions.body.smart_document_understanding).toEqual(smartDocumentUnderstanding);
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.project_id).toEqual(projectId);
       }
@@ -899,8 +890,8 @@ describe('DiscoveryV2', () => {
         const projectId = 'testString';
         const collectionId = 'testString';
         const getCollectionParams = {
-          projectId: projectId,
-          collectionId: collectionId,
+          projectId,
+          collectionId,
         };
 
         const getCollectionResult = discoveryService.getCollection(getCollectionParams);
@@ -1000,11 +991,11 @@ describe('DiscoveryV2', () => {
         const description = 'testString';
         const enrichments = [collectionEnrichmentModel];
         const updateCollectionParams = {
-          projectId: projectId,
-          collectionId: collectionId,
-          name: name,
-          description: description,
-          enrichments: enrichments,
+          projectId,
+          collectionId,
+          name,
+          description,
+          enrichments,
         };
 
         const updateCollectionResult = discoveryService.updateCollection(updateCollectionParams);
@@ -1096,8 +1087,8 @@ describe('DiscoveryV2', () => {
         const projectId = 'testString';
         const collectionId = 'testString';
         const deleteCollectionParams = {
-          projectId: projectId,
-          collectionId: collectionId,
+          projectId,
+          collectionId,
         };
 
         const deleteCollectionResult = discoveryService.deleteCollection(deleteCollectionParams);
@@ -1192,14 +1183,14 @@ describe('DiscoveryV2', () => {
         const parentDocumentId = 'testString';
         const sha256 = 'testString';
         const listDocumentsParams = {
-          projectId: projectId,
-          collectionId: collectionId,
-          count: count,
-          status: status,
-          hasNotices: hasNotices,
-          isParent: isParent,
-          parentDocumentId: parentDocumentId,
-          sha256: sha256,
+          projectId,
+          collectionId,
+          count,
+          status,
+          hasNotices,
+          isParent,
+          parentDocumentId,
+          sha256,
         };
 
         const listDocumentsResult = discoveryService.listDocuments(listDocumentsParams);
@@ -1299,13 +1290,13 @@ describe('DiscoveryV2', () => {
         const metadata = 'testString';
         const xWatsonDiscoveryForce = false;
         const addDocumentParams = {
-          projectId: projectId,
-          collectionId: collectionId,
-          file: file,
-          filename: filename,
-          fileContentType: fileContentType,
-          metadata: metadata,
-          xWatsonDiscoveryForce: xWatsonDiscoveryForce,
+          projectId,
+          collectionId,
+          file,
+          filename,
+          fileContentType,
+          metadata,
+          xWatsonDiscoveryForce,
         };
 
         const addDocumentResult = discoveryService.addDocument(addDocumentParams);
@@ -1400,9 +1391,9 @@ describe('DiscoveryV2', () => {
         const collectionId = 'testString';
         const documentId = 'testString';
         const getDocumentParams = {
-          projectId: projectId,
-          collectionId: collectionId,
-          documentId: documentId,
+          projectId,
+          collectionId,
+          documentId,
         };
 
         const getDocumentResult = discoveryService.getDocument(getDocumentParams);
@@ -1500,14 +1491,14 @@ describe('DiscoveryV2', () => {
         const metadata = 'testString';
         const xWatsonDiscoveryForce = false;
         const updateDocumentParams = {
-          projectId: projectId,
-          collectionId: collectionId,
-          documentId: documentId,
-          file: file,
-          filename: filename,
-          fileContentType: fileContentType,
-          metadata: metadata,
-          xWatsonDiscoveryForce: xWatsonDiscoveryForce,
+          projectId,
+          collectionId,
+          documentId,
+          file,
+          filename,
+          fileContentType,
+          metadata,
+          xWatsonDiscoveryForce,
         };
 
         const updateDocumentResult = discoveryService.updateDocument(updateDocumentParams);
@@ -1606,10 +1597,10 @@ describe('DiscoveryV2', () => {
         const documentId = 'testString';
         const xWatsonDiscoveryForce = false;
         const deleteDocumentParams = {
-          projectId: projectId,
-          collectionId: collectionId,
-          documentId: documentId,
-          xWatsonDiscoveryForce: xWatsonDiscoveryForce,
+          projectId,
+          collectionId,
+          documentId,
+          xWatsonDiscoveryForce,
         };
 
         const deleteDocumentResult = discoveryService.deleteDocument(deleteDocumentParams);
@@ -1749,22 +1740,22 @@ describe('DiscoveryV2', () => {
         const passages = queryLargePassagesModel;
         const similar = queryLargeSimilarModel;
         const queryParams = {
-          projectId: projectId,
-          collectionIds: collectionIds,
-          filter: filter,
-          query: query,
-          naturalLanguageQuery: naturalLanguageQuery,
-          aggregation: aggregation,
-          count: count,
-          _return: _return,
-          offset: offset,
-          sort: sort,
-          highlight: highlight,
-          spellingSuggestions: spellingSuggestions,
-          tableResults: tableResults,
-          suggestedRefinements: suggestedRefinements,
-          passages: passages,
-          similar: similar,
+          projectId,
+          collectionIds,
+          filter,
+          query,
+          naturalLanguageQuery,
+          aggregation,
+          count,
+          _return,
+          offset,
+          sort,
+          highlight,
+          spellingSuggestions,
+          tableResults,
+          suggestedRefinements,
+          passages,
+          similar,
         };
 
         const queryResult = discoveryService.query(queryParams);
@@ -1868,11 +1859,11 @@ describe('DiscoveryV2', () => {
         const field = 'testString';
         const count = 38;
         const getAutocompletionParams = {
-          projectId: projectId,
-          prefix: prefix,
-          collectionIds: collectionIds,
-          field: field,
-          count: count,
+          projectId,
+          prefix,
+          collectionIds,
+          field,
+          count,
         };
 
         const getAutocompletionResult = discoveryService.getAutocompletion(getAutocompletionParams);
@@ -1969,13 +1960,13 @@ describe('DiscoveryV2', () => {
         const count = 38;
         const offset = 38;
         const queryCollectionNoticesParams = {
-          projectId: projectId,
-          collectionId: collectionId,
-          filter: filter,
-          query: query,
-          naturalLanguageQuery: naturalLanguageQuery,
-          count: count,
-          offset: offset,
+          projectId,
+          collectionId,
+          filter,
+          query,
+          naturalLanguageQuery,
+          count,
+          offset,
         };
 
         const queryCollectionNoticesResult = discoveryService.queryCollectionNotices(queryCollectionNoticesParams);
@@ -2073,12 +2064,12 @@ describe('DiscoveryV2', () => {
         const count = 38;
         const offset = 38;
         const queryNoticesParams = {
-          projectId: projectId,
-          filter: filter,
-          query: query,
-          naturalLanguageQuery: naturalLanguageQuery,
-          count: count,
-          offset: offset,
+          projectId,
+          filter,
+          query,
+          naturalLanguageQuery,
+          count,
+          offset,
         };
 
         const queryNoticesResult = discoveryService.queryNotices(queryNoticesParams);
@@ -2169,8 +2160,8 @@ describe('DiscoveryV2', () => {
         const projectId = 'testString';
         const collectionId = 'testString';
         const getStopwordListParams = {
-          projectId: projectId,
-          collectionId: collectionId,
+          projectId,
+          collectionId,
         };
 
         const getStopwordListResult = discoveryService.getStopwordList(getStopwordListParams);
@@ -2260,9 +2251,9 @@ describe('DiscoveryV2', () => {
         const collectionId = 'testString';
         const stopwords = ['testString'];
         const createStopwordListParams = {
-          projectId: projectId,
-          collectionId: collectionId,
-          stopwords: stopwords,
+          projectId,
+          collectionId,
+          stopwords,
         };
 
         const createStopwordListResult = discoveryService.createStopwordList(createStopwordListParams);
@@ -2352,8 +2343,8 @@ describe('DiscoveryV2', () => {
         const projectId = 'testString';
         const collectionId = 'testString';
         const deleteStopwordListParams = {
-          projectId: projectId,
-          collectionId: collectionId,
+          projectId,
+          collectionId,
         };
 
         const deleteStopwordListResult = discoveryService.deleteStopwordList(deleteStopwordListParams);
@@ -2442,8 +2433,8 @@ describe('DiscoveryV2', () => {
         const projectId = 'testString';
         const collectionId = 'testString';
         const listExpansionsParams = {
-          projectId: projectId,
-          collectionId: collectionId,
+          projectId,
+          collectionId,
         };
 
         const listExpansionsResult = discoveryService.listExpansions(listExpansionsParams);
@@ -2541,9 +2532,9 @@ describe('DiscoveryV2', () => {
         const collectionId = 'testString';
         const expansions = [expansionModel];
         const createExpansionsParams = {
-          projectId: projectId,
-          collectionId: collectionId,
-          expansions: expansions,
+          projectId,
+          collectionId,
+          expansions,
         };
 
         const createExpansionsResult = discoveryService.createExpansions(createExpansionsParams);
@@ -2635,8 +2626,8 @@ describe('DiscoveryV2', () => {
         const projectId = 'testString';
         const collectionId = 'testString';
         const deleteExpansionsParams = {
-          projectId: projectId,
-          collectionId: collectionId,
+          projectId,
+          collectionId,
         };
 
         const deleteExpansionsResult = discoveryService.deleteExpansions(deleteExpansionsParams);
@@ -2724,7 +2715,7 @@ describe('DiscoveryV2', () => {
         // Construct the params object for operation getComponentSettings
         const projectId = 'testString';
         const getComponentSettingsParams = {
-          projectId: projectId,
+          projectId,
         };
 
         const getComponentSettingsResult = discoveryService.getComponentSettings(getComponentSettingsParams);
@@ -2809,7 +2800,7 @@ describe('DiscoveryV2', () => {
         // Construct the params object for operation listTrainingQueries
         const projectId = 'testString';
         const listTrainingQueriesParams = {
-          projectId: projectId,
+          projectId,
         };
 
         const listTrainingQueriesResult = discoveryService.listTrainingQueries(listTrainingQueriesParams);
@@ -2894,7 +2885,7 @@ describe('DiscoveryV2', () => {
         // Construct the params object for operation deleteTrainingQueries
         const projectId = 'testString';
         const deleteTrainingQueriesParams = {
-          projectId: projectId,
+          projectId,
         };
 
         const deleteTrainingQueriesResult = discoveryService.deleteTrainingQueries(deleteTrainingQueriesParams);
@@ -2991,10 +2982,10 @@ describe('DiscoveryV2', () => {
         const examples = [trainingExampleModel];
         const filter = 'testString';
         const createTrainingQueryParams = {
-          projectId: projectId,
-          naturalLanguageQuery: naturalLanguageQuery,
-          examples: examples,
-          filter: filter,
+          projectId,
+          naturalLanguageQuery,
+          examples,
+          filter,
         };
 
         const createTrainingQueryResult = discoveryService.createTrainingQuery(createTrainingQueryParams);
@@ -3087,8 +3078,8 @@ describe('DiscoveryV2', () => {
         const projectId = 'testString';
         const queryId = 'testString';
         const getTrainingQueryParams = {
-          projectId: projectId,
-          queryId: queryId,
+          projectId,
+          queryId,
         };
 
         const getTrainingQueryResult = discoveryService.getTrainingQuery(getTrainingQueryParams);
@@ -3189,11 +3180,11 @@ describe('DiscoveryV2', () => {
         const examples = [trainingExampleModel];
         const filter = 'testString';
         const updateTrainingQueryParams = {
-          projectId: projectId,
-          queryId: queryId,
-          naturalLanguageQuery: naturalLanguageQuery,
-          examples: examples,
-          filter: filter,
+          projectId,
+          queryId,
+          naturalLanguageQuery,
+          examples,
+          filter,
         };
 
         const updateTrainingQueryResult = discoveryService.updateTrainingQuery(updateTrainingQueryParams);
@@ -3289,8 +3280,8 @@ describe('DiscoveryV2', () => {
         const projectId = 'testString';
         const queryId = 'testString';
         const deleteTrainingQueryParams = {
-          projectId: projectId,
-          queryId: queryId,
+          projectId,
+          queryId,
         };
 
         const deleteTrainingQueryResult = discoveryService.deleteTrainingQuery(deleteTrainingQueryParams);
@@ -3378,7 +3369,7 @@ describe('DiscoveryV2', () => {
         // Construct the params object for operation listEnrichments
         const projectId = 'testString';
         const listEnrichmentsParams = {
-          projectId: projectId,
+          projectId,
         };
 
         const listEnrichmentsResult = discoveryService.listEnrichments(listEnrichmentsParams);
@@ -3487,9 +3478,9 @@ describe('DiscoveryV2', () => {
         const enrichment = createEnrichmentModel;
         const file = Buffer.from('This is a mock file.');
         const createEnrichmentParams = {
-          projectId: projectId,
-          enrichment: enrichment,
-          file: file,
+          projectId,
+          enrichment,
+          file,
         };
 
         const createEnrichmentResult = discoveryService.createEnrichment(createEnrichmentParams);
@@ -3580,8 +3571,8 @@ describe('DiscoveryV2', () => {
         const projectId = 'testString';
         const enrichmentId = 'testString';
         const getEnrichmentParams = {
-          projectId: projectId,
-          enrichmentId: enrichmentId,
+          projectId,
+          enrichmentId,
         };
 
         const getEnrichmentResult = discoveryService.getEnrichment(getEnrichmentParams);
@@ -3672,10 +3663,10 @@ describe('DiscoveryV2', () => {
         const name = 'testString';
         const description = 'testString';
         const updateEnrichmentParams = {
-          projectId: projectId,
-          enrichmentId: enrichmentId,
-          name: name,
-          description: description,
+          projectId,
+          enrichmentId,
+          name,
+          description,
         };
 
         const updateEnrichmentResult = discoveryService.updateEnrichment(updateEnrichmentParams);
@@ -3768,8 +3759,8 @@ describe('DiscoveryV2', () => {
         const projectId = 'testString';
         const enrichmentId = 'testString';
         const deleteEnrichmentParams = {
-          projectId: projectId,
-          enrichmentId: enrichmentId,
+          projectId,
+          enrichmentId,
         };
 
         const deleteEnrichmentResult = discoveryService.deleteEnrichment(deleteEnrichmentParams);
@@ -3857,7 +3848,7 @@ describe('DiscoveryV2', () => {
         // Construct the params object for operation listDocumentClassifiers
         const projectId = 'testString';
         const listDocumentClassifiersParams = {
-          projectId: projectId,
+          projectId,
         };
 
         const listDocumentClassifiersResult = discoveryService.listDocumentClassifiers(listDocumentClassifiersParams);
@@ -3968,10 +3959,10 @@ describe('DiscoveryV2', () => {
         const classifier = createDocumentClassifierModel;
         const testData = Buffer.from('This is a mock file.');
         const createDocumentClassifierParams = {
-          projectId: projectId,
-          trainingData: trainingData,
-          classifier: classifier,
-          testData: testData,
+          projectId,
+          trainingData,
+          classifier,
+          testData,
         };
 
         const createDocumentClassifierResult = discoveryService.createDocumentClassifier(createDocumentClassifierParams);
@@ -4066,8 +4057,8 @@ describe('DiscoveryV2', () => {
         const projectId = 'testString';
         const classifierId = 'testString';
         const getDocumentClassifierParams = {
-          projectId: projectId,
-          classifierId: classifierId,
+          projectId,
+          classifierId,
         };
 
         const getDocumentClassifierResult = discoveryService.getDocumentClassifier(getDocumentClassifierParams);
@@ -4167,11 +4158,11 @@ describe('DiscoveryV2', () => {
         const trainingData = Buffer.from('This is a mock file.');
         const testData = Buffer.from('This is a mock file.');
         const updateDocumentClassifierParams = {
-          projectId: projectId,
-          classifierId: classifierId,
-          classifier: classifier,
-          trainingData: trainingData,
-          testData: testData,
+          projectId,
+          classifierId,
+          classifier,
+          trainingData,
+          testData,
         };
 
         const updateDocumentClassifierResult = discoveryService.updateDocumentClassifier(updateDocumentClassifierParams);
@@ -4267,8 +4258,8 @@ describe('DiscoveryV2', () => {
         const projectId = 'testString';
         const classifierId = 'testString';
         const deleteDocumentClassifierParams = {
-          projectId: projectId,
-          classifierId: classifierId,
+          projectId,
+          classifierId,
         };
 
         const deleteDocumentClassifierResult = discoveryService.deleteDocumentClassifier(deleteDocumentClassifierParams);
@@ -4357,8 +4348,8 @@ describe('DiscoveryV2', () => {
         const projectId = 'testString';
         const classifierId = 'testString';
         const listDocumentClassifierModelsParams = {
-          projectId: projectId,
-          classifierId: classifierId,
+          projectId,
+          classifierId,
         };
 
         const listDocumentClassifierModelsResult = discoveryService.listDocumentClassifierModels(listDocumentClassifierModelsParams);
@@ -4454,15 +4445,15 @@ describe('DiscoveryV2', () => {
         const trainingMaxSteps = 0;
         const improvementRatio = 0;
         const createDocumentClassifierModelParams = {
-          projectId: projectId,
-          classifierId: classifierId,
-          name: name,
-          description: description,
-          learningRate: learningRate,
-          l1RegularizationStrengths: l1RegularizationStrengths,
-          l2RegularizationStrengths: l2RegularizationStrengths,
-          trainingMaxSteps: trainingMaxSteps,
-          improvementRatio: improvementRatio,
+          projectId,
+          classifierId,
+          name,
+          description,
+          learningRate,
+          l1RegularizationStrengths,
+          l2RegularizationStrengths,
+          trainingMaxSteps,
+          improvementRatio,
         };
 
         const createDocumentClassifierModelResult = discoveryService.createDocumentClassifierModel(createDocumentClassifierModelParams);
@@ -4561,9 +4552,9 @@ describe('DiscoveryV2', () => {
         const classifierId = 'testString';
         const modelId = 'testString';
         const getDocumentClassifierModelParams = {
-          projectId: projectId,
-          classifierId: classifierId,
-          modelId: modelId,
+          projectId,
+          classifierId,
+          modelId,
         };
 
         const getDocumentClassifierModelResult = discoveryService.getDocumentClassifierModel(getDocumentClassifierModelParams);
@@ -4658,11 +4649,11 @@ describe('DiscoveryV2', () => {
         const name = 'testString';
         const description = 'testString';
         const updateDocumentClassifierModelParams = {
-          projectId: projectId,
-          classifierId: classifierId,
-          modelId: modelId,
-          name: name,
-          description: description,
+          projectId,
+          classifierId,
+          modelId,
+          name,
+          description,
         };
 
         const updateDocumentClassifierModelResult = discoveryService.updateDocumentClassifierModel(updateDocumentClassifierModelParams);
@@ -4757,9 +4748,9 @@ describe('DiscoveryV2', () => {
         const classifierId = 'testString';
         const modelId = 'testString';
         const deleteDocumentClassifierModelParams = {
-          projectId: projectId,
-          classifierId: classifierId,
-          modelId: modelId,
+          projectId,
+          classifierId,
+          modelId,
         };
 
         const deleteDocumentClassifierModelResult = discoveryService.deleteDocumentClassifierModel(deleteDocumentClassifierModelParams);
@@ -4855,12 +4846,12 @@ describe('DiscoveryV2', () => {
         const fileContentType = 'application/json';
         const metadata = 'testString';
         const analyzeDocumentParams = {
-          projectId: projectId,
-          collectionId: collectionId,
-          file: file,
-          filename: filename,
-          fileContentType: fileContentType,
-          metadata: metadata,
+          projectId,
+          collectionId,
+          file,
+          filename,
+          fileContentType,
+          metadata,
         };
 
         const analyzeDocumentResult = discoveryService.analyzeDocument(analyzeDocumentParams);
@@ -4952,7 +4943,7 @@ describe('DiscoveryV2', () => {
         // Construct the params object for operation deleteUserData
         const customerId = 'testString';
         const deleteUserDataParams = {
-          customerId: customerId,
+          customerId,
         };
 
         const deleteUserDataResult = discoveryService.deleteUserData(deleteUserDataParams);
