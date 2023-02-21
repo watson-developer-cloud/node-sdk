@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2019, 2022.
+ * (C) Copyright IBM Corp. 2019, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.53.0-9710cac3-20220713-193508
+ * IBM OpenAPI SDK Code Generator Version: 3.64.1-cee95189-20230124-211647
  */
 
 import * as extend from 'extend';
@@ -30,7 +30,7 @@ import {
 import { getSdkHeaders } from '../lib/common';
 
 /**
- * IBM Watson&trade; Discovery is a cognitive search and content analytics engine that you can add to applications to
+ * IBM Watson&reg; Discovery is a cognitive search and content analytics engine that you can add to applications to
  * identify patterns, trends and actionable insights to drive better decision-making. Securely unify structured and
  * unstructured data with pre-enriched content, and use a simplified query language to eliminate the need for manual
  * filtering of results.
@@ -343,11 +343,11 @@ class DiscoveryV2 extends BaseService {
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
    * Deploy* page in Discovery.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>>}
    */
   public deleteProject(
     params: DiscoveryV2.DeleteProjectParams
-  ): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['projectId'];
     const _validParams = ['projectId', 'headers'];
@@ -531,8 +531,6 @@ class DiscoveryV2 extends BaseService {
    * If no enrichments are specified when the collection is created, the default enrichments for the project type are
    * applied. For more information about project default settings, see the [product
    * documentation](/docs/discovery-data?topic=discovery-data-project-defaults).
-   * @param {CollectionDetailsSmartDocumentUnderstanding} [params.smartDocumentUnderstanding] - An object that describes
-   * the Smart Document Understanding model for a collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>>}
    */
@@ -541,7 +539,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'name'];
-    const _validParams = ['projectId', 'name', 'description', 'language', 'enrichments', 'smartDocumentUnderstanding', 'headers'];
+    const _validParams = ['projectId', 'name', 'description', 'language', 'enrichments', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -552,7 +550,6 @@ class DiscoveryV2 extends BaseService {
       'description': _params.description,
       'language': _params.language,
       'enrichments': _params.enrichments,
-      'smart_document_understanding': _params.smartDocumentUnderstanding,
     };
 
     const query = {
@@ -735,11 +732,11 @@ class DiscoveryV2 extends BaseService {
    * Deploy* page in Discovery.
    * @param {string} params.collectionId - The ID of the collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>>}
    */
   public deleteCollection(
     params: DiscoveryV2.DeleteCollectionParams
-  ): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'collectionId'];
     const _validParams = ['projectId', 'collectionId', 'headers'];
@@ -794,7 +791,8 @@ class DiscoveryV2 extends BaseService {
    * returns information for up to 10,000 documents.
    *
    * **Note**: This method is available only from Cloud Pak for Data version 4.0.9 and later installed instances and
-   * from Plus and Enterprise plan IBM Cloud-managed instances.
+   * from Plus and Enterprise plan IBM Cloud-managed instances. It is not currently available from Premium plan
+   * instances.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
@@ -896,8 +894,7 @@ class DiscoveryV2 extends BaseService {
    *
    * Returns immediately after the system has accepted the document for processing.
    *
-   * This operation works with a file upload collection. It cannot be used to modify a collection that crawls an
-   * external data source.
+   * Use this method to upload a file to the collection. You cannot use this method to crawl an external data source.
    *
    *  * For a list of supported file types, see the [product
    * documentation](/docs/discovery-data?topic=discovery-data-collections#supportedfiletypes).
@@ -925,7 +922,7 @@ class DiscoveryV2 extends BaseService {
    * @param {string} params.collectionId - The ID of the collection.
    * @param {NodeJS.ReadableStream | Buffer} [params.file] - When adding a document, the content of the document to
    * ingest. For maximum supported file size limits, see [the
-   * documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
+   * documentation](/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
    *
    * When analyzing a document, the content of the document to analyze but not ingest. Only the `application/json`
    * content type is supported currently. For maximum supported file size limits, see [the product
@@ -1015,7 +1012,8 @@ class DiscoveryV2 extends BaseService {
    * data source.
    *
    * **Note**: This method is available only from Cloud Pak for Data version 4.0.9 and later installed instances and
-   * from Plus and Enterprise plan IBM Cloud-managed instances.
+   * from Plus and Enterprise plan IBM Cloud-managed instances. It is not currently available from Premium plan
+   * instances.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
@@ -1080,8 +1078,7 @@ class DiscoveryV2 extends BaseService {
    * Replace an existing document or add a document with a specified document ID. Starts ingesting a document with
    * optional metadata.
    *
-   * This operation works with a file upload collection. It cannot be used to modify a collection that crawls an
-   * external data source.
+   * Use this method to upload a file to a collection. You cannot use this method to crawl an external data source.
    *
    * If the document is uploaded to a collection that shares its data with another collection, the
    * **X-Watson-Discovery-Force** header must be set to `true`.
@@ -1101,7 +1098,7 @@ class DiscoveryV2 extends BaseService {
    * @param {string} params.documentId - The ID of the document.
    * @param {NodeJS.ReadableStream | Buffer} [params.file] - When adding a document, the content of the document to
    * ingest. For maximum supported file size limits, see [the
-   * documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
+   * documentation](/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
    *
    * When analyzing a document, the content of the document to analyze but not ingest. Only the `application/json`
    * content type is supported currently. For maximum supported file size limits, see [the product
@@ -1188,14 +1185,15 @@ class DiscoveryV2 extends BaseService {
   /**
    * Delete a document.
    *
-   * If the given document ID is invalid, or if the document is not found, then the a success response is returned (HTTP
-   * status code `200`) with the status set to 'deleted'.
+   * Deletes the document with the document ID that you specify from the collection. Removes uploaded documents from the
+   * collection permanently. If you delete a document that was added by crawling an external data source, the document
+   * will be added again with the next scheduled crawl of the data source. The delete function removes the document from
+   * the collection, not from the external data source.
    *
-   * **Note:** This operation only works on collections created to accept direct file uploads. It cannot be used to
-   * modify a collection that connects to an external source such as Microsoft SharePoint.
-   *
-   * **Note:** Segments of an uploaded document cannot be deleted individually. Delete all segments by deleting using
-   * the `parent_document_id` of a segment result.
+   * **Note:** Files such as CSV or JSON files generate subdocuments when they are added to a collection. If you delete
+   * a subdocument, and then repeat the action that created it, the deleted document is added back in to your
+   * collection. To remove subdocuments that are generated by an uploaded file, delete the original document instead.
+   * You can get the document ID of the original document from the `parent_document_id` of the subdocument result.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
@@ -1265,10 +1263,10 @@ class DiscoveryV2 extends BaseService {
    *
    * Search your data by submitting queries that are written in natural language or formatted in the Discovery Query
    * Language. For more information, see the [Discovery
-   * documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-query-concepts). The default query
-   * parameters differ by project type. For more information about the project default settings, see the [Discovery
-   * documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-query-defaults). See [the Projects
-   * API documentation](#create-project) for details about how to set custom default query settings.
+   * documentation](/docs/discovery-data?topic=discovery-data-query-concepts). The default query parameters differ by
+   * project type. For more information about the project default settings, see the [Discovery
+   * documentation](/docs/discovery-data?topic=discovery-data-query-defaults). See [the Projects API
+   * documentation](#create-project) for details about how to set custom default query settings.
    *
    * The length of the UTF-8 encoding of the POST body cannot exceed 10,000 bytes, which is roughly equivalent to 10,000
    * characters in English.
@@ -1289,7 +1287,7 @@ class DiscoveryV2 extends BaseService {
    * @param {string} [params.aggregation] - An aggregation search that returns an exact answer by combining query search
    * with filters. Useful for applications to build lists, tables, and time series. For more information about the
    * supported types of aggregations, see the [Discovery
-   * documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-query-aggregations).
+   * documentation](/docs/discovery-data?topic=discovery-data-query-aggregations).
    * @param {number} [params.count] - Number of results to return.
    * @param {string[]} [params._return] - A list of the fields in the document hierarchy to return. You can specify both
    * root-level (`text`) and nested (`extracted_metadata.filename`) fields. If this parameter is an empty list, then all
@@ -1685,10 +1683,9 @@ class DiscoveryV2 extends BaseService {
    * A default stop words list is used by all collections. The default list is applied both at indexing time and at
    * query time. A custom stop words list that you add is used at query time only.
    *
-   * The custom stop words list replaces the default stop words list. Therefore, if you want to keep the stop words that
-   * were used when the collection was indexed, get the default stop words list for the language of the collection first
-   * and edit it to create your custom list. For information about the default stop words lists per language, see [the
-   * product documentation](/docs/discovery-data?topic=discovery-data-stopwords).
+   * The custom stop words list augments the default stop words list; you cannot remove stop words. For information
+   * about the default stop words lists per language, see [the product
+   * documentation](/docs/discovery-data?topic=discovery-data-stopwords).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
@@ -1763,11 +1760,11 @@ class DiscoveryV2 extends BaseService {
    * Deploy* page in Discovery.
    * @param {string} params.collectionId - The ID of the collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>>}
    */
   public deleteStopwordList(
     params: DiscoveryV2.DeleteStopwordListParams
-  ): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'collectionId'];
     const _validParams = ['projectId', 'collectionId', 'headers'];
@@ -1964,11 +1961,11 @@ class DiscoveryV2 extends BaseService {
    * Deploy* page in Discovery.
    * @param {string} params.collectionId - The ID of the collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>>}
    */
   public deleteExpansions(
     params: DiscoveryV2.DeleteExpansionsParams
-  ): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'collectionId'];
     const _validParams = ['projectId', 'collectionId', 'headers'];
@@ -2144,11 +2141,11 @@ class DiscoveryV2 extends BaseService {
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
    * Deploy* page in Discovery.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>>}
    */
   public deleteTrainingQueries(
     params: DiscoveryV2.DeleteTrainingQueriesParams
-  ): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['projectId'];
     const _validParams = ['projectId', 'headers'];
@@ -2404,11 +2401,11 @@ class DiscoveryV2 extends BaseService {
    * Deploy* page in Discovery.
    * @param {string} params.queryId - The ID of the query used for training.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>>}
    */
   public deleteTrainingQuery(
     params: DiscoveryV2.DeleteTrainingQueryParams
-  ): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'queryId'];
     const _validParams = ['projectId', 'queryId', 'headers'];
@@ -2734,11 +2731,11 @@ class DiscoveryV2 extends BaseService {
    * Deploy* page in Discovery.
    * @param {string} params.enrichmentId - The ID of the enrichment.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>>}
    */
   public deleteEnrichment(
     params: DiscoveryV2.DeleteEnrichmentParams
-  ): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'enrichmentId'];
     const _validParams = ['projectId', 'enrichmentId', 'headers'];
@@ -2862,7 +2859,7 @@ class DiscoveryV2 extends BaseService {
    * must have headers. The file must include a field that contains the text you want to classify and a field that
    * contains the classification labels that you want to use to classify your data. If you want to specify multiple
    * values in a single field, use a semicolon as the value separator. For a sample file, see [the product
-   * documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-cm-doc-classifier).
+   * documentation](/docs/discovery-data?topic=discovery-data-cm-doc-classifier).
    * @param {CreateDocumentClassifier} params.classifier - An object that manages the settings and data that is required
    * to train a document classification model.
    * @param {NodeJS.ReadableStream | Buffer} [params.testData] - The CSV with test data to upload. The column values in
@@ -3007,7 +3004,7 @@ class DiscoveryV2 extends BaseService {
    * must have headers. The file must include a field that contains the text you want to classify and a field that
    * contains the classification labels that you want to use to classify your data. If you want to specify multiple
    * values in a single column, use a semicolon as the value separator. For a sample file, see [the product
-   * documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-cm-doc-classifier).
+   * documentation](/docs/discovery-data?topic=discovery-data-cm-doc-classifier).
    * @param {NodeJS.ReadableStream | Buffer} [params.testData] - The CSV with test data to upload. The column values in
    * the test file must be the same as the column values in the training data file. If no test data is provided, the
    * training data is split into two separate groups of training and test data.
@@ -3086,11 +3083,11 @@ class DiscoveryV2 extends BaseService {
    * Deploy* page in Discovery.
    * @param {string} params.classifierId - The ID of the classifier.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>>}
    */
   public deleteDocumentClassifier(
     params: DiscoveryV2.DeleteDocumentClassifierParams
-  ): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'classifierId'];
     const _validParams = ['projectId', 'classifierId', 'headers'];
@@ -3435,11 +3432,11 @@ class DiscoveryV2 extends BaseService {
    * @param {string} params.classifierId - The ID of the classifier.
    * @param {string} params.modelId - The ID of the classifier model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>>}
    */
   public deleteDocumentClassifierModel(
     params: DiscoveryV2.DeleteDocumentClassifierModelParams
-  ): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'classifierId', 'modelId'];
     const _validParams = ['projectId', 'classifierId', 'modelId', 'headers'];
@@ -3507,7 +3504,7 @@ class DiscoveryV2 extends BaseService {
    * @param {string} params.collectionId - The ID of the collection.
    * @param {NodeJS.ReadableStream | Buffer} [params.file] - When adding a document, the content of the document to
    * ingest. For maximum supported file size limits, see [the
-   * documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
+   * documentation](/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
    *
    * When analyzing a document, the content of the document to analyze but not ingest. Only the `application/json`
    * content type is supported currently. For maximum supported file size limits, see [the product
@@ -3598,19 +3595,18 @@ class DiscoveryV2 extends BaseService {
    *
    * You associate a customer ID with data by passing the **X-Watson-Metadata** header with a request that passes data.
    * For more information about personal data and customer IDs, see [Information
-   * security](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-information-security#information-security).
-   *
+   * security](/docs/discovery-data?topic=discovery-data-information-security#information-security).
    *
    * **Note:** This method is only supported on IBM Cloud instances of Discovery.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customerId - The customer ID for which all data is to be deleted.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Empty>>}
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>>}
    */
   public deleteUserData(
     params: DiscoveryV2.DeleteUserDataParams
-  ): Promise<DiscoveryV2.Response<DiscoveryV2.Empty>> {
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customerId'];
     const _validParams = ['customerId', 'headers'];
@@ -3676,7 +3672,7 @@ namespace DiscoveryV2 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty {}
+  export interface EmptyObject {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -3783,8 +3779,6 @@ namespace DiscoveryV2 {
      *  documentation](/docs/discovery-data?topic=discovery-data-project-defaults).
      */
     enrichments?: CollectionEnrichment[];
-    /** An object that describes the Smart Document Understanding model for a collection. */
-    smartDocumentUnderstanding?: CollectionDetailsSmartDocumentUnderstanding;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -3880,8 +3874,7 @@ namespace DiscoveryV2 {
     /** The ID of the collection. */
     collectionId: string;
     /** When adding a document, the content of the document to ingest. For maximum supported file size limits, see
-     *  [the
-     *  documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
+     *  [the documentation](/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
      *
      *  When analyzing a document, the content of the document to analyze but not ingest. Only the `application/json`
      *  content type is supported currently. For maximum supported file size limits, see [the product
@@ -3945,8 +3938,7 @@ namespace DiscoveryV2 {
     /** The ID of the document. */
     documentId: string;
     /** When adding a document, the content of the document to ingest. For maximum supported file size limits, see
-     *  [the
-     *  documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
+     *  [the documentation](/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
      *
      *  When analyzing a document, the content of the document to analyze but not ingest. Only the `application/json`
      *  content type is supported currently. For maximum supported file size limits, see [the product
@@ -4028,8 +4020,7 @@ namespace DiscoveryV2 {
     naturalLanguageQuery?: string;
     /** An aggregation search that returns an exact answer by combining query search with filters. Useful for
      *  applications to build lists, tables, and time series. For more information about the supported types of
-     *  aggregations, see the [Discovery
-     *  documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-query-aggregations).
+     *  aggregations, see the [Discovery documentation](/docs/discovery-data?topic=discovery-data-query-aggregations).
      */
     aggregation?: string;
     /** Number of results to return. */
@@ -4364,7 +4355,7 @@ namespace DiscoveryV2 {
      *  contains the text you want to classify and a field that contains the classification labels that you want to use
      *  to classify your data. If you want to specify multiple values in a single field, use a semicolon as the value
      *  separator. For a sample file, see [the product
-     *  documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-cm-doc-classifier).
+     *  documentation](/docs/discovery-data?topic=discovery-data-cm-doc-classifier).
      */
     trainingData: NodeJS.ReadableStream | Buffer;
     /** An object that manages the settings and data that is required to train a document classification model. */
@@ -4400,7 +4391,7 @@ namespace DiscoveryV2 {
      *  contains the text you want to classify and a field that contains the classification labels that you want to use
      *  to classify your data. If you want to specify multiple values in a single column, use a semicolon as the value
      *  separator. For a sample file, see [the product
-     *  documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-cm-doc-classifier).
+     *  documentation](/docs/discovery-data?topic=discovery-data-cm-doc-classifier).
      */
     trainingData?: NodeJS.ReadableStream | Buffer;
     /** The CSV with test data to upload. The column values in the test file must be the same as the column values
@@ -4509,8 +4500,7 @@ namespace DiscoveryV2 {
     /** The ID of the collection. */
     collectionId: string;
     /** When adding a document, the content of the document to ingest. For maximum supported file size limits, see
-     *  [the
-     *  documentation](https://cloud.ibm.com/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
+     *  [the documentation](/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
      *
      *  When analyzing a document, the content of the document to analyze but not ingest. Only the `application/json`
      *  content type is supported currently. For maximum supported file size limits, see [the product
@@ -5292,32 +5282,28 @@ namespace DiscoveryV2 {
     minimum_queries_added?: boolean;
   }
 
-  /** An abstract aggregation type produced by Discovery to analyze the input provided. */
+  /** An object that defines how to aggregate query results. */
   export interface QueryAggregation {
-    /** The type of aggregation command used. Options include: term, histogram, timeslice, nested, filter, min, max,
-     *  sum, average, unique_count, and top_hits.
-     */
-    type: string;
   }
 
-  /** Top value result for the term aggregation. */
+  /** Result group for the `group_by` aggregation. */
   export interface QueryGroupByAggregationResult {
-    /** Value of the field with a non-zero frequency in the document set. */
+    /** The condition that is met by the documents in this group. For example, `YEARTXT<2000`. */
     key: string;
-    /** Number of documents that contain the 'key'. */
+    /** Number of documents that meet the query and condition. */
     matching_results: number;
-    /** The relevancy for this group. */
+    /** The relevancy for this group. Returned only if `relevancy:true` is specified in the request. */
     relevancy?: number;
-    /** The number of documents which have the group as the value of specified field in the whole set of documents
-     *  in this collection. Returned only when the `relevancy` parameter is set to `true`.
+    /** Number of documents that meet the condition in the whole set of documents in this collection. Returned only
+     *  when `relevancy:true` is specified in the request.
      */
     total_matching_documents?: number;
-    /** The estimated number of documents which would match the query and also meet the condition. Returned only
-     *  when the `relevancy` parameter is set to `true`.
+    /** The number of documents that are estimated to match the query and condition. Returned only when
+     *  `relevancy:true` is specified in the request.
      */
-    estimated_matching_documents?: number;
-    /** An array of sub-aggregations. */
-    aggregations?: QueryAggregation[];
+    estimated_matching_results?: number;
+    /** An array of subaggregations. Returned only when this aggregation is returned as a subaggregation. */
+    aggregations?: JsonObject[];
   }
 
   /** Histogram numeric interval result. */
@@ -5326,8 +5312,8 @@ namespace DiscoveryV2 {
     key: number;
     /** Number of documents with the specified key as the upper bound. */
     matching_results: number;
-    /** An array of sub-aggregations. */
-    aggregations?: QueryAggregation[];
+    /** An array of subaggregations. Returned only when this aggregation is returned as a subaggregation. */
+    aggregations?: JsonObject[];
   }
 
   /** Configuration for passage retrieval. */
@@ -5345,8 +5331,9 @@ namespace DiscoveryV2 {
      *  `false`.
      */
     max_per_document?: number;
-    /** A list of fields to extract passages from. If this parameter is an empty list, then all root-level fields
-     *  are included.
+    /** A list of fields to extract passages from. By default, passages are extracted from the `text` and `title`
+     *  fields only. If you add this parameter and specify an empty list (`[]`) as its value, then the service searches
+     *  all root-level fields for suitable passages.
      */
     fields?: string[];
     /** The maximum number of passages to return. Ignored if **passages.per_document** is `true`. */
@@ -5412,6 +5399,15 @@ namespace DiscoveryV2 {
     notices?: Notice[];
   }
 
+  /** Result for the `pair` aggregation. */
+  export interface QueryPairAggregationResult {
+    /** Array of subaggregations of type `term`, `group_by`, `histogram`, or `timeslice`. Each element of the matrix
+     *  that is returned contains a **relevancy** value that is calculated from the combination of each value from the
+     *  first and second aggregations.
+     */
+    aggregations?: JsonObject[];
+  }
+
   /** A response that contains the documents and aggregations for the query. */
   export interface QueryResponse {
     /** The number of matching results for the query. Results that match due to a curation only are not counted in
@@ -5426,13 +5422,15 @@ namespace DiscoveryV2 {
     retrieval_details?: RetrievalDetails;
     /** Suggested correction to the submitted **natural_language_query** value. */
     suggested_query?: string;
-    /** Array of suggested refinements. **Note**: The `suggested_refinements` parameter that identified dynamic
-     *  facets from the data is deprecated.
+    /** Deprecated: Array of suggested refinements. **Note**: The `suggested_refinements` parameter that identified
+     *  dynamic facets from the data is deprecated.
      */
     suggested_refinements?: QuerySuggestedRefinement[];
     /** Array of table results. */
     table_results?: QueryTableResult[];
-    /** Passages that best match the query from across all of the collections in the project. */
+    /** Passages that best match the query from across all of the collections in the project. Returned if
+     *  **passages.per_document** is `false`.
+     */
     passages?: QueryResponsePassage[];
   }
 
@@ -5454,9 +5452,9 @@ namespace DiscoveryV2 {
     end_offset?: number;
     /** The label of the field from which the passage has been extracted. */
     field?: string;
-    /** An estimate of the probability that the passage is relevant. */
-    confidence?: number;
-    /** An array of extracted answers to the specified query. */
+    /** An array of extracted answers to the specified query. Returned for natural language queries when
+     *  **passages.per_document** is `false`.
+     */
     answers?: ResultPassageAnswer[];
   }
 
@@ -5468,7 +5466,7 @@ namespace DiscoveryV2 {
     metadata?: JsonObject;
     /** Metadata of a query result. */
     result_metadata: QueryResultMetadata;
-    /** Passages from the document that best matches the query. */
+    /** Passages from the document that best matches the query. Returned if **passages.per_document** is `true`. */
     document_passages?: QueryResultPassage[];
     /** QueryResult accepts additional properties. */
     [propName: string]: any;
@@ -5481,10 +5479,9 @@ namespace DiscoveryV2 {
     /** The collection id associated with this training data set. */
     collection_id: string;
     /** The confidence score for the given result. Calculated based on how relevant the result is estimated to be.
-     *  confidence can range from `0.0` to `1.0`. The higher the number, the more relevant the document. The
-     *  `confidence` value for a result was calculated using the model specified in the `document_retrieval_strategy`
-     *  field of the result set. This field is only returned if the **natural_language_query** parameter is specified in
-     *  the query.
+     *  The score can range from `0.0` to `1.0`. The higher the number, the more relevant the document. The `confidence`
+     *  value for a result was calculated using the model specified in the `document_retrieval_strategy` field of the
+     *  result set. This field is returned only if the **natural_language_query** parameter is specified in the query.
      */
     confidence?: number;
   }
@@ -5499,9 +5496,9 @@ namespace DiscoveryV2 {
     end_offset?: number;
     /** The label of the field from which the passage has been extracted. */
     field?: string;
-    /** Estimate of the probability that the passage is relevant. */
-    confidence?: number;
-    /** An arry of extracted answers to the specified query. */
+    /** An arry of extracted answers to the specified query. Returned for natural language queries when
+     *  **passages.per_document** is `true`.
+     */
     answers?: ResultPassageAnswer[];
   }
 
@@ -5527,24 +5524,26 @@ namespace DiscoveryV2 {
     table?: TableResultTable;
   }
 
-  /** Top value result for the term aggregation. */
+  /** Top value result for the `term` aggregation. */
   export interface QueryTermAggregationResult {
-    /** Value of the field with a non-zero frequency in the document set. */
+    /** Value of the field with a nonzero frequency in the document set. */
     key: string;
     /** Number of documents that contain the 'key'. */
     matching_results: number;
-    /** The relevancy for this term. */
+    /** The relevancy score for this result. Returned only if `relevancy:true` is specified in the request. */
     relevancy?: number;
-    /** The number of documents which have the term as the value of specified field in the whole set of documents in
-     *  this collection. Returned only when the `relevancy` parameter is set to `true`.
+    /** Number of documents in the collection that contain the term in the specified field. Returned only when
+     *  `relevancy:true` is specified in the request.
      */
     total_matching_documents?: number;
-    /** The estimated number of documents which would match the query and also meet the condition. Returned only
-     *  when the `relevancy` parameter is set to `true`.
+    /** Number of documents that are estimated to match the query and also meet the condition. Returned only when
+     *  `relevancy:true` is specified in the request.
      */
-    estimated_matching_documents?: number;
-    /** An array of sub-aggregations. */
-    aggregations?: QueryAggregation[];
+    estimated_matching_results?: number;
+    /** An array of subaggregations. Returned only when this aggregation is combined with other aggregations in the
+     *  request or is returned as a subaggregation.
+     */
+    aggregations?: JsonObject[];
   }
 
   /** A timeslice interval segment. */
@@ -5555,16 +5554,34 @@ namespace DiscoveryV2 {
     key: number;
     /** Number of documents with the specified key as the upper bound. */
     matching_results: number;
-    /** An array of sub-aggregations. */
-    aggregations?: QueryAggregation[];
+    /** An array of subaggregations. Returned only when this aggregation is returned as a subaggregation. */
+    aggregations?: JsonObject[];
   }
 
   /** A query response that contains the matching documents for the preceding aggregations. */
   export interface QueryTopHitsAggregationResult {
     /** Number of matching results. */
     matching_results: number;
-    /** An array of the document results. */
+    /** An array of the document results in an ordered list. */
     hits?: JsonObject[];
+  }
+
+  /** Result for the `topic` aggregation. */
+  export interface QueryTopicAggregationResult {
+    /** Array of subaggregations  of type `term` or `group_by` and `timeslice`. Each element of the matrix that is
+     *  returned contains a **topic_indicator** that is calculated from the combination of each aggregation value and
+     *  segment of time.
+     */
+    aggregations?: JsonObject[];
+  }
+
+  /** Result for the `trend` aggregation. */
+  export interface QueryTrendAggregationResult {
+    /** Array of subaggregations of type `term` or `group_by` and `timeslice`. Each element of the matrix that is
+     *  returned contains a **trend_indicator** that is calculated from the combination of each aggregation value and
+     *  segment of time.
+     */
+    aggregations?: JsonObject[];
   }
 
   /** Object that contains a potential answer to the specified query. */
@@ -5863,84 +5880,155 @@ namespace DiscoveryV2 {
   }
 
   /** Returns a scalar calculation across all documents for the field specified. Possible calculations include min, max, sum, average, and unique_count. */
-  export interface QueryCalculationAggregation extends QueryAggregation {
+  export interface QueryAggregationQueryCalculationAggregation extends QueryAggregation {
+    /** Specifies the calculation type, such as 'average`, `max`, `min`, `sum`, or `unique_count`. */
+    type?: string;
     /** The field to perform the calculation on. */
     field: string;
     /** The value of the calculation. */
     value?: number;
   }
 
-  /** A modifier that narrows the document set of the sub-aggregations it precedes. */
-  export interface QueryFilterAggregation extends QueryAggregation {
+  /** A modifier that narrows the document set of the subaggregations it precedes. */
+  export interface QueryAggregationQueryFilterAggregation extends QueryAggregation {
+    /** Specifies that the aggregation type is `filter`. */
+    type?: string;
     /** The filter that is written in Discovery Query Language syntax and is applied to the documents before
-     *  sub-aggregations are run.
+     *  subaggregations are run.
      */
     match: string;
     /** Number of documents that match the filter. */
     matching_results: number;
-    /** An array of sub-aggregations. */
-    aggregations?: QueryAggregation[];
+    /** An array of subaggregations. */
+    aggregations?: JsonObject[];
   }
 
-  /** Returns the top values for the field specified. */
-  export interface QueryGroupByAggregation extends QueryAggregation {
-    /** Array of top values for the field. */
+  /** Separates document results into groups that meet the conditions you specify. */
+  export interface QueryAggregationQueryGroupByAggregation extends QueryAggregation {
+    /** Specifies that the aggregation type is `group_by`. */
+    type?: string;
+    /** An array of results. */
     results?: QueryGroupByAggregationResult[];
   }
 
   /** Numeric interval segments to categorize documents by using field values from a single numeric field to describe the category. */
-  export interface QueryHistogramAggregation extends QueryAggregation {
+  export interface QueryAggregationQueryHistogramAggregation extends QueryAggregation {
+    /** Specifies that the aggregation type is `histogram`. */
+    type?: string;
     /** The numeric field name used to create the histogram. */
     field: string;
     /** The size of the sections that the results are split into. */
     interval: number;
-    /** Identifier specified in the query request of this aggregation. */
+    /** Identifier that can optionally be specified in the query request of this aggregation. */
     name?: string;
     /** Array of numeric intervals. */
     results?: QueryHistogramAggregationResult[];
   }
 
-  /** A restriction that alters the document set that is used for sub-aggregations it precedes to nested documents found in the field specified. */
-  export interface QueryNestedAggregation extends QueryAggregation {
-    /** The path to the document field to scope sub-aggregations to. */
+  /** A restriction that alters the document set that is used by the aggregations that it precedes. Subsequent aggregations are applied to nested documents from the specified field. */
+  export interface QueryAggregationQueryNestedAggregation extends QueryAggregation {
+    /** Specifies that the aggregation type is `nested`. */
+    type?: string;
+    /** The path to the document field to scope subsequent aggregations to. */
     path: string;
     /** Number of nested documents found in the specified field. */
     matching_results: number;
-    /** An array of sub-aggregations. */
-    aggregations?: QueryAggregation[];
+    /** An array of subaggregations. */
+    aggregations?: JsonObject[];
   }
 
-  /** Returns the top values for the field specified. */
-  export interface QueryTermAggregation extends QueryAggregation {
-    /** The field in the document used to generate top values from. */
-    field: string;
-    /** The number of top values returned. */
+  /** Calculates relevancy values using combinations of document sets from results of the specified pair of aggregations. */
+  export interface QueryAggregationQueryPairAggregation extends QueryAggregation {
+    /** Specifies that the aggregation type is `pair`. */
+    type?: string;
+    /** Specifies the first aggregation in the pair. The aggregation must be a `term`, `group_by`, `histogram`, or
+     *  `timeslice` aggregation type.
+     */
+    first?: string;
+    /** Specifies the second aggregation in the pair. The aggregation must be a `term`, `group_by`, `histogram`, or
+     *  `timeslice` aggregation type.
+     */
+    second?: string;
+    /** Indicates whether to include estimated matching result information. */
+    show_estimated_matching_results?: boolean;
+    /** Indicates whether to include total matching documents information. */
+    show_total_matching_documents?: boolean;
+    /** An array of aggregations. */
+    results?: QueryPairAggregationResult[];
+  }
+
+  /** Returns results from the field that is specified. */
+  export interface QueryAggregationQueryTermAggregation extends QueryAggregation {
+    /** Specifies that the aggregation type is `term`. */
+    type?: string;
+    /** The field in the document where the values come from. */
+    field?: string;
+    /** The number of results returned. Not returned if `relevancy:true` is specified in the request. */
     count?: number;
-    /** Identifier specified in the query request of this aggregation. */
+    /** Identifier specified in the query request of this aggregation. Not returned if `relevancy:true` is specified
+     *  in the request.
+     */
     name?: string;
-    /** Array of top values for the field. */
+    /** An array of results. */
     results?: QueryTermAggregationResult[];
   }
 
   /** A specialized histogram aggregation that uses dates to create interval segments. */
-  export interface QueryTimesliceAggregation extends QueryAggregation {
+  export interface QueryAggregationQueryTimesliceAggregation extends QueryAggregation {
+    /** Specifies that the aggregation type is `timeslice`. */
+    type?: string;
     /** The date field name used to create the timeslice. */
     field: string;
     /** The date interval value. Valid values are seconds, minutes, hours, days, weeks, and years. */
     interval: string;
-    /** Identifier specified in the query request of this aggregation. */
+    /** Identifier that can optionally be specified in the query request of this aggregation. */
     name?: string;
     /** Array of aggregation results. */
     results?: QueryTimesliceAggregationResult[];
   }
 
   /** Returns the top documents ranked by the score of the query. */
-  export interface QueryTopHitsAggregation extends QueryAggregation {
+  export interface QueryAggregationQueryTopHitsAggregation extends QueryAggregation {
+    /** Specifies that the aggregation type is `top_hits`. */
+    type?: string;
     /** The number of documents to return. */
     size: number;
     /** Identifier specified in the query request of this aggregation. */
     name?: string;
+    /** A query response that contains the matching documents for the preceding aggregations. */
     hits?: QueryTopHitsAggregationResult;
+  }
+
+  /** Detects how much the frequency of a given facet value deviates from the expected average for the given time period. This aggregation type does not use data from previous time periods. It calculates an index by using the averages of frequency counts of other facet values for the given time period. */
+  export interface QueryAggregationQueryTopicAggregation extends QueryAggregation {
+    /** Specifies that the aggregation type is `topic`. */
+    type?: string;
+    /** Specifies the `term` or `group_by` aggregation for the facet that you want to analyze. */
+    facet?: string;
+    /** Specifies the `timeslice` aggregation that defines the time segments. */
+    time_segments?: string;
+    /** Indicates whether to include estimated matching result information. */
+    show_estimated_matching_results?: boolean;
+    /** Indicates whether to include total matching documents information. */
+    show_total_matching_documents?: boolean;
+    /** An array of aggregations. */
+    results?: QueryTopicAggregationResult[];
+  }
+
+  /** Detects sharp and unexpected changes in the frequency of a facet or facet value over time based on the past history of frequency changes of the facet value. */
+  export interface QueryAggregationQueryTrendAggregation extends QueryAggregation {
+    /** Specifies that the aggregation type is `trend`. */
+    type?: string;
+    /** Specifies the `term` or `group_by` aggregation for the facet that you want to analyze. */
+    facet?: string;
+    /** Specifies the `timeslice` aggregation that defines the time segments. */
+    time_segments?: string;
+    /** Indicates whether to include estimated matching result information. */
+    show_estimated_matching_results?: boolean;
+    /** Indicates whether to include total matching documents information. */
+    show_total_matching_documents?: boolean;
+    /** An array of aggregations. */
+    results?: QueryTrendAggregationResult[];
   }
 }
 
