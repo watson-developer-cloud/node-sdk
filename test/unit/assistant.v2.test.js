@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2022.
+ * (C) Copyright IBM Corp. 2018, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ const {
   checkUrlAndMethod,
   checkMediaHeaders,
   expectToBePromise,
+  checkForSuccessfulExecution,
 } = unitTestUtils;
 
 const assistantServiceOptions = {
@@ -150,13 +151,256 @@ describe('AssistantV2', () => {
     });
   });
 
+  describe('createAssistant', () => {
+    describe('positive tests', () => {
+      function __createAssistantTest() {
+        // Construct the params object for operation createAssistant
+        const language = 'testString';
+        const name = 'testString';
+        const description = 'testString';
+        const createAssistantParams = {
+          language,
+          name,
+          description,
+        };
+
+        const createAssistantResult = assistantService.createAssistant(createAssistantParams);
+
+        // all methods should return a Promise
+        expectToBePromise(createAssistantResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'application/json';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.body.language).toEqual(language);
+        expect(mockRequestOptions.body.name).toEqual(name);
+        expect(mockRequestOptions.body.description).toEqual(description);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createAssistantTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __createAssistantTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __createAssistantTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const createAssistantParams = {
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistantService.createAssistant(createAssistantParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should not have any problems when no parameters are passed in', () => {
+        // invoke the method with no parameters
+        assistantService.createAssistant({});
+        checkForSuccessfulExecution(createRequestMock);
+      });
+    });
+  });
+
+  describe('listAssistants', () => {
+    describe('positive tests', () => {
+      function __listAssistantsTest() {
+        // Construct the params object for operation listAssistants
+        const pageLimit = 38;
+        const includeCount = false;
+        const sort = 'name';
+        const cursor = 'testString';
+        const includeAudit = false;
+        const listAssistantsParams = {
+          pageLimit,
+          includeCount,
+          sort,
+          cursor,
+          includeAudit,
+        };
+
+        const listAssistantsResult = assistantService.listAssistants(listAssistantsParams);
+
+        // all methods should return a Promise
+        expectToBePromise(listAssistantsResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.qs.page_limit).toEqual(pageLimit);
+        expect(mockRequestOptions.qs.include_count).toEqual(includeCount);
+        expect(mockRequestOptions.qs.sort).toEqual(sort);
+        expect(mockRequestOptions.qs.cursor).toEqual(cursor);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listAssistantsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __listAssistantsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __listAssistantsTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const listAssistantsParams = {
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistantService.listAssistants(listAssistantsParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should not have any problems when no parameters are passed in', () => {
+        // invoke the method with no parameters
+        assistantService.listAssistants({});
+        checkForSuccessfulExecution(createRequestMock);
+      });
+    });
+  });
+
+  describe('deleteAssistant', () => {
+    describe('positive tests', () => {
+      function __deleteAssistantTest() {
+        // Construct the params object for operation deleteAssistant
+        const assistantId = 'testString';
+        const deleteAssistantParams = {
+          assistantId,
+        };
+
+        const deleteAssistantResult = assistantService.deleteAssistant(deleteAssistantParams);
+
+        // all methods should return a Promise
+        expectToBePromise(deleteAssistantResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}', 'DELETE');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteAssistantTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __deleteAssistantTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __deleteAssistantTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const assistantId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const deleteAssistantParams = {
+          assistantId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistantService.deleteAssistant(deleteAssistantParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async () => {
+        let err;
+        try {
+          await assistantService.deleteAssistant({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.deleteAssistant();
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+    });
+  });
+
   describe('createSession', () => {
     describe('positive tests', () => {
+      // Request models needed by this operation.
+
+      // RequestAnalytics
+      const requestAnalyticsModel = {
+        browser: 'testString',
+        device: 'testString',
+        pageUrl: 'testString',
+      };
+
       function __createSessionTest() {
         // Construct the params object for operation createSession
         const assistantId = 'testString';
+        const analytics = requestAnalyticsModel;
         const createSessionParams = {
-          assistantId: assistantId,
+          assistantId,
+          analytics,
         };
 
         const createSessionResult = assistantService.createSession(createSessionParams);
@@ -173,6 +417,7 @@ describe('AssistantV2', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.body.analytics).toEqual(analytics);
         expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
         expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
       }
@@ -242,8 +487,8 @@ describe('AssistantV2', () => {
         const assistantId = 'testString';
         const sessionId = 'testString';
         const deleteSessionParams = {
-          assistantId: assistantId,
-          sessionId: sessionId,
+          assistantId,
+          sessionId,
         };
 
         const deleteSessionResult = assistantService.deleteSession(deleteSessionParams);
@@ -402,6 +647,13 @@ describe('AssistantV2', () => {
         media_type: 'testString',
       };
 
+      // RequestAnalytics
+      const requestAnalyticsModel = {
+        browser: 'testString',
+        device: 'testString',
+        pageUrl: 'testString',
+      };
+
       // MessageInputOptionsSpelling
       const messageInputOptionsSpellingModel = {
         suggestions: true,
@@ -426,6 +678,7 @@ describe('AssistantV2', () => {
         entities: [runtimeEntityModel],
         suggestion_id: 'testString',
         attachments: [messageInputAttachmentModel],
+        analytics: requestAnalyticsModel,
         options: messageInputOptionsModel,
       };
 
@@ -454,7 +707,7 @@ describe('AssistantV2', () => {
 
       // MessageContextSkill
       const messageContextSkillModel = {
-        user_defined: { 'key1': { foo: 'bar' } },
+        user_defined: { foo: 'bar' },
         system: messageContextSkillSystemModel,
       };
 
@@ -473,11 +726,11 @@ describe('AssistantV2', () => {
         const context = messageContextModel;
         const userId = 'testString';
         const messageParams = {
-          assistantId: assistantId,
-          sessionId: sessionId,
-          input: input,
-          context: context,
-          userId: userId,
+          assistantId,
+          sessionId,
+          input,
+          context,
+          userId,
         };
 
         const messageResult = assistantService.message(messageParams);
@@ -639,6 +892,13 @@ describe('AssistantV2', () => {
         media_type: 'testString',
       };
 
+      // RequestAnalytics
+      const requestAnalyticsModel = {
+        browser: 'testString',
+        device: 'testString',
+        pageUrl: 'testString',
+      };
+
       // MessageInputOptionsSpelling
       const messageInputOptionsSpellingModel = {
         suggestions: true,
@@ -661,6 +921,7 @@ describe('AssistantV2', () => {
         entities: [runtimeEntityModel],
         suggestion_id: 'testString',
         attachments: [messageInputAttachmentModel],
+        analytics: requestAnalyticsModel,
         options: messageInputOptionsStatelessModel,
       };
 
@@ -690,7 +951,7 @@ describe('AssistantV2', () => {
 
       // MessageContextSkill
       const messageContextSkillModel = {
-        user_defined: { 'key1': { foo: 'bar' } },
+        user_defined: { foo: 'bar' },
         system: messageContextSkillSystemModel,
       };
 
@@ -708,10 +969,10 @@ describe('AssistantV2', () => {
         const context = messageContextStatelessModel;
         const userId = 'testString';
         const messageStatelessParams = {
-          assistantId: assistantId,
-          input: input,
-          context: context,
-          userId: userId,
+          assistantId,
+          input,
+          context,
+          userId,
         };
 
         const messageStatelessResult = assistantService.messageStateless(messageStatelessParams);
@@ -807,8 +1068,8 @@ describe('AssistantV2', () => {
         const skillId = 'testString';
         const input = [bulkClassifyUtteranceModel];
         const bulkClassifyParams = {
-          skillId: skillId,
-          input: input,
+          skillId,
+          input,
         };
 
         const bulkClassifyResult = assistantService.bulkClassify(bulkClassifyParams);
@@ -900,11 +1161,11 @@ describe('AssistantV2', () => {
         const pageLimit = 38;
         const cursor = 'testString';
         const listLogsParams = {
-          assistantId: assistantId,
-          sort: sort,
-          filter: filter,
-          pageLimit: pageLimit,
-          cursor: cursor,
+          assistantId,
+          sort,
+          filter,
+          pageLimit,
+          cursor,
         };
 
         const listLogsResult = assistantService.listLogs(listLogsParams);
@@ -993,7 +1254,7 @@ describe('AssistantV2', () => {
         // Construct the params object for operation deleteUserData
         const customerId = 'testString';
         const deleteUserDataParams = {
-          customerId: customerId,
+          customerId,
         };
 
         const deleteUserDataResult = assistantService.deleteUserData(deleteUserDataParams);
@@ -1083,12 +1344,12 @@ describe('AssistantV2', () => {
         const cursor = 'testString';
         const includeAudit = false;
         const listEnvironmentsParams = {
-          assistantId: assistantId,
-          pageLimit: pageLimit,
-          includeCount: includeCount,
-          sort: sort,
-          cursor: cursor,
-          includeAudit: includeAudit,
+          assistantId,
+          pageLimit,
+          includeCount,
+          sort,
+          cursor,
+          includeAudit,
         };
 
         const listEnvironmentsResult = assistantService.listEnvironments(listEnvironmentsParams);
@@ -1180,9 +1441,9 @@ describe('AssistantV2', () => {
         const environmentId = 'testString';
         const includeAudit = false;
         const getEnvironmentParams = {
-          assistantId: assistantId,
-          environmentId: environmentId,
-          includeAudit: includeAudit,
+          assistantId,
+          environmentId,
+          includeAudit,
         };
 
         const getEnvironmentResult = assistantService.getEnvironment(getEnvironmentParams);
@@ -1265,6 +1526,207 @@ describe('AssistantV2', () => {
     });
   });
 
+  describe('updateEnvironment', () => {
+    describe('positive tests', () => {
+      // Request models needed by this operation.
+
+      // EnvironmentSkill
+      const environmentSkillModel = {
+        skill_id: 'testString',
+        type: 'dialog',
+        disabled: true,
+        snapshot: 'testString',
+        skill_reference: 'testString',
+      };
+
+      function __updateEnvironmentTest() {
+        // Construct the params object for operation updateEnvironment
+        const assistantId = 'testString';
+        const environmentId = 'testString';
+        const name = 'testString';
+        const description = 'testString';
+        const sessionTimeout = 10;
+        const skillReferences = [environmentSkillModel];
+        const updateEnvironmentParams = {
+          assistantId,
+          environmentId,
+          name,
+          description,
+          sessionTimeout,
+          skillReferences,
+        };
+
+        const updateEnvironmentResult = assistantService.updateEnvironment(updateEnvironmentParams);
+
+        // all methods should return a Promise
+        expectToBePromise(updateEnvironmentResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/environments/{environment_id}', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'application/json';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.body.name).toEqual(name);
+        expect(mockRequestOptions.body.description).toEqual(description);
+        expect(mockRequestOptions.body.session_timeout).toEqual(sessionTimeout);
+        expect(mockRequestOptions.body.skill_references).toEqual(skillReferences);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
+        expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __updateEnvironmentTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __updateEnvironmentTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __updateEnvironmentTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const assistantId = 'testString';
+        const environmentId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const updateEnvironmentParams = {
+          assistantId,
+          environmentId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistantService.updateEnvironment(updateEnvironmentParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async () => {
+        let err;
+        try {
+          await assistantService.updateEnvironment({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.updateEnvironment();
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+    });
+  });
+
+  describe('createRelease', () => {
+    describe('positive tests', () => {
+      function __createReleaseTest() {
+        // Construct the params object for operation createRelease
+        const assistantId = 'testString';
+        const description = 'testString';
+        const createReleaseParams = {
+          assistantId,
+          description,
+        };
+
+        const createReleaseResult = assistantService.createRelease(createReleaseParams);
+
+        // all methods should return a Promise
+        expectToBePromise(createReleaseResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/releases', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'application/json';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.body.description).toEqual(description);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createReleaseTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __createReleaseTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __createReleaseTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const assistantId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const createReleaseParams = {
+          assistantId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistantService.createRelease(createReleaseParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async () => {
+        let err;
+        try {
+          await assistantService.createRelease({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.createRelease();
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+    });
+  });
+
   describe('listReleases', () => {
     describe('positive tests', () => {
       function __listReleasesTest() {
@@ -1276,12 +1738,12 @@ describe('AssistantV2', () => {
         const cursor = 'testString';
         const includeAudit = false;
         const listReleasesParams = {
-          assistantId: assistantId,
-          pageLimit: pageLimit,
-          includeCount: includeCount,
-          sort: sort,
-          cursor: cursor,
-          includeAudit: includeAudit,
+          assistantId,
+          pageLimit,
+          includeCount,
+          sort,
+          cursor,
+          includeAudit,
         };
 
         const listReleasesResult = assistantService.listReleases(listReleasesParams);
@@ -1373,9 +1835,9 @@ describe('AssistantV2', () => {
         const release = 'testString';
         const includeAudit = false;
         const getReleaseParams = {
-          assistantId: assistantId,
-          release: release,
-          includeAudit: includeAudit,
+          assistantId,
+          release,
+          includeAudit,
         };
 
         const getReleaseResult = assistantService.getRelease(getReleaseParams);
@@ -1458,6 +1920,96 @@ describe('AssistantV2', () => {
     });
   });
 
+  describe('deleteRelease', () => {
+    describe('positive tests', () => {
+      function __deleteReleaseTest() {
+        // Construct the params object for operation deleteRelease
+        const assistantId = 'testString';
+        const release = 'testString';
+        const deleteReleaseParams = {
+          assistantId,
+          release,
+        };
+
+        const deleteReleaseResult = assistantService.deleteRelease(deleteReleaseParams);
+
+        // all methods should return a Promise
+        expectToBePromise(deleteReleaseResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/releases/{release}', 'DELETE');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
+        expect(mockRequestOptions.path.release).toEqual(release);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __deleteReleaseTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __deleteReleaseTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __deleteReleaseTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const assistantId = 'testString';
+        const release = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const deleteReleaseParams = {
+          assistantId,
+          release,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistantService.deleteRelease(deleteReleaseParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async () => {
+        let err;
+        try {
+          await assistantService.deleteRelease({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.deleteRelease();
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+    });
+  });
+
   describe('deployRelease', () => {
     describe('positive tests', () => {
       function __deployReleaseTest() {
@@ -1467,10 +2019,10 @@ describe('AssistantV2', () => {
         const environmentId = 'testString';
         const includeAudit = false;
         const deployReleaseParams = {
-          assistantId: assistantId,
-          release: release,
-          environmentId: environmentId,
-          includeAudit: includeAudit,
+          assistantId,
+          release,
+          environmentId,
+          includeAudit,
         };
 
         const deployReleaseResult = assistantService.deployRelease(deployReleaseParams);
@@ -1547,6 +2099,491 @@ describe('AssistantV2', () => {
         let err;
         try {
           await assistantService.deployRelease();
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+    });
+  });
+
+  describe('getSkill', () => {
+    describe('positive tests', () => {
+      function __getSkillTest() {
+        // Construct the params object for operation getSkill
+        const assistantId = 'testString';
+        const skillId = 'testString';
+        const getSkillParams = {
+          assistantId,
+          skillId,
+        };
+
+        const getSkillResult = assistantService.getSkill(getSkillParams);
+
+        // all methods should return a Promise
+        expectToBePromise(getSkillResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/skills/{skill_id}', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
+        expect(mockRequestOptions.path.skill_id).toEqual(skillId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getSkillTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __getSkillTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __getSkillTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const assistantId = 'testString';
+        const skillId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const getSkillParams = {
+          assistantId,
+          skillId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistantService.getSkill(getSkillParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async () => {
+        let err;
+        try {
+          await assistantService.getSkill({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.getSkill();
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+    });
+  });
+
+  describe('updateSkill', () => {
+    describe('positive tests', () => {
+      function __updateSkillTest() {
+        // Construct the params object for operation updateSkill
+        const assistantId = 'testString';
+        const skillId = 'testString';
+        const name = 'testString';
+        const description = 'testString';
+        const workspace = { foo: 'bar' };
+        const dialogSettings = { foo: 'bar' };
+        const searchSettings = { foo: 'bar' };
+        const updateSkillParams = {
+          assistantId,
+          skillId,
+          name,
+          description,
+          workspace,
+          dialogSettings,
+          searchSettings,
+        };
+
+        const updateSkillResult = assistantService.updateSkill(updateSkillParams);
+
+        // all methods should return a Promise
+        expectToBePromise(updateSkillResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/skills/{skill_id}', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'application/json';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.body.name).toEqual(name);
+        expect(mockRequestOptions.body.description).toEqual(description);
+        expect(mockRequestOptions.body.workspace).toEqual(workspace);
+        expect(mockRequestOptions.body.dialog_settings).toEqual(dialogSettings);
+        expect(mockRequestOptions.body.search_settings).toEqual(searchSettings);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
+        expect(mockRequestOptions.path.skill_id).toEqual(skillId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __updateSkillTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __updateSkillTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __updateSkillTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const assistantId = 'testString';
+        const skillId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const updateSkillParams = {
+          assistantId,
+          skillId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistantService.updateSkill(updateSkillParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async () => {
+        let err;
+        try {
+          await assistantService.updateSkill({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.updateSkill();
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+    });
+  });
+
+  describe('exportSkills', () => {
+    describe('positive tests', () => {
+      function __exportSkillsTest() {
+        // Construct the params object for operation exportSkills
+        const assistantId = 'testString';
+        const includeAudit = false;
+        const exportSkillsParams = {
+          assistantId,
+          includeAudit,
+        };
+
+        const exportSkillsResult = assistantService.exportSkills(exportSkillsParams);
+
+        // all methods should return a Promise
+        expectToBePromise(exportSkillsResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/skills_export', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __exportSkillsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __exportSkillsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __exportSkillsTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const assistantId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const exportSkillsParams = {
+          assistantId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistantService.exportSkills(exportSkillsParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async () => {
+        let err;
+        try {
+          await assistantService.exportSkills({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.exportSkills();
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+    });
+  });
+
+  describe('importSkills', () => {
+    describe('positive tests', () => {
+      // Request models needed by this operation.
+
+      // SkillImport
+      const skillImportModel = {
+        name: 'testString',
+        description: 'testString',
+        workspace: { foo: 'bar' },
+        dialog_settings: { foo: 'bar' },
+        search_settings: { foo: 'bar' },
+        language: 'testString',
+        type: 'action',
+      };
+
+      // AssistantState
+      const assistantStateModel = {
+        action_disabled: true,
+        dialog_disabled: true,
+      };
+
+      function __importSkillsTest() {
+        // Construct the params object for operation importSkills
+        const assistantId = 'testString';
+        const assistantSkills = [skillImportModel];
+        const assistantState = assistantStateModel;
+        const includeAudit = false;
+        const importSkillsParams = {
+          assistantId,
+          assistantSkills,
+          assistantState,
+          includeAudit,
+        };
+
+        const importSkillsResult = assistantService.importSkills(importSkillsParams);
+
+        // all methods should return a Promise
+        expectToBePromise(importSkillsResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/skills_import', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'application/json';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.body.assistant_skills).toEqual(assistantSkills);
+        expect(mockRequestOptions.body.assistant_state).toEqual(assistantState);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __importSkillsTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __importSkillsTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __importSkillsTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const assistantId = 'testString';
+        const assistantSkills = [skillImportModel];
+        const assistantState = assistantStateModel;
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const importSkillsParams = {
+          assistantId,
+          assistantSkills,
+          assistantState,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistantService.importSkills(importSkillsParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async () => {
+        let err;
+        try {
+          await assistantService.importSkills({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.importSkills();
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+    });
+  });
+
+  describe('importSkillsStatus', () => {
+    describe('positive tests', () => {
+      function __importSkillsStatusTest() {
+        // Construct the params object for operation importSkillsStatus
+        const assistantId = 'testString';
+        const importSkillsStatusParams = {
+          assistantId,
+        };
+
+        const importSkillsStatusResult = assistantService.importSkillsStatus(importSkillsStatusParams);
+
+        // all methods should return a Promise
+        expectToBePromise(importSkillsStatusResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/skills_import/status', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __importSkillsStatusTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __importSkillsStatusTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __importSkillsStatusTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const assistantId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const importSkillsStatusParams = {
+          assistantId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistantService.importSkillsStatus(importSkillsStatusParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async () => {
+        let err;
+        try {
+          await assistantService.importSkillsStatus({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.importSkillsStatus();
         } catch (e) {
           err = e;
         }

@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2022.
+ * (C) Copyright IBM Corp. 2018, 2023.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.53.0-9710cac3-20220713-193508
+ * IBM OpenAPI SDK Code Generator Version: 3.64.1-cee95189-20230124-211647
  */
 
 import * as extend from 'extend';
@@ -87,6 +87,210 @@ class AssistantV2 extends BaseService {
   }
 
   /*************************
+   * assistants
+   ************************/
+
+  /**
+   * Create an assistant.
+   *
+   * Create a new assistant.
+   *
+   * This method is available only with Enterprise plans.
+   *
+   * @param {Object} [params] - The parameters to send to the service.
+   * @param {string} [params.language] - The language of the assistant.
+   * @param {string} [params.name] - The name of the assistant. This string cannot contain carriage return, newline, or
+   * tab characters.
+   * @param {string} [params.description] - The description of the assistant. This string cannot contain carriage
+   * return, newline, or tab characters.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<AssistantV2.Response<AssistantV2.Assistant>>}
+   */
+  public createAssistant(
+    params?: AssistantV2.CreateAssistantParams
+  ): Promise<AssistantV2.Response<AssistantV2.Assistant>> {
+    const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['language', 'name', 'description', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const body = {
+      'language': _params.language,
+      'name': _params.name,
+      'description': _params.description,
+    };
+
+    const query = {
+      'version': this.version,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      AssistantV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'createAssistant'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/assistants',
+        method: 'POST',
+        body,
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * List assistants.
+   *
+   * List the assistants associated with a Watson Assistant service instance.
+   *
+   * This method is available only with Enterprise plans.
+   *
+   * @param {Object} [params] - The parameters to send to the service.
+   * @param {number} [params.pageLimit] - The number of records to return in each page of results.
+   * @param {boolean} [params.includeCount] - Whether to include information about the number of records that satisfy
+   * the request, regardless of the page limit. If this parameter is `true`, the `pagination` object in the response
+   * includes the `total` property.
+   * @param {string} [params.sort] - The attribute by which returned assistants will be sorted. To reverse the sort
+   * order, prefix the value with a minus sign (`-`).
+   * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<AssistantV2.Response<AssistantV2.AssistantCollection>>}
+   */
+  public listAssistants(
+    params?: AssistantV2.ListAssistantsParams
+  ): Promise<AssistantV2.Response<AssistantV2.AssistantCollection>> {
+    const _params = { ...params };
+    const _requiredParams = [];
+    const _validParams = ['pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'page_limit': _params.pageLimit,
+      'include_count': _params.includeCount,
+      'sort': _params.sort,
+      'cursor': _params.cursor,
+      'include_audit': _params.includeAudit,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      AssistantV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'listAssistants'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/assistants',
+        method: 'GET',
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Delete assistant.
+   *
+   * Delete an assistant.
+   *
+   * This method is available only with Enterprise plans.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
+   * is deployed, depending on the type of request:
+   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+   * deployed.
+   *  - For all other requests, specify the assistant ID of the assistant.
+   *
+   *  To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings and
+   * scroll to the **Environments** section.
+   *
+   * **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+   * assistant ID in the user interface, open the assistant settings and click API Details.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<AssistantV2.Response<AssistantV2.EmptyObject>>}
+   */
+  public deleteAssistant(
+    params: AssistantV2.DeleteAssistantParams
+  ): Promise<AssistantV2.Response<AssistantV2.EmptyObject>> {
+    const _params = { ...params };
+    const _requiredParams = ['assistantId'];
+    const _validParams = ['assistantId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'assistant_id': _params.assistantId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      AssistantV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'deleteAssistant'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/assistants/{assistant_id}',
+        method: 'DELETE',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+  /*************************
    * sessions
    ************************/
 
@@ -99,13 +303,19 @@ class AssistantV2 extends BaseService {
    * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-settings).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - Unique identifier of the assistant. To find the assistant ID in the Watson
-   * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
-   * assistants, see the
-   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
+   * is deployed, depending on the type of request:
+   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+   * deployed.
+   *  - For all other requests, specify the assistant ID of the assistant.
    *
-   * **Note:** Currently, the v2 API does not support creating assistants.
-   * @param {CreateSession} [params.createSession] -
+   *  To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings and
+   * scroll to the **Environments** section.
+   *
+   * **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+   * assistant ID in the user interface, open the assistant settings and click API Details.
+   * @param {RequestAnalytics} [params.analytics] - An optional object containing analytics data. Currently, this data
+   * is used only for events sent to the Segment extension.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV2.Response<AssistantV2.SessionResponse>>}
    */
@@ -114,13 +324,14 @@ class AssistantV2 extends BaseService {
   ): Promise<AssistantV2.Response<AssistantV2.SessionResponse>> {
     const _params = { ...params };
     const _requiredParams = ['assistantId'];
-    const _validParams = ['assistantId', 'headers'];
+    const _validParams = ['assistantId', 'analytics', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
     }
 
     const body = {
+      'analytics': _params.analytics,
     };
 
     const query = {
@@ -168,19 +379,24 @@ class AssistantV2 extends BaseService {
    * the [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-settings)).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - Unique identifier of the assistant. To find the assistant ID in the Watson
-   * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
-   * assistants, see the
-   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
+   * is deployed, depending on the type of request:
+   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+   * deployed.
+   *  - For all other requests, specify the assistant ID of the assistant.
    *
-   * **Note:** Currently, the v2 API does not support creating assistants.
+   *  To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings and
+   * scroll to the **Environments** section.
+   *
+   * **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+   * assistant ID in the user interface, open the assistant settings and click API Details.
    * @param {string} params.sessionId - Unique identifier of the session.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<AssistantV2.Response<AssistantV2.Empty>>}
+   * @returns {Promise<AssistantV2.Response<AssistantV2.EmptyObject>>}
    */
   public deleteSession(
     params: AssistantV2.DeleteSessionParams
-  ): Promise<AssistantV2.Response<AssistantV2.Empty>> {
+  ): Promise<AssistantV2.Response<AssistantV2.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['assistantId', 'sessionId'];
     const _validParams = ['assistantId', 'sessionId', 'headers'];
@@ -236,12 +452,17 @@ class AssistantV2 extends BaseService {
    * Watson Assistant for the duration of the session.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - Unique identifier of the assistant. To find the assistant ID in the Watson
-   * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
-   * assistants, see the
-   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
+   * is deployed, depending on the type of request:
+   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+   * deployed.
+   *  - For all other requests, specify the assistant ID of the assistant.
    *
-   * **Note:** Currently, the v2 API does not support creating assistants.
+   *  To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings and
+   * scroll to the **Environments** section.
+   *
+   * **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+   * assistant ID in the user interface, open the assistant settings and click API Details.
    * @param {string} params.sessionId - Unique identifier of the session.
    * @param {MessageInput} [params.input] - An input object that includes the input text.
    * @param {MessageContext} [params.context] - Context data for the conversation. You can use this property to set or
@@ -323,12 +544,17 @@ class AssistantV2 extends BaseService {
    * your application.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - Unique identifier of the assistant. To find the assistant ID in the Watson
-   * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
-   * assistants, see the
-   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
+   * is deployed, depending on the type of request:
+   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+   * deployed.
+   *  - For all other requests, specify the assistant ID of the assistant.
    *
-   * **Note:** Currently, the v2 API does not support creating assistants.
+   *  To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings and
+   * scroll to the **Environments** section.
+   *
+   * **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+   * assistant ID in the user interface, open the assistant settings and click API Details.
    * @param {MessageInputStateless} [params.input] - An input object that includes the input text.
    * @param {MessageContextStateless} [params.context] - Context data for the conversation. You can use this property to
    * set or modify context variables, which can also be accessed by dialog nodes. The context is not stored by the
@@ -481,19 +707,24 @@ class AssistantV2 extends BaseService {
    *
    * List the events from the log of an assistant.
    *
-   * This method requires Manager access, and is available only with Enterprise plans.
+   * This method requires Manager access, and is available only with Plus and Enterprise plans.
    *
    * **Note:** If you use the **cursor** parameter to retrieve results one page at a time, subsequent requests must be
    * no more than 5 minutes apart. Any returned value for the **cursor** parameter becomes invalid after 5 minutes. For
    * more information about using pagination, see [Pagination](#pagination).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - Unique identifier of the assistant. To find the assistant ID in the Watson
-   * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
-   * assistants, see the
-   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
+   * is deployed, depending on the type of request:
+   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+   * deployed.
+   *  - For all other requests, specify the assistant ID of the assistant.
    *
-   * **Note:** Currently, the v2 API does not support creating assistants.
+   *  To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings and
+   * scroll to the **Environments** section.
+   *
+   * **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+   * assistant ID in the user interface, open the assistant settings and click API Details.
    * @param {string} [params.sort] - How to sort the returned log events. You can sort by **request_timestamp**. To
    * reverse the sort order, prefix the parameter value with a minus sign (`-`).
    * @param {string} [params.filter] - A cacheable parameter that limits the results to those matching the specified
@@ -576,11 +807,11 @@ class AssistantV2 extends BaseService {
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customerId - The customer ID for which all data is to be deleted.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<AssistantV2.Response<AssistantV2.Empty>>}
+   * @returns {Promise<AssistantV2.Response<AssistantV2.EmptyObject>>}
    */
   public deleteUserData(
     params: AssistantV2.DeleteUserDataParams
-  ): Promise<AssistantV2.Response<AssistantV2.Empty>> {
+  ): Promise<AssistantV2.Response<AssistantV2.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customerId'];
     const _validParams = ['customerId', 'headers'];
@@ -629,13 +860,20 @@ class AssistantV2 extends BaseService {
    *
    * List the environments associated with an assistant.
    *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - Unique identifier of the assistant. To find the assistant ID in the Watson
-   * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
-   * assistants, see the
-   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+   * This method is available only with Enterprise plans.
    *
-   * **Note:** Currently, the v2 API does not support creating assistants.
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
+   * is deployed, depending on the type of request:
+   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+   * deployed.
+   *  - For all other requests, specify the assistant ID of the assistant.
+   *
+   *  To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings and
+   * scroll to the **Environments** section.
+   *
+   * **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+   * assistant ID in the user interface, open the assistant settings and click API Details.
    * @param {number} [params.pageLimit] - The number of records to return in each page of results.
    * @param {boolean} [params.includeCount] - Whether to include information about the number of records that satisfy
    * the request, regardless of the page limit. If this parameter is `true`, the `pagination` object in the response
@@ -706,13 +944,20 @@ class AssistantV2 extends BaseService {
    * Get information about an environment. For more information about environments, see
    * [Environments](https://cloud.ibm.com/docs/watson-assistant?topic=watson-assistant-publish-overview#environments).
    *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - Unique identifier of the assistant. To find the assistant ID in the Watson
-   * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
-   * assistants, see the
-   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+   * This method is available only with Enterprise plans.
    *
-   * **Note:** Currently, the v2 API does not support creating assistants.
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
+   * is deployed, depending on the type of request:
+   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+   * deployed.
+   *  - For all other requests, specify the assistant ID of the assistant.
+   *
+   *  To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings and
+   * scroll to the **Environments** section.
+   *
+   * **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+   * assistant ID in the user interface, open the assistant settings and click API Details.
    * @param {string} params.environmentId - Unique identifier of the environment. To find the environment ID in the
    * Watson Assistant user interface, open the environment settings and click **API Details**. **Note:** Currently, the
    * API does not support creating environments.
@@ -769,23 +1014,195 @@ class AssistantV2 extends BaseService {
 
     return this.createRequest(parameters);
   }
+
+  /**
+   * Update environment.
+   *
+   * Update an environment with new or modified data. For more information about environments, see
+   * [Environments](https://cloud.ibm.com/docs/watson-assistant?topic=watson-assistant-publish-overview#environments).
+   *
+   * This method is available only with Enterprise plans.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
+   * is deployed, depending on the type of request:
+   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+   * deployed.
+   *  - For all other requests, specify the assistant ID of the assistant.
+   *
+   *  To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings and
+   * scroll to the **Environments** section.
+   *
+   * **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+   * assistant ID in the user interface, open the assistant settings and click API Details.
+   * @param {string} params.environmentId - Unique identifier of the environment. To find the environment ID in the
+   * Watson Assistant user interface, open the environment settings and click **API Details**. **Note:** Currently, the
+   * API does not support creating environments.
+   * @param {string} [params.name] - The name of the environment.
+   * @param {string} [params.description] - The description of the environment.
+   * @param {number} [params.sessionTimeout] - The session inactivity timeout setting for the environment (in seconds).
+   * @param {EnvironmentSkill[]} [params.skillReferences] - An array of objects identifying the skills (such as action
+   * and dialog) that exist in the environment.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<AssistantV2.Response<AssistantV2.Environment>>}
+   */
+  public updateEnvironment(
+    params: AssistantV2.UpdateEnvironmentParams
+  ): Promise<AssistantV2.Response<AssistantV2.Environment>> {
+    const _params = { ...params };
+    const _requiredParams = ['assistantId', 'environmentId'];
+    const _validParams = ['assistantId', 'environmentId', 'name', 'description', 'sessionTimeout', 'skillReferences', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const body = {
+      'name': _params.name,
+      'description': _params.description,
+      'session_timeout': _params.sessionTimeout,
+      'skill_references': _params.skillReferences,
+    };
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'assistant_id': _params.assistantId,
+      'environment_id': _params.environmentId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      AssistantV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'updateEnvironment'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/assistants/{assistant_id}/environments/{environment_id}',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
   /*************************
    * releases
    ************************/
 
   /**
+   * Create release.
+   *
+   * Create a new release using the current content of the dialog and action skills in the draft environment. (In the
+   * Watson Assistant user interface, a release is called a *version*.)
+   *
+   * This method is available only with Enterprise plans.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
+   * is deployed, depending on the type of request:
+   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+   * deployed.
+   *  - For all other requests, specify the assistant ID of the assistant.
+   *
+   *  To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings and
+   * scroll to the **Environments** section.
+   *
+   * **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+   * assistant ID in the user interface, open the assistant settings and click API Details.
+   * @param {string} [params.description] - The description of the release.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<AssistantV2.Response<AssistantV2.Release>>}
+   */
+  public createRelease(
+    params: AssistantV2.CreateReleaseParams
+  ): Promise<AssistantV2.Response<AssistantV2.Release>> {
+    const _params = { ...params };
+    const _requiredParams = ['assistantId'];
+    const _validParams = ['assistantId', 'description', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const body = {
+      'description': _params.description,
+    };
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'assistant_id': _params.assistantId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      AssistantV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'createRelease'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/assistants/{assistant_id}/releases',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
    * List releases.
    *
    * List the releases associated with an assistant. (In the Watson Assistant user interface, a release is called a
-   * *version*.).
+   * *version*.)
+   *
+   * This method is available only with Enterprise plans.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - Unique identifier of the assistant. To find the assistant ID in the Watson
-   * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
-   * assistants, see the
-   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
+   * is deployed, depending on the type of request:
+   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+   * deployed.
+   *  - For all other requests, specify the assistant ID of the assistant.
    *
-   * **Note:** Currently, the v2 API does not support creating assistants.
+   *  To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings and
+   * scroll to the **Environments** section.
+   *
+   * **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+   * assistant ID in the user interface, open the assistant settings and click API Details.
    * @param {number} [params.pageLimit] - The number of records to return in each page of results.
    * @param {boolean} [params.includeCount] - Whether to include information about the number of records that satisfy
    * the request, regardless of the page limit. If this parameter is `true`, the `pagination` object in the response
@@ -859,13 +1276,20 @@ class AssistantV2 extends BaseService {
    * can continue to poll by calling the same request again and checking the value of the **status** property. When
    * processing has completed, the request returns the release data.
    *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - Unique identifier of the assistant. To find the assistant ID in the Watson
-   * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
-   * assistants, see the
-   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+   * This method is available only with Enterprise plans.
    *
-   * **Note:** Currently, the v2 API does not support creating assistants.
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
+   * is deployed, depending on the type of request:
+   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+   * deployed.
+   *  - For all other requests, specify the assistant ID of the assistant.
+   *
+   *  To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings and
+   * scroll to the **Environments** section.
+   *
+   * **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+   * assistant ID in the user interface, open the assistant settings and click API Details.
    * @param {string} params.release - Unique identifier of the release.
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
@@ -922,18 +1346,96 @@ class AssistantV2 extends BaseService {
   }
 
   /**
+   * Delete release.
+   *
+   * Delete a release. (In the Watson Assistant user interface, a release is called a *version*.)
+   *
+   * This method is available only with Enterprise plans.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
+   * is deployed, depending on the type of request:
+   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+   * deployed.
+   *  - For all other requests, specify the assistant ID of the assistant.
+   *
+   *  To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings and
+   * scroll to the **Environments** section.
+   *
+   * **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+   * assistant ID in the user interface, open the assistant settings and click API Details.
+   * @param {string} params.release - Unique identifier of the release.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<AssistantV2.Response<AssistantV2.EmptyObject>>}
+   */
+  public deleteRelease(
+    params: AssistantV2.DeleteReleaseParams
+  ): Promise<AssistantV2.Response<AssistantV2.EmptyObject>> {
+    const _params = { ...params };
+    const _requiredParams = ['assistantId', 'release'];
+    const _validParams = ['assistantId', 'release', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'assistant_id': _params.assistantId,
+      'release': _params.release,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      AssistantV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'deleteRelease'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/assistants/{assistant_id}/releases/{release}',
+        method: 'DELETE',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
    * Deploy release.
    *
    * Update the environment with the content of the release. All snapshots saved as part of the release become active in
    * the environment.
    *
-   * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - Unique identifier of the assistant. To find the assistant ID in the Watson
-   * Assistant user interface, open the assistant settings and click **API Details**. For information about creating
-   * assistants, see the
-   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+   * This method is available only with Enterprise plans.
    *
-   * **Note:** Currently, the v2 API does not support creating assistants.
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
+   * is deployed, depending on the type of request:
+   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+   * deployed.
+   *  - For all other requests, specify the assistant ID of the assistant.
+   *
+   *  To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings and
+   * scroll to the **Environments** section.
+   *
+   * **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+   * assistant ID in the user interface, open the assistant settings and click API Details.
    * @param {string} params.release - Unique identifier of the release.
    * @param {string} params.environmentId - The environment ID of the environment where the release is to be deployed.
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
@@ -995,6 +1497,417 @@ class AssistantV2 extends BaseService {
 
     return this.createRequest(parameters);
   }
+  /*************************
+   * skills
+   ************************/
+
+  /**
+   * Get skill.
+   *
+   * Get information about a skill.
+   *
+   * This method is available only with Enterprise plans.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
+   * is deployed, depending on the type of request:
+   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+   * deployed.
+   *  - For all other requests, specify the assistant ID of the assistant.
+   *
+   *  To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings and
+   * scroll to the **Environments** section.
+   *
+   * **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+   * assistant ID in the user interface, open the assistant settings and click API Details.
+   * @param {string} params.skillId - Unique identifier of the skill. To find the skill ID in the Watson Assistant user
+   * interface, open the skill settings and click **API Details**.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<AssistantV2.Response<AssistantV2.Skill>>}
+   */
+  public getSkill(
+    params: AssistantV2.GetSkillParams
+  ): Promise<AssistantV2.Response<AssistantV2.Skill>> {
+    const _params = { ...params };
+    const _requiredParams = ['assistantId', 'skillId'];
+    const _validParams = ['assistantId', 'skillId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'assistant_id': _params.assistantId,
+      'skill_id': _params.skillId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      AssistantV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'getSkill'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/assistants/{assistant_id}/skills/{skill_id}',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Update skill.
+   *
+   * Update a skill with new or modified data.
+   *
+   *   **Note:** The update is performed asynchronously; you can see the status of the update by calling the **Get
+   * skill** method and checking the value of the **status** property.
+   *
+   * This method is available only with Enterprise plans.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
+   * is deployed, depending on the type of request:
+   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+   * deployed.
+   *  - For all other requests, specify the assistant ID of the assistant.
+   *
+   *  To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings and
+   * scroll to the **Environments** section.
+   *
+   * **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+   * assistant ID in the user interface, open the assistant settings and click API Details.
+   * @param {string} params.skillId - Unique identifier of the skill. To find the skill ID in the Watson Assistant user
+   * interface, open the skill settings and click **API Details**.
+   * @param {string} [params.name] - The name of the skill. This string cannot contain carriage return, newline, or tab
+   * characters.
+   * @param {string} [params.description] - The description of the skill. This string cannot contain carriage return,
+   * newline, or tab characters.
+   * @param {JsonObject} [params.workspace] - An object containing the conversational content of an action or dialog
+   * skill.
+   * @param {JsonObject} [params.dialogSettings] - For internal use only.
+   * @param {JsonObject} [params.searchSettings] - A JSON object describing the search skill configuration.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<AssistantV2.Response<AssistantV2.Skill>>}
+   */
+  public updateSkill(
+    params: AssistantV2.UpdateSkillParams
+  ): Promise<AssistantV2.Response<AssistantV2.Skill>> {
+    const _params = { ...params };
+    const _requiredParams = ['assistantId', 'skillId'];
+    const _validParams = ['assistantId', 'skillId', 'name', 'description', 'workspace', 'dialogSettings', 'searchSettings', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const body = {
+      'name': _params.name,
+      'description': _params.description,
+      'workspace': _params.workspace,
+      'dialog_settings': _params.dialogSettings,
+      'search_settings': _params.searchSettings,
+    };
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'assistant_id': _params.assistantId,
+      'skill_id': _params.skillId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      AssistantV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'updateSkill'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/assistants/{assistant_id}/skills/{skill_id}',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Export skills.
+   *
+   * Asynchronously export the action skill and dialog skill (if enabled) for the assistant. Use this method to save all
+   * skill data so that you can import it to a different assistant using the **Import skills** method.
+   *
+   *  A successful call to this method only initiates an asynchronous export. The exported JSON data is not available
+   * until processing completes.
+   *
+   *  After the initial request is submitted, you can poll the status of the operation by calling the same request again
+   * and checking the value of the **status** property. If an error occurs (indicated by a **status** value of
+   * `Failed`), the `status_description` property provides more information about the error, and the `status_errors`
+   * property contains an array of error messages that caused the failure.
+   *
+   *  When processing has completed, the request returns the exported JSON data. Remember that the usual rate limits
+   * apply.
+   *
+   * This method is available only with Enterprise plans.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
+   * is deployed, depending on the type of request:
+   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+   * deployed.
+   *  - For all other requests, specify the assistant ID of the assistant.
+   *
+   *  To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings and
+   * scroll to the **Environments** section.
+   *
+   * **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+   * assistant ID in the user interface, open the assistant settings and click API Details.
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<AssistantV2.Response<AssistantV2.SkillsExport>>}
+   */
+  public exportSkills(
+    params: AssistantV2.ExportSkillsParams
+  ): Promise<AssistantV2.Response<AssistantV2.SkillsExport>> {
+    const _params = { ...params };
+    const _requiredParams = ['assistantId'];
+    const _validParams = ['assistantId', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+      'include_audit': _params.includeAudit,
+    };
+
+    const path = {
+      'assistant_id': _params.assistantId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      AssistantV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'exportSkills'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/assistants/{assistant_id}/skills_export',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Import skills.
+   *
+   * Asynchronously import skills into an existing assistant from a previously exported file.
+   *
+   *  The request body for this method should contain the response data that was received from a previous call to the
+   * **Export skills** method, without modification.
+   *
+   *  A successful call to this method initiates an asynchronous import. The updated skills belonging to the assistant
+   * are not available until processing completes. To check the status of the asynchronous import operation, use the
+   * **Get status of skills import** method.
+   *
+   * This method is available only with Enterprise plans.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
+   * is deployed, depending on the type of request:
+   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+   * deployed.
+   *  - For all other requests, specify the assistant ID of the assistant.
+   *
+   *  To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings and
+   * scroll to the **Environments** section.
+   *
+   * **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+   * assistant ID in the user interface, open the assistant settings and click API Details.
+   * @param {SkillImport[]} params.assistantSkills - An array of objects describing the skills for the assistant.
+   * Included in responses only if **status**=`Available`.
+   * @param {AssistantState} params.assistantState - Status information about the skills for the assistant. Included in
+   * responses only if **status**=`Available`.
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<AssistantV2.Response<AssistantV2.SkillsAsyncRequestStatus>>}
+   */
+  public importSkills(
+    params: AssistantV2.ImportSkillsParams
+  ): Promise<AssistantV2.Response<AssistantV2.SkillsAsyncRequestStatus>> {
+    const _params = { ...params };
+    const _requiredParams = ['assistantId', 'assistantSkills', 'assistantState'];
+    const _validParams = ['assistantId', 'assistantSkills', 'assistantState', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const body = {
+      'assistant_skills': _params.assistantSkills,
+      'assistant_state': _params.assistantState,
+    };
+
+    const query = {
+      'version': this.version,
+      'include_audit': _params.includeAudit,
+    };
+
+    const path = {
+      'assistant_id': _params.assistantId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      AssistantV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'importSkills'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/assistants/{assistant_id}/skills_import',
+        method: 'POST',
+        body,
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Get status of skills import.
+   *
+   * Retrieve the status of an asynchronous import operation previously initiated by using the **Import skills** method.
+   *
+   * This method is available only with Enterprise plans.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
+   * is deployed, depending on the type of request:
+   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+   * deployed.
+   *  - For all other requests, specify the assistant ID of the assistant.
+   *
+   *  To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings and
+   * scroll to the **Environments** section.
+   *
+   * **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+   * assistant ID in the user interface, open the assistant settings and click API Details.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<AssistantV2.Response<AssistantV2.SkillsAsyncRequestStatus>>}
+   */
+  public importSkillsStatus(
+    params: AssistantV2.ImportSkillsStatusParams
+  ): Promise<AssistantV2.Response<AssistantV2.SkillsAsyncRequestStatus>> {
+    const _params = { ...params };
+    const _requiredParams = ['assistantId'];
+    const _validParams = ['assistantId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'assistant_id': _params.assistantId,
+    };
+
+    const sdkHeaders = getSdkHeaders(
+      AssistantV2.DEFAULT_SERVICE_NAME,
+      'v2',
+      'importSkillsStatus'
+    );
+
+    const parameters = {
+      options: {
+        url: '/v2/assistants/{assistant_id}/skills_import/status',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
 }
 
 /*************************
@@ -1022,7 +1935,7 @@ namespace AssistantV2 {
   export type Callback<T> = (error: any, response?: Response<T>) => void;
 
   /** The body of a service request that returns no response data. */
-  export interface Empty {}
+  export interface EmptyObject {}
 
   /** A standard JS object, defined to avoid the limitations of `Object` and `object` */
   export interface JsonObject {
@@ -1033,25 +1946,98 @@ namespace AssistantV2 {
    * request interfaces
    ************************/
 
-  /** Parameters for the `createSession` operation. */
-  export interface CreateSessionParams {
-    /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open
-     *  the assistant settings and click **API Details**. For information about creating assistants, see the
-     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+  /** Parameters for the `createAssistant` operation. */
+  export interface CreateAssistantParams {
+    /** The language of the assistant. */
+    language?: string;
+    /** The name of the assistant. This string cannot contain carriage return, newline, or tab characters. */
+    name?: string;
+    /** The description of the assistant. This string cannot contain carriage return, newline, or tab characters. */
+    description?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `listAssistants` operation. */
+  export interface ListAssistantsParams {
+    /** The number of records to return in each page of results. */
+    pageLimit?: number;
+    /** Whether to include information about the number of records that satisfy the request, regardless of the page
+     *  limit. If this parameter is `true`, the `pagination` object in the response includes the `total` property.
+     */
+    includeCount?: boolean;
+    /** The attribute by which returned assistants will be sorted. To reverse the sort order, prefix the value with
+     *  a minus sign (`-`).
+     */
+    sort?: ListAssistantsConstants.Sort | string;
+    /** A token identifying the page of results to retrieve. */
+    cursor?: string;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    includeAudit?: boolean;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Constants for the `listAssistants` operation. */
+  export namespace ListAssistantsConstants {
+    /** The attribute by which returned assistants will be sorted. To reverse the sort order, prefix the value with a minus sign (`-`). */
+    export enum Sort {
+      NAME = 'name',
+      UPDATED = 'updated',
+    }
+  }
+
+  /** Parameters for the `deleteAssistant` operation. */
+  export interface DeleteAssistantParams {
+    /** The assistant ID or the environment ID of the environment where the assistant is deployed, depending on the
+     *  type of request:
+     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+     *  deployed.
+     *   - For all other requests, specify the assistant ID of the assistant.
      *
-     *  **Note:** Currently, the v2 API does not support creating assistants.
+     *   To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings
+     *  and scroll to the **Environments** section.
+     *
+     *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+     *  assistant ID in the user interface, open the assistant settings and click API Details.
      */
     assistantId: string;
     headers?: OutgoingHttpHeaders;
   }
 
+  /** Parameters for the `createSession` operation. */
+  export interface CreateSessionParams {
+    /** The assistant ID or the environment ID of the environment where the assistant is deployed, depending on the
+     *  type of request:
+     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+     *  deployed.
+     *   - For all other requests, specify the assistant ID of the assistant.
+     *
+     *   To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings
+     *  and scroll to the **Environments** section.
+     *
+     *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+     *  assistant ID in the user interface, open the assistant settings and click API Details.
+     */
+    assistantId: string;
+    /** An optional object containing analytics data. Currently, this data is used only for events sent to the
+     *  Segment extension.
+     */
+    analytics?: RequestAnalytics;
+    headers?: OutgoingHttpHeaders;
+  }
+
   /** Parameters for the `deleteSession` operation. */
   export interface DeleteSessionParams {
-    /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open
-     *  the assistant settings and click **API Details**. For information about creating assistants, see the
-     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+    /** The assistant ID or the environment ID of the environment where the assistant is deployed, depending on the
+     *  type of request:
+     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+     *  deployed.
+     *   - For all other requests, specify the assistant ID of the assistant.
      *
-     *  **Note:** Currently, the v2 API does not support creating assistants.
+     *   To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings
+     *  and scroll to the **Environments** section.
+     *
+     *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+     *  assistant ID in the user interface, open the assistant settings and click API Details.
      */
     assistantId: string;
     /** Unique identifier of the session. */
@@ -1061,11 +2047,17 @@ namespace AssistantV2 {
 
   /** Parameters for the `message` operation. */
   export interface MessageParams {
-    /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open
-     *  the assistant settings and click **API Details**. For information about creating assistants, see the
-     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+    /** The assistant ID or the environment ID of the environment where the assistant is deployed, depending on the
+     *  type of request:
+     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+     *  deployed.
+     *   - For all other requests, specify the assistant ID of the assistant.
      *
-     *  **Note:** Currently, the v2 API does not support creating assistants.
+     *   To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings
+     *  and scroll to the **Environments** section.
+     *
+     *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+     *  assistant ID in the user interface, open the assistant settings and click API Details.
      */
     assistantId: string;
     /** Unique identifier of the session. */
@@ -1093,11 +2085,17 @@ namespace AssistantV2 {
 
   /** Parameters for the `messageStateless` operation. */
   export interface MessageStatelessParams {
-    /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open
-     *  the assistant settings and click **API Details**. For information about creating assistants, see the
-     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+    /** The assistant ID or the environment ID of the environment where the assistant is deployed, depending on the
+     *  type of request:
+     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+     *  deployed.
+     *   - For all other requests, specify the assistant ID of the assistant.
      *
-     *  **Note:** Currently, the v2 API does not support creating assistants.
+     *   To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings
+     *  and scroll to the **Environments** section.
+     *
+     *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+     *  assistant ID in the user interface, open the assistant settings and click API Details.
      */
     assistantId: string;
     /** An input object that includes the input text. */
@@ -1135,11 +2133,17 @@ namespace AssistantV2 {
 
   /** Parameters for the `listLogs` operation. */
   export interface ListLogsParams {
-    /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open
-     *  the assistant settings and click **API Details**. For information about creating assistants, see the
-     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+    /** The assistant ID or the environment ID of the environment where the assistant is deployed, depending on the
+     *  type of request:
+     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+     *  deployed.
+     *   - For all other requests, specify the assistant ID of the assistant.
      *
-     *  **Note:** Currently, the v2 API does not support creating assistants.
+     *   To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings
+     *  and scroll to the **Environments** section.
+     *
+     *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+     *  assistant ID in the user interface, open the assistant settings and click API Details.
      */
     assistantId: string;
     /** How to sort the returned log events. You can sort by **request_timestamp**. To reverse the sort order,
@@ -1166,11 +2170,17 @@ namespace AssistantV2 {
 
   /** Parameters for the `listEnvironments` operation. */
   export interface ListEnvironmentsParams {
-    /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open
-     *  the assistant settings and click **API Details**. For information about creating assistants, see the
-     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+    /** The assistant ID or the environment ID of the environment where the assistant is deployed, depending on the
+     *  type of request:
+     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+     *  deployed.
+     *   - For all other requests, specify the assistant ID of the assistant.
      *
-     *  **Note:** Currently, the v2 API does not support creating assistants.
+     *   To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings
+     *  and scroll to the **Environments** section.
+     *
+     *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+     *  assistant ID in the user interface, open the assistant settings and click API Details.
      */
     assistantId: string;
     /** The number of records to return in each page of results. */
@@ -1201,11 +2211,17 @@ namespace AssistantV2 {
 
   /** Parameters for the `getEnvironment` operation. */
   export interface GetEnvironmentParams {
-    /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open
-     *  the assistant settings and click **API Details**. For information about creating assistants, see the
-     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+    /** The assistant ID or the environment ID of the environment where the assistant is deployed, depending on the
+     *  type of request:
+     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+     *  deployed.
+     *   - For all other requests, specify the assistant ID of the assistant.
      *
-     *  **Note:** Currently, the v2 API does not support creating assistants.
+     *   To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings
+     *  and scroll to the **Environments** section.
+     *
+     *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+     *  assistant ID in the user interface, open the assistant settings and click API Details.
      */
     assistantId: string;
     /** Unique identifier of the environment. To find the environment ID in the Watson Assistant user interface,
@@ -1218,13 +2234,70 @@ namespace AssistantV2 {
     headers?: OutgoingHttpHeaders;
   }
 
+  /** Parameters for the `updateEnvironment` operation. */
+  export interface UpdateEnvironmentParams {
+    /** The assistant ID or the environment ID of the environment where the assistant is deployed, depending on the
+     *  type of request:
+     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+     *  deployed.
+     *   - For all other requests, specify the assistant ID of the assistant.
+     *
+     *   To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings
+     *  and scroll to the **Environments** section.
+     *
+     *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+     *  assistant ID in the user interface, open the assistant settings and click API Details.
+     */
+    assistantId: string;
+    /** Unique identifier of the environment. To find the environment ID in the Watson Assistant user interface,
+     *  open the environment settings and click **API Details**. **Note:** Currently, the API does not support creating
+     *  environments.
+     */
+    environmentId: string;
+    /** The name of the environment. */
+    name?: string;
+    /** The description of the environment. */
+    description?: string;
+    /** The session inactivity timeout setting for the environment (in seconds). */
+    sessionTimeout?: number;
+    /** An array of objects identifying the skills (such as action and dialog) that exist in the environment. */
+    skillReferences?: EnvironmentSkill[];
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `createRelease` operation. */
+  export interface CreateReleaseParams {
+    /** The assistant ID or the environment ID of the environment where the assistant is deployed, depending on the
+     *  type of request:
+     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+     *  deployed.
+     *   - For all other requests, specify the assistant ID of the assistant.
+     *
+     *   To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings
+     *  and scroll to the **Environments** section.
+     *
+     *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+     *  assistant ID in the user interface, open the assistant settings and click API Details.
+     */
+    assistantId: string;
+    /** The description of the release. */
+    description?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
   /** Parameters for the `listReleases` operation. */
   export interface ListReleasesParams {
-    /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open
-     *  the assistant settings and click **API Details**. For information about creating assistants, see the
-     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+    /** The assistant ID or the environment ID of the environment where the assistant is deployed, depending on the
+     *  type of request:
+     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+     *  deployed.
+     *   - For all other requests, specify the assistant ID of the assistant.
      *
-     *  **Note:** Currently, the v2 API does not support creating assistants.
+     *   To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings
+     *  and scroll to the **Environments** section.
+     *
+     *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+     *  assistant ID in the user interface, open the assistant settings and click API Details.
      */
     assistantId: string;
     /** The number of records to return in each page of results. */
@@ -1255,11 +2328,17 @@ namespace AssistantV2 {
 
   /** Parameters for the `getRelease` operation. */
   export interface GetReleaseParams {
-    /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open
-     *  the assistant settings and click **API Details**. For information about creating assistants, see the
-     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+    /** The assistant ID or the environment ID of the environment where the assistant is deployed, depending on the
+     *  type of request:
+     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+     *  deployed.
+     *   - For all other requests, specify the assistant ID of the assistant.
      *
-     *  **Note:** Currently, the v2 API does not support creating assistants.
+     *   To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings
+     *  and scroll to the **Environments** section.
+     *
+     *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+     *  assistant ID in the user interface, open the assistant settings and click API Details.
      */
     assistantId: string;
     /** Unique identifier of the release. */
@@ -1269,13 +2348,39 @@ namespace AssistantV2 {
     headers?: OutgoingHttpHeaders;
   }
 
+  /** Parameters for the `deleteRelease` operation. */
+  export interface DeleteReleaseParams {
+    /** The assistant ID or the environment ID of the environment where the assistant is deployed, depending on the
+     *  type of request:
+     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+     *  deployed.
+     *   - For all other requests, specify the assistant ID of the assistant.
+     *
+     *   To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings
+     *  and scroll to the **Environments** section.
+     *
+     *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+     *  assistant ID in the user interface, open the assistant settings and click API Details.
+     */
+    assistantId: string;
+    /** Unique identifier of the release. */
+    release: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
   /** Parameters for the `deployRelease` operation. */
   export interface DeployReleaseParams {
-    /** Unique identifier of the assistant. To find the assistant ID in the Watson Assistant user interface, open
-     *  the assistant settings and click **API Details**. For information about creating assistants, see the
-     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-add#assistant-add-task).
+    /** The assistant ID or the environment ID of the environment where the assistant is deployed, depending on the
+     *  type of request:
+     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+     *  deployed.
+     *   - For all other requests, specify the assistant ID of the assistant.
      *
-     *  **Note:** Currently, the v2 API does not support creating assistants.
+     *   To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings
+     *  and scroll to the **Environments** section.
+     *
+     *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+     *  assistant ID in the user interface, open the assistant settings and click API Details.
      */
     assistantId: string;
     /** Unique identifier of the release. */
@@ -1287,6 +2392,124 @@ namespace AssistantV2 {
     headers?: OutgoingHttpHeaders;
   }
 
+  /** Parameters for the `getSkill` operation. */
+  export interface GetSkillParams {
+    /** The assistant ID or the environment ID of the environment where the assistant is deployed, depending on the
+     *  type of request:
+     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+     *  deployed.
+     *   - For all other requests, specify the assistant ID of the assistant.
+     *
+     *   To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings
+     *  and scroll to the **Environments** section.
+     *
+     *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+     *  assistant ID in the user interface, open the assistant settings and click API Details.
+     */
+    assistantId: string;
+    /** Unique identifier of the skill. To find the skill ID in the Watson Assistant user interface, open the skill
+     *  settings and click **API Details**.
+     */
+    skillId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `updateSkill` operation. */
+  export interface UpdateSkillParams {
+    /** The assistant ID or the environment ID of the environment where the assistant is deployed, depending on the
+     *  type of request:
+     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+     *  deployed.
+     *   - For all other requests, specify the assistant ID of the assistant.
+     *
+     *   To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings
+     *  and scroll to the **Environments** section.
+     *
+     *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+     *  assistant ID in the user interface, open the assistant settings and click API Details.
+     */
+    assistantId: string;
+    /** Unique identifier of the skill. To find the skill ID in the Watson Assistant user interface, open the skill
+     *  settings and click **API Details**.
+     */
+    skillId: string;
+    /** The name of the skill. This string cannot contain carriage return, newline, or tab characters. */
+    name?: string;
+    /** The description of the skill. This string cannot contain carriage return, newline, or tab characters. */
+    description?: string;
+    /** An object containing the conversational content of an action or dialog skill. */
+    workspace?: JsonObject;
+    /** For internal use only. */
+    dialogSettings?: JsonObject;
+    /** A JSON object describing the search skill configuration. */
+    searchSettings?: JsonObject;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `exportSkills` operation. */
+  export interface ExportSkillsParams {
+    /** The assistant ID or the environment ID of the environment where the assistant is deployed, depending on the
+     *  type of request:
+     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+     *  deployed.
+     *   - For all other requests, specify the assistant ID of the assistant.
+     *
+     *   To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings
+     *  and scroll to the **Environments** section.
+     *
+     *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+     *  assistant ID in the user interface, open the assistant settings and click API Details.
+     */
+    assistantId: string;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    includeAudit?: boolean;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `importSkills` operation. */
+  export interface ImportSkillsParams {
+    /** The assistant ID or the environment ID of the environment where the assistant is deployed, depending on the
+     *  type of request:
+     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+     *  deployed.
+     *   - For all other requests, specify the assistant ID of the assistant.
+     *
+     *   To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings
+     *  and scroll to the **Environments** section.
+     *
+     *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+     *  assistant ID in the user interface, open the assistant settings and click API Details.
+     */
+    assistantId: string;
+    /** An array of objects describing the skills for the assistant. Included in responses only if
+     *  **status**=`Available`.
+     */
+    assistantSkills: SkillImport[];
+    /** Status information about the skills for the assistant. Included in responses only if **status**=`Available`. */
+    assistantState: AssistantState;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    includeAudit?: boolean;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `importSkillsStatus` operation. */
+  export interface ImportSkillsStatusParams {
+    /** The assistant ID or the environment ID of the environment where the assistant is deployed, depending on the
+     *  type of request:
+     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+     *  deployed.
+     *   - For all other requests, specify the assistant ID of the assistant.
+     *
+     *   To find the environment ID or assistant ID in the Watson Assistant user interface, open the assistant settings
+     *  and scroll to the **Environments** section.
+     *
+     *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+     *  assistant ID in the user interface, open the assistant settings and click API Details.
+     */
+    assistantId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
   /*************************
    * model interfaces
    ************************/
@@ -1295,6 +2518,62 @@ namespace AssistantV2 {
   export interface AgentAvailabilityMessage {
     /** The text of the message. */
     message?: string;
+  }
+
+  /** Assistant. */
+  export interface Assistant {
+    /** The unique identifier of the assistant. */
+    assistant_id?: string;
+    /** The name of the assistant. This string cannot contain carriage return, newline, or tab characters. */
+    name?: string;
+    /** The description of the assistant. This string cannot contain carriage return, newline, or tab characters. */
+    description?: string;
+    /** The language of the assistant. */
+    language: string;
+    /** An array of skill references identifying the skills associated with the assistant. */
+    assistant_skills?: AssistantSkill[];
+    /** An array of objects describing the environments defined for the assistant. */
+    assistant_environments?: EnvironmentReference[];
+  }
+
+  /** AssistantCollection. */
+  export interface AssistantCollection {
+    /** An array of objects describing the assistants associated with the instance. */
+    assistants: Assistant[];
+    /** The pagination data for the returned objects. For more information about using pagination, see
+     *  [Pagination](#pagination).
+     */
+    pagination: Pagination;
+  }
+
+  /** AssistantSkill. */
+  export interface AssistantSkill {
+    /** The skill ID of the skill. */
+    skill_id: string;
+    /** The type of the skill. */
+    type?: string;
+  }
+
+  /** Status information about the skills for the assistant. Included in responses only if **status**=`Available`. */
+  export interface AssistantState {
+    /** Whether the action skill is disabled in the draft environment. */
+    action_disabled: boolean;
+    /** Whether the dialog skill is disabled in the draft environment. */
+    dialog_disabled: boolean;
+  }
+
+  /** The search skill orchestration settings for the environment. */
+  export interface BaseEnvironmentOrchestration {
+    /** Whether assistants deployed to the environment fall back to a search skill when responding to messages that
+     *  do not match any intent. If no search skill is configured for the assistant, this property is ignored.
+     */
+    search_skill_fallback?: boolean;
+  }
+
+  /** An object describing the release that is currently deployed in the environment. */
+  export interface BaseEnvironmentReleaseReference {
+    /** The name of the deployed release. */
+    release?: string;
   }
 
   /** BulkClassifyOutput. */
@@ -1413,6 +2692,9 @@ namespace AssistantV2 {
     label: string;
     /** An object defining the message input to be sent to the assistant if the user selects the corresponding
      *  disambiguation option.
+     *
+     *   **Note:** This entire message input object must be included in the request body of the next message sent to the
+     *  assistant. Do not modify or remove any of the included properties.
      */
     value: DialogSuggestionValue;
     /** The dialog output that will be returned from the Watson Assistant service if the user selects the
@@ -1421,7 +2703,7 @@ namespace AssistantV2 {
     output?: JsonObject;
   }
 
-  /** An object defining the message input to be sent to the assistant if the user selects the corresponding disambiguation option. */
+  /** An object defining the message input to be sent to the assistant if the user selects the corresponding disambiguation option. **Note:** This entire message input object must be included in the request body of the next message sent to the assistant. Do not modify or remove any of the included properties. */
   export interface DialogSuggestionValue {
     /** An input object that includes the input text. */
     input?: MessageInput;
@@ -1433,10 +2715,6 @@ namespace AssistantV2 {
     name?: string;
     /** The description of the environment. */
     description?: string;
-    /** The language of the environment. An environment is always created with the same language as the assistant it
-     *  is associated with.
-     */
-    language?: string;
     /** The assistant ID of the assistant the environment is associated with. */
     assistant_id?: string;
     /** The environment ID of the environment. */
@@ -1446,15 +2724,15 @@ namespace AssistantV2 {
      */
     environment?: string;
     /** An object describing the release that is currently deployed in the environment. */
-    release_reference?: EnvironmentReleaseReference;
+    release_reference?: BaseEnvironmentReleaseReference;
     /** The search skill orchestration settings for the environment. */
-    orchestration?: EnvironmentOrchestration;
-    /** The session inactivity timeout setting for the environment. */
-    session_timeout?: number;
+    orchestration?: BaseEnvironmentOrchestration;
+    /** The session inactivity timeout setting for the environment (in seconds). */
+    session_timeout: number;
     /** An array of objects describing the integrations that exist in the environment. */
     integration_references?: IntegrationReference[];
-    /** An array of objects describing the skills (such as actions and dialog) that exist in the environment. */
-    skill_references?: SkillReference[];
+    /** An array of objects identifying the skills (such as action and dialog) that exist in the environment. */
+    skill_references: EnvironmentSkill[];
     /** The timestamp for creation of the object. */
     created?: string;
     /** The timestamp for the most recent update to the object. */
@@ -1465,34 +2743,40 @@ namespace AssistantV2 {
   export interface EnvironmentCollection {
     /** An array of objects describing the environments associated with an assistant. */
     environments: Environment[];
-    /** The pagination data for the returned objects. */
-    pagination: Pagination;
-  }
-
-  /** The search skill orchestration settings for the environment. */
-  export interface EnvironmentOrchestration {
-    /** Whether assistants deployed to the environment fall back to a search skill when responding to messages that
-     *  do not match any intent. If no search skill is configured for the assistant, this property is ignored.
+    /** The pagination data for the returned objects. For more information about using pagination, see
+     *  [Pagination](#pagination).
      */
-    search_skill_fallback?: boolean;
+    pagination: Pagination;
   }
 
   /** EnvironmentReference. */
   export interface EnvironmentReference {
-    /** The name of the deployed environment. */
+    /** The name of the environment. */
     name?: string;
-    /** The environment ID of the deployed environment. */
+    /** The unique identifier of the environment. */
     environment_id?: string;
-    /** The type of the deployed environment. All environments other than the draft and live environments have the
-     *  type `staging`.
+    /** The type of the environment. All environments other than the draft and live environments have the type
+     *  `staging`.
      */
     environment?: string;
   }
 
-  /** An object describing the release that is currently deployed in the environment. */
-  export interface EnvironmentReleaseReference {
-    /** The name of the deployed release. */
-    release?: string;
+  /** EnvironmentSkill. */
+  export interface EnvironmentSkill {
+    /** The skill ID of the skill. */
+    skill_id: string;
+    /** The type of the skill. */
+    type?: string;
+    /** Whether the skill is disabled. A disabled skill in the draft environment does not handle any messages at run
+     *  time, and it is not included in saved releases.
+     */
+    disabled?: boolean;
+    /** The name of the skill snapshot that is deployed to the environment (for example, `draft` or `1`). */
+    snapshot?: string;
+    /** The type of skill identified by the skill reference. The possible values are `main skill` (for a dialog
+     *  skill), `actions skill`, and `search skill`.
+     */
+    skill_reference?: string;
   }
 
   /** IntegrationReference. */
@@ -1533,7 +2817,9 @@ namespace AssistantV2 {
   export interface LogCollection {
     /** An array of objects describing log events. */
     logs: Log[];
-    /** The pagination data for the returned objects. */
+    /** The pagination data for the returned objects. For more information about using pagination, see
+     *  [Pagination](#pagination).
+     */
     pagination: LogPagination;
   }
 
@@ -1541,7 +2827,7 @@ namespace AssistantV2 {
   export interface LogMessageSource {
   }
 
-  /** The pagination data for the returned objects. */
+  /** The pagination data for the returned objects. For more information about using pagination, see [Pagination](#pagination). */
   export interface LogPagination {
     /** The URL that will return the next page of results, if any. */
     next_url?: string;
@@ -1635,7 +2921,7 @@ namespace AssistantV2 {
     skip_user_input?: boolean;
   }
 
-  /** Contains information specific to a particular skill used by the assistant. The property name must be the same as the name of the skill. **Note:** The default skill names are `main skill` for the dialog skill (if enabled), and `actions skill` for the actions skill. */
+  /** Contains information specific to a particular skill used by the assistant. The property name must be the same as the name of the skill. **Note:** The default skill names are `main skill` for the dialog skill (if enabled) and `actions skill` for the action skill. */
   export interface MessageContextSkill {
     /** Arbitrary variables that can be read and written by a particular skill. */
     user_defined?: JsonObject;
@@ -1672,7 +2958,7 @@ namespace AssistantV2 {
     /** The type of the message:
      *
      *  - `text`: The user input is processed normally by the assistant.
-     *  - `search`: Only search results are returned. (Any dialog or actions skill is bypassed.)
+     *  - `search`: Only search results are returned. (Any dialog or action skill is bypassed.)
      *
      *  **Note:** A `search` message results in an error if no search skill is configured for the assistant.
      */
@@ -1689,12 +2975,16 @@ namespace AssistantV2 {
     entities?: RuntimeEntity[];
     /** For internal use only. */
     suggestion_id?: string;
-    /** An array of multimedia attachments to be sent with the message.
+    /** An array of multimedia attachments to be sent with the message. Attachments are not processed by the
+     *  assistant itself, but can be sent to external services by webhooks.
      *
-     *  **Note:** Attachments are not processed by the assistant itself, but can be sent to external services by
-     *  webhooks.
+     *   **Note:** Attachments are not supported on IBM Cloud Pak for Data.
      */
     attachments?: MessageInputAttachment[];
+    /** An optional object containing analytics data. Currently, this data is used only for events sent to the
+     *  Segment extension.
+     */
+    analytics?: RequestAnalytics;
     /** Optional properties that control how the assistant responds. */
     options?: MessageInputOptions;
   }
@@ -1778,7 +3068,7 @@ namespace AssistantV2 {
     /** The type of the message:
      *
      *  - `text`: The user input is processed normally by the assistant.
-     *  - `search`: Only search results are returned. (Any dialog or actions skill is bypassed.)
+     *  - `search`: Only search results are returned. (Any dialog or action skill is bypassed.)
      *
      *  **Note:** A `search` message results in an error if no search skill is configured for the assistant.
      */
@@ -1795,12 +3085,16 @@ namespace AssistantV2 {
     entities?: RuntimeEntity[];
     /** For internal use only. */
     suggestion_id?: string;
-    /** An array of multimedia attachments to be sent with the message.
+    /** An array of multimedia attachments to be sent with the message. Attachments are not processed by the
+     *  assistant itself, but can be sent to external services by webhooks.
      *
-     *  **Note:** Attachments are not processed by the assistant itself, but can be sent to external services by
-     *  webhooks.
+     *   **Note:** Attachments are not supported on IBM Cloud Pak for Data.
      */
     attachments?: MessageInputAttachment[];
+    /** An optional object containing analytics data. Currently, this data is used only for events sent to the
+     *  Segment extension.
+     */
+    analytics?: RequestAnalytics;
     /** Optional properties that control how the assistant responds. */
     options?: MessageInputOptionsStateless;
   }
@@ -1844,7 +3138,7 @@ namespace AssistantV2 {
     /** An array of objects containing detailed diagnostic information about dialog nodes and actions that were
      *  visited during processing of the input message.
      *
-     *  This property is present only if the assistant has an actions skill.
+     *  This property is present only if the assistant has an action skill.
      */
     turn_events?: MessageOutputDebugTurnEvent[];
   }
@@ -1932,7 +3226,7 @@ namespace AssistantV2 {
     user_id?: string;
   }
 
-  /** The pagination data for the returned objects. */
+  /** The pagination data for the returned objects. For more information about using pagination, see [Pagination](#pagination). */
   export interface Pagination {
     /** The URL that will return the same page of results. */
     refresh_url: string;
@@ -1958,7 +3252,7 @@ namespace AssistantV2 {
     description?: string;
     /** An array of objects describing the environments where this release has been deployed. */
     environment_references?: EnvironmentReference[];
-    /** An object describing the versionable content objects (such as skill snapshots) that are included in the
+    /** An object identifying the versionable content objects (such as skill snapshots) that are included in the
      *  release.
      */
     content?: ReleaseContent;
@@ -1978,24 +3272,36 @@ namespace AssistantV2 {
   export interface ReleaseCollection {
     /** An array of objects describing the releases associated with an assistant. */
     releases: Release[];
-    /** The pagination data for the returned objects. */
+    /** The pagination data for the returned objects. For more information about using pagination, see
+     *  [Pagination](#pagination).
+     */
     pagination: Pagination;
   }
 
-  /** An object describing the versionable content objects (such as skill snapshots) that are included in the release. */
+  /** An object identifying the versionable content objects (such as skill snapshots) that are included in the release. */
   export interface ReleaseContent {
     /** The skill snapshots that are included in the release. */
-    skills?: ReleaseSkillReference[];
+    skills?: ReleaseSkill[];
   }
 
-  /** ReleaseSkillReference. */
-  export interface ReleaseSkillReference {
+  /** ReleaseSkill. */
+  export interface ReleaseSkill {
     /** The skill ID of the skill. */
-    skill_id?: string;
+    skill_id: string;
     /** The type of the skill. */
     type?: string;
-    /** The name of the snapshot (skill version) that is saved as part of the release (for example, `draft` or `1`). */
+    /** The name of the skill snapshot that is saved as part of the release (for example, `draft` or `1`). */
     snapshot?: string;
+  }
+
+  /** An optional object containing analytics data. Currently, this data is used only for events sent to the Segment extension. */
+  export interface RequestAnalytics {
+    /** The browser that was used to send the message that triggered the event. */
+    browser?: string;
+    /** The type of device that was used to send the message that triggered the event. */
+    device?: string;
+    /** The URL of the web page that was used to send the message that triggered the event. */
+    pageUrl?: string;
   }
 
   /** ResponseGenericChannel. */
@@ -2038,9 +3344,9 @@ namespace AssistantV2 {
      */
     role?: RuntimeEntityRole;
     /** The skill that recognized the entity value. Currently, the only possible values are `main skill` for the
-     *  dialog skill (if enabled) and `actions skill` for the actions skill.
+     *  dialog skill (if enabled) and `actions skill` for the action skill.
      *
-     *  This property is present only if the assistant has both a dialog skill and an actions skill.
+     *  This property is present only if the assistant has both a dialog skill and an action skill.
      */
     skill?: string;
   }
@@ -2156,9 +3462,9 @@ namespace AssistantV2 {
      */
     confidence?: number;
     /** The skill that identified the intent. Currently, the only possible values are `main skill` for the dialog
-     *  skill (if enabled) and `actions skill` for the actions skill.
+     *  skill (if enabled) and `actions skill` for the action skill.
      *
-     *  This property is present only if the assistant has both a dialog skill and an actions skill.
+     *  This property is present only if the assistant has both a dialog skill and an action skill.
      */
     skill?: string;
   }
@@ -2194,8 +3500,10 @@ namespace AssistantV2 {
     /** An array specifying segments of text within the result that were identified as direct answers to the search
      *  query. Currently, only the single answer with the highest confidence (if any) is returned.
      *
-     *  **Note:** This property uses the answer finding beta feature, and is available only if the search skill is
-     *  connected to a Discovery v2 service instance.
+     *  **Notes:**
+     *   - This property uses the answer finding beta feature, and is available only if the search skill is connected to
+     *  a Discovery v2 service instance.
+     *   - Answer finding is not supported on IBM Cloud Pak for Data.
      */
     answers?: SearchResultAnswer[];
   }
@@ -2236,28 +3544,161 @@ namespace AssistantV2 {
     score?: number;
   }
 
+  /** A warning describing an error in the search skill configuration. */
+  export interface SearchSkillWarning {
+    /** The error code. */
+    code?: string;
+    /** The location of the error in the search skill configuration object. */
+    path?: string;
+    /** The error message. */
+    message?: string;
+  }
+
   /** SessionResponse. */
   export interface SessionResponse {
     /** The session ID. */
     session_id: string;
   }
 
-  /** SkillReference. */
-  export interface SkillReference {
+  /** Skill. */
+  export interface Skill {
+    /** The name of the skill. This string cannot contain carriage return, newline, or tab characters. */
+    name?: string;
+    /** The description of the skill. This string cannot contain carriage return, newline, or tab characters. */
+    description?: string;
+    /** An object containing the conversational content of an action or dialog skill. */
+    workspace?: JsonObject;
     /** The skill ID of the skill. */
     skill_id?: string;
-    /** The type of the skill. */
-    type?: string;
-    /** Whether the skill is disabled. A disabled skill in the draft environment does not handle any messages at run
-     *  time, and it is not included in saved releases.
+    /** The current status of the skill:
+     *   - **Available**: The skill is available and ready to process messages.
+     *   - **Failed**: An asynchronous operation has failed. See the **status_errors** property for more information
+     *  about the cause of the failure.
+     *   - **Non Existent**: The skill does not exist.
+     *   - **Processing**: An asynchronous operation has not yet completed.
+     *   - **Training**: The skill is training based on new data.
      */
-    disabled?: boolean;
-    /** The name of the snapshot (skill version) that is saved as part of the release (for example, `draft` or `1`). */
-    snapshot?: string;
-    /** The type of skill identified by the skill reference. The possible values are `main skill` (for a dialog
-     *  skill), `actions skill`, and `search skill`.
+    status?: string;
+    /** An array of messages about errors that caused an asynchronous operation to fail. Included only if
+     *  **status**=`Failed`.
      */
-    skill_reference?: string;
+    status_errors?: StatusError[];
+    /** The description of the failed asynchronous operation. Included only if **status**=`Failed`. */
+    status_description?: string;
+    /** For internal use only. */
+    dialog_settings?: JsonObject;
+    /** The unique identifier of the assistant the skill is associated with. */
+    assistant_id?: string;
+    /** The unique identifier of the workspace that contains the skill content. Included only for action and dialog
+     *  skills.
+     */
+    workspace_id?: string;
+    /** The unique identifier of the environment where the skill is defined. For action and dialog skills, this is
+     *  always the draft environment.
+     */
+    environment_id?: string;
+    /** Whether the skill is structurally valid. */
+    valid?: boolean;
+    /** The name that will be given to the next snapshot that is created for the skill. A snapshot of each
+     *  versionable skill is saved for each new release of an assistant.
+     */
+    next_snapshot_version?: string;
+    /** A JSON object describing the search skill configuration. */
+    search_settings?: JsonObject;
+    /** An array of warnings describing errors with the search skill configuration. Included only for search skills. */
+    warnings?: SearchSkillWarning[];
+    /** The language of the skill. */
+    language: string;
+    /** The type of skill. */
+    type: string;
+  }
+
+  /** SkillImport. */
+  export interface SkillImport {
+    /** The name of the skill. This string cannot contain carriage return, newline, or tab characters. */
+    name?: string;
+    /** The description of the skill. This string cannot contain carriage return, newline, or tab characters. */
+    description?: string;
+    /** An object containing the conversational content of an action or dialog skill. */
+    workspace?: JsonObject;
+    /** The skill ID of the skill. */
+    skill_id?: string;
+    /** The current status of the skill:
+     *   - **Available**: The skill is available and ready to process messages.
+     *   - **Failed**: An asynchronous operation has failed. See the **status_errors** property for more information
+     *  about the cause of the failure.
+     *   - **Non Existent**: The skill does not exist.
+     *   - **Processing**: An asynchronous operation has not yet completed.
+     *   - **Training**: The skill is training based on new data.
+     */
+    status?: string;
+    /** An array of messages about errors that caused an asynchronous operation to fail. Included only if
+     *  **status**=`Failed`.
+     */
+    status_errors?: StatusError[];
+    /** The description of the failed asynchronous operation. Included only if **status**=`Failed`. */
+    status_description?: string;
+    /** For internal use only. */
+    dialog_settings?: JsonObject;
+    /** The unique identifier of the assistant the skill is associated with. */
+    assistant_id?: string;
+    /** The unique identifier of the workspace that contains the skill content. Included only for action and dialog
+     *  skills.
+     */
+    workspace_id?: string;
+    /** The unique identifier of the environment where the skill is defined. For action and dialog skills, this is
+     *  always the draft environment.
+     */
+    environment_id?: string;
+    /** Whether the skill is structurally valid. */
+    valid?: boolean;
+    /** The name that will be given to the next snapshot that is created for the skill. A snapshot of each
+     *  versionable skill is saved for each new release of an assistant.
+     */
+    next_snapshot_version?: string;
+    /** A JSON object describing the search skill configuration. */
+    search_settings?: JsonObject;
+    /** An array of warnings describing errors with the search skill configuration. Included only for search skills. */
+    warnings?: SearchSkillWarning[];
+    /** The language of the skill. */
+    language: string;
+    /** The type of skill. */
+    type: string;
+  }
+
+  /** SkillsAsyncRequestStatus. */
+  export interface SkillsAsyncRequestStatus {
+    /** The assistant ID of the assistant. */
+    assistant_id?: string;
+    /** The current status of the asynchronous operation:
+     *   - **Available**: The export is available.
+     *   - **Failed**: An asynchronous export operation has failed. See the **status_errors** property for more
+     *  information about the cause of the failure.
+     *   - **Processing**: An asynchronous export operation has not yet completed.
+     */
+    status?: string;
+    /** The description of the failed asynchronous operation. Included only if **status**=`Failed`. */
+    status_description?: string;
+    /** An array of messages about errors that caused an asynchronous operation to fail. Included only if
+     *  **status**=`Failed`.
+     */
+    status_errors?: StatusError[];
+  }
+
+  /** SkillsExport. */
+  export interface SkillsExport {
+    /** An array of objects describing the skills for the assistant. Included in responses only if
+     *  **status**=`Available`.
+     */
+    assistant_skills: Skill[];
+    /** Status information about the skills for the assistant. Included in responses only if **status**=`Available`. */
+    assistant_state: AssistantState;
+  }
+
+  /** An object describing an error that occurred during processing of an asynchronous operation. */
+  export interface StatusError {
+    /** The text of the error message. */
+    message?: string;
   }
 
   /** TurnEventActionSource. */
@@ -2274,10 +3715,14 @@ namespace AssistantV2 {
 
   /** TurnEventCalloutCallout. */
   export interface TurnEventCalloutCallout {
-    /** callout type. */
+    /** The type of callout. Currently, the only supported value is `integration_interaction` (for calls to
+     *  extensions).
+     */
     type?: string;
     /** For internal use only. */
     internal?: JsonObject;
+    /** The name of the variable where the callout result is stored. */
+    result_variable?: string;
   }
 
   /** TurnEventCalloutError. */
@@ -2368,6 +3813,10 @@ namespace AssistantV2 {
     condition_type?: string;
     /** The reason the action was visited. */
     reason?: string;
+    /** The variable where the result of the call to the action is stored. Included only if
+     *  **reason**=`subaction_return`.
+     */
+    result_variable?: string;
   }
 
   /** MessageOutputDebugTurnEventTurnEventCallout. */
@@ -2461,6 +3910,8 @@ namespace AssistantV2 {
   export interface RuntimeResponseGenericRuntimeResponseTypeChannelTransfer extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
+     *
+     *   **Note:** The `channel_transfer` response type is not supported on IBM Cloud Pak for Data.
      */
     response_type: string;
     /** The message to display to the user when initiating a channel transfer. */
