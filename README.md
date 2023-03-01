@@ -13,20 +13,11 @@
 
 Node.js client library to use the Watson APIs.
 
-## Announcements
-
-### Natural Language Classifier deprecation
-On 9 August 2021, IBM announced the deprecation of the Natural Language Classifier service. The service will no longer be available from 8 August 2022. As of 9 September 2021, you will not be able to create new instances. Existing instances will be supported until 8 August 2022. Any instance that still exists on that date will be deleted.
-
-As an alternative, we encourage you to consider migrating to the Natural Language Understanding service on IBM Cloud that uses deep learning to extract data and insights from text such as keywords, categories, sentiment, emotion, and syntax, along with advanced multi-label text classification capabilities, to provide even richer insights for your business or industry. For more information, see [Migrating to Natural Language Understanding](https://cloud.ibm.com/docs/natural-language-classifier?topic=natural-language-classifier-migrating).
-### Package Rename
-This package has been moved under the name `ibm-watson`. The package is still available at `watson-developer-cloud`, but that will no longer receive updates. Use `ibm-watson` to stay up to date.
-
 ## Before you begin
 * You need an [IBM Cloud][ibm-cloud-onboarding] account.
 
 ## Prerequisites
-- **Node >=14**: This SDK is tested with Node versions 14 and up. It may work on previous versions but this is not officially supported.
+- **Node >=16**: This SDK is tested with Node versions 16 and up. It may work on previous versions but this is not officially supported.
 
 ## Installation
 
