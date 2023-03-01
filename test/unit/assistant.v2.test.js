@@ -253,6 +253,7 @@ describe('AssistantV2', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
         expect(mockRequestOptions.qs.page_limit).toEqual(pageLimit);
         expect(mockRequestOptions.qs.include_count).toEqual(includeCount);
         expect(mockRequestOptions.qs.sort).toEqual(sort);
@@ -705,16 +706,30 @@ describe('AssistantV2', () => {
         foo: 'testString',
       };
 
-      // MessageContextSkill
-      const messageContextSkillModel = {
+      // MessageContextSkillDialog
+      const messageContextSkillDialogModel = {
         user_defined: { foo: 'bar' },
         system: messageContextSkillSystemModel,
+      };
+
+      // MessageContextSkillAction
+      const messageContextSkillActionModel = {
+        user_defined: { foo: 'bar' },
+        system: messageContextSkillSystemModel,
+        action_variables: { foo: 'bar' },
+        skill_variables: { foo: 'bar' },
+      };
+
+      // MessageContextSkills
+      const messageContextSkillsModel = {
+        'main skill': messageContextSkillDialogModel,
+        'actions skill': messageContextSkillActionModel,
       };
 
       // MessageContext
       const messageContextModel = {
         global: messageContextGlobalModel,
-        skills: { 'key1': messageContextSkillModel },
+        skills: messageContextSkillsModel,
         integrations: { foo: 'bar' },
       };
 
@@ -949,16 +964,30 @@ describe('AssistantV2', () => {
         foo: 'testString',
       };
 
-      // MessageContextSkill
-      const messageContextSkillModel = {
+      // MessageContextSkillDialog
+      const messageContextSkillDialogModel = {
         user_defined: { foo: 'bar' },
         system: messageContextSkillSystemModel,
+      };
+
+      // MessageContextSkillAction
+      const messageContextSkillActionModel = {
+        user_defined: { foo: 'bar' },
+        system: messageContextSkillSystemModel,
+        action_variables: { foo: 'bar' },
+        skill_variables: { foo: 'bar' },
+      };
+
+      // MessageContextSkills
+      const messageContextSkillsModel = {
+        'main skill': messageContextSkillDialogModel,
+        'actions skill': messageContextSkillActionModel,
       };
 
       // MessageContextStateless
       const messageContextStatelessModel = {
         global: messageContextGlobalStatelessModel,
-        skills: { 'key1': messageContextSkillModel },
+        skills: messageContextSkillsModel,
         integrations: { foo: 'bar' },
       };
 
@@ -2200,6 +2229,48 @@ describe('AssistantV2', () => {
 
   describe('updateSkill', () => {
     describe('positive tests', () => {
+      // Request models needed by this operation.
+
+      // SearchSettingsDiscoveryAuthentication
+      const searchSettingsDiscoveryAuthenticationModel = {
+        basic: 'testString',
+        bearer: 'testString',
+      };
+
+      // SearchSettingsDiscovery
+      const searchSettingsDiscoveryModel = {
+        instance_id: 'testString',
+        project_id: 'testString',
+        url: 'testString',
+        max_primary_results: 10000,
+        max_total_results: 10000,
+        confidence_threshold: 0.0,
+        highlight: true,
+        find_answers: true,
+        authentication: searchSettingsDiscoveryAuthenticationModel,
+      };
+
+      // SearchSettingsMessages
+      const searchSettingsMessagesModel = {
+        success: 'testString',
+        error: 'testString',
+        no_result: 'testString',
+      };
+
+      // SearchSettingsSchemaMapping
+      const searchSettingsSchemaMappingModel = {
+        url: 'testString',
+        body: 'testString',
+        title: 'testString',
+      };
+
+      // SearchSettings
+      const searchSettingsModel = {
+        discovery: searchSettingsDiscoveryModel,
+        messages: searchSettingsMessagesModel,
+        schema_mapping: searchSettingsSchemaMappingModel,
+      };
+
       function __updateSkillTest() {
         // Construct the params object for operation updateSkill
         const assistantId = 'testString';
@@ -2208,7 +2279,7 @@ describe('AssistantV2', () => {
         const description = 'testString';
         const workspace = { foo: 'bar' };
         const dialogSettings = { foo: 'bar' };
-        const searchSettings = { foo: 'bar' };
+        const searchSettings = searchSettingsModel;
         const updateSkillParams = {
           assistantId,
           skillId,
@@ -2395,13 +2466,53 @@ describe('AssistantV2', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
 
+      // SearchSettingsDiscoveryAuthentication
+      const searchSettingsDiscoveryAuthenticationModel = {
+        basic: 'testString',
+        bearer: 'testString',
+      };
+
+      // SearchSettingsDiscovery
+      const searchSettingsDiscoveryModel = {
+        instance_id: 'testString',
+        project_id: 'testString',
+        url: 'testString',
+        max_primary_results: 10000,
+        max_total_results: 10000,
+        confidence_threshold: 0.0,
+        highlight: true,
+        find_answers: true,
+        authentication: searchSettingsDiscoveryAuthenticationModel,
+      };
+
+      // SearchSettingsMessages
+      const searchSettingsMessagesModel = {
+        success: 'testString',
+        error: 'testString',
+        no_result: 'testString',
+      };
+
+      // SearchSettingsSchemaMapping
+      const searchSettingsSchemaMappingModel = {
+        url: 'testString',
+        body: 'testString',
+        title: 'testString',
+      };
+
+      // SearchSettings
+      const searchSettingsModel = {
+        discovery: searchSettingsDiscoveryModel,
+        messages: searchSettingsMessagesModel,
+        schema_mapping: searchSettingsSchemaMappingModel,
+      };
+
       // SkillImport
       const skillImportModel = {
         name: 'testString',
         description: 'testString',
         workspace: { foo: 'bar' },
         dialog_settings: { foo: 'bar' },
-        search_settings: { foo: 'bar' },
+        search_settings: searchSettingsModel,
         language: 'testString',
         type: 'action',
       };

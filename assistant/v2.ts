@@ -188,6 +188,7 @@ class AssistantV2 extends BaseService {
     }
 
     const query = {
+      'version': this.version,
       'page_limit': _params.pageLimit,
       'include_count': _params.includeCount,
       'sort': _params.sort,
@@ -1604,7 +1605,7 @@ class AssistantV2 extends BaseService {
    * @param {JsonObject} [params.workspace] - An object containing the conversational content of an action or dialog
    * skill.
    * @param {JsonObject} [params.dialogSettings] - For internal use only.
-   * @param {JsonObject} [params.searchSettings] - A JSON object describing the search skill configuration.
+   * @param {SearchSettings} [params.searchSettings] - An object describing the search skill configuration.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV2.Response<AssistantV2.Skill>>}
    */
@@ -2441,8 +2442,8 @@ namespace AssistantV2 {
     workspace?: JsonObject;
     /** For internal use only. */
     dialogSettings?: JsonObject;
-    /** A JSON object describing the search skill configuration. */
-    searchSettings?: JsonObject;
+    /** An object describing the search skill configuration. */
+    searchSettings?: SearchSettings;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -2841,8 +2842,8 @@ namespace AssistantV2 {
   export interface MessageContext {
     /** Session context data that is shared by all skills used by the assistant. */
     global?: MessageContextGlobal;
-    /** Information specific to particular skills used by the assistant. */
-    skills?: JsonObject;
+    /** Context data specific to particular skills used by the assistant. */
+    skills?: MessageContextSkills;
     /** An object containing context data that is specific to particular integrations. For more information, see the
      *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-dialog-integrations).
      */
@@ -2921,9 +2922,25 @@ namespace AssistantV2 {
     skip_user_input?: boolean;
   }
 
-  /** Contains information specific to a particular skill used by the assistant. The property name must be the same as the name of the skill. **Note:** The default skill names are `main skill` for the dialog skill (if enabled) and `actions skill` for the action skill. */
-  export interface MessageContextSkill {
-    /** Arbitrary variables that can be read and written by a particular skill. */
+  /** Context variables that are used by the action skill. */
+  export interface MessageContextSkillAction {
+    /** An object containing any arbitrary variables that can be read and written by a particular skill. */
+    user_defined?: JsonObject;
+    /** System context data used by the skill. */
+    system?: MessageContextSkillSystem;
+    /** An object containing action variables. Action variables can be accessed only by steps in the same action,
+     *  and do not persist after the action ends.
+     */
+    action_variables?: JsonObject;
+    /** An object containing skill variables. (In the Watson Assistant user interface, skill variables are called
+     *  _session variables_.) Skill variables can be accessed by any action and persist for the duration of the session.
+     */
+    skill_variables?: JsonObject;
+  }
+
+  /** Context variables that are used by the dialog skill. */
+  export interface MessageContextSkillDialog {
+    /** An object containing any arbitrary variables that can be read and written by a particular skill. */
     user_defined?: JsonObject;
     /** System context data used by the skill. */
     system?: MessageContextSkillSystem;
@@ -2941,12 +2958,20 @@ namespace AssistantV2 {
     [propName: string]: any;
   }
 
+  /** Context data specific to particular skills used by the assistant. */
+  export interface MessageContextSkills {
+    /** Context variables that are used by the dialog skill. */
+    'main skill'?: MessageContextSkillDialog;
+    /** Context variables that are used by the action skill. */
+    'actions skill'?: MessageContextSkillAction;
+  }
+
   /** MessageContextStateless. */
   export interface MessageContextStateless {
     /** Session context data that is shared by all skills used by the assistant. */
     global?: MessageContextGlobalStateless;
-    /** Information specific to particular skills used by the assistant. */
-    skills?: JsonObject;
+    /** Context data specific to particular skills used by the assistant. */
+    skills?: MessageContextSkills;
     /** An object containing context data that is specific to particular integrations. For more information, see the
      *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-dialog-integrations).
      */
@@ -3501,8 +3526,7 @@ namespace AssistantV2 {
      *  query. Currently, only the single answer with the highest confidence (if any) is returned.
      *
      *  **Notes:**
-     *   - This property uses the answer finding beta feature, and is available only if the search skill is connected to
-     *  a Discovery v2 service instance.
+     *   - Answer finding is available only if the search skill is connected to a Discovery v2 service instance.
      *   - Answer finding is not supported on IBM Cloud Pak for Data.
      */
     answers?: SearchResultAnswer[];
@@ -3542,6 +3566,80 @@ namespace AssistantV2 {
      *  A higher score indicates a greater match to the query parameters.
      */
     score?: number;
+  }
+
+  /** An object describing the search skill configuration. */
+  export interface SearchSettings {
+    /** Configuration settings for the Watson Discovery service instance used by the search integration. */
+    discovery: SearchSettingsDiscovery;
+    /** The messages included with responses from the search integration. */
+    messages: SearchSettingsMessages;
+    /** The mapping between fields in the Watson Discovery collection and properties in the search response. */
+    schema_mapping: SearchSettingsSchemaMapping;
+  }
+
+  /** Configuration settings for the Watson Discovery service instance used by the search integration. */
+  export interface SearchSettingsDiscovery {
+    /** The ID for the Watson Discovery service instance. */
+    instance_id: string;
+    /** The ID for the Watson Discovery project. */
+    project_id: string;
+    /** The URL for the Watson Discovery service instance. */
+    url: string;
+    /** The maximum number of primary results to include in the response. */
+    max_primary_results?: number;
+    /** The maximum total number of primary and additional results to include in the response. */
+    max_total_results?: number;
+    /** The minimum confidence threshold for included results. Any results with a confidence below this threshold
+     *  will be discarded.
+     */
+    confidence_threshold?: number;
+    /** Whether to include the most relevant passages of text in the **highlight** property of each result. */
+    highlight?: boolean;
+    /** Whether to use the answer finding feature to emphasize answers within highlighted passages. This property is
+     *  ignored if **highlight**=`false`.
+     *
+     *  **Notes:**
+     *   - Answer finding is available only if the search skill is connected to a Discovery v2 service instance.
+     *   - Answer finding is not supported on IBM Cloud Pak for Data.
+     */
+    find_answers?: boolean;
+    /** Authentication information for the Watson Discovery service. For more information, see the [Watson Discovery
+     *  documentation](https://cloud.ibm.com/apidocs/discovery-data#authentication).
+     *
+     *   **Note:** You must specify either **basic** or **bearer**, but not both.
+     */
+    authentication: SearchSettingsDiscoveryAuthentication;
+  }
+
+  /** Authentication information for the Watson Discovery service. For more information, see the [Watson Discovery documentation](https://cloud.ibm.com/apidocs/discovery-data#authentication). **Note:** You must specify either **basic** or **bearer**, but not both. */
+  export interface SearchSettingsDiscoveryAuthentication {
+    /** The HTTP basic authentication credentials for Watson Discovery. Specify your Watson Discovery API key in the
+     *  format `apikey:{apikey}`.
+     */
+    basic?: string;
+    /** The authentication bearer token for Watson Discovery. */
+    bearer?: string;
+  }
+
+  /** The messages included with responses from the search integration. */
+  export interface SearchSettingsMessages {
+    /** The message to include in the response to a successful query. */
+    success: string;
+    /** The message to include in the response when the query encounters an error. */
+    error: string;
+    /** The message to include in the response when there is no result from the query. */
+    no_result: string;
+  }
+
+  /** The mapping between fields in the Watson Discovery collection and properties in the search response. */
+  export interface SearchSettingsSchemaMapping {
+    /** The field in the collection to map to the **url** property of the response. */
+    url: string;
+    /** The field in the collection to map to the **body** property in the response. */
+    body: string;
+    /** The field in the collection to map to the **title** property for the schema. */
+    title: string;
   }
 
   /** A warning describing an error in the search skill configuration. */
@@ -3603,8 +3701,8 @@ namespace AssistantV2 {
      *  versionable skill is saved for each new release of an assistant.
      */
     next_snapshot_version?: string;
-    /** A JSON object describing the search skill configuration. */
-    search_settings?: JsonObject;
+    /** An object describing the search skill configuration. */
+    search_settings?: SearchSettings;
     /** An array of warnings describing errors with the search skill configuration. Included only for search skills. */
     warnings?: SearchSkillWarning[];
     /** The language of the skill. */
@@ -3656,8 +3754,8 @@ namespace AssistantV2 {
      *  versionable skill is saved for each new release of an assistant.
      */
     next_snapshot_version?: string;
-    /** A JSON object describing the search skill configuration. */
-    search_settings?: JsonObject;
+    /** An object describing the search skill configuration. */
+    search_settings?: SearchSettings;
     /** An array of warnings describing errors with the search skill configuration. Included only for search skills. */
     warnings?: SearchSkillWarning[];
     /** The language of the skill. */
@@ -3671,10 +3769,11 @@ namespace AssistantV2 {
     /** The assistant ID of the assistant. */
     assistant_id?: string;
     /** The current status of the asynchronous operation:
-     *   - **Available**: The export is available.
-     *   - **Failed**: An asynchronous export operation has failed. See the **status_errors** property for more
-     *  information about the cause of the failure.
-     *   - **Processing**: An asynchronous export operation has not yet completed.
+     *   - `Available`: An asynchronous export is available.
+     *   - `Completed`: An asynchronous import operation has completed successfully.
+     *   - `Failed`: An asynchronous operation has failed. See the **status_errors** property for more information about
+     *  the cause of the failure.
+     *   - `Processing`: An asynchronous operation has not yet completed.
      */
     status?: string;
     /** The description of the failed asynchronous operation. Included only if **status**=`Failed`. */
