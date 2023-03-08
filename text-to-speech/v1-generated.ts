@@ -53,8 +53,8 @@ import { getSdkHeaders } from '../lib/common';
  *
  * Effective **31 March 2022**, all *neural voices* are deprecated. The deprecated voices remain available to existing
  * users until 31 March 2023, when they will be removed from the service and the documentation. *No enhanced neural
- * voices or expressive neural voices are deprecated.* For more information, see the [31 March 2022 service
- * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-31march2022) in
+ * voices or expressive neural voices are deprecated.*<br/><br/> For more information, see the [1 March 2023 service
+ * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-1march2023) in
  * the release notes for {{site.data.keyword.texttospeechshort}} for {{site.data.keyword.cloud_notm}}.{: deprecated}
  *
  * API Version: 1.0.0
@@ -108,9 +108,9 @@ class TextToSpeechV1 extends BaseService {
    *
    * **Note:** Effective **31 March 2022**, all *neural voices* are deprecated. The deprecated voices remain available
    * to existing users until 31 March 2023, when they will be removed from the service and the documentation. *No
-   * enhanced neural voices or expressive neural voices are deprecated.* For more information, see the [31 March 2022
+   * enhanced neural voices or expressive neural voices are deprecated.* For more information, see the [1 March 2023
    * service
-   * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-31march2022) in
+   * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-1march2023) in
    * the release notes.
    *
    * **See also:** [Listing all
@@ -170,9 +170,9 @@ class TextToSpeechV1 extends BaseService {
    *
    * **Note:** Effective **31 March 2022**, all *neural voices* are deprecated. The deprecated voices remain available
    * to existing users until 31 March 2023, when they will be removed from the service and the documentation. *No
-   * enhanced neural voices or expressive neural voices are deprecated.* For more information, see the [31 March 2022
+   * enhanced neural voices or expressive neural voices are deprecated.* For more information, see the [1 March 2023
    * service
-   * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-31march2022) in
+   * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-1march2023) in
    * the release notes.
    *
    * @param {Object} params - The parameters to send to the service.
@@ -248,9 +248,9 @@ class TextToSpeechV1 extends BaseService {
    *
    * **Note:** Effective **31 March 2022**, all *neural voices* are deprecated. The deprecated voices remain available
    * to existing users until 31 March 2023, when they will be removed from the service and the documentation. *No
-   * enhanced neural voices or expressive neural voices are deprecated.* For more information, see the [31 March 2022
+   * enhanced neural voices or expressive neural voices are deprecated.* For more information, see the [1 March 2023
    * service
-   * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-31march2022) in
+   * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-1march2023) in
    * the release notes.
    *
    * ### Audio formats (accept types)
@@ -425,9 +425,9 @@ class TextToSpeechV1 extends BaseService {
    *
    * **Note:** Effective **31 March 2022**, all *neural voices* are deprecated. The deprecated voices remain available
    * to existing users until 31 March 2023, when they will be removed from the service and the documentation. *No
-   * enhanced neural voices or expressive neural voices are deprecated.* For more information, see the [31 March 2022
+   * enhanced neural voices or expressive neural voices are deprecated.* For more information, see the [1 March 2023
    * service
-   * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-31march2022) in
+   * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-1march2023) in
    * the release notes.
    *
    * **See also:** [Querying a word from a
@@ -515,9 +515,9 @@ class TextToSpeechV1 extends BaseService {
    *
    * **Note:** Effective **31 March 2022**, all *neural voices* are deprecated. The deprecated voices remain available
    * to existing users until 31 March 2023, when they will be removed from the service and the documentation. *No
-   * enhanced neural voices or expressive neural voices are deprecated.* For more information, see the [31 March 2022
+   * enhanced neural voices or expressive neural voices are deprecated.* For more information, see the [1 March 2023
    * service
-   * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-31march2022) in
+   * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-1march2023) in
    * the release notes.
    *
    * @param {Object} params - The parameters to send to the service.

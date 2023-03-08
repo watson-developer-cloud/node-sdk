@@ -38,6 +38,15 @@ import { getSdkHeaders } from '../lib/common';
  * models](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-customizing)
  * with Watson Knowledge Studio to detect custom entities and relations in Natural Language Understanding.
  *
+ * IBM is sunsetting Watson Natural Language Understanding Custom Sentiment (BETA). From **June 1, 2023** onward, you
+ * will no longer be able to use the Custom Sentiment feature.<br /><br />To ensure we continue providing our clients
+ * with robust and powerful text classification capabilities, IBM recently announced the general availability of a new
+ * [single-label text classification
+ * capability](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-classifications).
+ * This new feature includes extended language support and training data customizations suited for building a custom
+ * sentiment classifier.<br /><br />If you would like more information or further guidance, please contact IBM Cloud
+ * Support.{: deprecated}
+ *
  * API Version: 1.0
  * See: https://cloud.ibm.com/docs/natural-language-understanding
  */
