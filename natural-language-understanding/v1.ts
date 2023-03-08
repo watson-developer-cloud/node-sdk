@@ -1849,12 +1849,6 @@ namespace NaturalLanguageUnderstandingV1 {
     document?: boolean;
     /** Sentiment results will be returned for each target string that is found in the document. */
     targets?: string[];
-    /** (Beta) Enter a [custom
-     *  model](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-customizing)
-     *  ID to override the standard sentiment model for all sentiment analysis operations in the request, including
-     *  targeted sentiment for entities and keywords.
-     */
-    model?: string;
   }
 
   /** The sentiment of the content. */
