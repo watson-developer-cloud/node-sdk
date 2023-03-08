@@ -203,7 +203,6 @@ describe('NaturalLanguageUnderstandingV1', () => {
       const sentimentOptionsModel = {
         document: true,
         targets: ['testString'],
-        model: 'testString',
       };
 
       // SummarizationOptions
