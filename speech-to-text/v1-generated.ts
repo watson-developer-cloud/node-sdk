@@ -1700,11 +1700,17 @@ class SpeechToTextV1 extends BaseService {
    * means that the custom model is trained and ready to use. The service cannot accept subsequent training requests or
    * requests to add new resources until the existing request completes.
    *
+   * For custom models that are based on improved base language models, training also performs an automatic upgrade to a
+   * newer version of the base model. You do not need to use the [Upgrade a custom language
+   * model](#upgradelanguagemodel) method to perform the upgrade.
+   *
    * **See also:**
-   * * [Train the custom language
-   * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-languageCreate#trainModel-language)
    * * [Language support for
    * customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-support)
+   * * [Train the custom language
+   * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-languageCreate#trainModel-language)
+   * * [Upgrading custom language models that are based on improved next-generation
+   * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-upgrade#custom-upgrade-language-ng)
    *
    * ### Training failures
    *
@@ -1882,11 +1888,17 @@ class SpeechToTextV1 extends BaseService {
    * resumes the status that it had prior to upgrade. The service cannot accept subsequent requests for the model until
    * the upgrade completes.
    *
+   * For custom models that are based on improved base language models, the [Train a custom language
+   * model](#trainlanguagemodel) method also performs an automatic upgrade to a newer version of the base model. You do
+   * not need to use the upgrade method.
+   *
    * **See also:**
+   * * [Language support for
+   * customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-support)
    * * [Upgrading a custom language
    * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-upgrade#custom-upgrade-language)
-   * * [Language support for
-   * customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-support).
+   * * [Upgrading custom language models that are based on improved next-generation
+   * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-upgrade#custom-upgrade-language-ng).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.customizationId - The customization ID (GUID) of the custom language model that is to be

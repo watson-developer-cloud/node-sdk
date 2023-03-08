@@ -104,11 +104,11 @@ class AssistantV2 extends BaseService {
    * @param {string} [params.description] - The description of the assistant. This string cannot contain carriage
    * return, newline, or tab characters.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<AssistantV2.Response<AssistantV2.Assistant>>}
+   * @returns {Promise<AssistantV2.Response<AssistantV2.AssistantData>>}
    */
   public createAssistant(
     params?: AssistantV2.CreateAssistantParams
-  ): Promise<AssistantV2.Response<AssistantV2.Assistant>> {
+  ): Promise<AssistantV2.Response<AssistantV2.AssistantData>> {
     const _params = { ...params };
     const _requiredParams = [];
     const _validParams = ['language', 'name', 'description', 'headers'];
@@ -2521,8 +2521,18 @@ namespace AssistantV2 {
     message?: string;
   }
 
-  /** Assistant. */
-  export interface Assistant {
+  /** AssistantCollection. */
+  export interface AssistantCollection {
+    /** An array of objects describing the assistants associated with the instance. */
+    assistants: AssistantData[];
+    /** The pagination data for the returned objects. For more information about using pagination, see
+     *  [Pagination](#pagination).
+     */
+    pagination: Pagination;
+  }
+
+  /** AssistantData. */
+  export interface AssistantData {
     /** The unique identifier of the assistant. */
     assistant_id?: string;
     /** The name of the assistant. This string cannot contain carriage return, newline, or tab characters. */
@@ -2535,16 +2545,6 @@ namespace AssistantV2 {
     assistant_skills?: AssistantSkill[];
     /** An array of objects describing the environments defined for the assistant. */
     assistant_environments?: EnvironmentReference[];
-  }
-
-  /** AssistantCollection. */
-  export interface AssistantCollection {
-    /** An array of objects describing the assistants associated with the instance. */
-    assistants: Assistant[];
-    /** The pagination data for the returned objects. For more information about using pagination, see
-     *  [Pagination](#pagination).
-     */
-    pagination: Pagination;
   }
 
   /** AssistantSkill. */
