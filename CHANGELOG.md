@@ -1,3 +1,33 @@
+# [8.0.0](https://github.com/watson-developer-cloud/node-sdk/compare/v7.1.2...v8.0.0) (2023-03-16)
+
+
+### Bug Fixes
+
+* **deps:** upgrade core version to address jsonwebtoken vulnerability ([67b169d](https://github.com/watson-developer-cloud/node-sdk/commit/67b169d795b6d7c828e078b891ac3b0940ef0def))
+
+
+### Features
+
+* **assistantv2:** add several new functions ([2eae4e9](https://github.com/watson-developer-cloud/node-sdk/commit/2eae4e975cd97408f9ad65af642e858e2fd12b56))
+* **assistantv2:** improved typing ([730114e](https://github.com/watson-developer-cloud/node-sdk/commit/730114ee39ac780d089416923cbc1ef7037f1d52))
+* **discov2:** new aggregation types ([9409082](https://github.com/watson-developer-cloud/node-sdk/commit/9409082da9436860632543f57eb69a5e12472776))
+* **lt,stt:** add and remove model constants ([d41c7ee](https://github.com/watson-developer-cloud/node-sdk/commit/d41c7ee5f88438df5b5e123e67656d4a78e7bf26))
+* **nlu:** remove all sentimentModel functions ([0f17d68](https://github.com/watson-developer-cloud/node-sdk/commit/0f17d6871f501c61bc62a30d1760ed932adc7982))
+* **nlu:** remove beta model param from Sentiment ([8815b1a](https://github.com/watson-developer-cloud/node-sdk/commit/8815b1a0e6f39dc6202c344a944ecbf4250cf7e7))
+* **stt, tts:** add more models ([93cbe80](https://github.com/watson-developer-cloud/node-sdk/commit/93cbe8014586ab8b31fbb579628b1ff46c54f75c))
+* **tts:** add new params to websocket function ([13ab63f](https://github.com/watson-developer-cloud/node-sdk/commit/13ab63f8493b6d0feffcdfd610b554684e80cb53))
+* **tts:** add params and add model constants ([b9fad7b](https://github.com/watson-developer-cloud/node-sdk/commit/b9fad7b8e4c6982705c60ceb5adc8684bd7ef81a))
+
+
+### BREAKING CHANGES
+
+* **assistantv2:** createSession param removed
+* **assistantv2:** removing and changing of interface properties
+* **discov2:** confidence property removed
+* **discov2:** smartDocumentUnderstanding param removed
+* **discov2:** QueryAggregation structure changed
+* **nlu:** remove all sentimentModel functions and interfaces
+
 ## [7.1.2](https://github.com/watson-developer-cloud/node-sdk/compare/v7.1.1...v7.1.2) (2022-10-25)
 
 
