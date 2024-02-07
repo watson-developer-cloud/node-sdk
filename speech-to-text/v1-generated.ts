@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2017, 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.64.1-cee95189-20230124-211647
+ * IBM OpenAPI SDK Code Generator Version: 3.85.0-75c38f8f-20240206-210220
  */
 
 import * as extend from 'extend';
@@ -23,9 +23,9 @@ import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import {
   Authenticator,
   BaseService,
+  UserOptions,
   getAuthenticatorFromEnvironment,
   validateParams,
-  UserOptions,
 } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
@@ -71,7 +71,7 @@ class SpeechToTextV1 extends BaseService {
    * Construct a SpeechToTextV1 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base URL for the service
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
@@ -124,11 +124,7 @@ class SpeechToTextV1 extends BaseService {
       return Promise.reject(_validationErrors);
     }
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listModels'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listModels');
 
     const parameters = {
       options: {
@@ -180,11 +176,7 @@ class SpeechToTextV1 extends BaseService {
       'model_id': _params.modelId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getModel'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getModel');
 
     const parameters = {
       options: {
@@ -579,11 +571,7 @@ class SpeechToTextV1 extends BaseService {
       'character_insertion_bias': _params.characterInsertionBias,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'recognize'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'recognize');
 
     const parameters = {
       options: {
@@ -670,11 +658,7 @@ class SpeechToTextV1 extends BaseService {
       'user_secret': _params.userSecret,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'registerCallback'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'registerCallback');
 
     const parameters = {
       options: {
@@ -727,11 +711,7 @@ class SpeechToTextV1 extends BaseService {
       'callback_url': _params.callbackUrl,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'unregisterCallback'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'unregisterCallback');
 
     const parameters = {
       options: {
@@ -1182,11 +1162,7 @@ class SpeechToTextV1 extends BaseService {
       'character_insertion_bias': _params.characterInsertionBias,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createJob'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'createJob');
 
     const parameters = {
       options: {
@@ -1239,11 +1215,7 @@ class SpeechToTextV1 extends BaseService {
       return Promise.reject(_validationErrors);
     }
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'checkJobs'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'checkJobs');
 
     const parameters = {
       options: {
@@ -1301,11 +1273,7 @@ class SpeechToTextV1 extends BaseService {
       'id': _params.id,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'checkJob'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'checkJob');
 
     const parameters = {
       options: {
@@ -1358,11 +1326,7 @@ class SpeechToTextV1 extends BaseService {
       'id': _params.id,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteJob'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteJob');
 
     const parameters = {
       options: {
@@ -1460,11 +1424,7 @@ class SpeechToTextV1 extends BaseService {
       'description': _params.description,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createLanguageModel'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'createLanguageModel');
 
     const parameters = {
       options: {
@@ -1528,11 +1488,7 @@ class SpeechToTextV1 extends BaseService {
       'language': _params.language,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listLanguageModels'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listLanguageModels');
 
     const parameters = {
       options: {
@@ -1589,11 +1545,7 @@ class SpeechToTextV1 extends BaseService {
       'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getLanguageModel'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getLanguageModel');
 
     const parameters = {
       options: {
@@ -1651,11 +1603,7 @@ class SpeechToTextV1 extends BaseService {
       'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteLanguageModel'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteLanguageModel');
 
     const parameters = {
       options: {
@@ -1780,11 +1728,7 @@ class SpeechToTextV1 extends BaseService {
       'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'trainLanguageModel'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'trainLanguageModel');
 
     const parameters = {
       options: {
@@ -1844,11 +1788,7 @@ class SpeechToTextV1 extends BaseService {
       'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'resetLanguageModel'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'resetLanguageModel');
 
     const parameters = {
       options: {
@@ -1922,11 +1862,7 @@ class SpeechToTextV1 extends BaseService {
       'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'upgradeLanguageModel'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'upgradeLanguageModel');
 
     const parameters = {
       options: {
@@ -1985,11 +1921,7 @@ class SpeechToTextV1 extends BaseService {
       'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listCorpora'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listCorpora');
 
     const parameters = {
       options: {
@@ -2120,11 +2052,7 @@ class SpeechToTextV1 extends BaseService {
       'corpus_name': _params.corpusName,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'addCorpus'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'addCorpus');
 
     const parameters = {
       options: {
@@ -2185,11 +2113,7 @@ class SpeechToTextV1 extends BaseService {
       'corpus_name': _params.corpusName,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getCorpus'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getCorpus');
 
     const parameters = {
       options: {
@@ -2253,11 +2177,7 @@ class SpeechToTextV1 extends BaseService {
       'corpus_name': _params.corpusName,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteCorpus'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteCorpus');
 
     const parameters = {
       options: {
@@ -2340,11 +2260,7 @@ class SpeechToTextV1 extends BaseService {
       'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listWords'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listWords');
 
     const parameters = {
       options: {
@@ -2457,11 +2373,7 @@ class SpeechToTextV1 extends BaseService {
       'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'addWords'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'addWords');
 
     const parameters = {
       options: {
@@ -2585,11 +2497,7 @@ class SpeechToTextV1 extends BaseService {
       'word_name': _params.wordName,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'addWord'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'addWord');
 
     const parameters = {
       options: {
@@ -2649,11 +2557,7 @@ class SpeechToTextV1 extends BaseService {
       'word_name': _params.wordName,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getWord'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getWord');
 
     const parameters = {
       options: {
@@ -2714,11 +2618,7 @@ class SpeechToTextV1 extends BaseService {
       'word_name': _params.wordName,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteWord'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteWord');
 
     const parameters = {
       options: {
@@ -2779,11 +2679,7 @@ class SpeechToTextV1 extends BaseService {
       'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listGrammars'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listGrammars');
 
     const parameters = {
       options: {
@@ -2898,11 +2794,7 @@ class SpeechToTextV1 extends BaseService {
       'grammar_name': _params.grammarName,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'addGrammar'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'addGrammar');
 
     const parameters = {
       options: {
@@ -2965,11 +2857,7 @@ class SpeechToTextV1 extends BaseService {
       'grammar_name': _params.grammarName,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getGrammar'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getGrammar');
 
     const parameters = {
       options: {
@@ -3032,11 +2920,7 @@ class SpeechToTextV1 extends BaseService {
       'grammar_name': _params.grammarName,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteGrammar'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteGrammar');
 
     const parameters = {
       options: {
@@ -3119,11 +3003,7 @@ class SpeechToTextV1 extends BaseService {
       'description': _params.description,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createAcousticModel'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'createAcousticModel');
 
     const parameters = {
       options: {
@@ -3187,11 +3067,7 @@ class SpeechToTextV1 extends BaseService {
       'language': _params.language,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listAcousticModels'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listAcousticModels');
 
     const parameters = {
       options: {
@@ -3248,11 +3124,7 @@ class SpeechToTextV1 extends BaseService {
       'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getAcousticModel'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getAcousticModel');
 
     const parameters = {
       options: {
@@ -3310,11 +3182,7 @@ class SpeechToTextV1 extends BaseService {
       'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteAcousticModel'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteAcousticModel');
 
     const parameters = {
       options: {
@@ -3431,11 +3299,7 @@ class SpeechToTextV1 extends BaseService {
       'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'trainAcousticModel'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'trainAcousticModel');
 
     const parameters = {
       options: {
@@ -3497,11 +3361,7 @@ class SpeechToTextV1 extends BaseService {
       'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'resetAcousticModel'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'resetAcousticModel');
 
     const parameters = {
       options: {
@@ -3590,11 +3450,7 @@ class SpeechToTextV1 extends BaseService {
       'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'upgradeAcousticModel'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'upgradeAcousticModel');
 
     const parameters = {
       options: {
@@ -3658,11 +3514,7 @@ class SpeechToTextV1 extends BaseService {
       'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listAudio'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'listAudio');
 
     const parameters = {
       options: {
@@ -3840,11 +3692,7 @@ class SpeechToTextV1 extends BaseService {
       'audio_name': _params.audioName,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'addAudio'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'addAudio');
 
     const parameters = {
       options: {
@@ -3920,11 +3768,7 @@ class SpeechToTextV1 extends BaseService {
       'audio_name': _params.audioName,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getAudio'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'getAudio');
 
     const parameters = {
       options: {
@@ -3988,11 +3832,7 @@ class SpeechToTextV1 extends BaseService {
       'audio_name': _params.audioName,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteAudio'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteAudio');
 
     const parameters = {
       options: {
@@ -4055,11 +3895,7 @@ class SpeechToTextV1 extends BaseService {
       'customer_id': _params.customerId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      SpeechToTextV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteUserData'
-    );
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteUserData');
 
     const parameters = {
       options: {
@@ -5945,7 +5781,7 @@ namespace SpeechToTextV1 {
      *  * `upgrading`: The model is currently being upgraded.
      *  * `failed`: Training of the model failed.
      */
-    status?: string;
+    status?: AcousticModel.Constants.Status | string;
     /** A percentage that indicates the progress of the custom acoustic model's current training. A value of `100`
      *  means that the model is fully trained. **Note:** The `progress` field does not currently reflect the progress of
      *  the training. The field changes from `0` to `100` when training is complete.
@@ -5955,6 +5791,19 @@ namespace SpeechToTextV1 {
      *  ['parameters'] detected`, where `parameters` is a list that includes a quoted string for each unknown parameter.
      */
     warnings?: string;
+  }
+  export namespace AcousticModel {
+    export namespace Constants {
+      /** The current status of the custom acoustic model: * `pending`: The model was created but is waiting either for valid training data to be added or for the service to finish analyzing added data. * `ready`: The model contains valid data and is ready to be trained. If the model contains a mix of valid and invalid resources, you need to set the `strict` parameter to `false` for the training to proceed. * `training`: The model is currently being trained. * `available`: The model is trained and ready to use. * `upgrading`: The model is currently being upgraded. * `failed`: Training of the model failed. */
+      export enum Status {
+        PENDING = 'pending',
+        READY = 'ready',
+        TRAINING = 'training',
+        AVAILABLE = 'available',
+        UPGRADING = 'upgrading',
+        FAILED = 'failed',
+      }
+    }
   }
 
   /** Information about existing custom acoustic models. */
@@ -5974,7 +5823,7 @@ namespace SpeechToTextV1 {
      *  * `undetermined` for a resource that the service cannot validate (for example, if the user mistakenly passes a
      *  file that does not contain audio, such as a JPEG file).
      */
-    type?: string;
+    type?: AudioDetails.Constants.Type | string;
     /** _For an audio-type resource_, the codec in which the audio is encoded. Omitted for an archive-type resource. */
     codec?: string;
     /** _For an audio-type resource_, the sampling rate of the audio in Hertz (samples per second). Omitted for an
@@ -5987,7 +5836,22 @@ namespace SpeechToTextV1 {
      *
      *  Omitted for an audio-type resource.
      */
-    compression?: string;
+    compression?: AudioDetails.Constants.Compression | string;
+  }
+  export namespace AudioDetails {
+    export namespace Constants {
+      /** The type of the audio resource: * `audio` for an individual audio file * `archive` for an archive (**.zip** or **.tar.gz**) file that contains audio files * `undetermined` for a resource that the service cannot validate (for example, if the user mistakenly passes a file that does not contain audio, such as a JPEG file). */
+      export enum Type {
+        AUDIO = 'audio',
+        ARCHIVE = 'archive',
+        UNDETERMINED = 'undetermined',
+      }
+      /** _For an archive-type resource_, the format of the compressed archive: * `zip` for a **.zip** file * `gzip` for a **.tar.gz** file Omitted for an audio-type resource. */
+      export enum Compression {
+        ZIP = 'zip',
+        GZIP = 'gzip',
+      }
+    }
   }
 
   /** Information about an audio resource from a custom acoustic model. */
@@ -6012,7 +5876,7 @@ namespace SpeechToTextV1 {
      *
      *  Omitted for an archive-type resource.
      */
-    status?: string;
+    status?: AudioListing.Constants.Status | string;
     /** _For an archive-type resource_, an object of type `AudioResource` that provides information about the
      *  resource. Omitted for an audio-type resource.
      */
@@ -6021,6 +5885,16 @@ namespace SpeechToTextV1 {
      *  audio-type resources that are contained in the resource. Omitted for an audio-type resource.
      */
     audio?: AudioResource[];
+  }
+  export namespace AudioListing {
+    export namespace Constants {
+      /** _For an audio-type resource_, the status of the resource: * `ok`: The service successfully analyzed the audio data. The data can be used to train the custom model. * `being_processed`: The service is still analyzing the audio data. The service cannot accept requests to add new audio resources or to train the custom model until its analysis is complete. * `invalid`: The audio data is not valid for training the custom model (possibly because it has the wrong format or sampling rate, or because it is corrupted). Omitted for an archive-type resource. */
+      export enum Status {
+        OK = 'ok',
+        BEING_PROCESSED = 'being_processed',
+        INVALID = 'invalid',
+      }
+    }
   }
 
   /** If audio metrics are requested, information about the signal characteristics of the input audio. */
@@ -6112,7 +5986,17 @@ namespace SpeechToTextV1 {
      *  or sampling rate, or because it is corrupted). For an archive file, the entire archive is invalid if any of its
      *  audio files are invalid.
      */
-    status: string;
+    status: AudioResource.Constants.Status | string;
+  }
+  export namespace AudioResource {
+    export namespace Constants {
+      /** The status of the audio resource: * `ok`: The service successfully analyzed the audio data. The data can be used to train the custom model. * `being_processed`: The service is still analyzing the audio data. The service cannot accept requests to add new audio resources or to train the custom model until its analysis is complete. * `invalid`: The audio data is not valid for training the custom model (possibly because it has the wrong format or sampling rate, or because it is corrupted). For an archive file, the entire archive is invalid if any of its audio files are invalid. */
+      export enum Status {
+        OK = 'ok',
+        BEING_PROCESSED = 'being_processed',
+        INVALID = 'invalid',
+      }
+    }
   }
 
   /** Information about the audio resources from a custom acoustic model. */
@@ -6157,11 +6041,21 @@ namespace SpeechToTextV1 {
      *  * `undetermined`: The service encountered an error while processing the corpus. The `error` field describes the
      *  failure.
      */
-    status: string;
+    status: Corpus.Constants.Status | string;
     /** If the status of the corpus is `undetermined`, the following message: `Analysis of corpus 'name' failed.
      *  Please try adding the corpus again by setting the 'allow_overwrite' flag to 'true'`.
      */
     error?: string;
+  }
+  export namespace Corpus {
+    export namespace Constants {
+      /** The status of the corpus: * `analyzed`: The service successfully analyzed the corpus. The custom model can be trained with data from the corpus. * `being_processed`: The service is still analyzing the corpus. The service cannot accept requests to add new resources or to train the custom model. * `undetermined`: The service encountered an error while processing the corpus. The `error` field describes the failure. */
+      export enum Status {
+        ANALYZED = 'analyzed',
+        BEING_PROCESSED = 'being_processed',
+        UNDETERMINED = 'undetermined',
+      }
+    }
   }
 
   /** Information about a word that is to be added to a custom language model. */
@@ -6215,12 +6109,22 @@ namespace SpeechToTextV1 {
      *  * `undetermined`: The service encountered an error while processing the grammar. The `error` field describes the
      *  failure.
      */
-    status: string;
+    status: Grammar.Constants.Status | string;
     /** If the status of the grammar is `undetermined`, the following message: `Analysis of grammar '{grammar_name}'
      *  failed. Please try fixing the error or adding the grammar again by setting the 'allow_overwrite' flag to
      *  'true'.`.
      */
     error?: string;
+  }
+  export namespace Grammar {
+    export namespace Constants {
+      /** The status of the grammar: * `analyzed`: The service successfully analyzed the grammar. The custom model can be trained with data from the grammar. * `being_processed`: The service is still analyzing the grammar. The service cannot accept requests to add new resources or to train the custom model. * `undetermined`: The service encountered an error while processing the grammar. The `error` field describes the failure. */
+      export enum Status {
+        ANALYZED = 'analyzed',
+        BEING_PROCESSED = 'being_processed',
+        UNDETERMINED = 'undetermined',
+      }
+    }
   }
 
   /** Information about the grammars from a custom language model. */
@@ -6298,7 +6202,7 @@ namespace SpeechToTextV1 {
      *  * `upgrading`: The model is currently being upgraded.
      *  * `failed`: Training of the model failed.
      */
-    status?: string;
+    status?: LanguageModel.Constants.Status | string;
     /** A percentage that indicates the progress of the custom language model's current training. A value of `100`
      *  means that the model is fully trained. **Note:** The `progress` field does not currently reflect the progress of
      *  the training. The field changes from `0` to `100` when training is complete.
@@ -6313,6 +6217,19 @@ namespace SpeechToTextV1 {
      *  ['parameters'] detected`, where `parameters` is a list that includes a quoted string for each unknown parameter.
      */
     warnings?: string;
+  }
+  export namespace LanguageModel {
+    export namespace Constants {
+      /** The current status of the custom language model: * `pending`: The model was created but is waiting either for valid training data to be added or for the service to finish analyzing added data. * `ready`: The model contains valid data and is ready to be trained. If the model contains a mix of valid and invalid resources, you need to set the `strict` parameter to `false` for the training to proceed. * `training`: The model is currently being trained. * `available`: The model is trained and ready to use. * `upgrading`: The model is currently being upgraded. * `failed`: Training of the model failed. */
+      export enum Status {
+        PENDING = 'pending',
+        READY = 'ready',
+        TRAINING = 'training',
+        AVAILABLE = 'available',
+        UPGRADING = 'upgrading',
+        FAILED = 'failed',
+      }
+    }
   }
 
   /** Information about existing custom language models. */
@@ -6386,7 +6303,7 @@ namespace SpeechToTextV1 {
      *  you must retrieve the results by checking the individual job.
      *  * `failed`: The job failed.
      */
-    status: string;
+    status: RecognitionJob.Constants.Status | string;
     /** The date and time in Coordinated Universal Time (UTC) at which the job was created. The value is provided in
      *  full ISO 8601 format (`YYYY-MM-DDThh:mm:ss.sTZD`).
      */
@@ -6418,6 +6335,17 @@ namespace SpeechToTextV1 {
      */
     warnings?: string[];
   }
+  export namespace RecognitionJob {
+    export namespace Constants {
+      /** The current status of the job: * `waiting`: The service is preparing the job for processing. The service returns this status when the job is initially created or when it is waiting for capacity to process the job. The job remains in this state until the service has the capacity to begin processing it. * `processing`: The service is actively processing the job. * `completed`: The service has finished processing the job. If the job specified a callback URL and the event `recognitions.completed_with_results`, the service sent the results with the callback notification. Otherwise, you must retrieve the results by checking the individual job. * `failed`: The job failed. */
+      export enum Status {
+        WAITING = 'waiting',
+        PROCESSING = 'processing',
+        COMPLETED = 'completed',
+        FAILED = 'failed',
+      }
+    }
+  }
 
   /** Information about current asynchronous speech recognition jobs. */
   export interface RecognitionJobs {
@@ -6433,9 +6361,18 @@ namespace SpeechToTextV1 {
      *  * `created`: The service successfully allowlisted the callback URL as a result of the call.
      *  * `already created`: The URL was already allowlisted.
      */
-    status: string;
+    status: RegisterStatus.Constants.Status | string;
     /** The callback URL that is successfully registered. */
     url: string;
+  }
+  export namespace RegisterStatus {
+    export namespace Constants {
+      /** The current status of the job: * `created`: The service successfully allowlisted the callback URL as a result of the call. * `already created`: The URL was already allowlisted. */
+      export enum Status {
+        CREATED = 'created',
+        ALREADY_CREATED = 'already created',
+      }
+    }
   }
 
   /** Information about the speakers from speech recognition results. */
@@ -6544,7 +6481,18 @@ namespace SpeechToTextV1 {
      *  splits the transcript to avoid excessive memory use.
      *  * `silence` - A pause or silence that is at least as long as the pause interval.
      */
-    end_of_utterance?: string;
+    end_of_utterance?: SpeechRecognitionResult.Constants.EndOfUtterance | string;
+  }
+  export namespace SpeechRecognitionResult {
+    export namespace Constants {
+      /** If the `split_transcript_at_phrase_end` parameter is `true`, describes the reason for the split: * `end_of_data` - The end of the input audio stream. * `full_stop` - A full semantic stop, such as for the conclusion of a grammatical sentence. The insertion of splits is influenced by the base language model and biased by custom language models and grammars. * `reset` - The amount of audio that is currently being processed exceeds the two-minute maximum. The service splits the transcript to avoid excessive memory use. * `silence` - A pause or silence that is at least as long as the pause interval. */
+      export enum EndOfUtterance {
+        END_OF_DATA = 'end_of_data',
+        FULL_STOP = 'full_stop',
+        RESET = 'reset',
+        SILENCE = 'silence',
+      }
+    }
   }
 
   /** The complete results for a speech recognition request. */
@@ -6637,12 +6585,23 @@ namespace SpeechToTextV1 {
   /** A warning from training of a custom language or custom acoustic model. */
   export interface TrainingWarning {
     /** An identifier for the type of invalid resources listed in the `description` field. */
-    code: string;
+    code: TrainingWarning.Constants.Code | string;
     /** A warning message that lists the invalid resources that are excluded from the custom model's training. The
      *  message has the following format: `Analysis of the following {resource_type} has not completed successfully:
      *  [{resource_names}]. They will be excluded from custom {model_type} model training.`.
      */
     message: string;
+  }
+  export namespace TrainingWarning {
+    export namespace Constants {
+      /** An identifier for the type of invalid resources listed in the `description` field. */
+      export enum Code {
+        INVALID_AUDIO_FILES = 'invalid_audio_files',
+        INVALID_CORPUS_FILES = 'invalid_corpus_files',
+        INVALID_GRAMMAR_FILES = 'invalid_grammar_files',
+        INVALID_WORDS = 'invalid_words',
+      }
+    }
   }
 
   /** Information about a word from a custom language model. */

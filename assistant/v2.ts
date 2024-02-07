@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2023.
+ * (C) Copyright IBM Corp. 2018, 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.64.1-cee95189-20230124-211647
+ * IBM OpenAPI SDK Code Generator Version: 3.85.0-75c38f8f-20240206-210220
  */
 
 import * as extend from 'extend';
@@ -23,9 +23,9 @@ import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import {
   Authenticator,
   BaseService,
+  UserOptions,
   getAuthenticatorFromEnvironment,
   validateParams,
-  UserOptions,
 } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
@@ -56,7 +56,7 @@ class AssistantV2 extends BaseService {
    * @param {Object} options - Options for the service.
    * @param {string} options.version - Release date of the API version you want to use. Specify dates in YYYY-MM-DD
    * format. The current version is `2021-11-27`.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base URL for the service
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
@@ -127,11 +127,7 @@ class AssistantV2 extends BaseService {
       'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'createAssistant'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'createAssistant');
 
     const parameters = {
       options: {
@@ -196,11 +192,7 @@ class AssistantV2 extends BaseService {
       'include_audit': _params.includeAudit,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'listAssistants'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'listAssistants');
 
     const parameters = {
       options: {
@@ -264,11 +256,7 @@ class AssistantV2 extends BaseService {
       'assistant_id': _params.assistantId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'deleteAssistant'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteAssistant');
 
     const parameters = {
       options: {
@@ -343,11 +331,7 @@ class AssistantV2 extends BaseService {
       'assistant_id': _params.assistantId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'createSession'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'createSession');
 
     const parameters = {
       options: {
@@ -415,11 +399,7 @@ class AssistantV2 extends BaseService {
       'session_id': _params.sessionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'deleteSession'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteSession');
 
     const parameters = {
       options: {
@@ -508,11 +488,7 @@ class AssistantV2 extends BaseService {
       'session_id': _params.sessionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'message'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'message');
 
     const parameters = {
       options: {
@@ -598,11 +574,7 @@ class AssistantV2 extends BaseService {
       'assistant_id': _params.assistantId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'messageStateless'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'messageStateless');
 
     const parameters = {
       options: {
@@ -670,11 +642,7 @@ class AssistantV2 extends BaseService {
       'skill_id': _params.skillId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'bulkClassify'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'bulkClassify');
 
     const parameters = {
       options: {
@@ -759,11 +727,7 @@ class AssistantV2 extends BaseService {
       'assistant_id': _params.assistantId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'listLogs'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'listLogs');
 
     const parameters = {
       options: {
@@ -826,11 +790,7 @@ class AssistantV2 extends BaseService {
       'customer_id': _params.customerId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'deleteUserData'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteUserData');
 
     const parameters = {
       options: {
@@ -911,11 +871,7 @@ class AssistantV2 extends BaseService {
       'assistant_id': _params.assistantId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'listEnvironments'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'listEnvironments');
 
     const parameters = {
       options: {
@@ -988,11 +944,7 @@ class AssistantV2 extends BaseService {
       'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'getEnvironment'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'getEnvironment');
 
     const parameters = {
       options: {
@@ -1074,11 +1026,7 @@ class AssistantV2 extends BaseService {
       'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'updateEnvironment'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'updateEnvironment');
 
     const parameters = {
       options: {
@@ -1154,11 +1102,7 @@ class AssistantV2 extends BaseService {
       'assistant_id': _params.assistantId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'createRelease'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'createRelease');
 
     const parameters = {
       options: {
@@ -1240,11 +1184,7 @@ class AssistantV2 extends BaseService {
       'assistant_id': _params.assistantId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'listReleases'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'listReleases');
 
     const parameters = {
       options: {
@@ -1318,11 +1258,7 @@ class AssistantV2 extends BaseService {
       'release': _params.release,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'getRelease'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'getRelease');
 
     const parameters = {
       options: {
@@ -1389,11 +1325,7 @@ class AssistantV2 extends BaseService {
       'release': _params.release,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'deleteRelease'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteRelease');
 
     const parameters = {
       options: {
@@ -1469,11 +1401,7 @@ class AssistantV2 extends BaseService {
       'release': _params.release,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'deployRelease'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'deployRelease');
 
     const parameters = {
       options: {
@@ -1546,11 +1474,7 @@ class AssistantV2 extends BaseService {
       'skill_id': _params.skillId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'getSkill'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'getSkill');
 
     const parameters = {
       options: {
@@ -1637,11 +1561,7 @@ class AssistantV2 extends BaseService {
       'skill_id': _params.skillId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'updateSkill'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'updateSkill');
 
     const parameters = {
       options: {
@@ -1723,11 +1643,7 @@ class AssistantV2 extends BaseService {
       'assistant_id': _params.assistantId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'exportSkills'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'exportSkills');
 
     const parameters = {
       options: {
@@ -1811,11 +1727,7 @@ class AssistantV2 extends BaseService {
       'assistant_id': _params.assistantId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'importSkills'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'importSkills');
 
     const parameters = {
       options: {
@@ -1882,11 +1794,7 @@ class AssistantV2 extends BaseService {
       'assistant_id': _params.assistantId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'importSkillsStatus'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'importSkillsStatus');
 
     const parameters = {
       options: {
@@ -2552,7 +2460,17 @@ namespace AssistantV2 {
     /** The skill ID of the skill. */
     skill_id: string;
     /** The type of the skill. */
-    type?: string;
+    type?: AssistantSkill.Constants.Type | string;
+  }
+  export namespace AssistantSkill {
+    export namespace Constants {
+      /** The type of the skill. */
+      export enum Type {
+        DIALOG = 'dialog',
+        ACTION = 'action',
+        SEARCH = 'search',
+      }
+    }
   }
 
   /** Status information about the skills for the assistant. Included in responses only if **status**=`Available`. */
@@ -2631,7 +2549,7 @@ namespace AssistantV2 {
   /** Dialog log message details. */
   export interface DialogLogMessage {
     /** The severity of the log message. */
-    level: string;
+    level: DialogLogMessage.Constants.Level | string;
     /** The text of the log message. */
     message: string;
     /** A code that indicates the category to which the error message belongs. */
@@ -2639,19 +2557,40 @@ namespace AssistantV2 {
     /** An object that identifies the dialog element that generated the error message. */
     source?: LogMessageSource;
   }
+  export namespace DialogLogMessage {
+    export namespace Constants {
+      /** The severity of the log message. */
+      export enum Level {
+        INFO = 'info',
+        ERROR = 'error',
+        WARN = 'warn',
+      }
+    }
+  }
 
   /** DialogNodeAction. */
   export interface DialogNodeAction {
     /** The name of the action. */
     name: string;
     /** The type of action to invoke. */
-    type?: string;
+    type?: DialogNodeAction.Constants.Type | string;
     /** A map of key/value pairs to be provided to the action. */
     parameters?: JsonObject;
     /** The location in the dialog context where the result of the action is stored. */
     result_variable: string;
     /** The name of the context variable that the client application will use to pass in credentials for the action. */
     credentials?: string;
+  }
+  export namespace DialogNodeAction {
+    export namespace Constants {
+      /** The type of action to invoke. */
+      export enum Type {
+        CLIENT = 'client',
+        SERVER = 'server',
+        WEB_ACTION = 'web-action',
+        CLOUD_FUNCTION = 'cloud-function',
+      }
+    }
   }
 
   /** Routing or other contextual information to be used by target service desk systems. */
@@ -2759,7 +2698,17 @@ namespace AssistantV2 {
     /** The type of the environment. All environments other than the draft and live environments have the type
      *  `staging`.
      */
-    environment?: string;
+    environment?: EnvironmentReference.Constants.Environment | string;
+  }
+  export namespace EnvironmentReference {
+    export namespace Constants {
+      /** The type of the environment. All environments other than the draft and live environments have the type `staging`. */
+      export enum Environment {
+        DRAFT = 'draft',
+        LIVE = 'live',
+        STAGING = 'staging',
+      }
+    }
   }
 
   /** EnvironmentSkill. */
@@ -2767,7 +2716,7 @@ namespace AssistantV2 {
     /** The skill ID of the skill. */
     skill_id: string;
     /** The type of the skill. */
-    type?: string;
+    type?: EnvironmentSkill.Constants.Type | string;
     /** Whether the skill is disabled. A disabled skill in the draft environment does not handle any messages at run
      *  time, and it is not included in saved releases.
      */
@@ -2778,6 +2727,16 @@ namespace AssistantV2 {
      *  skill), `actions skill`, and `search skill`.
      */
     skill_reference?: string;
+  }
+  export namespace EnvironmentSkill {
+    export namespace Constants {
+      /** The type of the skill. */
+      export enum Type {
+        DIALOG = 'dialog',
+        ACTION = 'action',
+        SEARCH = 'search',
+      }
+    }
   }
 
   /** IntegrationReference. */
@@ -2891,7 +2850,7 @@ namespace AssistantV2 {
      *
      *   This property is included only if the new system entities are enabled for the skill.
      */
-    locale?: string;
+    locale?: MessageContextGlobalSystem.Constants.Locale | string;
     /** The base time for interpreting any relative time mentions in the user input. The specified time overrides
      *  the current server time, and is used to calculate times mentioned in relative terms such as `now` or `tomorrow`.
      *  This can be useful for simulating past or future times for testing purposes, or when analyzing documents such as
@@ -2920,6 +2879,28 @@ namespace AssistantV2 {
     state?: string;
     /** For internal use only. */
     skip_user_input?: boolean;
+  }
+  export namespace MessageContextGlobalSystem {
+    export namespace Constants {
+      /** The language code for localization in the user input. The specified locale overrides the default for the assistant, and is used for interpreting entity values in user input such as date values. For example, `04/03/2018` might be interpreted either as April 3 or March 4, depending on the locale. This property is included only if the new system entities are enabled for the skill. */
+      export enum Locale {
+        EN_US = 'en-us',
+        EN_CA = 'en-ca',
+        EN_GB = 'en-gb',
+        AR_AR = 'ar-ar',
+        CS_CZ = 'cs-cz',
+        DE_DE = 'de-de',
+        ES_ES = 'es-es',
+        FR_FR = 'fr-fr',
+        IT_IT = 'it-it',
+        JA_JP = 'ja-jp',
+        KO_KR = 'ko-kr',
+        NL_NL = 'nl-nl',
+        PT_BR = 'pt-br',
+        ZH_CN = 'zh-cn',
+        ZH_TW = 'zh-tw',
+      }
+    }
   }
 
   /** Context variables that are used by the action skill. */
@@ -2987,7 +2968,7 @@ namespace AssistantV2 {
      *
      *  **Note:** A `search` message results in an error if no search skill is configured for the assistant.
      */
-    message_type?: string;
+    message_type?: MessageInput.Constants.MessageType | string;
     /** The text of the user input. This string cannot contain carriage return, newline, or tab characters. */
     text?: string;
     /** Intents to use when evaluating the user input. Include intents from the previous response to continue using
@@ -3012,6 +2993,15 @@ namespace AssistantV2 {
     analytics?: RequestAnalytics;
     /** Optional properties that control how the assistant responds. */
     options?: MessageInputOptions;
+  }
+  export namespace MessageInput {
+    export namespace Constants {
+      /** The type of the message: - `text`: The user input is processed normally by the assistant. - `search`: Only search results are returned. (Any dialog or action skill is bypassed.) **Note:** A `search` message results in an error if no search skill is configured for the assistant. */
+      export enum MessageType {
+        TEXT = 'text',
+        SEARCH = 'search',
+      }
+    }
   }
 
   /** A reference to a media file to be sent as an attachment with the message. */
@@ -3097,7 +3087,7 @@ namespace AssistantV2 {
      *
      *  **Note:** A `search` message results in an error if no search skill is configured for the assistant.
      */
-    message_type?: string;
+    message_type?: MessageInputStateless.Constants.MessageType | string;
     /** The text of the user input. This string cannot contain carriage return, newline, or tab characters. */
     text?: string;
     /** Intents to use when evaluating the user input. Include intents from the previous response to continue using
@@ -3122,6 +3112,15 @@ namespace AssistantV2 {
     analytics?: RequestAnalytics;
     /** Optional properties that control how the assistant responds. */
     options?: MessageInputOptionsStateless;
+  }
+  export namespace MessageInputStateless {
+    export namespace Constants {
+      /** The type of the message: - `text`: The user input is processed normally by the assistant. - `search`: Only search results are returned. (Any dialog or action skill is bypassed.) **Note:** A `search` message results in an error if no search skill is configured for the assistant. */
+      export enum MessageType {
+        TEXT = 'text',
+        SEARCH = 'search',
+      }
+    }
   }
 
   /** Assistant output to be rendered or processed by the client. */
@@ -3159,13 +3158,22 @@ namespace AssistantV2 {
     /** When `branch_exited` is set to `true` by the assistant, the `branch_exited_reason` specifies whether the
      *  dialog completed by itself or got interrupted.
      */
-    branch_exited_reason?: string;
+    branch_exited_reason?: MessageOutputDebug.Constants.BranchExitedReason | string;
     /** An array of objects containing detailed diagnostic information about dialog nodes and actions that were
      *  visited during processing of the input message.
      *
      *  This property is present only if the assistant has an action skill.
      */
     turn_events?: MessageOutputDebugTurnEvent[];
+  }
+  export namespace MessageOutputDebug {
+    export namespace Constants {
+      /** When `branch_exited` is set to `true` by the assistant, the `branch_exited_reason` specifies whether the dialog completed by itself or got interrupted. */
+      export enum BranchExitedReason {
+        COMPLETED = 'completed',
+        FALLBACK = 'fallback',
+      }
+    }
   }
 
   /** MessageOutputDebugTurnEvent. */
@@ -3286,11 +3294,21 @@ namespace AssistantV2 {
      *   - **Failed**: An asynchronous publish operation has failed.
      *   - **Processing**: An asynchronous publish operation has not yet completed.
      */
-    status?: string;
+    status?: Release.Constants.Status | string;
     /** The timestamp for creation of the object. */
     created?: string;
     /** The timestamp for the most recent update to the object. */
     updated?: string;
+  }
+  export namespace Release {
+    export namespace Constants {
+      /** The current status of the release: - **Available**: The release is available for deployment. - **Failed**: An asynchronous publish operation has failed. - **Processing**: An asynchronous publish operation has not yet completed. */
+      export enum Status {
+        AVAILABLE = 'Available',
+        FAILED = 'Failed',
+        PROCESSING = 'Processing',
+      }
+    }
   }
 
   /** ReleaseCollection. */
@@ -3314,9 +3332,19 @@ namespace AssistantV2 {
     /** The skill ID of the skill. */
     skill_id: string;
     /** The type of the skill. */
-    type?: string;
+    type?: ReleaseSkill.Constants.Type | string;
     /** The name of the skill snapshot that is saved as part of the release (for example, `draft` or `1`). */
     snapshot?: string;
+  }
+  export namespace ReleaseSkill {
+    export namespace Constants {
+      /** The type of the skill. */
+      export enum Type {
+        DIALOG = 'dialog',
+        ACTION = 'action',
+        SEARCH = 'search',
+      }
+    }
   }
 
   /** An optional object containing analytics data. Currently, this data is used only for events sent to the Segment extension. */
@@ -3398,7 +3426,7 @@ namespace AssistantV2 {
      */
     festival?: string;
     /** The precision or duration of a time range specified by a recognized `@sys-time` or `@sys-date` entity. */
-    granularity?: string;
+    granularity?: RuntimeEntityInterpretation.Constants.Granularity | string;
     /** A unique identifier used to associate multiple recognized `@sys-date`, `@sys-time`, or `@sys-number`
      *  entities that are recognized as a range of values in the user's input (for example, `from July 4 until July 14`
      *  or `from 20 to 25`).
@@ -3471,11 +3499,42 @@ namespace AssistantV2 {
     /** A recognized time zone mentioned as part of a time value (for example, `EST`). */
     timezone?: string;
   }
+  export namespace RuntimeEntityInterpretation {
+    export namespace Constants {
+      /** The precision or duration of a time range specified by a recognized `@sys-time` or `@sys-date` entity. */
+      export enum Granularity {
+        DAY = 'day',
+        FORTNIGHT = 'fortnight',
+        HOUR = 'hour',
+        INSTANT = 'instant',
+        MINUTE = 'minute',
+        MONTH = 'month',
+        QUARTER = 'quarter',
+        SECOND = 'second',
+        WEEK = 'week',
+        WEEKEND = 'weekend',
+        YEAR = 'year',
+      }
+    }
+  }
 
   /** An object describing the role played by a system entity that is specifies the beginning or end of a range recognized in the user input. This property is included only if the new system entities are enabled for the skill. */
   export interface RuntimeEntityRole {
     /** The relationship of the entity to the range. */
-    type?: string;
+    type?: RuntimeEntityRole.Constants.Type | string;
+  }
+  export namespace RuntimeEntityRole {
+    export namespace Constants {
+      /** The relationship of the entity to the range. */
+      export enum Type {
+        DATE_FROM = 'date_from',
+        DATE_TO = 'date_to',
+        NUMBER_FROM = 'number_from',
+        NUMBER_TO = 'number_to',
+        TIME_FROM = 'time_from',
+        TIME_TO = 'time_to',
+      }
+    }
   }
 
   /** An intent identified in the user input. */
@@ -3676,7 +3735,7 @@ namespace AssistantV2 {
      *   - **Processing**: An asynchronous operation has not yet completed.
      *   - **Training**: The skill is training based on new data.
      */
-    status?: string;
+    status?: Skill.Constants.Status | string;
     /** An array of messages about errors that caused an asynchronous operation to fail. Included only if
      *  **status**=`Failed`.
      */
@@ -3708,7 +3767,26 @@ namespace AssistantV2 {
     /** The language of the skill. */
     language: string;
     /** The type of skill. */
-    type: string;
+    type: Skill.Constants.Type | string;
+  }
+  export namespace Skill {
+    export namespace Constants {
+      /** The current status of the skill: - **Available**: The skill is available and ready to process messages. - **Failed**: An asynchronous operation has failed. See the **status_errors** property for more information about the cause of the failure. - **Non Existent**: The skill does not exist. - **Processing**: An asynchronous operation has not yet completed. - **Training**: The skill is training based on new data. */
+      export enum Status {
+        AVAILABLE = 'Available',
+        FAILED = 'Failed',
+        NON_EXISTENT = 'Non Existent',
+        PROCESSING = 'Processing',
+        TRAINING = 'Training',
+        UNAVAILABLE = 'Unavailable',
+      }
+      /** The type of skill. */
+      export enum Type {
+        ACTION = 'action',
+        DIALOG = 'dialog',
+        SEARCH = 'search',
+      }
+    }
   }
 
   /** SkillImport. */
@@ -3729,7 +3807,7 @@ namespace AssistantV2 {
      *   - **Processing**: An asynchronous operation has not yet completed.
      *   - **Training**: The skill is training based on new data.
      */
-    status?: string;
+    status?: SkillImport.Constants.Status | string;
     /** An array of messages about errors that caused an asynchronous operation to fail. Included only if
      *  **status**=`Failed`.
      */
@@ -3761,7 +3839,26 @@ namespace AssistantV2 {
     /** The language of the skill. */
     language: string;
     /** The type of skill. */
-    type: string;
+    type: SkillImport.Constants.Type | string;
+  }
+  export namespace SkillImport {
+    export namespace Constants {
+      /** The current status of the skill: - **Available**: The skill is available and ready to process messages. - **Failed**: An asynchronous operation has failed. See the **status_errors** property for more information about the cause of the failure. - **Non Existent**: The skill does not exist. - **Processing**: An asynchronous operation has not yet completed. - **Training**: The skill is training based on new data. */
+      export enum Status {
+        AVAILABLE = 'Available',
+        FAILED = 'Failed',
+        NON_EXISTENT = 'Non Existent',
+        PROCESSING = 'Processing',
+        TRAINING = 'Training',
+        UNAVAILABLE = 'Unavailable',
+      }
+      /** The type of skill. */
+      export enum Type {
+        ACTION = 'action',
+        DIALOG = 'dialog',
+        SEARCH = 'search',
+      }
+    }
   }
 
   /** SkillsAsyncRequestStatus. */
@@ -3775,13 +3872,24 @@ namespace AssistantV2 {
      *  the cause of the failure.
      *   - `Processing`: An asynchronous operation has not yet completed.
      */
-    status?: string;
+    status?: SkillsAsyncRequestStatus.Constants.Status | string;
     /** The description of the failed asynchronous operation. Included only if **status**=`Failed`. */
     status_description?: string;
     /** An array of messages about errors that caused an asynchronous operation to fail. Included only if
      *  **status**=`Failed`.
      */
     status_errors?: StatusError[];
+  }
+  export namespace SkillsAsyncRequestStatus {
+    export namespace Constants {
+      /** The current status of the asynchronous operation: - `Available`: An asynchronous export is available. - `Completed`: An asynchronous import operation has completed successfully. - `Failed`: An asynchronous operation has failed. See the **status_errors** property for more information about the cause of the failure. - `Processing`: An asynchronous operation has not yet completed. */
+      export enum Status {
+        AVAILABLE = 'Available',
+        COMPLETED = 'Completed',
+        FAILED = 'Failed',
+        PROCESSING = 'Processing',
+      }
+    }
   }
 
   /** SkillsExport. */
@@ -3803,7 +3911,7 @@ namespace AssistantV2 {
   /** TurnEventActionSource. */
   export interface TurnEventActionSource {
     /** The type of turn event. */
-    type?: string;
+    type?: TurnEventActionSource.Constants.Type | string;
     /** An action that was visited during processing of the message. */
     action?: string;
     /** The title of the action. */
@@ -3811,17 +3919,33 @@ namespace AssistantV2 {
     /** The condition that triggered the dialog node. */
     condition?: string;
   }
+  export namespace TurnEventActionSource {
+    export namespace Constants {
+      /** The type of turn event. */
+      export enum Type {
+        ACTION = 'action',
+      }
+    }
+  }
 
   /** TurnEventCalloutCallout. */
   export interface TurnEventCalloutCallout {
     /** The type of callout. Currently, the only supported value is `integration_interaction` (for calls to
      *  extensions).
      */
-    type?: string;
+    type?: TurnEventCalloutCallout.Constants.Type | string;
     /** For internal use only. */
     internal?: JsonObject;
     /** The name of the variable where the callout result is stored. */
     result_variable?: string;
+  }
+  export namespace TurnEventCalloutCallout {
+    export namespace Constants {
+      /** The type of callout. Currently, the only supported value is `integration_interaction` (for calls to extensions). */
+      export enum Type {
+        INTEGRATION_INTERACTION = 'integration_interaction',
+      }
+    }
   }
 
   /** TurnEventCalloutError. */
@@ -3833,13 +3957,21 @@ namespace AssistantV2 {
   /** TurnEventNodeSource. */
   export interface TurnEventNodeSource {
     /** The type of turn event. */
-    type?: string;
+    type?: TurnEventNodeSource.Constants.Type | string;
     /** A dialog node that was visited during processing of the input message. */
     dialog_node?: string;
     /** The title of the dialog node. */
     title?: string;
     /** The condition that triggered the dialog node. */
     condition?: string;
+  }
+  export namespace TurnEventNodeSource {
+    export namespace Constants {
+      /** The type of turn event. */
+      export enum Type {
+        DIALOG_NODE = 'dialog_node',
+      }
+    }
   }
 
   /** TurnEventSearchError. */
@@ -3894,11 +4026,30 @@ namespace AssistantV2 {
     /** The time when the action started processing the message. */
     action_start_time?: string;
     /** The type of condition (if any) that is defined for the action. */
-    condition_type?: string;
+    condition_type?: MessageOutputDebugTurnEventTurnEventActionFinished.Constants.ConditionType | string;
     /** The reason the action finished processing. */
-    reason?: string;
+    reason?: MessageOutputDebugTurnEventTurnEventActionFinished.Constants.Reason | string;
     /** The state of all action variables at the time the action finished. */
     action_variables?: JsonObject;
+  }
+  export namespace MessageOutputDebugTurnEventTurnEventActionFinished {
+    export namespace Constants {
+      /** The type of condition (if any) that is defined for the action. */
+      export enum ConditionType {
+        USER_DEFINED = 'user_defined',
+        WELCOME = 'welcome',
+        ANYTHING_ELSE = 'anything_else',
+      }
+      /** The reason the action finished processing. */
+      export enum Reason {
+        ALL_STEPS_DONE = 'all_steps_done',
+        NO_STEPS_VISITED = 'no_steps_visited',
+        ENDED_BY_STEP = 'ended_by_step',
+        CONNECT_TO_AGENT = 'connect_to_agent',
+        MAX_RETRIES_REACHED = 'max_retries_reached',
+        FALLBACK = 'fallback',
+      }
+    }
   }
 
   /** MessageOutputDebugTurnEventTurnEventActionVisited. */
@@ -3909,13 +4060,35 @@ namespace AssistantV2 {
     /** The time when the action started processing the message. */
     action_start_time?: string;
     /** The type of condition (if any) that is defined for the action. */
-    condition_type?: string;
+    condition_type?: MessageOutputDebugTurnEventTurnEventActionVisited.Constants.ConditionType | string;
     /** The reason the action was visited. */
-    reason?: string;
+    reason?: MessageOutputDebugTurnEventTurnEventActionVisited.Constants.Reason | string;
     /** The variable where the result of the call to the action is stored. Included only if
      *  **reason**=`subaction_return`.
      */
     result_variable?: string;
+  }
+  export namespace MessageOutputDebugTurnEventTurnEventActionVisited {
+    export namespace Constants {
+      /** The type of condition (if any) that is defined for the action. */
+      export enum ConditionType {
+        USER_DEFINED = 'user_defined',
+        WELCOME = 'welcome',
+        ANYTHING_ELSE = 'anything_else',
+      }
+      /** The reason the action was visited. */
+      export enum Reason {
+        INTENT = 'intent',
+        INVOKE_SUBACTION = 'invoke_subaction',
+        SUBACTION_RETURN = 'subaction_return',
+        INVOKE_EXTERNAL = 'invoke_external',
+        TOPIC_SWITCH = 'topic_switch',
+        TOPIC_RETURN = 'topic_return',
+        AGENT_REQUESTED = 'agent_requested',
+        STEP_VALIDATION_FAILED = 'step_validation_failed',
+        NO_ACTION_MATCHES = 'no_action_matches',
+      }
+    }
   }
 
   /** MessageOutputDebugTurnEventTurnEventCallout. */
@@ -3942,7 +4115,20 @@ namespace AssistantV2 {
     event?: string;
     source?: TurnEventNodeSource;
     /** The reason the dialog node was visited. */
-    reason?: string;
+    reason?: MessageOutputDebugTurnEventTurnEventNodeVisited.Constants.Reason | string;
+  }
+  export namespace MessageOutputDebugTurnEventTurnEventNodeVisited {
+    export namespace Constants {
+      /** The reason the dialog node was visited. */
+      export enum Reason {
+        WELCOME = 'welcome',
+        BRANCH_START = 'branch_start',
+        TOPIC_SWITCH = 'topic_switch',
+        TOPIC_RETURN = 'topic_return',
+        TOPIC_SWITCH_WITHOUT_RETURN = 'topic_switch_without_return',
+        JUMP = 'jump',
+      }
+    }
   }
 
   /** MessageOutputDebugTurnEventTurnEventSearch. */
@@ -3959,13 +4145,23 @@ namespace AssistantV2 {
     event?: string;
     source?: TurnEventActionSource;
     /** The type of condition (if any) that is defined for the action. */
-    condition_type?: string;
+    condition_type?: MessageOutputDebugTurnEventTurnEventStepAnswered.Constants.ConditionType | string;
     /** The time when the action started processing the message. */
     action_start_time?: string;
     /** Whether the step was answered in response to a prompt from the assistant. If this property is `false`, the
      *  user provided the answer without visiting the step.
      */
     prompted?: boolean;
+  }
+  export namespace MessageOutputDebugTurnEventTurnEventStepAnswered {
+    export namespace Constants {
+      /** The type of condition (if any) that is defined for the action. */
+      export enum ConditionType {
+        USER_DEFINED = 'user_defined',
+        WELCOME = 'welcome',
+        ANYTHING_ELSE = 'anything_else',
+      }
+    }
   }
 
   /** MessageOutputDebugTurnEventTurnEventStepVisited. */
@@ -3974,11 +4170,21 @@ namespace AssistantV2 {
     event?: string;
     source?: TurnEventActionSource;
     /** The type of condition (if any) that is defined for the action. */
-    condition_type?: string;
+    condition_type?: MessageOutputDebugTurnEventTurnEventStepVisited.Constants.ConditionType | string;
     /** The time when the action started processing the message. */
     action_start_time?: string;
     /** Whether the step collects a customer response. */
     has_question?: boolean;
+  }
+  export namespace MessageOutputDebugTurnEventTurnEventStepVisited {
+    export namespace Constants {
+      /** The type of condition (if any) that is defined for the action. */
+      export enum ConditionType {
+        USER_DEFINED = 'user_defined',
+        WELCOME = 'welcome',
+        ANYTHING_ELSE = 'anything_else',
+      }
+    }
   }
 
   /** RuntimeResponseGenericRuntimeResponseTypeAudio. */
@@ -4110,13 +4316,22 @@ namespace AssistantV2 {
     /** The description to show with the the response. */
     description?: string;
     /** The preferred type of control to display. */
-    preference?: string;
+    preference?: RuntimeResponseGenericRuntimeResponseTypeOption.Constants.Preference | string;
     /** An array of objects describing the options from which the user can choose. */
     options: DialogNodeOutputOptionsElement[];
     /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
      *  response is intended for a built-in integration and should not be handled by an API client.
      */
     channels?: ResponseGenericChannel[];
+  }
+  export namespace RuntimeResponseGenericRuntimeResponseTypeOption {
+    export namespace Constants {
+      /** The preferred type of control to display. */
+      export enum Preference {
+        DROPDOWN = 'dropdown',
+        BUTTON = 'button',
+      }
+    }
   }
 
   /** RuntimeResponseGenericRuntimeResponseTypePause. */

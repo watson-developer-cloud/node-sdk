@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.64.1-cee95189-20230124-211647
+ * IBM OpenAPI SDK Code Generator Version: 3.85.0-75c38f8f-20240206-210220
  */
 
 import * as extend from 'extend';
@@ -23,9 +23,9 @@ import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import {
   Authenticator,
   BaseService,
+  UserOptions,
   getAuthenticatorFromEnvironment,
   validateParams,
-  UserOptions,
 } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
@@ -55,7 +55,7 @@ class LanguageTranslatorV3 extends BaseService {
    * @param {Object} options - Options for the service.
    * @param {string} options.version - Release date of the version of the API you want to use. Specify dates in
    * YYYY-MM-DD format. The current version is `2018-05-01`.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base URL for the service
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
@@ -117,11 +117,7 @@ class LanguageTranslatorV3 extends BaseService {
       'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      LanguageTranslatorV3.DEFAULT_SERVICE_NAME,
-      'v3',
-      'listLanguages'
-    );
+    const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'listLanguages');
 
     const parameters = {
       options: {
@@ -194,11 +190,7 @@ class LanguageTranslatorV3 extends BaseService {
       'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      LanguageTranslatorV3.DEFAULT_SERVICE_NAME,
-      'v3',
-      'translate'
-    );
+    const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'translate');
 
     const parameters = {
       options: {
@@ -251,11 +243,7 @@ class LanguageTranslatorV3 extends BaseService {
       'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      LanguageTranslatorV3.DEFAULT_SERVICE_NAME,
-      'v3',
-      'listIdentifiableLanguages'
-    );
+    const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'listIdentifiableLanguages');
 
     const parameters = {
       options: {
@@ -304,11 +292,7 @@ class LanguageTranslatorV3 extends BaseService {
       'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      LanguageTranslatorV3.DEFAULT_SERVICE_NAME,
-      'v3',
-      'identify'
-    );
+    const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'identify');
 
     const parameters = {
       options: {
@@ -369,11 +353,7 @@ class LanguageTranslatorV3 extends BaseService {
       'default': _params._default,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      LanguageTranslatorV3.DEFAULT_SERVICE_NAME,
-      'v3',
-      'listModels'
-    );
+    const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'listModels');
 
     const parameters = {
       options: {
@@ -517,11 +497,7 @@ class LanguageTranslatorV3 extends BaseService {
       'name': _params.name,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      LanguageTranslatorV3.DEFAULT_SERVICE_NAME,
-      'v3',
-      'createModel'
-    );
+    const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'createModel');
 
     const parameters = {
       options: {
@@ -575,11 +551,7 @@ class LanguageTranslatorV3 extends BaseService {
       'model_id': _params.modelId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      LanguageTranslatorV3.DEFAULT_SERVICE_NAME,
-      'v3',
-      'deleteModel'
-    );
+    const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'deleteModel');
 
     const parameters = {
       options: {
@@ -633,11 +605,7 @@ class LanguageTranslatorV3 extends BaseService {
       'model_id': _params.modelId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      LanguageTranslatorV3.DEFAULT_SERVICE_NAME,
-      'v3',
-      'getModel'
-    );
+    const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'getModel');
 
     const parameters = {
       options: {
@@ -688,11 +656,7 @@ class LanguageTranslatorV3 extends BaseService {
       'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      LanguageTranslatorV3.DEFAULT_SERVICE_NAME,
-      'v3',
-      'listDocuments'
-    );
+    const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'listDocuments');
 
     const parameters = {
       options: {
@@ -797,11 +761,7 @@ class LanguageTranslatorV3 extends BaseService {
       'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      LanguageTranslatorV3.DEFAULT_SERVICE_NAME,
-      'v3',
-      'translateDocument'
-    );
+    const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'translateDocument');
 
     const parameters = {
       options: {
@@ -855,11 +815,7 @@ class LanguageTranslatorV3 extends BaseService {
       'document_id': _params.documentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      LanguageTranslatorV3.DEFAULT_SERVICE_NAME,
-      'v3',
-      'getDocumentStatus'
-    );
+    const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'getDocumentStatus');
 
     const parameters = {
       options: {
@@ -912,11 +868,7 @@ class LanguageTranslatorV3 extends BaseService {
       'document_id': _params.documentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      LanguageTranslatorV3.DEFAULT_SERVICE_NAME,
-      'v3',
-      'deleteDocument'
-    );
+    const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'deleteDocument');
 
     const parameters = {
       options: {
@@ -977,11 +929,7 @@ class LanguageTranslatorV3 extends BaseService {
       'document_id': _params.documentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      LanguageTranslatorV3.DEFAULT_SERVICE_NAME,
-      'v3',
-      'getTranslatedDocument'
-    );
+    const sdkHeaders = getSdkHeaders(LanguageTranslatorV3.DEFAULT_SERVICE_NAME, 'v3', 'getTranslatedDocument');
 
     const parameters = {
       options: {
@@ -1341,7 +1289,7 @@ namespace LanguageTranslatorV3 {
      */
     filename: string;
     /** The status of the translation job associated with a submitted document. */
-    status: string;
+    status: DocumentStatus.Constants.Status | string;
     /** A globally unique string that identifies the underlying model that is used for translation. */
     model_id: string;
     /** Model ID of the base model that was used to customize the model. If the model is not a custom model, this
@@ -1364,6 +1312,16 @@ namespace LanguageTranslatorV3 {
     word_count?: number;
     /** The number of characters in the source document, present only if status=available. */
     character_count?: number;
+  }
+  export namespace DocumentStatus {
+    export namespace Constants {
+      /** The status of the translation job associated with a submitted document. */
+      export enum Status {
+        PROCESSING = 'processing',
+        AVAILABLE = 'available',
+        FAILED = 'failed',
+      }
+    }
   }
 
   /** IdentifiableLanguage. */
@@ -1465,7 +1423,24 @@ namespace LanguageTranslatorV3 {
      */
     owner?: string;
     /** Availability of a model. */
-    status?: string;
+    status?: TranslationModel.Constants.Status | string;
+  }
+  export namespace TranslationModel {
+    export namespace Constants {
+      /** Availability of a model. */
+      export enum Status {
+        UPLOADING = 'uploading',
+        UPLOADED = 'uploaded',
+        DISPATCHING = 'dispatching',
+        QUEUED = 'queued',
+        TRAINING = 'training',
+        TRAINED = 'trained',
+        PUBLISHING = 'publishing',
+        AVAILABLE = 'available',
+        DELETED = 'deleted',
+        ERROR = 'error',
+      }
+    }
   }
 
   /** The response type for listing existing translation models. */

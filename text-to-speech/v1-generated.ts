@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2017, 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.64.1-cee95189-20230124-211647
+ * IBM OpenAPI SDK Code Generator Version: 3.85.0-75c38f8f-20240206-210220
  */
 
 import * as extend from 'extend';
@@ -23,9 +23,9 @@ import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import {
   Authenticator,
   BaseService,
+  UserOptions,
   getAuthenticatorFromEnvironment,
   validateParams,
-  UserOptions,
 } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
@@ -70,7 +70,7 @@ class TextToSpeechV1 extends BaseService {
    * Construct a TextToSpeechV1 object.
    *
    * @param {Object} options - Options for the service.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base URL for the service
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
@@ -131,11 +131,7 @@ class TextToSpeechV1 extends BaseService {
       return Promise.reject(_validationErrors);
     }
 
-    const sdkHeaders = getSdkHeaders(
-      TextToSpeechV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listVoices'
-    );
+    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'listVoices');
 
     const parameters = {
       options: {
@@ -202,11 +198,7 @@ class TextToSpeechV1 extends BaseService {
       'voice': _params.voice,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      TextToSpeechV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getVoice'
-    );
+    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'getVoice');
 
     const parameters = {
       options: {
@@ -383,11 +375,7 @@ class TextToSpeechV1 extends BaseService {
       'pitch_percentage': _params.pitchPercentage,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      TextToSpeechV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'synthesize'
-    );
+    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'synthesize');
 
     const parameters = {
       options: {
@@ -473,11 +461,7 @@ class TextToSpeechV1 extends BaseService {
       'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      TextToSpeechV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getPronunciation'
-    );
+    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'getPronunciation');
 
     const parameters = {
       options: {
@@ -552,11 +536,7 @@ class TextToSpeechV1 extends BaseService {
       'description': _params.description,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      TextToSpeechV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createCustomModel'
-    );
+    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'createCustomModel');
 
     const parameters = {
       options: {
@@ -612,11 +592,7 @@ class TextToSpeechV1 extends BaseService {
       'language': _params.language,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      TextToSpeechV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listCustomModels'
-    );
+    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'listCustomModels');
 
     const parameters = {
       options: {
@@ -696,11 +672,7 @@ class TextToSpeechV1 extends BaseService {
       'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      TextToSpeechV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'updateCustomModel'
-    );
+    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'updateCustomModel');
 
     const parameters = {
       options: {
@@ -757,11 +729,7 @@ class TextToSpeechV1 extends BaseService {
       'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      TextToSpeechV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getCustomModel'
-    );
+    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'getCustomModel');
 
     const parameters = {
       options: {
@@ -814,11 +782,7 @@ class TextToSpeechV1 extends BaseService {
       'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      TextToSpeechV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteCustomModel'
-    );
+    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteCustomModel');
 
     const parameters = {
       options: {
@@ -900,11 +864,7 @@ class TextToSpeechV1 extends BaseService {
       'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      TextToSpeechV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'addWords'
-    );
+    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'addWords');
 
     const parameters = {
       options: {
@@ -960,11 +920,7 @@ class TextToSpeechV1 extends BaseService {
       'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      TextToSpeechV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listWords'
-    );
+    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'listWords');
 
     const parameters = {
       options: {
@@ -1050,11 +1006,7 @@ class TextToSpeechV1 extends BaseService {
       'word': _params.word,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      TextToSpeechV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'addWord'
-    );
+    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'addWord');
 
     const parameters = {
       options: {
@@ -1111,11 +1063,7 @@ class TextToSpeechV1 extends BaseService {
       'word': _params.word,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      TextToSpeechV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getWord'
-    );
+    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'getWord');
 
     const parameters = {
       options: {
@@ -1170,11 +1118,7 @@ class TextToSpeechV1 extends BaseService {
       'word': _params.word,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      TextToSpeechV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteWord'
-    );
+    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteWord');
 
     const parameters = {
       options: {
@@ -1233,11 +1177,7 @@ class TextToSpeechV1 extends BaseService {
       'customization_id': _params.customizationId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      TextToSpeechV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listCustomPrompts'
-    );
+    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'listCustomPrompts');
 
     const parameters = {
       options: {
@@ -1377,11 +1317,7 @@ class TextToSpeechV1 extends BaseService {
       'prompt_id': _params.promptId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      TextToSpeechV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'addCustomPrompt'
-    );
+    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'addCustomPrompt');
 
     const parameters = {
       options: {
@@ -1440,11 +1376,7 @@ class TextToSpeechV1 extends BaseService {
       'prompt_id': _params.promptId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      TextToSpeechV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getCustomPrompt'
-    );
+    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'getCustomPrompt');
 
     const parameters = {
       options: {
@@ -1504,11 +1436,7 @@ class TextToSpeechV1 extends BaseService {
       'prompt_id': _params.promptId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      TextToSpeechV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteCustomPrompt'
-    );
+    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteCustomPrompt');
 
     const parameters = {
       options: {
@@ -1559,11 +1487,7 @@ class TextToSpeechV1 extends BaseService {
       return Promise.reject(_validationErrors);
     }
 
-    const sdkHeaders = getSdkHeaders(
-      TextToSpeechV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listSpeakerModels'
-    );
+    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'listSpeakerModels');
 
     const parameters = {
       options: {
@@ -1657,11 +1581,7 @@ class TextToSpeechV1 extends BaseService {
       'speaker_name': _params.speakerName,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      TextToSpeechV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createSpeakerModel'
-    );
+    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'createSpeakerModel');
 
     const parameters = {
       options: {
@@ -1720,11 +1640,7 @@ class TextToSpeechV1 extends BaseService {
       'speaker_id': _params.speakerId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      TextToSpeechV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getSpeakerModel'
-    );
+    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'getSpeakerModel');
 
     const parameters = {
       options: {
@@ -1784,11 +1700,7 @@ class TextToSpeechV1 extends BaseService {
       'speaker_id': _params.speakerId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      TextToSpeechV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteSpeakerModel'
-    );
+    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteSpeakerModel');
 
     const parameters = {
       options: {
@@ -1849,11 +1761,7 @@ class TextToSpeechV1 extends BaseService {
       'customer_id': _params.customerId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      TextToSpeechV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteUserData'
-    );
+    const sdkHeaders = getSdkHeaders(TextToSpeechV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteUserData');
 
     const parameters = {
       options: {
@@ -2730,7 +2638,31 @@ namespace TextToSpeechV1 {
      *  see [Working with Japanese
      *  entries](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-rules#jaNotes).
      */
-    part_of_speech?: string;
+    part_of_speech?: Translation.Constants.PartOfSpeech | string;
+  }
+  export namespace Translation {
+    export namespace Constants {
+      /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-rules#jaNotes). */
+      export enum PartOfSpeech {
+        DOSI = 'Dosi',
+        FUKU = 'Fuku',
+        GOBI = 'Gobi',
+        HOKA = 'Hoka',
+        JODO = 'Jodo',
+        JOSI = 'Josi',
+        KATO = 'Kato',
+        KEDO = 'Kedo',
+        KEYO = 'Keyo',
+        KIGO = 'Kigo',
+        KOYU = 'Koyu',
+        MESI = 'Mesi',
+        RETA = 'Reta',
+        STBI = 'Stbi',
+        STTO = 'Stto',
+        STZO = 'Stzo',
+        SUJI = 'Suji',
+      }
+    }
   }
 
   /** Information about an available voice. */
@@ -2779,7 +2711,31 @@ namespace TextToSpeechV1 {
      *  see [Working with Japanese
      *  entries](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-rules#jaNotes).
      */
-    part_of_speech?: string;
+    part_of_speech?: Word.Constants.PartOfSpeech | string;
+  }
+  export namespace Word {
+    export namespace Constants {
+      /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct intonation for the word. You can create only a single entry, with or without a single part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word. For more information, see [Working with Japanese entries](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-rules#jaNotes). */
+      export enum PartOfSpeech {
+        DOSI = 'Dosi',
+        FUKU = 'Fuku',
+        GOBI = 'Gobi',
+        HOKA = 'Hoka',
+        JODO = 'Jodo',
+        JOSI = 'Josi',
+        KATO = 'Kato',
+        KEDO = 'Kedo',
+        KEYO = 'Keyo',
+        KIGO = 'Kigo',
+        KOYU = 'Koyu',
+        MESI = 'Mesi',
+        RETA = 'Reta',
+        STBI = 'Stbi',
+        STTO = 'Stto',
+        STZO = 'Stzo',
+        SUJI = 'Suji',
+      }
+    }
   }
 
   /** For the [Add custom words](#addwords) method, one or more words that are to be added or updated for the custom model and the translation for each specified word. For the [List custom words](#listwords) method, the words and their translations from the custom model. */

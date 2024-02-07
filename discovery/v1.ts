@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.64.1-cee95189-20230124-211647
+ * IBM OpenAPI SDK Code Generator Version: 3.85.0-75c38f8f-20240206-210220
  */
 
 import * as extend from 'extend';
@@ -23,9 +23,9 @@ import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import {
   Authenticator,
   BaseService,
+  UserOptions,
   getAuthenticatorFromEnvironment,
   validateParams,
-  UserOptions,
 } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
@@ -55,7 +55,7 @@ class DiscoveryV1 extends BaseService {
    * @param {Object} options - Options for the service.
    * @param {string} options.version - Release date of the version of the API you want to use. Specify dates in
    * YYYY-MM-DD format. The current version is `2019-04-30`.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base URL for the service
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
@@ -126,11 +126,7 @@ class DiscoveryV1 extends BaseService {
       'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createEnvironment'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'createEnvironment');
 
     const parameters = {
       options: {
@@ -181,11 +177,7 @@ class DiscoveryV1 extends BaseService {
       'name': _params.name,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listEnvironments'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'listEnvironments');
 
     const parameters = {
       options: {
@@ -235,11 +227,7 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getEnvironment'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getEnvironment');
 
     const parameters = {
       options: {
@@ -303,11 +291,7 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'updateEnvironment'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'updateEnvironment');
 
     const parameters = {
       options: {
@@ -360,11 +344,7 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteEnvironment'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteEnvironment');
 
     const parameters = {
       options: {
@@ -419,11 +399,7 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listFields'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'listFields');
 
     const parameters = {
       options: {
@@ -503,11 +479,7 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createConfiguration'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'createConfiguration');
 
     const parameters = {
       options: {
@@ -564,11 +536,7 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listConfigurations'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'listConfigurations');
 
     const parameters = {
       options: {
@@ -621,11 +589,7 @@ class DiscoveryV1 extends BaseService {
       'configuration_id': _params.configurationId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getConfiguration'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getConfiguration');
 
     const parameters = {
       options: {
@@ -702,11 +666,7 @@ class DiscoveryV1 extends BaseService {
       'configuration_id': _params.configurationId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'updateConfiguration'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'updateConfiguration');
 
     const parameters = {
       options: {
@@ -766,11 +726,7 @@ class DiscoveryV1 extends BaseService {
       'configuration_id': _params.configurationId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteConfiguration'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteConfiguration');
 
     const parameters = {
       options: {
@@ -836,11 +792,7 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createCollection'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'createCollection');
 
     const parameters = {
       options: {
@@ -897,11 +849,7 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listCollections'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'listCollections');
 
     const parameters = {
       options: {
@@ -954,11 +902,7 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getCollection'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getCollection');
 
     const parameters = {
       options: {
@@ -1020,11 +964,7 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'updateCollection'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'updateCollection');
 
     const parameters = {
       options: {
@@ -1079,11 +1019,7 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteCollection'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteCollection');
 
     const parameters = {
       options: {
@@ -1138,11 +1074,7 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listCollectionFields'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'listCollectionFields');
 
     const parameters = {
       options: {
@@ -1201,11 +1133,7 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listExpansions'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'listExpansions');
 
     const parameters = {
       options: {
@@ -1278,11 +1206,7 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createExpansions'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'createExpansions');
 
     const parameters = {
       options: {
@@ -1340,11 +1264,7 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteExpansions'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteExpansions');
 
     const parameters = {
       options: {
@@ -1398,11 +1318,7 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getTokenizationDictionaryStatus'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getTokenizationDictionaryStatus');
 
     const parameters = {
       options: {
@@ -1464,11 +1380,7 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createTokenizationDictionary'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'createTokenizationDictionary');
 
     const parameters = {
       options: {
@@ -1525,11 +1437,7 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteTokenizationDictionary'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteTokenizationDictionary');
 
     const parameters = {
       options: {
@@ -1583,11 +1491,7 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getStopwordListStatus'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getStopwordListStatus');
 
     const parameters = {
       options: {
@@ -1652,11 +1556,7 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createStopwordList'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'createStopwordList');
 
     const parameters = {
       options: {
@@ -1714,11 +1614,7 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteStopwordList'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteStopwordList');
 
     const parameters = {
       options: {
@@ -1815,11 +1711,7 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'addDocument'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'addDocument');
 
     const parameters = {
       options: {
@@ -1880,11 +1772,7 @@ class DiscoveryV1 extends BaseService {
       'document_id': _params.documentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getDocumentStatus'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getDocumentStatus');
 
     const parameters = {
       options: {
@@ -1964,11 +1852,7 @@ class DiscoveryV1 extends BaseService {
       'document_id': _params.documentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'updateDocument'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'updateDocument');
 
     const parameters = {
       options: {
@@ -2028,11 +1912,7 @@ class DiscoveryV1 extends BaseService {
       'document_id': _params.documentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteDocument'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteDocument');
 
     const parameters = {
       options: {
@@ -2166,11 +2046,7 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'query'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'query');
 
     const parameters = {
       options: {
@@ -2286,11 +2162,7 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'queryNotices'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'queryNotices');
 
     const parameters = {
       options: {
@@ -2415,11 +2287,7 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'federatedQuery'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'federatedQuery');
 
     const parameters = {
       options: {
@@ -2525,11 +2393,7 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'federatedQueryNotices'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'federatedQueryNotices');
 
     const parameters = {
       options: {
@@ -2593,11 +2457,7 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getAutocompletion'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getAutocompletion');
 
     const parameters = {
       options: {
@@ -2655,11 +2515,7 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listTrainingData'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'listTrainingData');
 
     const parameters = {
       options: {
@@ -2724,11 +2580,7 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'addTrainingData'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'addTrainingData');
 
     const parameters = {
       options: {
@@ -2785,11 +2637,7 @@ class DiscoveryV1 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteAllTrainingData'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteAllTrainingData');
 
     const parameters = {
       options: {
@@ -2845,11 +2693,7 @@ class DiscoveryV1 extends BaseService {
       'query_id': _params.queryId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getTrainingData'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getTrainingData');
 
     const parameters = {
       options: {
@@ -2906,11 +2750,7 @@ class DiscoveryV1 extends BaseService {
       'query_id': _params.queryId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteTrainingData'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteTrainingData');
 
     const parameters = {
       options: {
@@ -2966,11 +2806,7 @@ class DiscoveryV1 extends BaseService {
       'query_id': _params.queryId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listTrainingExamples'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'listTrainingExamples');
 
     const parameters = {
       options: {
@@ -3036,11 +2872,7 @@ class DiscoveryV1 extends BaseService {
       'query_id': _params.queryId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createTrainingExample'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'createTrainingExample');
 
     const parameters = {
       options: {
@@ -3101,11 +2933,7 @@ class DiscoveryV1 extends BaseService {
       'example_id': _params.exampleId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteTrainingExample'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteTrainingExample');
 
     const parameters = {
       options: {
@@ -3170,11 +2998,7 @@ class DiscoveryV1 extends BaseService {
       'example_id': _params.exampleId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'updateTrainingExample'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'updateTrainingExample');
 
     const parameters = {
       options: {
@@ -3235,11 +3059,7 @@ class DiscoveryV1 extends BaseService {
       'example_id': _params.exampleId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getTrainingExample'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getTrainingExample');
 
     const parameters = {
       options: {
@@ -3297,11 +3117,7 @@ class DiscoveryV1 extends BaseService {
       'customer_id': _params.customerId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteUserData'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteUserData');
 
     const parameters = {
       options: {
@@ -3358,11 +3174,7 @@ class DiscoveryV1 extends BaseService {
       'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createEvent'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'createEvent');
 
     const parameters = {
       options: {
@@ -3429,11 +3241,7 @@ class DiscoveryV1 extends BaseService {
       'sort': _params.sort,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'queryLog'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'queryLog');
 
     const parameters = {
       options: {
@@ -3488,11 +3296,7 @@ class DiscoveryV1 extends BaseService {
       'result_type': _params.resultType,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getMetricsQuery'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getMetricsQuery');
 
     const parameters = {
       options: {
@@ -3549,11 +3353,7 @@ class DiscoveryV1 extends BaseService {
       'result_type': _params.resultType,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getMetricsQueryEvent'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getMetricsQueryEvent');
 
     const parameters = {
       options: {
@@ -3609,11 +3409,7 @@ class DiscoveryV1 extends BaseService {
       'result_type': _params.resultType,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getMetricsQueryNoResults'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getMetricsQueryNoResults');
 
     const parameters = {
       options: {
@@ -3670,11 +3466,7 @@ class DiscoveryV1 extends BaseService {
       'result_type': _params.resultType,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getMetricsEventRate'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getMetricsEventRate');
 
     const parameters = {
       options: {
@@ -3726,11 +3518,7 @@ class DiscoveryV1 extends BaseService {
       'count': _params.count,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getMetricsQueryTokenEvent'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getMetricsQueryTokenEvent');
 
     const parameters = {
       options: {
@@ -3787,11 +3575,7 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listCredentials'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'listCredentials');
 
     const parameters = {
       options: {
@@ -3864,11 +3648,7 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createCredentials'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'createCredentials');
 
     const parameters = {
       options: {
@@ -3928,11 +3708,7 @@ class DiscoveryV1 extends BaseService {
       'credential_id': _params.credentialId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getCredentials'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getCredentials');
 
     const parameters = {
       options: {
@@ -4006,11 +3782,7 @@ class DiscoveryV1 extends BaseService {
       'credential_id': _params.credentialId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'updateCredentials'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'updateCredentials');
 
     const parameters = {
       options: {
@@ -4067,11 +3839,7 @@ class DiscoveryV1 extends BaseService {
       'credential_id': _params.credentialId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteCredentials'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteCredentials');
 
     const parameters = {
       options: {
@@ -4127,11 +3895,7 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listGateways'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'listGateways');
 
     const parameters = {
       options: {
@@ -4189,11 +3953,7 @@ class DiscoveryV1 extends BaseService {
       'environment_id': _params.environmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createGateway'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'createGateway');
 
     const parameters = {
       options: {
@@ -4250,11 +4010,7 @@ class DiscoveryV1 extends BaseService {
       'gateway_id': _params.gatewayId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getGateway'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'getGateway');
 
     const parameters = {
       options: {
@@ -4309,11 +4065,7 @@ class DiscoveryV1 extends BaseService {
       'gateway_id': _params.gatewayId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteGateway'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteGateway');
 
     const parameters = {
       options: {
@@ -5573,7 +5325,7 @@ namespace DiscoveryV1 {
     /** The timestamp of when the collection was last updated in the format yyyy-MM-dd'T'HH:mm:ss.SSS'Z'. */
     updated?: string;
     /** The status of the collection. */
-    status?: string;
+    status?: Collection.Constants.Status | string;
     /** The unique identifier of the collection's configuration. */
     configuration_id?: string;
     /** The language of the documents stored in the collection. Permitted values include `en` (English), `de`
@@ -5590,6 +5342,16 @@ namespace DiscoveryV1 {
     crawl_status?: CollectionCrawlStatus;
     /** Object containing smart document understanding information for this collection. */
     smart_document_understanding?: SduStatus;
+  }
+  export namespace Collection {
+    export namespace Constants {
+      /** The status of the collection. */
+      export enum Status {
+        ACTIVE = 'active',
+        PENDING = 'pending',
+        MAINTENANCE = 'maintenance',
+      }
+    }
   }
 
   /** Object containing information about the crawl status of this collection. */
@@ -5667,9 +5429,17 @@ namespace DiscoveryV1 {
   /** An object defining the event being created. */
   export interface CreateEventResponse {
     /** The event type that was created. */
-    type?: string;
+    type?: CreateEventResponse.Constants.Type | string;
     /** Query event data object. */
     data?: EventData;
+  }
+  export namespace CreateEventResponse {
+    export namespace Constants {
+      /** The event type that was created. */
+      export enum Type {
+        CLICK = 'click',
+      }
+    }
   }
 
   /** Object containing details of the stored credentials. Obtain credentials for your source from the administrator of the source. */
@@ -5684,7 +5454,7 @@ namespace DiscoveryV1 {
      *  -  `"source_type": "web_crawl"` - valid `credential_type`s: `noauth` or `basic`
      *  -  "source_type": "cloud_object_storage"` - valid `credential_type`s: `aws4_hmac`.
      */
-    credential_type?: string;
+    credential_type?: CredentialDetails.Constants.CredentialType | string;
     /** The **client_id** of the source that these credentials connect to. Only valid, and required, with a
      *  **credential_type** of `oauth2`.
      */
@@ -5745,7 +5515,7 @@ namespace DiscoveryV1 {
     /** The type of Sharepoint repository to connect to. Only valid, and required, with a **source_type** of
      *  `sharepoint`.
      */
-    source_version?: string;
+    source_version?: CredentialDetails.Constants.SourceVersion | string;
     /** SharePoint OnPrem WebApplication URL. Only valid, and required, with a **source_version** of `2016`. If a
      *  port is not supplied, the default to port `80` for http and port `443` for https connections are used.
      */
@@ -5771,6 +5541,24 @@ namespace DiscoveryV1 {
      */
     secret_access_key?: string;
   }
+  export namespace CredentialDetails {
+    export namespace Constants {
+      /** The authentication method for this credentials definition. The  **credential_type** specified must be supported by the **source_type**. The following combinations are possible: -  `"source_type": "box"` - valid `credential_type`s: `oauth2` -  `"source_type": "salesforce"` - valid `credential_type`s: `username_password` -  `"source_type": "sharepoint"` - valid `credential_type`s: `saml` with **source_version** of `online`, or `ntlm_v1` with **source_version** of `2016` -  `"source_type": "web_crawl"` - valid `credential_type`s: `noauth` or `basic` -  "source_type": "cloud_object_storage"` - valid `credential_type`s: `aws4_hmac`. */
+      export enum CredentialType {
+        OAUTH2 = 'oauth2',
+        SAML = 'saml',
+        USERNAME_PASSWORD = 'username_password',
+        NOAUTH = 'noauth',
+        BASIC = 'basic',
+        NTLM_V1 = 'ntlm_v1',
+        AWS4_HMAC = 'aws4_hmac',
+      }
+      /** The type of Sharepoint repository to connect to. Only valid, and required, with a **source_type** of `sharepoint`. */
+      export enum SourceVersion {
+        ONLINE = 'online',
+      }
+    }
+  }
 
   /** Object containing credential information. */
   export interface Credentials {
@@ -5783,7 +5571,7 @@ namespace DiscoveryV1 {
      *  -  `web_crawl` indicates the credentials are used to perform a web crawl.
      *  =  `cloud_object_storage` indicates the credentials are used to connect to an IBM Cloud Object Store.
      */
-    source_type?: string;
+    source_type?: Credentials.Constants.SourceType | string;
     /** Object containing details of the stored credentials.
      *
      *  Obtain credentials for your source from the administrator of the source.
@@ -5791,6 +5579,18 @@ namespace DiscoveryV1 {
     credential_details?: CredentialDetails;
     /** Object that contains details about the status of the authentication process. */
     status?: StatusDetails;
+  }
+  export namespace Credentials {
+    export namespace Constants {
+      /** The source that this credentials object connects to. -  `box` indicates the credentials are used to connect an instance of Enterprise Box. -  `salesforce` indicates the credentials are used to connect to Salesforce. -  `sharepoint` indicates the credentials are used to connect to Microsoft SharePoint Online. -  `web_crawl` indicates the credentials are used to perform a web crawl. =  `cloud_object_storage` indicates the credentials are used to connect to an IBM Cloud Object Store. */
+      export enum SourceType {
+        BOX = 'box',
+        SALESFORCE = 'salesforce',
+        SHAREPOINT = 'sharepoint',
+        WEB_CRAWL = 'web_crawl',
+        CLOUD_OBJECT_STORAGE = 'cloud_object_storage',
+      }
+    }
   }
 
   /** Object containing array of credential definitions. */
@@ -5804,7 +5604,15 @@ namespace DiscoveryV1 {
     /** The unique identifier of the collection that is being deleted. */
     collection_id: string;
     /** The status of the collection. The status of a successful deletion operation is `deleted`. */
-    status: string;
+    status: DeleteCollectionResponse.Constants.Status | string;
+  }
+  export namespace DeleteCollectionResponse {
+    export namespace Constants {
+      /** The status of the collection. The status of a successful deletion operation is `deleted`. */
+      export enum Status {
+        DELETED = 'deleted',
+      }
+    }
   }
 
   /** Information returned when a configuration is deleted. */
@@ -5812,9 +5620,17 @@ namespace DiscoveryV1 {
     /** The unique identifier for the configuration. */
     configuration_id: string;
     /** Status of the configuration. A deleted configuration has the status deleted. */
-    status: string;
+    status: DeleteConfigurationResponse.Constants.Status | string;
     /** An array of notice messages, if any. */
     notices?: Notice[];
+  }
+  export namespace DeleteConfigurationResponse {
+    export namespace Constants {
+      /** Status of the configuration. A deleted configuration has the status deleted. */
+      export enum Status {
+        DELETED = 'deleted',
+      }
+    }
   }
 
   /** Object returned after credentials are deleted. */
@@ -5822,7 +5638,15 @@ namespace DiscoveryV1 {
     /** The unique identifier of the credentials that have been deleted. */
     credential_id?: string;
     /** The status of the deletion request. */
-    status?: string;
+    status?: DeleteCredentials.Constants.Status | string;
+  }
+  export namespace DeleteCredentials {
+    export namespace Constants {
+      /** The status of the deletion request. */
+      export enum Status {
+        DELETED = 'deleted',
+      }
+    }
   }
 
   /** Information returned when a document is deleted. */
@@ -5830,7 +5654,15 @@ namespace DiscoveryV1 {
     /** The unique identifier of the document. */
     document_id?: string;
     /** Status of the document. A deleted document has the status deleted. */
-    status?: string;
+    status?: DeleteDocumentResponse.Constants.Status | string;
+  }
+  export namespace DeleteDocumentResponse {
+    export namespace Constants {
+      /** Status of the document. A deleted document has the status deleted. */
+      export enum Status {
+        DELETED = 'deleted',
+      }
+    }
   }
 
   /** Response object returned when deleting an environment. */
@@ -5838,7 +5670,15 @@ namespace DiscoveryV1 {
     /** The unique identifier for the environment. */
     environment_id: string;
     /** Status of the environment. */
-    status: string;
+    status: DeleteEnvironmentResponse.Constants.Status | string;
+  }
+  export namespace DeleteEnvironmentResponse {
+    export namespace Constants {
+      /** Status of the environment. */
+      export enum Status {
+        DELETED = 'deleted',
+      }
+    }
   }
 
   /** Summary of the disk usage statistics for the environment. */
@@ -5856,9 +5696,18 @@ namespace DiscoveryV1 {
     /** Status of the document in the ingestion process. A status of `processing` is returned for documents that are
      *  ingested with a *version* date before `2019-01-01`. The `pending` status is returned for all others.
      */
-    status?: string;
+    status?: DocumentAccepted.Constants.Status | string;
     /** Array of notices produced by the document-ingestion process. */
     notices?: Notice[];
+  }
+  export namespace DocumentAccepted {
+    export namespace Constants {
+      /** Status of the document in the ingestion process. A status of `processing` is returned for documents that are ingested with a *version* date before `2019-01-01`. The `pending` status is returned for all others. */
+      export enum Status {
+        PROCESSING = 'processing',
+        PENDING = 'pending',
+      }
+    }
   }
 
   /** Object containing collection document count information. */
@@ -5880,17 +5729,36 @@ namespace DiscoveryV1 {
     /** The unique identifier for the configuration. */
     configuration_id?: string;
     /** Status of the document in the ingestion process. */
-    status?: string;
+    status?: DocumentStatus.Constants.Status | string;
     /** Description of the document status. */
     status_description?: string;
     /** Name of the original source file (if available). */
     filename?: string;
     /** The type of the original source file. */
-    file_type?: string;
+    file_type?: DocumentStatus.Constants.FileType | string;
     /** The SHA-1 hash of the original source file (formatted as a hexadecimal string). */
     sha1?: string;
     /** Array of notices produced by the document-ingestion process. */
     notices?: Notice[];
+  }
+  export namespace DocumentStatus {
+    export namespace Constants {
+      /** Status of the document in the ingestion process. */
+      export enum Status {
+        AVAILABLE = 'available',
+        AVAILABLE_WITH_NOTICES = 'available with notices',
+        FAILED = 'failed',
+        PROCESSING = 'processing',
+        PENDING = 'pending',
+      }
+      /** The type of the original source file. */
+      export enum FileType {
+        PDF = 'pdf',
+        HTML = 'html',
+        WORD = 'word',
+        JSON = 'json',
+      }
+    }
   }
 
   /** Enrichment step to perform on the document. Each enrichment is performed on the specified field in the order that they are listed in the configuration. */
@@ -5938,11 +5806,27 @@ namespace DiscoveryV1 {
      *  `it` (Italian), `pt` (Portuguese), `ru` (Russian), `es` (Spanish), and `sv` (Swedish). **Note:** Not all
      *  features support all languages, automatic detection is recommended.
      */
-    language?: string;
+    language?: EnrichmentOptions.Constants.Language | string;
     /** Deprecated: The element extraction model to use, which can be `contract` only. The `elements` enrichment is
      *  deprecated.
      */
     model?: string;
+  }
+  export namespace EnrichmentOptions {
+    export namespace Constants {
+      /** ISO 639-1 code indicating the language to use for the analysis. This code overrides the automatic language detection performed by the service. Valid codes are `ar` (Arabic), `en` (English), `fr` (French), `de` (German), `it` (Italian), `pt` (Portuguese), `ru` (Russian), `es` (Spanish), and `sv` (Swedish). **Note:** Not all features support all languages, automatic detection is recommended. */
+      export enum Language {
+        AR = 'ar',
+        EN = 'en',
+        FR = 'fr',
+        DE = 'de',
+        IT = 'it',
+        PT = 'pt',
+        RU = 'ru',
+        ES = 'es',
+        SV = 'sv',
+      }
+    }
   }
 
   /** Details about an environment. */
@@ -5960,11 +5844,11 @@ namespace DiscoveryV1 {
     /** Current status of the environment. `resizing` is displayed when a request to increase the environment size
      *  has been made, but is still in the process of being completed.
      */
-    status?: string;
+    status?: Environment.Constants.Status | string;
     /** If `true`, the environment contains read-only collections that are maintained by IBM. */
     read_only?: boolean;
     /** Current size of the environment. */
-    size?: string;
+    size?: Environment.Constants.Size | string;
     /** The new size requested for this environment. Only returned when the environment *status* is `resizing`.
      *
      *  *Note:* Querying and indexing can still be performed during an environment upsize.
@@ -5974,6 +5858,30 @@ namespace DiscoveryV1 {
     index_capacity?: IndexCapacity;
     /** Information about the Continuous Relevancy Training for this environment. */
     search_status?: SearchStatus;
+  }
+  export namespace Environment {
+    export namespace Constants {
+      /** Current status of the environment. `resizing` is displayed when a request to increase the environment size has been made, but is still in the process of being completed. */
+      export enum Status {
+        ACTIVE = 'active',
+        PENDING = 'pending',
+        MAINTENANCE = 'maintenance',
+        RESIZING = 'resizing',
+      }
+      /** Current size of the environment. */
+      export enum Size {
+        LT = 'LT',
+        XS = 'XS',
+        S = 'S',
+        MS = 'MS',
+        M = 'M',
+        ML = 'ML',
+        L = 'L',
+        XL = 'XL',
+        XXL = 'XXL',
+        XXXL = 'XXXL',
+      }
+    }
   }
 
   /** Summary of the document usage statistics for the environment. */
@@ -6042,7 +5950,25 @@ namespace DiscoveryV1 {
     /** The name of the field. */
     field?: string;
     /** The type of the field. */
-    type?: string;
+    type?: Field.Constants.Type | string;
+  }
+  export namespace Field {
+    export namespace Constants {
+      /** The type of the field. */
+      export enum Type {
+        NESTED = 'nested',
+        STRING = 'string',
+        DATE = 'date',
+        LONG = 'long',
+        INTEGER = 'integer',
+        SHORT = 'short',
+        BYTE = 'byte',
+        DOUBLE = 'double',
+        FLOAT = 'float',
+        BOOLEAN = 'boolean',
+        BINARY = 'binary',
+      }
+    }
   }
 
   /** Font matching configuration. */
@@ -6070,7 +5996,7 @@ namespace DiscoveryV1 {
     /** The current status of the gateway. `connected` means the gateway is connected to the remotly installed
      *  gateway. `idle` means this gateway is not currently in use.
      */
-    status?: string;
+    status?: Gateway.Constants.Status | string;
     /** The generated **token** for this gateway. The value of this field is used when configuring the remotly
      *  installed gateway.
      */
@@ -6079,6 +6005,15 @@ namespace DiscoveryV1 {
      *  installed gateway.
      */
     token_id?: string;
+  }
+  export namespace Gateway {
+    export namespace Constants {
+      /** The current status of the gateway. `connected` means the gateway is connected to the remotly installed gateway. `idle` means this gateway is not currently in use. */
+      export enum Status {
+        CONNECTED = 'connected',
+        IDLE = 'idle',
+      }
+    }
   }
 
   /** Gatway deletion confirmation. */
@@ -6167,7 +6102,7 @@ namespace DiscoveryV1 {
      *
      *   **event** indicates that the log represents  a call to the **events** API.
      */
-    document_type?: string;
+    document_type?: LogQueryResponseResult.Constants.DocumentType | string;
     /** The value of the **natural_language_query** query parameter that was used to create these results. Only
      *  returned with logs of type **query**.
      *
@@ -6215,9 +6150,27 @@ namespace DiscoveryV1 {
      *
      *   -  `click` the result of a call to the **events** endpoint.
      */
-    event_type?: string;
+    event_type?: LogQueryResponseResult.Constants.EventType | string;
     /** The type of result that this **event** is associated with. Only returned with logs of type `event`. */
-    result_type?: string;
+    result_type?: LogQueryResponseResult.Constants.ResultType | string;
+  }
+  export namespace LogQueryResponseResult {
+    export namespace Constants {
+      /** The type of log entry returned. **query** indicates that the log represents the results of a call to the single collection **query** method. **event** indicates that the log represents  a call to the **events** API. */
+      export enum DocumentType {
+        QUERY = 'query',
+        EVENT = 'event',
+      }
+      /** The type of event that this object respresents. Possible values are -  `query` the log of a query to a collection -  `click` the result of a call to the **events** endpoint. */
+      export enum EventType {
+        CLICK = 'click',
+        QUERY = 'query',
+      }
+      /** The type of result that this **event** is associated with. Only returned with logs of type `event`. */
+      export enum ResultType {
+        DOCUMENT = 'document',
+      }
+    }
   }
 
   /** Object containing result information that was returned by the query used to create this log entry. Only returned with logs of type `query`. */
@@ -6418,11 +6371,23 @@ namespace DiscoveryV1 {
      *  document. Typically, **remove_nulls** is invoked as the last normalization operation (if it is invoked at all,
      *  it can be time-expensive).
      */
-    operation?: string;
+    operation?: NormalizationOperation.Constants.Operation | string;
     /** The source field for the operation. */
     source_field?: string;
     /** The destination field for the operation. */
     destination_field?: string;
+  }
+  export namespace NormalizationOperation {
+    export namespace Constants {
+      /** Identifies what type of operation to perform. **copy** - Copies the value of the **source_field** to the **destination_field** field. If the **destination_field** already exists, then the value of the **source_field** overwrites the original value of the **destination_field**. **move** - Renames (moves) the **source_field** to the **destination_field**. If the **destination_field** already exists, then the value of the **source_field** overwrites the original value of the **destination_field**. Rename is identical to copy, except that the **source_field** is removed after the value has been copied to the **destination_field** (it is the same as a _copy_ followed by a _remove_). **merge** - Merges the value of the **source_field** with the value of the **destination_field**. The **destination_field** is converted into an array if it is not already an array, and the value of the **source_field** is appended to the array. This operation removes the **source_field** after the merge. If the **source_field** does not exist in the current document, then the **destination_field** is still converted into an array (if it is not an array already). This conversion ensures the type for **destination_field** is consistent across all documents. **remove** - Deletes the **source_field** field. The **destination_field** is ignored for this operation. **remove_nulls** - Removes all nested null (blank) field values from the ingested document. **source_field** and **destination_field** are ignored by this operation because _remove_nulls_ operates on the entire ingested document. Typically, **remove_nulls** is invoked as the last normalization operation (if it is invoked at all, it can be time-expensive). */
+      export enum Operation {
+        COPY = 'copy',
+        MOVE = 'move',
+        MERGE = 'merge',
+        REMOVE = 'remove',
+        REMOVE_NULLS = 'remove_nulls',
+      }
+    }
   }
 
   /** A notice produced for the collection. */
@@ -6445,7 +6410,7 @@ namespace DiscoveryV1 {
     /** Unique identifier of the query used for relevance training. */
     query_id?: string;
     /** Severity level of the notice. */
-    severity?: string;
+    severity?: Notice.Constants.Severity | string;
     /** Ingestion or training step in which the notice occurred. Typical step values include:
      *  `smartDocumentUnderstanding`, `ingestion`, `indexing`, `convert`. **Note:** This is not a complete list; other
      *  values might be returned.
@@ -6453,6 +6418,15 @@ namespace DiscoveryV1 {
     step?: string;
     /** The description of the notice. */
     description?: string;
+  }
+  export namespace Notice {
+    export namespace Constants {
+      /** Severity level of the notice. */
+      export enum Severity {
+        WARNING = 'warning',
+        ERROR = 'error',
+      }
+    }
   }
 
   /** Object containing heading detection conversion settings for PDF documents. */
@@ -6514,13 +6488,24 @@ namespace DiscoveryV1 {
     /** Name of the original source file (if available). */
     filename?: string;
     /** The type of the original source file. */
-    file_type?: string;
+    file_type?: QueryNoticesResult.Constants.FileType | string;
     /** The SHA-1 hash of the original source file (formatted as a hexadecimal string). */
     sha1?: string;
     /** Array of notices for the document. */
     notices?: Notice[];
     /** QueryNoticesResult accepts additional properties. */
     [propName: string]: any;
+  }
+  export namespace QueryNoticesResult {
+    export namespace Constants {
+      /** The type of the original source file. */
+      export enum FileType {
+        PDF = 'pdf',
+        HTML = 'html',
+        WORD = 'word',
+        JSON = 'json',
+      }
+    }
   }
 
   /** A passage query result. */
@@ -6641,7 +6626,17 @@ namespace DiscoveryV1 {
      *   **Note**: In the event of trained collections being queried, but the trained model is not used to return
      *  results, the **document_retrieval_strategy** will be listed as `untrained`.
      */
-    document_retrieval_strategy?: string;
+    document_retrieval_strategy?: RetrievalDetails.Constants.DocumentRetrievalStrategy | string;
+  }
+  export namespace RetrievalDetails {
+    export namespace Constants {
+      /** Indentifies the document retrieval strategy used for this query. `relevancy_training` indicates that the results were returned using a relevancy trained model. `continuous_relevancy_training` indicates that the results were returned using the continuous relevancy training model created by result feedback analysis. `untrained` means the results were returned using the standard untrained model. **Note**: In the event of trained collections being queried, but the trained model is not used to return results, the **document_retrieval_strategy** will be listed as `untrained`. */
+      export enum DocumentRetrievalStrategy {
+        UNTRAINED = 'untrained',
+        RELEVANCY_TRAINING = 'relevancy_training',
+        CONTINUOUS_RELEVANCY_TRAINING = 'continuous_relevancy_training',
+      }
+    }
   }
 
   /** Object containing smart document understanding information for this collection. */
@@ -6683,11 +6678,23 @@ namespace DiscoveryV1 {
     /** Current scope of the training. Always returned as `environment`. */
     scope?: string;
     /** The current status of Continuous Relevancy Training for this environment. */
-    status?: string;
+    status?: SearchStatus.Constants.Status | string;
     /** Long description of the current Continuous Relevancy Training status. */
     status_description?: string;
     /** The date stamp of the most recent completed training for this environment. */
     last_trained?: string;
+  }
+  export namespace SearchStatus {
+    export namespace Constants {
+      /** The current status of Continuous Relevancy Training for this environment. */
+      export enum Status {
+        NO_DATA = 'NO_DATA',
+        INSUFFICENT_DATA = 'INSUFFICENT_DATA',
+        TRAINING = 'TRAINING',
+        TRAINED = 'TRAINED',
+        NOT_APPLICABLE = 'NOT_APPLICABLE',
+      }
+    }
   }
 
   /** A list of Document Segmentation settings. */
@@ -6720,7 +6727,7 @@ namespace DiscoveryV1 {
      *  -  `web_crawl` indicates the configuration is to perform a web page crawl.
      *  -  `cloud_object_storage` indicates the configuration is to connect to a cloud object store.
      */
-    type?: string;
+    type?: Source.Constants.Type | string;
     /** The **credential_id** of the credentials to use to connect to the source. Credentials are defined using the
      *  **credentials** method. The **source_type** of the credentials used must match the **type** field specified in
      *  this object.
@@ -6730,6 +6737,18 @@ namespace DiscoveryV1 {
     schedule?: SourceSchedule;
     /** The **options** object defines which items to crawl from the source system. */
     options?: SourceOptions;
+  }
+  export namespace Source {
+    export namespace Constants {
+      /** The type of source to connect to. -  `box` indicates the configuration is to connect an instance of Enterprise Box. -  `salesforce` indicates the configuration is to connect to Salesforce. -  `sharepoint` indicates the configuration is to connect to Microsoft SharePoint Online. -  `web_crawl` indicates the configuration is to perform a web page crawl. -  `cloud_object_storage` indicates the configuration is to connect to a cloud object store. */
+      export enum Type {
+        BOX = 'box',
+        SALESFORCE = 'salesforce',
+        SHAREPOINT = 'sharepoint',
+        WEB_CRAWL = 'web_crawl',
+        CLOUD_OBJECT_STORAGE = 'cloud_object_storage',
+      }
+    }
   }
 
   /** The **options** object defines which items to crawl from the source system. */
@@ -6815,7 +6834,7 @@ namespace DiscoveryV1 {
      *  each call. `normal` means as many as two URLs are fectched concurrently with a short delay between fetch calls.
      *  `aggressive` means that up to ten URLs are fetched concurrently with a short delay between fetch calls.
      */
-    crawl_speed?: string;
+    crawl_speed?: SourceOptionsWebCrawl.Constants.CrawlSpeed | string;
     /** When `true`, allows the crawl to interact with HTTPS sites with SSL certificates with untrusted signers. */
     allow_untrusted_certificate?: boolean;
     /** The maximum number of hops to make from the initial URL. When a page is crawled each link on that page will
@@ -6834,6 +6853,16 @@ namespace DiscoveryV1 {
      *  For example, listing `https://ibm.com/watson` also excludes `https://ibm.com/watson/discovery`.
      */
     blacklist?: string[];
+  }
+  export namespace SourceOptionsWebCrawl {
+    export namespace Constants {
+      /** The number of concurrent URLs to fetch. `gentle` means one URL is fetched at a time with a delay between each call. `normal` means as many as two URLs are fectched concurrently with a short delay between fetch calls. `aggressive` means that up to ten URLs are fetched concurrently with a short delay between fetch calls. */
+      export enum CrawlSpeed {
+        GENTLE = 'gentle',
+        NORMAL = 'normal',
+        AGGRESSIVE = 'aggressive',
+      }
+    }
   }
 
   /** Object containing the schedule information for the source. */
@@ -6854,7 +6883,19 @@ namespace DiscoveryV1 {
      *  -  `weekly`: Runs every week on Sunday between 00:00 and 06:00.
      *  -  `monthly`: Runs the on the first Sunday of every month between 00:00 and 06:00.
      */
-    frequency?: string;
+    frequency?: SourceSchedule.Constants.Frequency | string;
+  }
+  export namespace SourceSchedule {
+    export namespace Constants {
+      /** The crawl schedule in the specified **time_zone**. -  `five_minutes`: Runs every five minutes. -  `hourly`: Runs every hour. -  `daily`: Runs every day between 00:00 and 06:00. -  `weekly`: Runs every week on Sunday between 00:00 and 06:00. -  `monthly`: Runs the on the first Sunday of every month between 00:00 and 06:00. */
+      export enum Frequency {
+        DAILY = 'daily',
+        WEEKLY = 'weekly',
+        MONTHLY = 'monthly',
+        FIVE_MINUTES = 'five_minutes',
+        HOURLY = 'hourly',
+      }
+    }
   }
 
   /** Object containing source crawl status information. */
@@ -6867,9 +6908,21 @@ namespace DiscoveryV1 {
      *  -  `queued` indicates that the crawl has been paused by the system and will automatically restart when possible.
      *  -  `unknown` indicates that an unidentified error has occured in the service.
      */
-    status?: string;
+    status?: SourceStatus.Constants.Status | string;
     /** Date in `RFC 3339` format indicating the time of the next crawl attempt. */
     next_crawl?: string;
+  }
+  export namespace SourceStatus {
+    export namespace Constants {
+      /** The current status of the source crawl for this collection. This field returns `not_configured` if the default configuration for this source does not have a **source** object defined. -  `running` indicates that a crawl to fetch more documents is in progress. -  `complete` indicates that the crawl has completed with no errors. -  `queued` indicates that the crawl has been paused by the system and will automatically restart when possible. -  `unknown` indicates that an unidentified error has occured in the service. */
+      export enum Status {
+        RUNNING = 'running',
+        COMPLETE = 'complete',
+        NOT_CONFIGURED = 'not_configured',
+        QUEUED = 'queued',
+        UNKNOWN = 'unknown',
+      }
+    }
   }
 
   /** Object that contains details about the status of the authentication process. */
@@ -6897,9 +6950,19 @@ namespace DiscoveryV1 {
   /** Object describing the current status of the wordlist. */
   export interface TokenDictStatusResponse {
     /** Current wordlist status for the specified collection. */
-    status?: string;
+    status?: TokenDictStatusResponse.Constants.Status | string;
     /** The type for this wordlist. Can be `tokenization_dictionary` or `stopwords`. */
     type?: string;
+  }
+  export namespace TokenDictStatusResponse {
+    export namespace Constants {
+      /** Current wordlist status for the specified collection. */
+      export enum Status {
+        ACTIVE = 'active',
+        PENDING = 'pending',
+        NOT_FOUND = 'not found',
+      }
+    }
   }
 
   /** Training information for a specific collection. */

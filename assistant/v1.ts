@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2023.
+ * (C) Copyright IBM Corp. 2018, 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.64.1-cee95189-20230124-211647
+ * IBM OpenAPI SDK Code Generator Version: 3.85.0-75c38f8f-20240206-210220
  */
 
 import * as extend from 'extend';
@@ -23,9 +23,9 @@ import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import {
   Authenticator,
   BaseService,
+  UserOptions,
   getAuthenticatorFromEnvironment,
   validateParams,
-  UserOptions,
 } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
@@ -55,7 +55,7 @@ class AssistantV1 extends BaseService {
    * @param {Object} options - Options for the service.
    * @param {string} options.version - Release date of the API version you want to use. Specify dates in YYYY-MM-DD
    * format. The current version is `2021-11-27`.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base URL for the service
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
@@ -154,11 +154,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'message'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'message');
 
     const parameters = {
       options: {
@@ -224,11 +220,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'bulkClassify'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'bulkClassify');
 
     const parameters = {
       options: {
@@ -295,11 +287,7 @@ class AssistantV1 extends BaseService {
       'include_audit': _params.includeAudit,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listWorkspaces'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listWorkspaces');
 
     const parameters = {
       options: {
@@ -383,11 +371,7 @@ class AssistantV1 extends BaseService {
       'include_audit': _params.includeAudit,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createWorkspace'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'createWorkspace');
 
     const parameters = {
       options: {
@@ -452,11 +436,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getWorkspace'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'getWorkspace');
 
     const parameters = {
       options: {
@@ -554,11 +534,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'updateWorkspace'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'updateWorkspace');
 
     const parameters = {
       options: {
@@ -613,11 +589,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteWorkspace'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteWorkspace');
 
     const parameters = {
       options: {
@@ -700,11 +672,7 @@ class AssistantV1 extends BaseService {
       'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createWorkspaceAsync'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'createWorkspaceAsync');
 
     const parameters = {
       options: {
@@ -801,11 +769,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'updateWorkspaceAsync'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'updateWorkspaceAsync');
 
     const parameters = {
       options: {
@@ -874,11 +838,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'exportWorkspaceAsync'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'exportWorkspaceAsync');
 
     const parameters = {
       options: {
@@ -952,11 +912,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listIntents'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listIntents');
 
     const parameters = {
       options: {
@@ -1027,11 +983,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createIntent'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'createIntent');
 
     const parameters = {
       options: {
@@ -1095,11 +1047,7 @@ class AssistantV1 extends BaseService {
       'intent': _params.intent,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getIntent'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'getIntent');
 
     const parameters = {
       options: {
@@ -1182,11 +1130,7 @@ class AssistantV1 extends BaseService {
       'intent': _params.intent,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'updateIntent'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'updateIntent');
 
     const parameters = {
       options: {
@@ -1243,11 +1187,7 @@ class AssistantV1 extends BaseService {
       'intent': _params.intent,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteIntent'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteIntent');
 
     const parameters = {
       options: {
@@ -1319,11 +1259,7 @@ class AssistantV1 extends BaseService {
       'intent': _params.intent,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listExamples'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listExamples');
 
     const parameters = {
       options: {
@@ -1394,11 +1330,7 @@ class AssistantV1 extends BaseService {
       'intent': _params.intent,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createExample'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'createExample');
 
     const parameters = {
       options: {
@@ -1460,11 +1392,7 @@ class AssistantV1 extends BaseService {
       'text': _params.text,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getExample'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'getExample');
 
     const parameters = {
       options: {
@@ -1537,11 +1465,7 @@ class AssistantV1 extends BaseService {
       'text': _params.text,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'updateExample'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'updateExample');
 
     const parameters = {
       options: {
@@ -1600,11 +1524,7 @@ class AssistantV1 extends BaseService {
       'text': _params.text,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteExample'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteExample');
 
     const parameters = {
       options: {
@@ -1674,11 +1594,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listCounterexamples'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listCounterexamples');
 
     const parameters = {
       options: {
@@ -1745,11 +1661,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createCounterexample'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'createCounterexample');
 
     const parameters = {
       options: {
@@ -1809,11 +1721,7 @@ class AssistantV1 extends BaseService {
       'text': _params.text,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getCounterexample'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'getCounterexample');
 
     const parameters = {
       options: {
@@ -1879,11 +1787,7 @@ class AssistantV1 extends BaseService {
       'text': _params.text,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'updateCounterexample'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'updateCounterexample');
 
     const parameters = {
       options: {
@@ -1940,11 +1844,7 @@ class AssistantV1 extends BaseService {
       'text': _params.text,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteCounterexample'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteCounterexample');
 
     const parameters = {
       options: {
@@ -2018,11 +1918,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listEntities'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listEntities');
 
     const parameters = {
       options: {
@@ -2098,11 +1994,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createEntity'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'createEntity');
 
     const parameters = {
       options: {
@@ -2166,11 +2058,7 @@ class AssistantV1 extends BaseService {
       'entity': _params.entity,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getEntity'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'getEntity');
 
     const parameters = {
       options: {
@@ -2257,11 +2145,7 @@ class AssistantV1 extends BaseService {
       'entity': _params.entity,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'updateEntity'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'updateEntity');
 
     const parameters = {
       options: {
@@ -2318,11 +2202,7 @@ class AssistantV1 extends BaseService {
       'entity': _params.entity,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteEntity'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteEntity');
 
     const parameters = {
       options: {
@@ -2388,11 +2268,7 @@ class AssistantV1 extends BaseService {
       'entity': _params.entity,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listMentions'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listMentions');
 
     const parameters = {
       options: {
@@ -2468,11 +2344,7 @@ class AssistantV1 extends BaseService {
       'entity': _params.entity,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listValues'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listValues');
 
     const parameters = {
       options: {
@@ -2556,11 +2428,7 @@ class AssistantV1 extends BaseService {
       'entity': _params.entity,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createValue'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'createValue');
 
     const parameters = {
       options: {
@@ -2626,11 +2494,7 @@ class AssistantV1 extends BaseService {
       'value': _params.value,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getValue'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'getValue');
 
     const parameters = {
       options: {
@@ -2725,11 +2589,7 @@ class AssistantV1 extends BaseService {
       'value': _params.value,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'updateValue'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'updateValue');
 
     const parameters = {
       options: {
@@ -2788,11 +2648,7 @@ class AssistantV1 extends BaseService {
       'value': _params.value,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteValue'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteValue');
 
     const parameters = {
       options: {
@@ -2866,11 +2722,7 @@ class AssistantV1 extends BaseService {
       'value': _params.value,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listSynonyms'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listSynonyms');
 
     const parameters = {
       options: {
@@ -2940,11 +2792,7 @@ class AssistantV1 extends BaseService {
       'value': _params.value,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createSynonym'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'createSynonym');
 
     const parameters = {
       options: {
@@ -3008,11 +2856,7 @@ class AssistantV1 extends BaseService {
       'synonym': _params.synonym,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getSynonym'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'getSynonym');
 
     const parameters = {
       options: {
@@ -3085,11 +2929,7 @@ class AssistantV1 extends BaseService {
       'synonym': _params.synonym,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'updateSynonym'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'updateSynonym');
 
     const parameters = {
       options: {
@@ -3150,11 +2990,7 @@ class AssistantV1 extends BaseService {
       'synonym': _params.synonym,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteSynonym'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteSynonym');
 
     const parameters = {
       options: {
@@ -3224,11 +3060,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listDialogNodes'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listDialogNodes');
 
     const parameters = {
       options: {
@@ -3346,11 +3178,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createDialogNode'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'createDialogNode');
 
     const parameters = {
       options: {
@@ -3410,11 +3238,7 @@ class AssistantV1 extends BaseService {
       'dialog_node': _params.dialogNode,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getDialogNode'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'getDialogNode');
 
     const parameters = {
       options: {
@@ -3535,11 +3359,7 @@ class AssistantV1 extends BaseService {
       'dialog_node': _params.dialogNode,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'updateDialogNode'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'updateDialogNode');
 
     const parameters = {
       options: {
@@ -3596,11 +3416,7 @@ class AssistantV1 extends BaseService {
       'dialog_node': _params.dialogNode,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteDialogNode'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteDialogNode');
 
     const parameters = {
       options: {
@@ -3673,11 +3489,7 @@ class AssistantV1 extends BaseService {
       'workspace_id': _params.workspaceId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listLogs'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listLogs');
 
     const parameters = {
       options: {
@@ -3742,11 +3554,7 @@ class AssistantV1 extends BaseService {
       'cursor': _params.cursor,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listAllLogs'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'listAllLogs');
 
     const parameters = {
       options: {
@@ -3808,11 +3616,7 @@ class AssistantV1 extends BaseService {
       'customer_id': _params.customerId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      AssistantV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteUserData'
-    );
+    const sdkHeaders = getSdkHeaders(AssistantV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteUserData');
 
     const parameters = {
       options: {
@@ -5281,7 +5085,7 @@ namespace AssistantV1 {
     /** Any metadata related to the entity value. */
     metadata?: JsonObject;
     /** Specifies the type of entity value. */
-    type?: string;
+    type?: CreateValue.Constants.Type | string;
     /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the
      *  value type), but not both. A synonym must conform to the following resrictions:
      *  - It cannot contain carriage return, newline, or tab characters.
@@ -5298,6 +5102,15 @@ namespace AssistantV1 {
     created?: string;
     /** The timestamp for the most recent update to the object. */
     updated?: string;
+  }
+  export namespace CreateValue {
+    export namespace Constants {
+      /** Specifies the type of entity value. */
+      export enum Type {
+        SYNONYMS = 'synonyms',
+        PATTERNS = 'patterns',
+      }
+    }
   }
 
   /** DialogNode. */
@@ -5339,19 +5152,19 @@ namespace AssistantV1 {
      */
     title?: string;
     /** How the dialog node is processed. */
-    type?: string;
+    type?: DialogNode.Constants.Type | string;
     /** How an `event_handler` node is processed. */
-    event_name?: string;
+    event_name?: DialogNode.Constants.EventName | string;
     /** The location in the dialog context where output is stored. */
     variable?: string;
     /** An array of objects describing any actions to be invoked by the dialog node. */
     actions?: DialogNodeAction[];
     /** Whether this top-level dialog node can be digressed into. */
-    digress_in?: string;
+    digress_in?: DialogNode.Constants.DigressIn | string;
     /** Whether this dialog node can be returned to after a digression. */
-    digress_out?: string;
+    digress_out?: DialogNode.Constants.DigressOut | string;
     /** Whether the user can digress to top-level nodes while filling out slots. */
-    digress_out_slots?: string;
+    digress_out_slots?: DialogNode.Constants.DigressOutSlots | string;
     /** A label that can be displayed externally to describe the purpose of the node to users. If set, this label is
      *  used to identify the node in disambiguation responses (overriding the value of the **title** property).
      */
@@ -5367,19 +5180,74 @@ namespace AssistantV1 {
     /** The timestamp for the most recent update to the object. */
     updated?: string;
   }
+  export namespace DialogNode {
+    export namespace Constants {
+      /** How the dialog node is processed. */
+      export enum Type {
+        STANDARD = 'standard',
+        EVENT_HANDLER = 'event_handler',
+        FRAME = 'frame',
+        SLOT = 'slot',
+        RESPONSE_CONDITION = 'response_condition',
+        FOLDER = 'folder',
+      }
+      /** How an `event_handler` node is processed. */
+      export enum EventName {
+        FOCUS = 'focus',
+        INPUT = 'input',
+        FILLED = 'filled',
+        VALIDATE = 'validate',
+        FILLED_MULTIPLE = 'filled_multiple',
+        GENERIC = 'generic',
+        NOMATCH = 'nomatch',
+        NOMATCH_RESPONSES_DEPLETED = 'nomatch_responses_depleted',
+        DIGRESSION_RETURN_PROMPT = 'digression_return_prompt',
+      }
+      /** Whether this top-level dialog node can be digressed into. */
+      export enum DigressIn {
+        NOT_AVAILABLE = 'not_available',
+        RETURNS = 'returns',
+        DOES_NOT_RETURN = 'does_not_return',
+      }
+      /** Whether this dialog node can be returned to after a digression. */
+      export enum DigressOut {
+        ALLOW_RETURNING = 'allow_returning',
+        ALLOW_ALL = 'allow_all',
+        ALLOW_ALL_NEVER_RETURN = 'allow_all_never_return',
+      }
+      /** Whether the user can digress to top-level nodes while filling out slots. */
+      export enum DigressOutSlots {
+        NOT_ALLOWED = 'not_allowed',
+        ALLOW_RETURNING = 'allow_returning',
+        ALLOW_ALL = 'allow_all',
+      }
+    }
+  }
 
   /** DialogNodeAction. */
   export interface DialogNodeAction {
     /** The name of the action. */
     name: string;
     /** The type of action to invoke. */
-    type?: string;
+    type?: DialogNodeAction.Constants.Type | string;
     /** A map of key/value pairs to be provided to the action. */
     parameters?: JsonObject;
     /** The location in the dialog context where the result of the action is stored. */
     result_variable: string;
     /** The name of the context variable that the client application will use to pass in credentials for the action. */
     credentials?: string;
+  }
+  export namespace DialogNodeAction {
+    export namespace Constants {
+      /** The type of action to invoke. */
+      export enum Type {
+        CLIENT = 'client',
+        SERVER = 'server',
+        CLOUD_FUNCTION = 'cloud_function',
+        WEB_ACTION = 'web_action',
+        WEBHOOK = 'webhook',
+      }
+    }
   }
 
   /** An array of dialog nodes. */
@@ -5422,11 +5290,31 @@ namespace AssistantV1 {
      *      - `skip_all_slots`
      *       If you specify `jump_to`, then you must also specify a value for the `dialog_node` property.
      */
-    behavior: string;
+    behavior: DialogNodeNextStep.Constants.Behavior | string;
     /** The unique ID of the dialog node to process next. This parameter is required if **behavior**=`jump_to`. */
     dialog_node?: string;
     /** Which part of the dialog node to process next. */
-    selector?: string;
+    selector?: DialogNodeNextStep.Constants.Selector | string;
+  }
+  export namespace DialogNodeNextStep {
+    export namespace Constants {
+      /** What happens after the dialog node completes. The valid values depend on the node type: - The following values are valid for any node: - `get_user_input` - `skip_user_input` - `jump_to` - If the node is of type `event_handler` and its parent node is of type `slot` or `frame`, additional values are also valid: - if **event_name**=`filled` and the type of the parent node is `slot`: - `reprompt` - `skip_all_slots` - if **event_name**=`nomatch` and the type of the parent node is `slot`: - `reprompt` - `skip_slot` - `skip_all_slots` - if **event_name**=`generic` and the type of the parent node is `frame`: - `reprompt` - `skip_slot` - `skip_all_slots` If you specify `jump_to`, then you must also specify a value for the `dialog_node` property. */
+      export enum Behavior {
+        GET_USER_INPUT = 'get_user_input',
+        SKIP_USER_INPUT = 'skip_user_input',
+        JUMP_TO = 'jump_to',
+        REPROMPT = 'reprompt',
+        SKIP_SLOT = 'skip_slot',
+        SKIP_ALL_SLOTS = 'skip_all_slots',
+      }
+      /** Which part of the dialog node to process next. */
+      export enum Selector {
+        CONDITION = 'condition',
+        CLIENT = 'client',
+        USER_INPUT = 'user_input',
+        BODY = 'body',
+      }
+    }
   }
 
   /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-dialog-overview#dialog-overview-responses). */
@@ -5676,7 +5564,7 @@ namespace AssistantV1 {
   /** Log message details. */
   export interface LogMessage {
     /** The severity of the log message. */
-    level: string;
+    level: LogMessage.Constants.Level | string;
     /** The text of the log message. */
     msg: string;
     /** A code that indicates the category to which the error message belongs. */
@@ -5684,13 +5572,31 @@ namespace AssistantV1 {
     /** An object that identifies the dialog element that generated the error message. */
     source?: LogMessageSource;
   }
+  export namespace LogMessage {
+    export namespace Constants {
+      /** The severity of the log message. */
+      export enum Level {
+        INFO = 'info',
+        ERROR = 'error',
+        WARN = 'warn',
+      }
+    }
+  }
 
   /** An object that identifies the dialog element that generated the error message. */
   export interface LogMessageSource {
     /** A string that indicates the type of dialog element that generated the error message. */
-    type?: string;
+    type?: LogMessageSource.Constants.Type | string;
     /** The unique identifier of the dialog node that generated the error message. */
     dialog_node?: string;
+  }
+  export namespace LogMessageSource {
+    export namespace Constants {
+      /** A string that indicates the type of dialog element that generated the error message. */
+      export enum Type {
+        DIALOG_NODE = 'dialog_node',
+      }
+    }
   }
 
   /** The pagination data for the returned objects. For more information about using pagination, see [Pagination](#pagination). */
@@ -5867,7 +5773,21 @@ namespace AssistantV1 {
      *
      *   **Note:** On IBM Cloud Pak for Data, only `chat` is supported.
      */
-    channel?: string;
+    channel?: ResponseGenericChannel.Constants.Channel | string;
+  }
+  export namespace ResponseGenericChannel {
+    export namespace Constants {
+      /** A channel for which the response is intended. **Note:** On IBM Cloud Pak for Data, only `chat` is supported. */
+      export enum Channel {
+        CHAT = 'chat',
+        FACEBOOK = 'facebook',
+        INTERCOM = 'intercom',
+        SLACK = 'slack',
+        TEXT_MESSAGING = 'text_messaging',
+        VOICE_TELEPHONY = 'voice_telephony',
+        WHATSAPP = 'whatsapp',
+      }
+    }
   }
 
   /** A term from the request that was identified as an entity. */
@@ -5926,7 +5846,7 @@ namespace AssistantV1 {
      */
     festival?: string;
     /** The precision or duration of a time range specified by a recognized `@sys-time` or `@sys-date` entity. */
-    granularity?: string;
+    granularity?: RuntimeEntityInterpretation.Constants.Granularity | string;
     /** A unique identifier used to associate multiple recognized `@sys-date`, `@sys-time`, or `@sys-number`
      *  entities that are recognized as a range of values in the user's input (for example, `from July 4 until July 14`
      *  or `from 20 to 25`).
@@ -5999,11 +5919,42 @@ namespace AssistantV1 {
     /** A recognized time zone mentioned as part of a time value (for example, `EST`). */
     timezone?: string;
   }
+  export namespace RuntimeEntityInterpretation {
+    export namespace Constants {
+      /** The precision or duration of a time range specified by a recognized `@sys-time` or `@sys-date` entity. */
+      export enum Granularity {
+        DAY = 'day',
+        FORTNIGHT = 'fortnight',
+        HOUR = 'hour',
+        INSTANT = 'instant',
+        MINUTE = 'minute',
+        MONTH = 'month',
+        QUARTER = 'quarter',
+        SECOND = 'second',
+        WEEK = 'week',
+        WEEKEND = 'weekend',
+        YEAR = 'year',
+      }
+    }
+  }
 
   /** An object describing the role played by a system entity that is specifies the beginning or end of a range recognized in the user input. This property is included only if the new system entities are enabled for the workspace. */
   export interface RuntimeEntityRole {
     /** The relationship of the entity to the range. */
-    type?: string;
+    type?: RuntimeEntityRole.Constants.Type | string;
+  }
+  export namespace RuntimeEntityRole {
+    export namespace Constants {
+      /** The relationship of the entity to the range. */
+      export enum Type {
+        DATE_FROM = 'date_from',
+        DATE_TO = 'date_to',
+        NUMBER_FROM = 'number_from',
+        NUMBER_TO = 'number_to',
+        TIME_FROM = 'time_from',
+        TIME_TO = 'time_to',
+      }
+    }
   }
 
   /** An intent identified in the user input. */
@@ -6059,7 +6010,7 @@ namespace AssistantV1 {
     /** Any metadata related to the entity value. */
     metadata?: JsonObject;
     /** Specifies the type of entity value. */
-    type: string;
+    type: Value.Constants.Type | string;
     /** An array of synonyms for the entity value. A value can specify either synonyms or patterns (depending on the
      *  value type), but not both. A synonym must conform to the following resrictions:
      *  - It cannot contain carriage return, newline, or tab characters.
@@ -6076,6 +6027,15 @@ namespace AssistantV1 {
     created?: string;
     /** The timestamp for the most recent update to the object. */
     updated?: string;
+  }
+  export namespace Value {
+    export namespace Constants {
+      /** Specifies the type of entity value. */
+      export enum Type {
+        SYNONYMS = 'synonyms',
+        PATTERNS = 'patterns',
+      }
+    }
   }
 
   /** ValueCollection. */
@@ -6140,7 +6100,7 @@ namespace AssistantV1 {
      *   - **Processing**: An asynchronous operation has not yet completed.
      *   - **Training**: The workspace is training based on new data such as intents or examples.
      */
-    status?: string;
+    status?: Workspace.Constants.Status | string;
     /** An array of messages about errors that caused an asynchronous operation to fail. */
     status_errors?: StatusError[];
     webhooks?: Webhook[];
@@ -6153,6 +6113,19 @@ namespace AssistantV1 {
      *  and only when the **verbose** query parameter is set to `true`.
      */
     counts?: WorkspaceCounts;
+  }
+  export namespace Workspace {
+    export namespace Constants {
+      /** The current status of the workspace: - **Available**: The workspace is available and ready to process messages. - **Failed**: An asynchronous operation has failed. See the **status_errors** property for more information about the cause of the failure. - **Non Existent**: The workspace does not exist. - **Processing**: An asynchronous operation has not yet completed. - **Training**: The workspace is training based on new data such as intents or examples. */
+      export enum Status {
+        AVAILABLE = 'Available',
+        FAILED = 'Failed',
+        NON_EXISTENT = 'Non Existent',
+        PROCESSING = 'Processing',
+        TRAINING = 'Training',
+        UNAVAILABLE = 'Unavailable',
+      }
+    }
   }
 
   /** WorkspaceCollection. */
@@ -6214,7 +6187,7 @@ namespace AssistantV1 {
     /** The sensitivity of the disambiguation feature to intent detection uncertainty. Higher sensitivity means that
      *  the disambiguation feature is triggered more often and includes more choices.
      */
-    sensitivity?: string;
+    sensitivity?: WorkspaceSystemSettingsDisambiguation.Constants.Sensitivity | string;
     /** Whether the order in which disambiguation suggestions are presented should be randomized (but still
      *  influenced by relative confidence).
      */
@@ -6223,6 +6196,19 @@ namespace AssistantV1 {
     max_suggestions?: number;
     /** For internal use only. */
     suggestion_text_policy?: string;
+  }
+  export namespace WorkspaceSystemSettingsDisambiguation {
+    export namespace Constants {
+      /** The sensitivity of the disambiguation feature to intent detection uncertainty. Higher sensitivity means that the disambiguation feature is triggered more often and includes more choices. */
+      export enum Sensitivity {
+        AUTO = 'auto',
+        HIGH = 'high',
+        MEDIUM_HIGH = 'medium_high',
+        MEDIUM = 'medium',
+        MEDIUM_LOW = 'medium_low',
+        LOW = 'low',
+      }
+    }
   }
 
   /** Workspace settings related to the version of the training algorithms currently used by the skill. */
@@ -6367,11 +6353,20 @@ namespace AssistantV1 {
     /** An optional description to show with the response. */
     description?: string;
     /** The preferred type of control to display, if supported by the channel. */
-    preference?: string;
+    preference?: DialogNodeOutputGenericDialogNodeOutputResponseTypeOption.Constants.Preference | string;
     /** An array of objects describing the options from which the user can choose. You can include up to 20 options. */
     options: DialogNodeOutputOptionsElement[];
     /** An array of objects specifying channels for which the response is intended. */
     channels?: ResponseGenericChannel[];
+  }
+  export namespace DialogNodeOutputGenericDialogNodeOutputResponseTypeOption {
+    export namespace Constants {
+      /** The preferred type of control to display, if supported by the channel. */
+      export enum Preference {
+        DROPDOWN = 'dropdown',
+        BUTTON = 'button',
+      }
+    }
   }
 
   /** DialogNodeOutputGenericDialogNodeOutputResponseTypePause. */
@@ -6405,7 +6400,7 @@ namespace AssistantV1 {
      */
     query: string;
     /** The type of the search query. */
-    query_type: string;
+    query_type: DialogNodeOutputGenericDialogNodeOutputResponseTypeSearchSkill.Constants.QueryType | string;
     /** An optional filter that narrows the set of documents to be searched. For more information, see the
      *  [Discovery service documentation]([Discovery service
      *  documentation](https://cloud.ibm.com/docs/discovery?topic=discovery-query-parameters#filter).
@@ -6415,6 +6410,15 @@ namespace AssistantV1 {
     discovery_version?: string;
     /** An array of objects specifying channels for which the response is intended. */
     channels?: ResponseGenericChannel[];
+  }
+  export namespace DialogNodeOutputGenericDialogNodeOutputResponseTypeSearchSkill {
+    export namespace Constants {
+      /** The type of the search query. */
+      export enum QueryType {
+        NATURAL_LANGUAGE = 'natural_language',
+        DISCOVERY_QUERY_LANGUAGE = 'discovery_query_language',
+      }
+    }
   }
 
   /** DialogNodeOutputGenericDialogNodeOutputResponseTypeText. */
@@ -6426,11 +6430,21 @@ namespace AssistantV1 {
     /** A list of one or more objects defining text responses. */
     values: DialogNodeOutputTextValuesElement[];
     /** How a response is selected from the list, if more than one response is specified. */
-    selection_policy?: string;
+    selection_policy?: DialogNodeOutputGenericDialogNodeOutputResponseTypeText.Constants.SelectionPolicy | string;
     /** The delimiter to use as a separator between responses when `selection_policy`=`multiline`. */
     delimiter?: string;
     /** An array of objects specifying channels for which the response is intended. */
     channels?: ResponseGenericChannel[];
+  }
+  export namespace DialogNodeOutputGenericDialogNodeOutputResponseTypeText {
+    export namespace Constants {
+      /** How a response is selected from the list, if more than one response is specified. */
+      export enum SelectionPolicy {
+        SEQUENTIAL = 'sequential',
+        RANDOM = 'random',
+        MULTILINE = 'multiline',
+      }
+    }
   }
 
   /** DialogNodeOutputGenericDialogNodeOutputResponseTypeUserDefined. */
@@ -6594,13 +6608,22 @@ namespace AssistantV1 {
     /** The description to show with the response. */
     description?: string;
     /** The preferred type of control to display. */
-    preference?: string;
+    preference?: RuntimeResponseGenericRuntimeResponseTypeOption.Constants.Preference | string;
     /** An array of objects describing the options from which the user can choose. */
     options: DialogNodeOutputOptionsElement[];
     /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
      *  response is intended for a built-in integration and should not be handled by an API client.
      */
     channels?: ResponseGenericChannel[];
+  }
+  export namespace RuntimeResponseGenericRuntimeResponseTypeOption {
+    export namespace Constants {
+      /** The preferred type of control to display. */
+      export enum Preference {
+        DROPDOWN = 'dropdown',
+        BUTTON = 'button',
+      }
+    }
   }
 
   /** RuntimeResponseGenericRuntimeResponseTypePause. */
