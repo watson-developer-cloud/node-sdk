@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2017, 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.64.1-cee95189-20230124-211647
+ * IBM OpenAPI SDK Code Generator Version: 3.85.0-75c38f8f-20240206-210220
  */
 
 import * as extend from 'extend';
@@ -23,9 +23,9 @@ import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import {
   Authenticator,
   BaseService,
+  UserOptions,
   getAuthenticatorFromEnvironment,
   validateParams,
-  UserOptions,
 } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
@@ -67,7 +67,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * @param {Object} options - Options for the service.
    * @param {string} options.version - Release date of the API version you want to use. Specify dates in YYYY-MM-DD
    * format. The current version is `2022-04-07`.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base URL for the service
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
@@ -175,11 +175,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'analyze'
-    );
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'analyze');
 
     const parameters = {
       options: {
@@ -233,11 +229,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listModels'
-    );
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'listModels');
 
     const parameters = {
       options: {
@@ -289,11 +281,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       'model_id': _params.modelId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteModel'
-    );
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteModel');
 
     const parameters = {
       options: {
@@ -333,6 +321,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-categories##categories-training-data-requirements).
    * @param {string} [params.trainingDataContentType] - The content type of trainingData.
    * @param {string} [params.name] - An optional name for the model.
+   * @param {JsonObject} [params.userMetadata] - An optional map of metadata key-value pairs to store with this model.
    * @param {string} [params.description] - An optional description of the model.
    * @param {string} [params.modelVersion] - An optional version string.
    * @param {string} [params.workspaceId] - ID of the Watson Knowledge Studio workspace that deployed this model to
@@ -346,7 +335,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModel>> {
     const _params = { ...params };
     const _requiredParams = ['language', 'trainingData'];
-    const _validParams = ['language', 'trainingData', 'trainingDataContentType', 'name', 'description', 'modelVersion', 'workspaceId', 'versionDescription', 'headers'];
+    const _validParams = ['language', 'trainingData', 'trainingDataContentType', 'name', 'userMetadata', 'description', 'modelVersion', 'workspaceId', 'versionDescription', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -359,6 +348,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         contentType: _params.trainingDataContentType,
       },
       'name': _params.name,
+      'user_metadata': _params.userMetadata,
       'description': _params.description,
       'model_version': _params.modelVersion,
       'workspace_id': _params.workspaceId,
@@ -369,11 +359,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createCategoriesModel'
-    );
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'createCategoriesModel');
 
     const parameters = {
       options: {
@@ -422,11 +408,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listCategoriesModels'
-    );
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'listCategoriesModels');
 
     const parameters = {
       options: {
@@ -478,11 +460,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       'model_id': _params.modelId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getCategoriesModel'
-    );
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'getCategoriesModel');
 
     const parameters = {
       options: {
@@ -520,6 +498,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-categories##categories-training-data-requirements).
    * @param {string} [params.trainingDataContentType] - The content type of trainingData.
    * @param {string} [params.name] - An optional name for the model.
+   * @param {JsonObject} [params.userMetadata] - An optional map of metadata key-value pairs to store with this model.
    * @param {string} [params.description] - An optional description of the model.
    * @param {string} [params.modelVersion] - An optional version string.
    * @param {string} [params.workspaceId] - ID of the Watson Knowledge Studio workspace that deployed this model to
@@ -533,7 +512,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModel>> {
     const _params = { ...params };
     const _requiredParams = ['modelId', 'language', 'trainingData'];
-    const _validParams = ['modelId', 'language', 'trainingData', 'trainingDataContentType', 'name', 'description', 'modelVersion', 'workspaceId', 'versionDescription', 'headers'];
+    const _validParams = ['modelId', 'language', 'trainingData', 'trainingDataContentType', 'name', 'userMetadata', 'description', 'modelVersion', 'workspaceId', 'versionDescription', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -546,6 +525,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         contentType: _params.trainingDataContentType,
       },
       'name': _params.name,
+      'user_metadata': _params.userMetadata,
       'description': _params.description,
       'model_version': _params.modelVersion,
       'workspace_id': _params.workspaceId,
@@ -560,11 +540,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       'model_id': _params.modelId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'updateCategoriesModel'
-    );
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'updateCategoriesModel');
 
     const parameters = {
       options: {
@@ -620,11 +596,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       'model_id': _params.modelId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteCategoriesModel'
-    );
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteCategoriesModel');
 
     const parameters = {
       options: {
@@ -664,6 +636,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-classifications#classification-training-data-requirements).
    * @param {string} [params.trainingDataContentType] - The content type of trainingData.
    * @param {string} [params.name] - An optional name for the model.
+   * @param {JsonObject} [params.userMetadata] - An optional map of metadata key-value pairs to store with this model.
    * @param {string} [params.description] - An optional description of the model.
    * @param {string} [params.modelVersion] - An optional version string.
    * @param {string} [params.workspaceId] - ID of the Watson Knowledge Studio workspace that deployed this model to
@@ -679,7 +652,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModel>> {
     const _params = { ...params };
     const _requiredParams = ['language', 'trainingData'];
-    const _validParams = ['language', 'trainingData', 'trainingDataContentType', 'name', 'description', 'modelVersion', 'workspaceId', 'versionDescription', 'trainingParameters', 'headers'];
+    const _validParams = ['language', 'trainingData', 'trainingDataContentType', 'name', 'userMetadata', 'description', 'modelVersion', 'workspaceId', 'versionDescription', 'trainingParameters', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -692,6 +665,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         contentType: _params.trainingDataContentType,
       },
       'name': _params.name,
+      'user_metadata': _params.userMetadata,
       'description': _params.description,
       'model_version': _params.modelVersion,
       'workspace_id': _params.workspaceId,
@@ -703,11 +677,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'createClassificationsModel'
-    );
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'createClassificationsModel');
 
     const parameters = {
       options: {
@@ -756,11 +726,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'listClassificationsModels'
-    );
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'listClassificationsModels');
 
     const parameters = {
       options: {
@@ -812,11 +778,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       'model_id': _params.modelId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'getClassificationsModel'
-    );
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'getClassificationsModel');
 
     const parameters = {
       options: {
@@ -854,6 +816,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * requirements](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-classifications#classification-training-data-requirements).
    * @param {string} [params.trainingDataContentType] - The content type of trainingData.
    * @param {string} [params.name] - An optional name for the model.
+   * @param {JsonObject} [params.userMetadata] - An optional map of metadata key-value pairs to store with this model.
    * @param {string} [params.description] - An optional description of the model.
    * @param {string} [params.modelVersion] - An optional version string.
    * @param {string} [params.workspaceId] - ID of the Watson Knowledge Studio workspace that deployed this model to
@@ -869,7 +832,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModel>> {
     const _params = { ...params };
     const _requiredParams = ['modelId', 'language', 'trainingData'];
-    const _validParams = ['modelId', 'language', 'trainingData', 'trainingDataContentType', 'name', 'description', 'modelVersion', 'workspaceId', 'versionDescription', 'trainingParameters', 'headers'];
+    const _validParams = ['modelId', 'language', 'trainingData', 'trainingDataContentType', 'name', 'userMetadata', 'description', 'modelVersion', 'workspaceId', 'versionDescription', 'trainingParameters', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -882,6 +845,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         contentType: _params.trainingDataContentType,
       },
       'name': _params.name,
+      'user_metadata': _params.userMetadata,
       'description': _params.description,
       'model_version': _params.modelVersion,
       'workspace_id': _params.workspaceId,
@@ -897,11 +861,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       'model_id': _params.modelId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'updateClassificationsModel'
-    );
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'updateClassificationsModel');
 
     const parameters = {
       options: {
@@ -957,11 +917,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
       'model_id': _params.modelId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME,
-      'v1',
-      'deleteClassificationsModel'
-    );
+    const sdkHeaders = getSdkHeaders(NaturalLanguageUnderstandingV1.DEFAULT_SERVICE_NAME, 'v1', 'deleteClassificationsModel');
 
     const parameters = {
       options: {
@@ -1081,6 +1037,8 @@ namespace NaturalLanguageUnderstandingV1 {
     trainingDataContentType?: CreateCategoriesModelConstants.TrainingDataContentType | string;
     /** An optional name for the model. */
     name?: string;
+    /** An optional map of metadata key-value pairs to store with this model. */
+    userMetadata?: JsonObject;
     /** An optional description of the model. */
     description?: string;
     /** An optional version string. */
@@ -1127,6 +1085,8 @@ namespace NaturalLanguageUnderstandingV1 {
     trainingDataContentType?: UpdateCategoriesModelConstants.TrainingDataContentType | string;
     /** An optional name for the model. */
     name?: string;
+    /** An optional map of metadata key-value pairs to store with this model. */
+    userMetadata?: JsonObject;
     /** An optional description of the model. */
     description?: string;
     /** An optional version string. */
@@ -1166,6 +1126,8 @@ namespace NaturalLanguageUnderstandingV1 {
     trainingDataContentType?: CreateClassificationsModelConstants.TrainingDataContentType | string;
     /** An optional name for the model. */
     name?: string;
+    /** An optional map of metadata key-value pairs to store with this model. */
+    userMetadata?: JsonObject;
     /** An optional description of the model. */
     description?: string;
     /** An optional version string. */
@@ -1214,6 +1176,8 @@ namespace NaturalLanguageUnderstandingV1 {
     trainingDataContentType?: UpdateClassificationsModelConstants.TrainingDataContentType | string;
     /** An optional name for the model. */
     name?: string;
+    /** An optional map of metadata key-value pairs to store with this model. */
+    userMetadata?: JsonObject;
     /** An optional description of the model. */
     description?: string;
     /** An optional version string. */
@@ -1316,7 +1280,7 @@ namespace NaturalLanguageUnderstandingV1 {
     /** The service features that are supported by the custom model. */
     features?: string[];
     /** When the status is `available`, the model is ready to use. */
-    status: string;
+    status: CategoriesModel.Constants.Status | string;
     /** Unique model ID. */
     model_id: string;
     /** dateTime indicating when the model was created. */
@@ -1326,6 +1290,19 @@ namespace NaturalLanguageUnderstandingV1 {
     last_trained?: string;
     /** dateTime of last successful model deployment. */
     last_deployed?: string;
+  }
+  export namespace CategoriesModel {
+    export namespace Constants {
+      /** When the status is `available`, the model is ready to use. */
+      export enum Status {
+        STARTING = 'starting',
+        TRAINING = 'training',
+        DEPLOYING = 'deploying',
+        AVAILABLE = 'available',
+        ERROR = 'error',
+        DELETED = 'deleted',
+      }
+    }
   }
 
   /** List of categories models. */
@@ -1396,7 +1373,7 @@ namespace NaturalLanguageUnderstandingV1 {
     /** The service features that are supported by the custom model. */
     features?: string[];
     /** When the status is `available`, the model is ready to use. */
-    status: string;
+    status: ClassificationsModel.Constants.Status | string;
     /** Unique model ID. */
     model_id: string;
     /** dateTime indicating when the model was created. */
@@ -1406,6 +1383,19 @@ namespace NaturalLanguageUnderstandingV1 {
     last_trained?: string;
     /** dateTime of last successful model deployment. */
     last_deployed?: string;
+  }
+  export namespace ClassificationsModel {
+    export namespace Constants {
+      /** When the status is `available`, the model is ready to use. */
+      export enum Status {
+        STARTING = 'starting',
+        TRAINING = 'training',
+        DEPLOYING = 'deploying',
+        AVAILABLE = 'available',
+        ERROR = 'error',
+        DELETED = 'deleted',
+      }
+    }
   }
 
   /** List of classifications models. */
@@ -1438,7 +1428,16 @@ namespace NaturalLanguageUnderstandingV1 {
   /** Optional classifications training parameters along with model train requests. */
   export interface ClassificationsTrainingParameters {
     /** Model type selector to train either a single_label or a multi_label classifier. */
-    model_type?: string;
+    model_type?: ClassificationsTrainingParameters.Constants.ModelType | string;
+  }
+  export namespace ClassificationsTrainingParameters {
+    export namespace Constants {
+      /** Model type selector to train either a single_label or a multi_label classifier. */
+      export enum ModelType {
+        SINGLE_LABEL = 'single_label',
+        MULTI_LABEL = 'multi_label',
+      }
+    }
   }
 
   /** Returns high-level concepts in the content. For example, a research paper about deep learning might return the concept, "Artificial Intelligence" although the term is not mentioned. Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Spanish. */
@@ -1700,7 +1699,7 @@ namespace NaturalLanguageUnderstandingV1 {
   /** Model. */
   export interface Model {
     /** When the status is `available`, the model is ready to use. */
-    status?: string;
+    status?: Model.Constants.Status | string;
     /** Unique model ID. */
     model_id?: string;
     /** ISO 639-1 code that indicates the language of the model. */
@@ -1717,6 +1716,19 @@ namespace NaturalLanguageUnderstandingV1 {
     version_description?: string;
     /** A dateTime indicating when the model was created. */
     created?: string;
+  }
+  export namespace Model {
+    export namespace Constants {
+      /** When the status is `available`, the model is ready to use. */
+      export enum Status {
+        STARTING = 'starting',
+        TRAINING = 'training',
+        DEPLOYING = 'deploying',
+        AVAILABLE = 'available',
+        ERROR = 'error',
+        DELETED = 'deleted',
+      }
+    }
   }
 
   /** A list of messages describing model training issues when model status is `error`. */
@@ -1910,11 +1922,35 @@ namespace NaturalLanguageUnderstandingV1 {
     /** The part of speech of the token. For more information about the values, see [Universal Dependencies POS
      *  tags](https://universaldependencies.org/u/pos/).
      */
-    part_of_speech?: string;
+    part_of_speech?: TokenResult.Constants.PartOfSpeech | string;
     /** Character offsets indicating the beginning and end of the token in the analyzed text. */
     location?: number[];
     /** The [lemma](https://wikipedia.org/wiki/Lemma_%28morphology%29) of the token. */
     lemma?: string;
+  }
+  export namespace TokenResult {
+    export namespace Constants {
+      /** The part of speech of the token. For more information about the values, see [Universal Dependencies POS tags](https://universaldependencies.org/u/pos/). */
+      export enum PartOfSpeech {
+        ADJ = 'ADJ',
+        ADP = 'ADP',
+        ADV = 'ADV',
+        AUX = 'AUX',
+        CCONJ = 'CCONJ',
+        DET = 'DET',
+        INTJ = 'INTJ',
+        NOUN = 'NOUN',
+        NUM = 'NUM',
+        PART = 'PART',
+        PRON = 'PRON',
+        PROPN = 'PROPN',
+        PUNCT = 'PUNCT',
+        SCONJ = 'SCONJ',
+        SYM = 'SYM',
+        VERB = 'VERB',
+        X = 'X',
+      }
+    }
   }
 }
 

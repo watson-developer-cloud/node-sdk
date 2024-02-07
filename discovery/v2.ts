@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2019, 2023.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.64.1-cee95189-20230124-211647
+ * IBM OpenAPI SDK Code Generator Version: 3.85.0-75c38f8f-20240206-210220
  */
 
 import * as extend from 'extend';
@@ -23,9 +23,9 @@ import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import {
   Authenticator,
   BaseService,
+  UserOptions,
   getAuthenticatorFromEnvironment,
   validateParams,
-  UserOptions,
 } from 'ibm-cloud-sdk-core';
 import { getSdkHeaders } from '../lib/common';
 
@@ -55,7 +55,7 @@ class DiscoveryV2 extends BaseService {
    * @param {Object} options - Options for the service.
    * @param {string} options.version - Release date of the version of the API you want to use. Specify dates in
    * YYYY-MM-DD format. The current version is `2020-08-30`.
-   * @param {string} [options.serviceUrl] - The base url to use when contacting the service. The base url may differ between IBM Cloud regions.
+   * @param {string} [options.serviceUrl] - The base URL for the service
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
    * @param {Authenticator} [options.authenticator] - The Authenticator object used to authenticate requests to the service. Defaults to environment if not set
@@ -113,11 +113,7 @@ class DiscoveryV2 extends BaseService {
       'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'listProjects'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listProjects');
 
     const parameters = {
       options: {
@@ -179,11 +175,7 @@ class DiscoveryV2 extends BaseService {
       'version': this.version,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'createProject'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'createProject');
 
     const parameters = {
       options: {
@@ -238,11 +230,7 @@ class DiscoveryV2 extends BaseService {
       'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'getProject'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getProject');
 
     const parameters = {
       options: {
@@ -301,11 +289,7 @@ class DiscoveryV2 extends BaseService {
       'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'updateProject'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'updateProject');
 
     const parameters = {
       options: {
@@ -364,11 +348,7 @@ class DiscoveryV2 extends BaseService {
       'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'deleteProject'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteProject');
 
     const parameters = {
       options: {
@@ -424,11 +404,7 @@ class DiscoveryV2 extends BaseService {
       'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'listFields'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listFields');
 
     const parameters = {
       options: {
@@ -485,11 +461,7 @@ class DiscoveryV2 extends BaseService {
       'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'listCollections'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listCollections');
 
     const parameters = {
       options: {
@@ -560,11 +532,7 @@ class DiscoveryV2 extends BaseService {
       'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'createCollection'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'createCollection');
 
     const parameters = {
       options: {
@@ -622,11 +590,7 @@ class DiscoveryV2 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'getCollection'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getCollection');
 
     const parameters = {
       options: {
@@ -691,11 +655,7 @@ class DiscoveryV2 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'updateCollection'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'updateCollection');
 
     const parameters = {
       options: {
@@ -754,11 +714,7 @@ class DiscoveryV2 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'deleteCollection'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteCollection');
 
     const parameters = {
       options: {
@@ -859,11 +815,7 @@ class DiscoveryV2 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'listDocuments'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listDocuments');
 
     const parameters = {
       options: {
@@ -974,11 +926,7 @@ class DiscoveryV2 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'addDocument'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'addDocument');
 
     const parameters = {
       options: {
@@ -1044,11 +992,7 @@ class DiscoveryV2 extends BaseService {
       'document_id': _params.documentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'getDocument'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getDocument');
 
     const parameters = {
       options: {
@@ -1151,11 +1095,7 @@ class DiscoveryV2 extends BaseService {
       'document_id': _params.documentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'updateDocument'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'updateDocument');
 
     const parameters = {
       options: {
@@ -1226,11 +1166,7 @@ class DiscoveryV2 extends BaseService {
       'document_id': _params.documentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'deleteDocument'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteDocument');
 
     const parameters = {
       options: {
@@ -1352,11 +1288,7 @@ class DiscoveryV2 extends BaseService {
       'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'query'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'query');
 
     const parameters = {
       options: {
@@ -1423,11 +1355,7 @@ class DiscoveryV2 extends BaseService {
       'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'getAutocompletion'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getAutocompletion');
 
     const parameters = {
       options: {
@@ -1502,11 +1430,7 @@ class DiscoveryV2 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'queryCollectionNotices'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'queryCollectionNotices');
 
     const parameters = {
       options: {
@@ -1580,11 +1504,7 @@ class DiscoveryV2 extends BaseService {
       'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'queryNotices'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'queryNotices');
 
     const parameters = {
       options: {
@@ -1645,11 +1565,7 @@ class DiscoveryV2 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'getStopwordList'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getStopwordList');
 
     const parameters = {
       options: {
@@ -1719,11 +1635,7 @@ class DiscoveryV2 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'createStopwordList'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'createStopwordList');
 
     const parameters = {
       options: {
@@ -1782,11 +1694,7 @@ class DiscoveryV2 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'deleteStopwordList'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteStopwordList');
 
     const parameters = {
       options: {
@@ -1842,11 +1750,7 @@ class DiscoveryV2 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'listExpansions'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listExpansions');
 
     const parameters = {
       options: {
@@ -1920,11 +1824,7 @@ class DiscoveryV2 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'createExpansions'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'createExpansions');
 
     const parameters = {
       options: {
@@ -1983,11 +1883,7 @@ class DiscoveryV2 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'deleteExpansions'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteExpansions');
 
     const parameters = {
       options: {
@@ -2043,11 +1939,7 @@ class DiscoveryV2 extends BaseService {
       'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'getComponentSettings'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getComponentSettings');
 
     const parameters = {
       options: {
@@ -2104,11 +1996,7 @@ class DiscoveryV2 extends BaseService {
       'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'listTrainingQueries'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listTrainingQueries');
 
     const parameters = {
       options: {
@@ -2162,11 +2050,7 @@ class DiscoveryV2 extends BaseService {
       'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'deleteTrainingQueries'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteTrainingQueries');
 
     const parameters = {
       options: {
@@ -2229,11 +2113,7 @@ class DiscoveryV2 extends BaseService {
       'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'createTrainingQuery'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'createTrainingQuery');
 
     const parameters = {
       options: {
@@ -2291,11 +2171,7 @@ class DiscoveryV2 extends BaseService {
       'query_id': _params.queryId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'getTrainingQuery'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getTrainingQuery');
 
     const parameters = {
       options: {
@@ -2361,11 +2237,7 @@ class DiscoveryV2 extends BaseService {
       'query_id': _params.queryId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'updateTrainingQuery'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'updateTrainingQuery');
 
     const parameters = {
       options: {
@@ -2423,11 +2295,7 @@ class DiscoveryV2 extends BaseService {
       'query_id': _params.queryId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'deleteTrainingQuery'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteTrainingQuery');
 
     const parameters = {
       options: {
@@ -2484,11 +2352,7 @@ class DiscoveryV2 extends BaseService {
       'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'listEnrichments'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listEnrichments');
 
     const parameters = {
       options: {
@@ -2560,11 +2424,7 @@ class DiscoveryV2 extends BaseService {
       'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'createEnrichment'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'createEnrichment');
 
     const parameters = {
       options: {
@@ -2622,11 +2482,7 @@ class DiscoveryV2 extends BaseService {
       'enrichment_id': _params.enrichmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'getEnrichment'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getEnrichment');
 
     const parameters = {
       options: {
@@ -2689,11 +2545,7 @@ class DiscoveryV2 extends BaseService {
       'enrichment_id': _params.enrichmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'updateEnrichment'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'updateEnrichment');
 
     const parameters = {
       options: {
@@ -2753,11 +2605,7 @@ class DiscoveryV2 extends BaseService {
       'enrichment_id': _params.enrichmentId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'deleteEnrichment'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteEnrichment');
 
     const parameters = {
       options: {
@@ -2814,11 +2662,7 @@ class DiscoveryV2 extends BaseService {
       'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'listDocumentClassifiers'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listDocumentClassifiers');
 
     const parameters = {
       options: {
@@ -2899,11 +2743,7 @@ class DiscoveryV2 extends BaseService {
       'project_id': _params.projectId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'createDocumentClassifier'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'createDocumentClassifier');
 
     const parameters = {
       options: {
@@ -2961,11 +2801,7 @@ class DiscoveryV2 extends BaseService {
       'classifier_id': _params.classifierId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'getDocumentClassifier'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getDocumentClassifier');
 
     const parameters = {
       options: {
@@ -3043,11 +2879,7 @@ class DiscoveryV2 extends BaseService {
       'classifier_id': _params.classifierId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'updateDocumentClassifier'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'updateDocumentClassifier');
 
     const parameters = {
       options: {
@@ -3105,11 +2937,7 @@ class DiscoveryV2 extends BaseService {
       'classifier_id': _params.classifierId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'deleteDocumentClassifier'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteDocumentClassifier');
 
     const parameters = {
       options: {
@@ -3168,11 +2996,7 @@ class DiscoveryV2 extends BaseService {
       'classifier_id': _params.classifierId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'listDocumentClassifierModels'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listDocumentClassifierModels');
 
     const parameters = {
       options: {
@@ -3258,11 +3082,7 @@ class DiscoveryV2 extends BaseService {
       'classifier_id': _params.classifierId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'createDocumentClassifierModel'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'createDocumentClassifierModel');
 
     const parameters = {
       options: {
@@ -3322,11 +3142,7 @@ class DiscoveryV2 extends BaseService {
       'model_id': _params.modelId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'getDocumentClassifierModel'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'getDocumentClassifierModel');
 
     const parameters = {
       options: {
@@ -3391,11 +3207,7 @@ class DiscoveryV2 extends BaseService {
       'model_id': _params.modelId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'updateDocumentClassifierModel'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'updateDocumentClassifierModel');
 
     const parameters = {
       options: {
@@ -3455,11 +3267,7 @@ class DiscoveryV2 extends BaseService {
       'model_id': _params.modelId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'deleteDocumentClassifierModel'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteDocumentClassifierModel');
 
     const parameters = {
       options: {
@@ -3554,11 +3362,7 @@ class DiscoveryV2 extends BaseService {
       'collection_id': _params.collectionId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'analyzeDocument'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'analyzeDocument');
 
     const parameters = {
       options: {
@@ -3620,11 +3424,7 @@ class DiscoveryV2 extends BaseService {
       'customer_id': _params.customerId,
     };
 
-    const sdkHeaders = getSdkHeaders(
-      DiscoveryV2.DEFAULT_SERVICE_NAME,
-      'v2',
-      'deleteUserData'
-    );
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'deleteUserData');
 
     const parameters = {
       options: {
@@ -4645,7 +4445,17 @@ namespace DiscoveryV2 {
      *  user interface. For more information, see [the product
      *  documentation](/docs/discovery-data?topic=discovery-data-configuring-fields).
      */
-    model?: string;
+    model?: CollectionDetailsSmartDocumentUnderstanding.Constants.Model | string;
+  }
+  export namespace CollectionDetailsSmartDocumentUnderstanding {
+    export namespace Constants {
+      /** Specifies the type of Smart Document Understanding (SDU) model that is enabled for the collection. The following types of models are supported: * `custom`: A user-trained model is applied. * `pre_trained`: A pretrained model is applied. This type of model is applied automatically to *Document Retrieval for Contracts* projects. * `text_extraction`: An SDU model that extracts text and metadata from the content. This model is enabled in collections by default regardless of the types of documents in the collection (as long as the service plan supports SDU models). You can apply user-trained or pretrained models to collections from the *Identify fields* page of the product user interface. For more information, see [the product documentation](/docs/discovery-data?topic=discovery-data-configuring-fields). */
+      export enum Model {
+        CUSTOM = 'custom',
+        PRE_TRAINED = 'pre_trained',
+        TEXT_EXTRACTION = 'text_extraction',
+      }
+    }
   }
 
   /** An object describing an enrichment for a collection. */
@@ -4678,7 +4488,18 @@ namespace DiscoveryV2 {
     /** Whether users is allowed to select more than one of the aggregation terms. */
     multiple_selections_allowed?: boolean;
     /** Type of visualization to use when rendering the aggregation. */
-    visualization_type?: string;
+    visualization_type?: ComponentSettingsAggregation.Constants.VisualizationType | string;
+  }
+  export namespace ComponentSettingsAggregation {
+    export namespace Constants {
+      /** Type of visualization to use when rendering the aggregation. */
+      export enum VisualizationType {
+        AUTO = 'auto',
+        FACET_TABLE = 'facet_table',
+        WORD_CLOUD = 'word_cloud',
+        MAP = 'map',
+      }
+    }
   }
 
   /** Fields shown in the results section of the UI. */
@@ -4768,11 +4589,24 @@ namespace DiscoveryV2 {
      *  * `watson_knowledge_studio_model`: Creates an enrichment from a Watson Knowledge Studio machine learning model
      *  that is defined in a ZIP file.
      */
-    type?: string;
+    type?: CreateEnrichment.Constants.Type | string;
     /** An object that contains options for the current enrichment. Starting with version `2020-08-30`, the
      *  enrichment options are not included in responses from the List Enrichments method.
      */
     options?: EnrichmentOptions;
+  }
+  export namespace CreateEnrichment {
+    export namespace Constants {
+      /** The type of this enrichment. The following types are supported: * `classifier`: Creates a document classifier enrichment from a document classifier model that you create by using the [Document classifier API](/apidocs/discovery-data#createdocumentclassifier). **Note**: A text classifier enrichment can be created only from the product user interface. * `dictionary`: Creates a custom dictionary enrichment that you define in a CSV file. * `regular_expression`: Creates a custom regular expression enrichment from regex syntax that you specify in the request. * `rule_based`: Creates an enrichment from an advanced rules model that is created and exported as a ZIP file from Watson Knowledge Studio. * `uima_annotator`: Creates an enrichment from a custom UIMA text analysis model that is defined in a PEAR file created in one of the following ways: * Watson Explorer Content Analytics Studio. **Note**: Supported in IBM Cloud Pak for Data instances only. * Rule-based model that is created in Watson Knowledge Studio. * `watson_knowledge_studio_model`: Creates an enrichment from a Watson Knowledge Studio machine learning model that is defined in a ZIP file. */
+      export enum Type {
+        CLASSIFIER = 'classifier',
+        DICTIONARY = 'dictionary',
+        REGULAR_EXPRESSION = 'regular_expression',
+        UIMA_ANNOTATOR = 'uima_annotator',
+        RULE_BASED = 'rule_based',
+        WATSON_KNOWLEDGE_STUDIO_MODEL = 'watson_knowledge_studio_model',
+      }
+    }
   }
 
   /** Default query parameters for this project. */
@@ -4845,7 +4679,15 @@ namespace DiscoveryV2 {
     /** The unique identifier of the document. */
     document_id?: string;
     /** Status of the document. A deleted document has the status deleted. */
-    status?: string;
+    status?: DeleteDocumentResponse.Constants.Status | string;
+  }
+  export namespace DeleteDocumentResponse {
+    export namespace Constants {
+      /** Status of the document. A deleted document has the status deleted. */
+      export enum Status {
+        DELETED = 'deleted',
+      }
+    }
   }
 
   /** Information returned after an uploaded document is accepted. */
@@ -4855,7 +4697,16 @@ namespace DiscoveryV2 {
     /** Status of the document in the ingestion process. A status of `processing` is returned for documents that are
      *  ingested with a *version* date before `2019-01-01`. The `pending` status is returned for all others.
      */
-    status?: string;
+    status?: DocumentAccepted.Constants.Status | string;
+  }
+  export namespace DocumentAccepted {
+    export namespace Constants {
+      /** Status of the document in the ingestion process. A status of `processing` is returned for documents that are ingested with a *version* date before `2019-01-01`. The `pending` status is returned for all others. */
+      export enum Status {
+        PROCESSING = 'processing',
+        PENDING = 'pending',
+      }
+    }
   }
 
   /** List of document attributes. */
@@ -4933,13 +4784,23 @@ namespace DiscoveryV2 {
      */
     test_data_file?: string;
     /** The status of the training run. */
-    status?: string;
+    status?: DocumentClassifierModel.Constants.Status | string;
     /** An object that contains information about a trained document classifier model. */
     evaluation?: ClassifierModelEvaluation;
     /** A unique identifier of the enrichment that is generated by this document classifier model. */
     enrichment_id?: string;
     /** The date that the document classifier model was deployed. */
     deployed_at?: string;
+  }
+  export namespace DocumentClassifierModel {
+    export namespace Constants {
+      /** The status of the training run. */
+      export enum Status {
+        TRAINING = 'training',
+        AVAILABLE = 'available',
+        FAILED = 'failed',
+      }
+    }
   }
 
   /** An object that contains a list of document classifier model definitions. */
@@ -4977,7 +4838,7 @@ namespace DiscoveryV2 {
      *
      *  * `processing`: Ingestion is in progress.
      */
-    status?: string;
+    status?: DocumentDetails.Constants.Status | string;
     /** Array of JSON objects for notices, meaning warning or error messages, that are produced by the document
      *  ingestion process. The array does not include notices that are produced for child documents that are generated
      *  when a document is processed.
@@ -4995,6 +4856,17 @@ namespace DiscoveryV2 {
     file_type?: string;
     /** The SHA-256 hash of the original source file. The hash is formatted as a hexadecimal string. */
     sha256?: string;
+  }
+  export namespace DocumentDetails {
+    export namespace Constants {
+      /** The status of the ingestion of the document. The possible values are: * `available`: Ingestion is finished and the document is indexed. * `failed`: Ingestion is finished, but the document is not indexed because of an error. * `pending`: The document is uploaded, but the ingestion process is not started. * `processing`: Ingestion is in progress. */
+      export enum Status {
+        AVAILABLE = 'available',
+        FAILED = 'failed',
+        PENDING = 'pending',
+        PROCESSING = 'processing',
+      }
+    }
   }
 
   /** Information about the child documents that are generated from a single document during ingestion or other processing. */
@@ -5018,11 +4890,27 @@ namespace DiscoveryV2 {
     /** The description of this enrichment. */
     description?: string;
     /** The type of this enrichment. */
-    type?: string;
+    type?: Enrichment.Constants.Type | string;
     /** An object that contains options for the current enrichment. Starting with version `2020-08-30`, the
      *  enrichment options are not included in responses from the List Enrichments method.
      */
     options?: EnrichmentOptions;
+  }
+  export namespace Enrichment {
+    export namespace Constants {
+      /** The type of this enrichment. */
+      export enum Type {
+        PART_OF_SPEECH = 'part_of_speech',
+        SENTIMENT = 'sentiment',
+        NATURAL_LANGUAGE_UNDERSTANDING = 'natural_language_understanding',
+        DICTIONARY = 'dictionary',
+        REGULAR_EXPRESSION = 'regular_expression',
+        UIMA_ANNOTATOR = 'uima_annotator',
+        RULE_BASED = 'rule_based',
+        WATSON_KNOWLEDGE_STUDIO_MODEL = 'watson_knowledge_studio_model',
+        CLASSIFIER = 'classifier',
+      }
+    }
   }
 
   /** An object that contains options for the current enrichment. Starting with version `2020-08-30`, the enrichment options are not included in responses from the List Enrichments method. */
@@ -5106,9 +4994,27 @@ namespace DiscoveryV2 {
     /** The name of the field. */
     field?: string;
     /** The type of the field. */
-    type?: string;
+    type?: Field.Constants.Type | string;
     /** The collection Id of the collection where the field was found. */
     collection_id?: string;
+  }
+  export namespace Field {
+    export namespace Constants {
+      /** The type of the field. */
+      export enum Type {
+        NESTED = 'nested',
+        STRING = 'string',
+        DATE = 'date',
+        LONG = 'long',
+        INTEGER = 'integer',
+        SHORT = 'short',
+        BYTE = 'byte',
+        DOUBLE = 'double',
+        FLOAT = 'float',
+        BOOLEAN = 'boolean',
+        BINARY = 'binary',
+      }
+    }
   }
 
   /** Response object that contains an array of collection details. */
@@ -5192,11 +5098,20 @@ namespace DiscoveryV2 {
     /** Unique identifier of the query used for relevance training. */
     query_id?: string;
     /** Severity level of the notice. */
-    severity?: string;
+    severity?: Notice.Constants.Severity | string;
     /** Ingestion or training step in which the notice occurred. */
     step?: string;
     /** The description of the notice. */
     description?: string;
+  }
+  export namespace Notice {
+    export namespace Constants {
+      /** Severity level of the notice. */
+      export enum Severity {
+        WARNING = 'warning',
+        ERROR = 'error',
+      }
+    }
   }
 
   /** An object that measures the metrics from a training run for each classification label separately. */
@@ -5230,13 +5145,25 @@ namespace DiscoveryV2 {
      *  The `content_mining` and `content_intelligence` types are available with Premium plan managed deployments and
      *  installed deployments only.
      */
-    type?: string;
+    type?: ProjectDetails.Constants.Type | string;
     /** Relevancy training status information for this project. */
     relevancy_training_status?: ProjectListDetailsRelevancyTrainingStatus;
     /** The number of collections configured in this project. */
     collection_count?: number;
     /** Default query parameters for this project. */
     default_query_parameters?: DefaultQueryParams;
+  }
+  export namespace ProjectDetails {
+    export namespace Constants {
+      /** The type of project. The `content_intelligence` type is a *Document Retrieval for Contracts* project and the `other` type is a *Custom* project. The `content_mining` and `content_intelligence` types are available with Premium plan managed deployments and installed deployments only. */
+      export enum Type {
+        DOCUMENT_RETRIEVAL = 'document_retrieval',
+        CONVERSATIONAL_SEARCH = 'conversational_search',
+        CONTENT_MINING = 'content_mining',
+        CONTENT_INTELLIGENCE = 'content_intelligence',
+        OTHER = 'other',
+      }
+    }
   }
 
   /** Details about a specific project. */
@@ -5253,11 +5180,23 @@ namespace DiscoveryV2 {
      *  The `content_mining` and `content_intelligence` types are available with Premium plan managed deployments and
      *  installed deployments only.
      */
-    type?: string;
+    type?: ProjectListDetails.Constants.Type | string;
     /** Relevancy training status information for this project. */
     relevancy_training_status?: ProjectListDetailsRelevancyTrainingStatus;
     /** The number of collections configured in this project. */
     collection_count?: number;
+  }
+  export namespace ProjectListDetails {
+    export namespace Constants {
+      /** The type of project. The `content_intelligence` type is a *Document Retrieval for Contracts* project and the `other` type is a *Custom* project. The `content_mining` and `content_intelligence` types are available with Premium plan managed deployments and installed deployments only. */
+      export enum Type {
+        DOCUMENT_RETRIEVAL = 'document_retrieval',
+        CONVERSATIONAL_SEARCH = 'conversational_search',
+        CONTENT_MINING = 'content_mining',
+        CONTENT_INTELLIGENCE = 'content_intelligence',
+        OTHER = 'other',
+      }
+    }
   }
 
   /** Relevancy training status information for this project. */
@@ -5475,7 +5414,7 @@ namespace DiscoveryV2 {
   /** Metadata of a query result. */
   export interface QueryResultMetadata {
     /** The document retrieval source that produced this search result. */
-    document_retrieval_source?: string;
+    document_retrieval_source?: QueryResultMetadata.Constants.DocumentRetrievalSource | string;
     /** The collection id associated with this training data set. */
     collection_id: string;
     /** The confidence score for the given result. Calculated based on how relevant the result is estimated to be.
@@ -5484,6 +5423,15 @@ namespace DiscoveryV2 {
      *  result set. This field is returned only if the **natural_language_query** parameter is specified in the query.
      */
     confidence?: number;
+  }
+  export namespace QueryResultMetadata {
+    export namespace Constants {
+      /** The document retrieval source that produced this search result. */
+      export enum DocumentRetrievalSource {
+        SEARCH = 'search',
+        CURATION = 'curation',
+      }
+    }
   }
 
   /** A passage query result. */
@@ -5604,7 +5552,16 @@ namespace DiscoveryV2 {
      *  **Note**: In the event of trained collections being queried, but the trained model is not used to return
      *  results, the **document_retrieval_strategy** is listed as `untrained`.
      */
-    document_retrieval_strategy?: string;
+    document_retrieval_strategy?: RetrievalDetails.Constants.DocumentRetrievalStrategy | string;
+  }
+  export namespace RetrievalDetails {
+    export namespace Constants {
+      /** Identifies the document retrieval strategy used for this query. `relevancy_training` indicates that the results were returned using a relevancy trained model. **Note**: In the event of trained collections being queried, but the trained model is not used to return results, the **document_retrieval_strategy** is listed as `untrained`. */
+      export enum DocumentRetrievalStrategy {
+        UNTRAINED = 'untrained',
+        RELEVANCY_TRAINING = 'relevancy_training',
+      }
+    }
   }
 
   /** List of words to filter out of text that is submitted in queries. */
