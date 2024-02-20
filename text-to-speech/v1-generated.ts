@@ -44,18 +44,11 @@ import { getSdkHeaders } from '../lib/common';
  * words. A sounds-like translation consists of one or more words that, when combined, sound like the word. A phonetic
  * translation is based on the SSML phoneme format for representing a word. You can specify a phonetic translation in
  * standard International Phonetic Alphabet (IPA) representation or in the proprietary IBM Symbolic Phonetic
- * Representation (SPR). For phonetic translation, the Arabic, Chinese, Dutch, Australian English, Korean, and Swedish
- * voices support only IPA, not SPR.
+ * Representation (SPR).
  *
  * The service also offers a Tune by Example feature that lets you define custom prompts. You can also define speaker
- * models to improve the quality of your custom prompts. The service support custom prompts only for US English custom
+ * models to improve the quality of your custom prompts. The service supports custom prompts only for US English custom
  * models and voices.
- *
- * Effective **31 March 2022**, all *neural voices* are deprecated. The deprecated voices remain available to existing
- * users until 31 March 2023, when they will be removed from the service and the documentation. *No enhanced neural
- * voices or expressive neural voices are deprecated.*<br/><br/> For more information, see the [1 March 2023 service
- * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-1march2023) in
- * the release notes for {{site.data.keyword.texttospeechshort}} for {{site.data.keyword.cloud_notm}}.{: deprecated}
  *
  * API Version: 1.0.0
  * See: https://cloud.ibm.com/docs/text-to-speech
@@ -105,13 +98,6 @@ class TextToSpeechV1 extends BaseService {
    * details about the voice. The ordering of the list of voices can change from call to call; do not rely on an
    * alphabetized or static list of voices. To see information about a specific voice, use the [Get a voice](#getvoice).
    *
-   *
-   * **Note:** Effective **31 March 2022**, all *neural voices* are deprecated. The deprecated voices remain available
-   * to existing users until 31 March 2023, when they will be removed from the service and the documentation. *No
-   * enhanced neural voices or expressive neural voices are deprecated.* For more information, see the [1 March 2023
-   * service
-   * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-1march2023) in
-   * the release notes.
    *
    * **See also:** [Listing all
    * voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices-list#list-all-voices).
@@ -163,13 +149,6 @@ class TextToSpeechV1 extends BaseService {
    *
    * **See also:** [Listing a specific
    * voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices-list#list-specific-voice).
-   *
-   * **Note:** Effective **31 March 2022**, all *neural voices* are deprecated. The deprecated voices remain available
-   * to existing users until 31 March 2023, when they will be removed from the service and the documentation. *No
-   * enhanced neural voices or expressive neural voices are deprecated.* For more information, see the [1 March 2023
-   * service
-   * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-1march2023) in
-   * the release notes.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.voice - The voice for which information is to be returned.
@@ -237,13 +216,6 @@ class TextToSpeechV1 extends BaseService {
    *
    * **See also:** [The HTTP
    * interface](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-usingHTTP#usingHTTP).
-   *
-   * **Note:** Effective **31 March 2022**, all *neural voices* are deprecated. The deprecated voices remain available
-   * to existing users until 31 March 2023, when they will be removed from the service and the documentation. *No
-   * enhanced neural voices or expressive neural voices are deprecated.* For more information, see the [1 March 2023
-   * service
-   * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-1march2023) in
-   * the release notes.
    *
    * ### Audio formats (accept types)
    *
@@ -411,13 +383,6 @@ class TextToSpeechV1 extends BaseService {
    * You can also request the pronunciation for a specific voice to see the default translation for the language of that
    * voice or for a specific custom model to see the translation for that model.
    *
-   * **Note:** Effective **31 March 2022**, all *neural voices* are deprecated. The deprecated voices remain available
-   * to existing users until 31 March 2023, when they will be removed from the service and the documentation. *No
-   * enhanced neural voices or expressive neural voices are deprecated.* For more information, see the [1 March 2023
-   * service
-   * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-1march2023) in
-   * the release notes.
-   *
    * **See also:** [Querying a word from a
    * language](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customWords#cuWordsQueryLanguage).
    *
@@ -432,9 +397,8 @@ class TextToSpeechV1 extends BaseService {
    *
    * **See also:** [Using the default
    * voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices-use#specify-voice-default).
-   * @param {string} [params.format] - The phoneme format in which to return the pronunciation. The Arabic, Chinese,
-   * Dutch, Australian English, and Korean languages support only IPA. Omit the parameter to obtain the pronunciation in
-   * the default format.
+   * @param {string} [params.format] - The phoneme format in which to return the pronunciation. Omit the parameter to
+   * obtain the pronunciation in the default format.
    * @param {string} [params.customizationId] - The customization ID (GUID) of a custom model for which the
    * pronunciation is to be returned. The language of a specified custom model must match the language of the specified
    * voice. If the word is not defined in the specified custom model, the service returns the default translation for
@@ -496,13 +460,6 @@ class TextToSpeechV1 extends BaseService {
    *
    * **See also:** [Creating a custom
    * model](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-customModels#cuModelsCreate).
-   *
-   * **Note:** Effective **31 March 2022**, all *neural voices* are deprecated. The deprecated voices remain available
-   * to existing users until 31 March 2023, when they will be removed from the service and the documentation. *No
-   * enhanced neural voices or expressive neural voices are deprecated.* For more information, see the [1 March 2023
-   * service
-   * update](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-release-notes#text-to-speech-1march2023) in
-   * the release notes.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.name - The name of the new custom model. Use a localized name that matches the language of
@@ -975,8 +932,7 @@ class TextToSpeechV1 extends BaseService {
    * @param {string} params.word - The word that is to be added or updated for the custom model.
    * @param {string} params.translation - The phonetic or sounds-like translation for the word. A phonetic translation
    * is based on the SSML format for representing the phonetic string of a word either as an IPA translation or as an
-   * IBM SPR translation. The Arabic, Chinese, Dutch, Australian English, and Korean languages support only IPA. A
-   * sounds-like is one or more words that, when combined, sound like the word.
+   * IBM SPR translation. A sounds-like is one or more words that, when combined, sound like the word.
    * @param {string} [params.partOfSpeech] - **Japanese only.** The part of speech for the word. The service uses the
    * value to produce the correct intonation for the word. You can create only a single entry, with or without a single
    * part of speech, for any word; you cannot create multiple entries with different parts of speech for the same word.
@@ -1833,16 +1789,11 @@ namespace TextToSpeechV1 {
   export namespace GetVoiceConstants {
     /** The voice for which information is to be returned. */
     export enum Voice {
-      AR_MS_OMARVOICE = 'ar-MS_OmarVoice',
-      CS_CZ_ALENAVOICE = 'cs-CZ_AlenaVoice',
       DE_DE_BIRGITV3VOICE = 'de-DE_BirgitV3Voice',
       DE_DE_DIETERV3VOICE = 'de-DE_DieterV3Voice',
       DE_DE_ERIKAV3VOICE = 'de-DE_ErikaV3Voice',
-      EN_AU_CRAIGVOICE = 'en-AU_CraigVoice',
       EN_AU_HEIDIEXPRESSIVE = 'en-AU_HeidiExpressive',
       EN_AU_JACKEXPRESSIVE = 'en-AU_JackExpressive',
-      EN_AU_MADISONVOICE = 'en-AU_MadisonVoice',
-      EN_AU_STEVEVOICE = 'en-AU_SteveVoice',
       EN_GB_CHARLOTTEV3VOICE = 'en-GB_CharlotteV3Voice',
       EN_GB_JAMESV3VOICE = 'en-GB_JamesV3Voice',
       EN_GB_KATEV3VOICE = 'en-GB_KateV3Voice',
@@ -1866,20 +1817,9 @@ namespace TextToSpeechV1 {
       FR_FR_RENEEV3VOICE = 'fr-FR_ReneeV3Voice',
       IT_IT_FRANCESCAV3VOICE = 'it-IT_FrancescaV3Voice',
       JA_JP_EMIV3VOICE = 'ja-JP_EmiV3Voice',
-      KO_KR_HYUNJUNVOICE = 'ko-KR_HyunjunVoice',
       KO_KR_JINV3VOICE = 'ko-KR_JinV3Voice',
-      KO_KR_SIWOOVOICE = 'ko-KR_SiWooVoice',
-      KO_KR_YOUNGMIVOICE = 'ko-KR_YoungmiVoice',
-      KO_KR_YUNAVOICE = 'ko-KR_YunaVoice',
-      NL_BE_ADELEVOICE = 'nl-BE_AdeleVoice',
-      NL_BE_BRAMVOICE = 'nl-BE_BramVoice',
-      NL_NL_EMMAVOICE = 'nl-NL_EmmaVoice',
-      NL_NL_LIAMVOICE = 'nl-NL_LiamVoice',
+      NL_NL_MERELV3VOICE = 'nl-NL_MerelV3Voice',
       PT_BR_ISABELAV3VOICE = 'pt-BR_IsabelaV3Voice',
-      SV_SE_INGRIDVOICE = 'sv-SE_IngridVoice',
-      ZH_CN_LINAVOICE = 'zh-CN_LiNaVoice',
-      ZH_CN_WANGWEIVOICE = 'zh-CN_WangWeiVoice',
-      ZH_CN_ZHANGJINGVOICE = 'zh-CN_ZhangJingVoice',
     }
   }
 
@@ -1976,16 +1916,11 @@ namespace TextToSpeechV1 {
     }
     /** The voice to use for speech synthesis. If you omit the `voice` parameter, the service uses the US English `en-US_MichaelV3Voice` by default. _For IBM Cloud Pak for Data,_ if you do not install the `en-US_MichaelV3Voice`, you must either specify a voice with the request or specify a new default voice for your installation of the service. **See also:** * [Languages and voices](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices) * [Using the default voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices-use#specify-voice-default). */
     export enum Voice {
-      AR_MS_OMARVOICE = 'ar-MS_OmarVoice',
-      CS_CZ_ALENAVOICE = 'cs-CZ_AlenaVoice',
       DE_DE_BIRGITV3VOICE = 'de-DE_BirgitV3Voice',
       DE_DE_DIETERV3VOICE = 'de-DE_DieterV3Voice',
       DE_DE_ERIKAV3VOICE = 'de-DE_ErikaV3Voice',
-      EN_AU_CRAIGVOICE = 'en-AU_CraigVoice',
       EN_AU_HEIDIEXPRESSIVE = 'en-AU_HeidiExpressive',
       EN_AU_JACKEXPRESSIVE = 'en-AU_JackExpressive',
-      EN_AU_MADISONVOICE = 'en-AU_MadisonVoice',
-      EN_AU_STEVEVOICE = 'en-AU_SteveVoice',
       EN_GB_CHARLOTTEV3VOICE = 'en-GB_CharlotteV3Voice',
       EN_GB_JAMESV3VOICE = 'en-GB_JamesV3Voice',
       EN_GB_KATEV3VOICE = 'en-GB_KateV3Voice',
@@ -2009,20 +1944,9 @@ namespace TextToSpeechV1 {
       FR_FR_RENEEV3VOICE = 'fr-FR_ReneeV3Voice',
       IT_IT_FRANCESCAV3VOICE = 'it-IT_FrancescaV3Voice',
       JA_JP_EMIV3VOICE = 'ja-JP_EmiV3Voice',
-      KO_KR_HYUNJUNVOICE = 'ko-KR_HyunjunVoice',
       KO_KR_JINV3VOICE = 'ko-KR_JinV3Voice',
-      KO_KR_SIWOOVOICE = 'ko-KR_SiWooVoice',
-      KO_KR_YOUNGMIVOICE = 'ko-KR_YoungmiVoice',
-      KO_KR_YUNAVOICE = 'ko-KR_YunaVoice',
-      NL_BE_ADELEVOICE = 'nl-BE_AdeleVoice',
-      NL_BE_BRAMVOICE = 'nl-BE_BramVoice',
-      NL_NL_EMMAVOICE = 'nl-NL_EmmaVoice',
-      NL_NL_LIAMVOICE = 'nl-NL_LiamVoice',
+      NL_NL_MERELV3VOICE = 'nl-NL_MerelV3Voice',
       PT_BR_ISABELAV3VOICE = 'pt-BR_IsabelaV3Voice',
-      SV_SE_INGRIDVOICE = 'sv-SE_IngridVoice',
-      ZH_CN_LINAVOICE = 'zh-CN_LiNaVoice',
-      ZH_CN_WANGWEIVOICE = 'zh-CN_WangWeiVoice',
-      ZH_CN_ZHANGJINGVOICE = 'zh-CN_ZhangJingVoice',
     }
     /** *For German voices,* indicates how the service is to spell out strings of individual letters. To indicate the pace of the spelling, specify one of the following values: * `default` - The service reads the characters at the rate at which it synthesizes speech for the request. You can also omit the parameter entirely to achieve the default behavior. * `singles` - The service reads the characters one at a time, with a brief pause between each character. * `pairs` - The service reads the characters two at a time, with a brief pause between each pair. * `triples` - The service reads the characters three at a time, with a brief pause between each triplet. For more information, see [Specifying how strings are spelled out](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-synthesis-params#params-spell-out-mode). */
     export enum SpellOutMode {
@@ -2048,8 +1972,8 @@ namespace TextToSpeechV1 {
      *  voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices-use#specify-voice-default).
      */
     voice?: GetPronunciationConstants.Voice | string;
-    /** The phoneme format in which to return the pronunciation. The Arabic, Chinese, Dutch, Australian English, and
-     *  Korean languages support only IPA. Omit the parameter to obtain the pronunciation in the default format.
+    /** The phoneme format in which to return the pronunciation. Omit the parameter to obtain the pronunciation in
+     *  the default format.
      */
     format?: GetPronunciationConstants.Format | string;
     /** The customization ID (GUID) of a custom model for which the pronunciation is to be returned. The language of
@@ -2066,16 +1990,11 @@ namespace TextToSpeechV1 {
   export namespace GetPronunciationConstants {
     /** A voice that specifies the language in which the pronunciation is to be returned. If you omit the `voice` parameter, the service uses the US English `en-US_MichaelV3Voice` by default. All voices for the same language (for example, `en-US`) return the same translation. _For IBM Cloud Pak for Data,_ if you do not install the `en-US_MichaelV3Voice`, you must either specify a voice with the request or specify a new default voice for your installation of the service. **See also:** [Using the default voice](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-voices-use#specify-voice-default). */
     export enum Voice {
-      AR_MS_OMARVOICE = 'ar-MS_OmarVoice',
-      CS_CZ_ALENAVOICE = 'cs-CZ_AlenaVoice',
       DE_DE_BIRGITV3VOICE = 'de-DE_BirgitV3Voice',
       DE_DE_DIETERV3VOICE = 'de-DE_DieterV3Voice',
       DE_DE_ERIKAV3VOICE = 'de-DE_ErikaV3Voice',
-      EN_AU_CRAIGVOICE = 'en-AU_CraigVoice',
       EN_AU_HEIDIEXPRESSIVE = 'en-AU_HeidiExpressive',
       EN_AU_JACKEXPRESSIVE = 'en-AU_JackExpressive',
-      EN_AU_MADISONVOICE = 'en-AU_MadisonVoice',
-      EN_AU_STEVEVOICE = 'en-AU_SteveVoice',
       EN_GB_CHARLOTTEV3VOICE = 'en-GB_CharlotteV3Voice',
       EN_GB_JAMESV3VOICE = 'en-GB_JamesV3Voice',
       EN_GB_KATEV3VOICE = 'en-GB_KateV3Voice',
@@ -2099,22 +2018,11 @@ namespace TextToSpeechV1 {
       FR_FR_RENEEV3VOICE = 'fr-FR_ReneeV3Voice',
       IT_IT_FRANCESCAV3VOICE = 'it-IT_FrancescaV3Voice',
       JA_JP_EMIV3VOICE = 'ja-JP_EmiV3Voice',
-      KO_KR_HYUNJUNVOICE = 'ko-KR_HyunjunVoice',
       KO_KR_JINV3VOICE = 'ko-KR_JinV3Voice',
-      KO_KR_SIWOOVOICE = 'ko-KR_SiWooVoice',
-      KO_KR_YOUNGMIVOICE = 'ko-KR_YoungmiVoice',
-      KO_KR_YUNAVOICE = 'ko-KR_YunaVoice',
-      NL_BE_ADELEVOICE = 'nl-BE_AdeleVoice',
-      NL_BE_BRAMVOICE = 'nl-BE_BramVoice',
-      NL_NL_EMMAVOICE = 'nl-NL_EmmaVoice',
-      NL_NL_LIAMVOICE = 'nl-NL_LiamVoice',
+      NL_NL_MERELV3VOICE = 'nl-NL_MerelV3Voice',
       PT_BR_ISABELAV3VOICE = 'pt-BR_IsabelaV3Voice',
-      SV_SE_INGRIDVOICE = 'sv-SE_IngridVoice',
-      ZH_CN_LINAVOICE = 'zh-CN_LiNaVoice',
-      ZH_CN_WANGWEIVOICE = 'zh-CN_WangWeiVoice',
-      ZH_CN_ZHANGJINGVOICE = 'zh-CN_ZhangJingVoice',
     }
-    /** The phoneme format in which to return the pronunciation. The Arabic, Chinese, Dutch, Australian English, and Korean languages support only IPA. Omit the parameter to obtain the pronunciation in the default format. */
+    /** The phoneme format in which to return the pronunciation. Omit the parameter to obtain the pronunciation in the default format. */
     export enum Format {
       IBM = 'ibm',
       IPA = 'ipa',
@@ -2147,8 +2055,6 @@ namespace TextToSpeechV1 {
   export namespace CreateCustomModelConstants {
     /** The language of the new custom model. You create a custom model for a specific language, not for a specific voice. A custom model can be used with any voice for its specified language. Omit the parameter to use the the default language, `en-US`. */
     export enum Language {
-      AR_MS = 'ar-MS',
-      CS_CZ = 'cs-CZ',
       DE_DE = 'de-DE',
       EN_AU = 'en-AU',
       EN_GB = 'en-GB',
@@ -2160,12 +2066,8 @@ namespace TextToSpeechV1 {
       FR_FR = 'fr-FR',
       IT_IT = 'it-IT',
       JA_JP = 'ja-JP',
-      KO_KR = 'ko-KR',
-      NL_BE = 'nl-BE',
       NL_NL = 'nl-NL',
       PT_BR = 'pt-BR',
-      SV_SE = 'sv-SE',
-      ZH_CN = 'zh-CN',
     }
   }
 
@@ -2182,8 +2084,6 @@ namespace TextToSpeechV1 {
   export namespace ListCustomModelsConstants {
     /** The language for which custom models that are owned by the requesting credentials are to be returned. Omit the parameter to see all custom models that are owned by the requester. */
     export enum Language {
-      AR_MS = 'ar-MS',
-      CS_CZ = 'cs-CZ',
       DE_DE = 'de-DE',
       EN_AU = 'en-AU',
       EN_GB = 'en-GB',
@@ -2195,12 +2095,8 @@ namespace TextToSpeechV1 {
       FR_FR = 'fr-FR',
       IT_IT = 'it-IT',
       JA_JP = 'ja-JP',
-      KO_KR = 'ko-KR',
-      NL_BE = 'nl-BE',
       NL_NL = 'nl-NL',
       PT_BR = 'pt-BR',
-      SV_SE = 'sv-SE',
-      ZH_CN = 'zh-CN',
     }
   }
 
@@ -2274,9 +2170,8 @@ namespace TextToSpeechV1 {
     /** The word that is to be added or updated for the custom model. */
     word: string;
     /** The phonetic or sounds-like translation for the word. A phonetic translation is based on the SSML format for
-     *  representing the phonetic string of a word either as an IPA translation or as an IBM SPR translation. The
-     *  Arabic, Chinese, Dutch, Australian English, and Korean languages support only IPA. A sounds-like is one or more
-     *  words that, when combined, sound like the word.
+     *  representing the phonetic string of a word either as an IPA translation or as an IBM SPR translation. A
+     *  sounds-like is one or more words that, when combined, sound like the word.
      */
     translation: string;
     /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct
@@ -2617,9 +2512,9 @@ namespace TextToSpeechV1 {
      *  `customizable`.).
      */
     custom_pronunciation: boolean;
-    /** If `true`, the voice can be transformed by using the SSML &lt;voice-transformation&gt; element; if `false`,
-     *  the voice cannot be transformed. The feature was available only for the now-deprecated standard voices. You
-     *  cannot use the feature with neural voices.
+    /** If `true`, the voice can be transformed by using the SSML `<voice-transformation>` element; if `false`, the
+     *  voice cannot be transformed. **Note:** The SSML `<voice-transformation>` element is obsolete. You can no longer
+     *  use the element with any supported voice.
      */
     voice_transformation: boolean;
   }
@@ -2627,9 +2522,8 @@ namespace TextToSpeechV1 {
   /** Information about the translation for the specified text. */
   export interface Translation {
     /** The phonetic or sounds-like translation for the word. A phonetic translation is based on the SSML format for
-     *  representing the phonetic string of a word either as an IPA translation or as an IBM SPR translation. The
-     *  Arabic, Chinese, Dutch, Australian English, and Korean languages support only IPA. A sounds-like is one or more
-     *  words that, when combined, sound like the word.
+     *  representing the phonetic string of a word either as an IPA translation or as an IBM SPR translation. A
+     *  sounds-like is one or more words that, when combined, sound like the word.
      */
     translation: string;
     /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct
@@ -2700,9 +2594,9 @@ namespace TextToSpeechV1 {
     /** The word for the custom model. The maximum length of a word is 49 characters. */
     word: string;
     /** The phonetic or sounds-like translation for the word. A phonetic translation is based on the SSML format for
-     *  representing the phonetic string of a word either as an IPA or IBM SPR translation. The Arabic, Chinese, Dutch,
-     *  Australian English, and Korean languages support only IPA. A sounds-like translation consists of one or more
-     *  words that, when combined, sound like the word. The maximum length of a translation is 499 characters.
+     *  representing the phonetic string of a word either as an IPA or IBM SPR translation. A sounds-like translation
+     *  consists of one or more words that, when combined, sound like the word. The maximum length of a translation is
+     *  499 characters.
      */
     translation: string;
     /** **Japanese only.** The part of speech for the word. The service uses the value to produce the correct

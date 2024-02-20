@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2023.
+ * (C) Copyright IBM Corp. 2018, 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,9 @@
  */
 
 // need to import the whole package to mock getAuthenticatorFromEnvironment
-const core = require('ibm-cloud-sdk-core');
+const sdkCorePackage = require('ibm-cloud-sdk-core');
 
-const { NoAuthAuthenticator, unitTestUtils } = core;
-
+const { NoAuthAuthenticator, unitTestUtils } = sdkCorePackage;
 const TextToSpeechV1 = require('../../dist/text-to-speech/v1');
 
 const {
@@ -46,11 +45,10 @@ function mock_createRequest() {
 }
 
 // dont actually construct an authenticator
-const getAuthenticatorMock = jest.spyOn(core, 'getAuthenticatorFromEnvironment');
+const getAuthenticatorMock = jest.spyOn(sdkCorePackage, 'getAuthenticatorFromEnvironment');
 getAuthenticatorMock.mockImplementation(() => new NoAuthAuthenticator());
 
 describe('TextToSpeechV1', () => {
-
   beforeEach(() => {
     mock_createRequest();
   });
@@ -188,7 +186,7 @@ describe('TextToSpeechV1', () => {
     describe('positive tests', () => {
       function __getVoiceTest() {
         // Construct the params object for operation getVoice
-        const voice = 'ar-MS_OmarVoice';
+        const voice = 'de-DE_BirgitV3Voice';
         const customizationId = 'testString';
         const getVoiceParams = {
           voice,
@@ -230,7 +228,7 @@ describe('TextToSpeechV1', () => {
 
       test('should prioritize user-given headers', () => {
         // parameters
-        const voice = 'ar-MS_OmarVoice';
+        const voice = 'de-DE_BirgitV3Voice';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const getVoiceParams = {
@@ -280,8 +278,8 @@ describe('TextToSpeechV1', () => {
         const voice = 'en-US_MichaelV3Voice';
         const customizationId = 'testString';
         const spellOutMode = 'default';
-        const ratePercentage = 38;
-        const pitchPercentage = 38;
+        const ratePercentage = 0;
+        const pitchPercentage = 0;
         const synthesizeParams = {
           text,
           accept,
@@ -561,7 +559,7 @@ describe('TextToSpeechV1', () => {
     describe('positive tests', () => {
       function __listCustomModelsTest() {
         // Construct the params object for operation listCustomModels
-        const language = 'ar-MS';
+        const language = 'de-DE';
         const listCustomModelsParams = {
           language,
         };

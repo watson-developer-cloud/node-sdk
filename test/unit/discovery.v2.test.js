@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2019, 2023.
+ * (C) Copyright IBM Corp. 2019, 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,9 @@
  */
 
 // need to import the whole package to mock getAuthenticatorFromEnvironment
-const core = require('ibm-cloud-sdk-core');
+const sdkCorePackage = require('ibm-cloud-sdk-core');
 
-const { NoAuthAuthenticator, unitTestUtils } = core;
-
+const { NoAuthAuthenticator, unitTestUtils } = sdkCorePackage;
 const DiscoveryV2 = require('../../dist/discovery/v2');
 
 const {
@@ -47,14 +46,13 @@ function mock_createRequest() {
 }
 
 // dont actually construct an authenticator
-const getAuthenticatorMock = jest.spyOn(core, 'getAuthenticatorFromEnvironment');
+const getAuthenticatorMock = jest.spyOn(sdkCorePackage, 'getAuthenticatorFromEnvironment');
 getAuthenticatorMock.mockImplementation(() => new NoAuthAuthenticator());
 
 // used for the service construction tests
 let requiredGlobals;
 
 describe('DiscoveryV2', () => {
-
   beforeEach(() => {
     mock_createRequest();
     // these are changed when passed into the factory/constructor, so re-init
@@ -231,7 +229,7 @@ describe('DiscoveryV2', () => {
       const defaultQueryParamsTableResultsModel = {
         enabled: true,
         count: 38,
-        per_document: 38,
+        per_document: 0,
       };
 
       // DefaultQueryParamsSuggestedRefinements
@@ -1176,7 +1174,7 @@ describe('DiscoveryV2', () => {
         // Construct the params object for operation listDocuments
         const projectId = 'testString';
         const collectionId = 'testString';
-        const count = 38;
+        const count = 1000;
         const status = 'testString';
         const hasNotices = true;
         const isParent = true;
@@ -1711,7 +1709,7 @@ describe('DiscoveryV2', () => {
         count: 400,
         characters: 50,
         find_answers: false,
-        max_answers_per_passage: 38,
+        max_answers_per_passage: 1,
       };
 
       // QueryLargeSimilar
@@ -1857,7 +1855,7 @@ describe('DiscoveryV2', () => {
         const prefix = 'testString';
         const collectionIds = ['testString'];
         const field = 'testString';
-        const count = 38;
+        const count = 5;
         const getAutocompletionParams = {
           projectId,
           prefix,
@@ -1957,7 +1955,7 @@ describe('DiscoveryV2', () => {
         const filter = 'testString';
         const query = 'testString';
         const naturalLanguageQuery = 'testString';
-        const count = 38;
+        const count = 10;
         const offset = 38;
         const queryCollectionNoticesParams = {
           projectId,
@@ -2061,7 +2059,7 @@ describe('DiscoveryV2', () => {
         const filter = 'testString';
         const query = 'testString';
         const naturalLanguageQuery = 'testString';
-        const count = 38;
+        const count = 10;
         const offset = 38;
         const queryNoticesParams = {
           projectId,
@@ -3452,6 +3450,12 @@ describe('DiscoveryV2', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
 
+      // WebhookHeader
+      const webhookHeaderModel = {
+        name: 'testString',
+        value: 'testString',
+      };
+
       // EnrichmentOptions
       const enrichmentOptionsModel = {
         languages: ['testString'],
@@ -3461,7 +3465,12 @@ describe('DiscoveryV2', () => {
         classifier_id: 'testString',
         model_id: 'testString',
         confidence_threshold: 0,
-        top_k: 38,
+        top_k: 0,
+        url: 'testString',
+        version: '2023-03-31',
+        secret: 'testString',
+        headers: webhookHeaderModel,
+        location_encoding: '`utf-16`',
       };
 
       // CreateEnrichment
@@ -4439,11 +4448,11 @@ describe('DiscoveryV2', () => {
         const classifierId = 'testString';
         const name = 'testString';
         const description = 'testString';
-        const learningRate = 0;
+        const learningRate = 0.1;
         const l1RegularizationStrengths = [1.0E-6];
         const l2RegularizationStrengths = [1.0E-6];
-        const trainingMaxSteps = 0;
-        const improvementRatio = 0;
+        const trainingMaxSteps = 10000000;
+        const improvementRatio = 0.000010;
         const createDocumentClassifierModelParams = {
           projectId,
           classifierId,

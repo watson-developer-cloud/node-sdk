@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2023.
+ * (C) Copyright IBM Corp. 2018, 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,9 @@
  */
 
 // need to import the whole package to mock getAuthenticatorFromEnvironment
-const core = require('ibm-cloud-sdk-core');
+const sdkCorePackage = require('ibm-cloud-sdk-core');
 
-const { NoAuthAuthenticator, unitTestUtils } = core;
-
+const { NoAuthAuthenticator, unitTestUtils } = sdkCorePackage;
 const NaturalLanguageUnderstandingV1 = require('../../dist/natural-language-understanding/v1');
 
 const {
@@ -46,14 +45,13 @@ function mock_createRequest() {
 }
 
 // dont actually construct an authenticator
-const getAuthenticatorMock = jest.spyOn(core, 'getAuthenticatorFromEnvironment');
+const getAuthenticatorMock = jest.spyOn(sdkCorePackage, 'getAuthenticatorFromEnvironment');
 getAuthenticatorMock.mockImplementation(() => new NoAuthAuthenticator());
 
 // used for the service construction tests
 let requiredGlobals;
 
 describe('NaturalLanguageUnderstandingV1', () => {
-
   beforeEach(() => {
     mock_createRequest();
     // these are changed when passed into the factory/constructor, so re-init
@@ -162,7 +160,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
 
       // ConceptsOptions
       const conceptsOptionsModel = {
-        limit: 50,
+        limit: 8,
       };
 
       // EmotionOptions
@@ -173,7 +171,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
 
       // EntitiesOptions
       const entitiesOptionsModel = {
-        limit: 250,
+        limit: 50,
         mentions: false,
         model: 'testString',
         sentiment: false,
@@ -182,7 +180,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
 
       // KeywordsOptions
       const keywordsOptionsModel = {
-        limit: 250,
+        limit: 50,
         sentiment: false,
         emotion: false,
       };
@@ -194,7 +192,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
 
       // SemanticRolesOptions
       const semanticRolesOptionsModel = {
-        limit: 38,
+        limit: 50,
         keywords: false,
         entities: false,
       };
@@ -207,13 +205,13 @@ describe('NaturalLanguageUnderstandingV1', () => {
 
       // SummarizationOptions
       const summarizationOptionsModel = {
-        limit: 10,
+        limit: 3,
       };
 
       // CategoriesOptions
       const categoriesOptionsModel = {
         explanation: false,
-        limit: 10,
+        limit: 3,
         model: 'testString',
       };
 
@@ -236,7 +234,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         emotion: emotionOptionsModel,
         entities: entitiesOptionsModel,
         keywords: keywordsOptionsModel,
-        metadata: { foo: 'bar' },
+        metadata: { anyKey: 'anyValue' },
         relations: relationsOptionsModel,
         semantic_roles: semanticRolesOptionsModel,
         sentiment: sentimentOptionsModel,
@@ -509,6 +507,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const trainingData = Buffer.from('This is a mock file.');
         const trainingDataContentType = 'json';
         const name = 'testString';
+        const userMetadata = { region: 'North America', latest: true };
         const description = 'testString';
         const modelVersion = 'testString';
         const workspaceId = 'testString';
@@ -518,6 +517,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
           trainingData,
           trainingDataContentType,
           name,
+          userMetadata,
           description,
           modelVersion,
           workspaceId,
@@ -542,6 +542,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         expect(mockRequestOptions.formData.training_data.data).toEqual(trainingData);
         expect(mockRequestOptions.formData.training_data.contentType).toEqual(trainingDataContentType);
         expect(mockRequestOptions.formData.name).toEqual(name);
+        expect(mockRequestOptions.formData.user_metadata).toEqual(userMetadata);
         expect(mockRequestOptions.formData.description).toEqual(description);
         expect(mockRequestOptions.formData.model_version).toEqual(modelVersion);
         expect(mockRequestOptions.formData.workspace_id).toEqual(workspaceId);
@@ -764,6 +765,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const trainingData = Buffer.from('This is a mock file.');
         const trainingDataContentType = 'json';
         const name = 'testString';
+        const userMetadata = { region: 'North America', latest: true };
         const description = 'testString';
         const modelVersion = 'testString';
         const workspaceId = 'testString';
@@ -774,6 +776,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
           trainingData,
           trainingDataContentType,
           name,
+          userMetadata,
           description,
           modelVersion,
           workspaceId,
@@ -798,6 +801,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         expect(mockRequestOptions.formData.training_data.data).toEqual(trainingData);
         expect(mockRequestOptions.formData.training_data.contentType).toEqual(trainingDataContentType);
         expect(mockRequestOptions.formData.name).toEqual(name);
+        expect(mockRequestOptions.formData.user_metadata).toEqual(userMetadata);
         expect(mockRequestOptions.formData.description).toEqual(description);
         expect(mockRequestOptions.formData.model_version).toEqual(modelVersion);
         expect(mockRequestOptions.formData.workspace_id).toEqual(workspaceId);
@@ -968,6 +972,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const trainingData = Buffer.from('This is a mock file.');
         const trainingDataContentType = 'json';
         const name = 'testString';
+        const userMetadata = { region: 'North America', latest: true };
         const description = 'testString';
         const modelVersion = 'testString';
         const workspaceId = 'testString';
@@ -978,6 +983,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
           trainingData,
           trainingDataContentType,
           name,
+          userMetadata,
           description,
           modelVersion,
           workspaceId,
@@ -1003,6 +1009,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         expect(mockRequestOptions.formData.training_data.data).toEqual(trainingData);
         expect(mockRequestOptions.formData.training_data.contentType).toEqual(trainingDataContentType);
         expect(mockRequestOptions.formData.name).toEqual(name);
+        expect(mockRequestOptions.formData.user_metadata).toEqual(userMetadata);
         expect(mockRequestOptions.formData.description).toEqual(description);
         expect(mockRequestOptions.formData.model_version).toEqual(modelVersion);
         expect(mockRequestOptions.formData.workspace_id).toEqual(workspaceId);
@@ -1233,6 +1240,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         const trainingData = Buffer.from('This is a mock file.');
         const trainingDataContentType = 'json';
         const name = 'testString';
+        const userMetadata = { region: 'North America', latest: true };
         const description = 'testString';
         const modelVersion = 'testString';
         const workspaceId = 'testString';
@@ -1244,6 +1252,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
           trainingData,
           trainingDataContentType,
           name,
+          userMetadata,
           description,
           modelVersion,
           workspaceId,
@@ -1269,6 +1278,7 @@ describe('NaturalLanguageUnderstandingV1', () => {
         expect(mockRequestOptions.formData.training_data.data).toEqual(trainingData);
         expect(mockRequestOptions.formData.training_data.contentType).toEqual(trainingDataContentType);
         expect(mockRequestOptions.formData.name).toEqual(name);
+        expect(mockRequestOptions.formData.user_metadata).toEqual(userMetadata);
         expect(mockRequestOptions.formData.description).toEqual(description);
         expect(mockRequestOptions.formData.model_version).toEqual(modelVersion);
         expect(mockRequestOptions.formData.workspace_id).toEqual(workspaceId);

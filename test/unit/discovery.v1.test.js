@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2023.
+ * (C) Copyright IBM Corp. 2018, 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,9 @@
  */
 
 // need to import the whole package to mock getAuthenticatorFromEnvironment
-const core = require('ibm-cloud-sdk-core');
+const sdkCorePackage = require('ibm-cloud-sdk-core');
 
-const { NoAuthAuthenticator, unitTestUtils } = core;
-
+const { NoAuthAuthenticator, unitTestUtils } = sdkCorePackage;
 const DiscoveryV1 = require('../../dist/discovery/v1');
 
 const {
@@ -47,14 +46,13 @@ function mock_createRequest() {
 }
 
 // dont actually construct an authenticator
-const getAuthenticatorMock = jest.spyOn(core, 'getAuthenticatorFromEnvironment');
+const getAuthenticatorMock = jest.spyOn(sdkCorePackage, 'getAuthenticatorFromEnvironment');
 getAuthenticatorMock.mockImplementation(() => new NoAuthAuthenticator());
 
 // used for the service construction tests
 let requiredGlobals;
 
 describe('DiscoveryV1', () => {
-
   beforeEach(() => {
     mock_createRequest();
     // these are changed when passed into the factory/constructor, so re-init
@@ -795,7 +793,7 @@ describe('DiscoveryV1', () => {
         entities: nluEnrichmentEntitiesModel,
         sentiment: nluEnrichmentSentimentModel,
         emotion: nluEnrichmentEmotionModel,
-        categories: { foo: 'bar' },
+        categories: { anyKey: 'anyValue' },
         semantic_roles: nluEnrichmentSemanticRolesModel,
         relations: nluEnrichmentRelationsModel,
         concepts: nluEnrichmentConceptsModel,
@@ -851,8 +849,8 @@ describe('DiscoveryV1', () => {
         limit_to_starting_hosts: true,
         crawl_speed: 'normal',
         allow_untrusted_certificate: false,
-        maximum_hops: 38,
-        request_timeout: 38,
+        maximum_hops: 2,
+        request_timeout: 30000,
         override_robots_txt: false,
         blacklist: ['testString'],
       };
@@ -1295,7 +1293,7 @@ describe('DiscoveryV1', () => {
         entities: nluEnrichmentEntitiesModel,
         sentiment: nluEnrichmentSentimentModel,
         emotion: nluEnrichmentEmotionModel,
-        categories: { foo: 'bar' },
+        categories: { anyKey: 'anyValue' },
         semantic_roles: nluEnrichmentSemanticRolesModel,
         relations: nluEnrichmentRelationsModel,
         concepts: nluEnrichmentConceptsModel,
@@ -1351,8 +1349,8 @@ describe('DiscoveryV1', () => {
         limit_to_starting_hosts: true,
         crawl_speed: 'normal',
         allow_untrusted_certificate: false,
-        maximum_hops: 38,
-        request_timeout: 38,
+        maximum_hops: 2,
+        request_timeout: 30000,
         override_robots_txt: false,
         blacklist: ['testString'],
       };
@@ -3394,14 +3392,14 @@ describe('DiscoveryV1', () => {
         const naturalLanguageQuery = 'testString';
         const passages = true;
         const aggregation = 'testString';
-        const count = 38;
+        const count = 10;
         const _return = 'testString';
         const offset = 38;
         const sort = 'testString';
         const highlight = false;
         const passagesFields = 'testString';
-        const passagesCount = 100;
-        const passagesCharacters = 50;
+        const passagesCount = 10;
+        const passagesCharacters = 400;
         const deduplicate = false;
         const deduplicateField = 'testString';
         const similar = false;
@@ -3547,14 +3545,14 @@ describe('DiscoveryV1', () => {
         const naturalLanguageQuery = 'testString';
         const passages = true;
         const aggregation = 'testString';
-        const count = 38;
+        const count = 10;
         const _return = ['testString'];
         const offset = 38;
         const sort = ['testString'];
         const highlight = false;
         const passagesFields = ['testString'];
-        const passagesCount = 100;
-        const passagesCharacters = 50;
+        const passagesCount = 10;
+        const passagesCharacters = 400;
         const deduplicateField = 'testString';
         const similar = false;
         const similarDocumentIds = ['testString'];
@@ -3688,14 +3686,14 @@ describe('DiscoveryV1', () => {
         const naturalLanguageQuery = 'testString';
         const passages = true;
         const aggregation = 'testString';
-        const count = 38;
+        const count = 10;
         const _return = 'testString';
         const offset = 38;
         const sort = 'testString';
         const highlight = false;
         const passagesFields = 'testString';
-        const passagesCount = 100;
-        const passagesCharacters = 50;
+        const passagesCount = 10;
+        const passagesCharacters = 400;
         const deduplicate = false;
         const deduplicateField = 'testString';
         const similar = false;
@@ -3837,7 +3835,7 @@ describe('DiscoveryV1', () => {
         const query = 'testString';
         const naturalLanguageQuery = 'testString';
         const aggregation = 'testString';
-        const count = 38;
+        const count = 10;
         const _return = ['testString'];
         const offset = 38;
         const sort = ['testString'];
@@ -3964,7 +3962,7 @@ describe('DiscoveryV1', () => {
         const collectionId = 'testString';
         const prefix = 'testString';
         const field = 'testString';
-        const count = 38;
+        const count = 5;
         const getAutocompletionParams = {
           environmentId,
           collectionId,
@@ -5233,7 +5231,7 @@ describe('DiscoveryV1', () => {
         // Construct the params object for operation queryLog
         const filter = 'testString';
         const query = 'testString';
-        const count = 38;
+        const count = 10;
         const offset = 38;
         const sort = ['testString'];
         const queryLogParams = {
@@ -5592,7 +5590,7 @@ describe('DiscoveryV1', () => {
     describe('positive tests', () => {
       function __getMetricsQueryTokenEventTest() {
         // Construct the params object for operation getMetricsQueryTokenEvent
-        const count = 38;
+        const count = 10;
         const getMetricsQueryTokenEventParams = {
           count,
         };
