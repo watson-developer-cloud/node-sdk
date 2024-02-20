@@ -404,6 +404,8 @@ class SpeechToTextV1 extends BaseService {
    * **Note:** The parameter can be used with US English, Japanese, and Spanish (all dialects) transcription only.
    *
    * See [Smart formatting](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-formatting#smart-formatting).
+   * @param {boolean} [params.smartFormattingVersion] - Smart formatting version is for next-generation models and that
+   * is supported in US English, Brazilian Portuguese, French and German languages.
    * @param {boolean} [params.speakerLabels] - If `true`, the response includes labels that identify which words were
    * spoken by which participants in a multi-person exchange. By default, the service returns no speaker labels. Setting
    * `speaker_labels` to `true` forces the `timestamps` parameter to be `true`, regardless of whether you specify
@@ -537,7 +539,7 @@ class SpeechToTextV1 extends BaseService {
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechRecognitionResults>> {
     const _params = { ...params };
     const _requiredParams = ['audio'];
-    const _validParams = ['audio', 'contentType', 'model', 'languageCustomizationId', 'acousticCustomizationId', 'baseModelVersion', 'customizationWeight', 'inactivityTimeout', 'keywords', 'keywordsThreshold', 'maxAlternatives', 'wordAlternativesThreshold', 'wordConfidence', 'timestamps', 'profanityFilter', 'smartFormatting', 'speakerLabels', 'grammarName', 'redaction', 'audioMetrics', 'endOfPhraseSilenceTime', 'splitTranscriptAtPhraseEnd', 'speechDetectorSensitivity', 'backgroundAudioSuppression', 'lowLatency', 'characterInsertionBias', 'headers'];
+    const _validParams = ['audio', 'contentType', 'model', 'languageCustomizationId', 'acousticCustomizationId', 'baseModelVersion', 'customizationWeight', 'inactivityTimeout', 'keywords', 'keywordsThreshold', 'maxAlternatives', 'wordAlternativesThreshold', 'wordConfidence', 'timestamps', 'profanityFilter', 'smartFormatting', 'smartFormattingVersion', 'speakerLabels', 'grammarName', 'redaction', 'audioMetrics', 'endOfPhraseSilenceTime', 'splitTranscriptAtPhraseEnd', 'speechDetectorSensitivity', 'backgroundAudioSuppression', 'lowLatency', 'characterInsertionBias', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -559,6 +561,7 @@ class SpeechToTextV1 extends BaseService {
       'timestamps': _params.timestamps,
       'profanity_filter': _params.profanityFilter,
       'smart_formatting': _params.smartFormatting,
+      'smart_formatting_version': _params.smartFormattingVersion,
       'speaker_labels': _params.speakerLabels,
       'grammar_name': _params.grammarName,
       'redaction': _params.redaction,
@@ -969,6 +972,8 @@ class SpeechToTextV1 extends BaseService {
    * **Note:** The parameter can be used with US English, Japanese, and Spanish (all dialects) transcription only.
    *
    * See [Smart formatting](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-formatting#smart-formatting).
+   * @param {boolean} [params.smartFormattingVersion] - Smart formatting version is for next-generation models and that
+   * is supported in US English, Brazilian Portuguese, French and German languages.
    * @param {boolean} [params.speakerLabels] - If `true`, the response includes labels that identify which words were
    * spoken by which participants in a multi-person exchange. By default, the service returns no speaker labels. Setting
    * `speaker_labels` to `true` forces the `timestamps` parameter to be `true`, regardless of whether you specify
@@ -1122,7 +1127,7 @@ class SpeechToTextV1 extends BaseService {
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.RecognitionJob>> {
     const _params = { ...params };
     const _requiredParams = ['audio'];
-    const _validParams = ['audio', 'contentType', 'model', 'callbackUrl', 'events', 'userToken', 'resultsTtl', 'languageCustomizationId', 'acousticCustomizationId', 'baseModelVersion', 'customizationWeight', 'inactivityTimeout', 'keywords', 'keywordsThreshold', 'maxAlternatives', 'wordAlternativesThreshold', 'wordConfidence', 'timestamps', 'profanityFilter', 'smartFormatting', 'speakerLabels', 'grammarName', 'redaction', 'processingMetrics', 'processingMetricsInterval', 'audioMetrics', 'endOfPhraseSilenceTime', 'splitTranscriptAtPhraseEnd', 'speechDetectorSensitivity', 'backgroundAudioSuppression', 'lowLatency', 'characterInsertionBias', 'headers'];
+    const _validParams = ['audio', 'contentType', 'model', 'callbackUrl', 'events', 'userToken', 'resultsTtl', 'languageCustomizationId', 'acousticCustomizationId', 'baseModelVersion', 'customizationWeight', 'inactivityTimeout', 'keywords', 'keywordsThreshold', 'maxAlternatives', 'wordAlternativesThreshold', 'wordConfidence', 'timestamps', 'profanityFilter', 'smartFormatting', 'smartFormattingVersion', 'speakerLabels', 'grammarName', 'redaction', 'processingMetrics', 'processingMetricsInterval', 'audioMetrics', 'endOfPhraseSilenceTime', 'splitTranscriptAtPhraseEnd', 'speechDetectorSensitivity', 'backgroundAudioSuppression', 'lowLatency', 'characterInsertionBias', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1148,6 +1153,7 @@ class SpeechToTextV1 extends BaseService {
       'timestamps': _params.timestamps,
       'profanity_filter': _params.profanityFilter,
       'smart_formatting': _params.smartFormatting,
+      'smart_formatting_version': _params.smartFormattingVersion,
       'speaker_labels': _params.speakerLabels,
       'grammar_name': _params.grammarName,
       'redaction': _params.redaction,
@@ -1704,6 +1710,13 @@ class SpeechToTextV1 extends BaseService {
    * the model contains at least one valid resource. The method returns an array of `TrainingWarning` objects that lists
    * any invalid resources. By default (`true`), training of a custom language model fails (status code 400) if the
    * model contains one or more invalid resources (corpus files, grammar files, or custom words).
+   * @param {boolean} [params.force] - If `true`, forces the training of the custom language model regardless of whether
+   * it contains any changes (is in the `ready` or `available` state). By default (`false`), the model must be in the
+   * `ready` state to be trained. You can use the parameter to train and thus upgrade a custom model that is based on an
+   * improved next-generation model. *The parameter is available only for IBM Cloud, not for IBM Cloud Pak for Data.*
+   *
+   * See [Upgrading a custom language model based on an improved next-generation
+   * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-upgrade#custom-upgrade-language-ng).
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.TrainingResponse>>}
    */
@@ -1712,7 +1725,7 @@ class SpeechToTextV1 extends BaseService {
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.TrainingResponse>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId'];
-    const _validParams = ['customizationId', 'wordTypeToAdd', 'customizationWeight', 'strict', 'headers'];
+    const _validParams = ['customizationId', 'wordTypeToAdd', 'customizationWeight', 'strict', 'force', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1722,6 +1735,7 @@ class SpeechToTextV1 extends BaseService {
       'word_type_to_add': _params.wordTypeToAdd,
       'customization_weight': _params.customizationWeight,
       'strict': _params.strict,
+      'force': _params.force,
     };
 
     const path = {
@@ -2314,6 +2328,11 @@ class SpeechToTextV1 extends BaseService {
    * previous-generation model_, if you omit the `sounds_like` field, the service attempts to set the field to its
    * pronunciation of the word. It cannot generate a pronunciation for all words, so you must review the word's
    * definition to ensure that it is complete and valid.
+   * * The `mapping_only` field provides parameter for custom words. You can use the 'mapping_only' key in custom words
+   * as a form of post processing. This key parameter has a boolean value to determine whether 'sounds_like' (for
+   * non-Japanese models) or word (for Japanese) is not used for the model fine-tuning, but for the replacement for
+   * 'display_as'. This feature helps you when you use custom words exclusively to map 'sounds_like' (or word) to
+   * 'display_as' value. When you use custom words solely for post-processing purposes that does not need fine-tuning.
    *
    * If you add a custom word that already exists in the words resource for the custom model, the new definition
    * overwrites the existing data for the word. If the service encounters an error with the input data, it returns a
@@ -2448,14 +2467,22 @@ class SpeechToTextV1 extends BaseService {
    * used for the request. You must make the request with credentials for the instance of the service that owns the
    * custom model.
    * @param {string} params.wordName - The custom word that is to be added to or updated in the custom language model.
-   * Do not include spaces in the word. Use a `-` (dash) or `_` (underscore) to connect the tokens of compound words.
-   * URL-encode the word if it includes non-ASCII characters. For more information, see [Character
-   * encoding](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corporaWords#charEncoding).
+   * Do not use characters that need to be URL-encoded, for example, spaces, slashes, backslashes, colons, ampersands,
+   * double quotes, plus signs, equals signs, or question marks. Use a `-` (dash) or `_` (underscore) to connect the
+   * tokens of compound words. URL-encode the word if it includes non-ASCII characters. For more information, see
+   * [Character encoding](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corporaWords#charEncoding).
    * @param {string} [params.word] - For the [Add custom words](#addwords) method, you must specify the custom word that
-   * is to be added to or updated in the custom model. Do not include spaces in the word. Use a `-` (dash) or `_`
-   * (underscore) to connect the tokens of compound words.
+   * is to be added to or updated in the custom model. Do not use characters that need to be URL-encoded, for example,
+   * spaces, slashes, backslashes, colons, ampersands, double quotes, plus signs, equals signs, or question marks. Use a
+   * `-` (dash) or `_` (underscore) to connect the tokens of compound words. A Japanese custom word can include at most
+   * 25 characters, not including leading or trailing spaces.
    *
    * Omit this parameter for the [Add a custom word](#addword) method.
+   * @param {string[]} [params.mappingOnly] - Parameter for custom words. You can use the 'mapping_only' key in custom
+   * words as a form of post processing. This key parameter has a boolean value to determine whether 'sounds_like' (for
+   * non-Japanese models) or word (for Japanese) is not used for the model fine-tuning, but for the replacement for
+   * 'display_as'. This feature helps you when you use custom words exclusively to map 'sounds_like' (or word) to
+   * 'display_as' value. When you use custom words solely for post-processing purposes that does not need fine-tuning.
    * @param {string[]} [params.soundsLike] - As array of sounds-like pronunciations for the custom word. Specify how
    * words that are difficult to pronounce, foreign words, acronyms, and so on can be pronounced by users.
    * * _For custom models that are based on previous-generation models_, for a word that is not in the service's base
@@ -2464,8 +2491,9 @@ class SpeechToTextV1 extends BaseService {
    * the word. You cannot override the default pronunciation of a word; pronunciations you add augment the pronunciation
    * from the base vocabulary.
    *
-   * A word can have at most five sounds-like pronunciations. A pronunciation can include at most 40 characters not
-   * including spaces.
+   * A word can have at most five sounds-like pronunciations. A pronunciation can include at most 40 characters, not
+   * including leading or trailing spaces. A Japanese pronunciation can include at most 25 characters, not including
+   * leading or trailing spaces.
    * @param {string} [params.displayAs] - An alternative spelling for the custom word when it appears in a transcript.
    * Use the parameter when you want the word to have a spelling that is different from its usual representation or from
    * its spelling in corpora training data.
@@ -2480,7 +2508,7 @@ class SpeechToTextV1 extends BaseService {
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId', 'wordName'];
-    const _validParams = ['customizationId', 'wordName', 'word', 'soundsLike', 'displayAs', 'headers'];
+    const _validParams = ['customizationId', 'wordName', 'word', 'mappingOnly', 'soundsLike', 'displayAs', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2488,6 +2516,7 @@ class SpeechToTextV1 extends BaseService {
 
     const body = {
       'word': _params.word,
+      'mapping_only': _params.mappingOnly,
       'sounds_like': _params.soundsLike,
       'display_as': _params.displayAs,
     };
@@ -4168,6 +4197,10 @@ namespace SpeechToTextV1 {
      *  formatting](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-formatting#smart-formatting).
      */
     smartFormatting?: boolean;
+    /** Smart formatting version is for next-generation models and that is supported in US English, Brazilian
+     *  Portuguese, French and German languages.
+     */
+    smartFormattingVersion?: boolean;
     /** If `true`, the response includes labels that identify which words were spoken by which participants in a
      *  multi-person exchange. By default, the service returns no speaker labels. Setting `speaker_labels` to `true`
      *  forces the `timestamps` parameter to be `true`, regardless of whether you specify `false` for the parameter.
@@ -4597,6 +4630,10 @@ namespace SpeechToTextV1 {
      *  formatting](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-formatting#smart-formatting).
      */
     smartFormatting?: boolean;
+    /** Smart formatting version is for next-generation models and that is supported in US English, Brazilian
+     *  Portuguese, French and German languages.
+     */
+    smartFormattingVersion?: boolean;
     /** If `true`, the response includes labels that identify which words were spoken by which participants in a
      *  multi-person exchange. By default, the service returns no speaker labels. Setting `speaker_labels` to `true`
      *  forces the `timestamps` parameter to be `true`, regardless of whether you specify `false` for the parameter.
@@ -5111,6 +5148,15 @@ namespace SpeechToTextV1 {
      *  more invalid resources (corpus files, grammar files, or custom words).
      */
     strict?: boolean;
+    /** If `true`, forces the training of the custom language model regardless of whether it contains any changes
+     *  (is in the `ready` or `available` state). By default (`false`), the model must be in the `ready` state to be
+     *  trained. You can use the parameter to train and thus upgrade a custom model that is based on an improved
+     *  next-generation model. *The parameter is available only for IBM Cloud, not for IBM Cloud Pak for Data.*
+     *
+     *  See [Upgrading a custom language model based on an improved next-generation
+     *  model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-upgrade#custom-upgrade-language-ng).
+     */
+    force?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -5272,19 +5318,29 @@ namespace SpeechToTextV1 {
      *  the request with credentials for the instance of the service that owns the custom model.
      */
     customizationId: string;
-    /** The custom word that is to be added to or updated in the custom language model. Do not include spaces in the
-     *  word. Use a `-` (dash) or `_` (underscore) to connect the tokens of compound words. URL-encode the word if it
-     *  includes non-ASCII characters. For more information, see [Character
+    /** The custom word that is to be added to or updated in the custom language model. Do not use characters that
+     *  need to be URL-encoded, for example, spaces, slashes, backslashes, colons, ampersands, double quotes, plus
+     *  signs, equals signs, or question marks. Use a `-` (dash) or `_` (underscore) to connect the tokens of compound
+     *  words. URL-encode the word if it includes non-ASCII characters. For more information, see [Character
      *  encoding](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corporaWords#charEncoding).
      */
     wordName: string;
     /** For the [Add custom words](#addwords) method, you must specify the custom word that is to be added to or
-     *  updated in the custom model. Do not include spaces in the word. Use a `-` (dash) or `_` (underscore) to connect
-     *  the tokens of compound words.
+     *  updated in the custom model. Do not use characters that need to be URL-encoded, for example, spaces, slashes,
+     *  backslashes, colons, ampersands, double quotes, plus signs, equals signs, or question marks. Use a `-` (dash) or
+     *  `_` (underscore) to connect the tokens of compound words. A Japanese custom word can include at most 25
+     *  characters, not including leading or trailing spaces.
      *
      *  Omit this parameter for the [Add a custom word](#addword) method.
      */
     word?: string;
+    /** Parameter for custom words. You can use the 'mapping_only' key in custom words as a form of post processing.
+     *  This key parameter has a boolean value to determine whether 'sounds_like' (for non-Japanese models) or word (for
+     *  Japanese) is not used for the model fine-tuning, but for the replacement for 'display_as'. This feature helps
+     *  you when you use custom words exclusively to map 'sounds_like' (or word) to 'display_as' value. When you use
+     *  custom words solely for post-processing purposes that does not need fine-tuning.
+     */
+    mappingOnly?: string[];
     /** As array of sounds-like pronunciations for the custom word. Specify how words that are difficult to
      *  pronounce, foreign words, acronyms, and so on can be pronounced by users.
      *  * _For custom models that are based on previous-generation models_, for a word that is not in the service's base
@@ -5294,8 +5350,9 @@ namespace SpeechToTextV1 {
      *  for the word. You cannot override the default pronunciation of a word; pronunciations you add augment the
      *  pronunciation from the base vocabulary.
      *
-     *  A word can have at most five sounds-like pronunciations. A pronunciation can include at most 40 characters not
-     *  including spaces.
+     *  A word can have at most five sounds-like pronunciations. A pronunciation can include at most 40 characters, not
+     *  including leading or trailing spaces. A Japanese pronunciation can include at most 25 characters, not including
+     *  leading or trailing spaces.
      */
     soundsLike?: string[];
     /** An alternative spelling for the custom word when it appears in a transcript. Use the parameter when you want
@@ -6061,12 +6118,21 @@ namespace SpeechToTextV1 {
   /** Information about a word that is to be added to a custom language model. */
   export interface CustomWord {
     /** For the [Add custom words](#addwords) method, you must specify the custom word that is to be added to or
-     *  updated in the custom model. Do not include spaces in the word. Use a `-` (dash) or `_` (underscore) to connect
-     *  the tokens of compound words.
+     *  updated in the custom model. Do not use characters that need to be URL-encoded, for example, spaces, slashes,
+     *  backslashes, colons, ampersands, double quotes, plus signs, equals signs, or question marks. Use a `-` (dash) or
+     *  `_` (underscore) to connect the tokens of compound words. A Japanese custom word can include at most 25
+     *  characters, not including leading or trailing spaces.
      *
      *  Omit this parameter for the [Add a custom word](#addword) method.
      */
     word?: string;
+    /** Parameter for custom words. You can use the 'mapping_only' key in custom words as a form of post processing.
+     *  This key parameter has a boolean value to determine whether 'sounds_like' (for non-Japanese models) or word (for
+     *  Japanese) is not used for the model fine-tuning, but for the replacement for 'display_as'. This feature helps
+     *  you when you use custom words exclusively to map 'sounds_like' (or word) to 'display_as' value. When you use
+     *  custom words solely for post-processing purposes that does not need fine-tuning.
+     */
+    mapping_only?: string[];
     /** As array of sounds-like pronunciations for the custom word. Specify how words that are difficult to
      *  pronounce, foreign words, acronyms, and so on can be pronounced by users.
      *  * _For custom models that are based on previous-generation models_, for a word that is not in the service's base
@@ -6076,8 +6142,9 @@ namespace SpeechToTextV1 {
      *  for the word. You cannot override the default pronunciation of a word; pronunciations you add augment the
      *  pronunciation from the base vocabulary.
      *
-     *  A word can have at most five sounds-like pronunciations. A pronunciation can include at most 40 characters not
-     *  including spaces.
+     *  A word can have at most five sounds-like pronunciations. A pronunciation can include at most 40 characters, not
+     *  including leading or trailing spaces. A Japanese pronunciation can include at most 25 characters, not including
+     *  leading or trailing spaces.
      */
     sounds_like?: string[];
     /** An alternative spelling for the custom word when it appears in a transcript. Use the parameter when you want
@@ -6608,6 +6675,13 @@ namespace SpeechToTextV1 {
   export interface Word {
     /** A word from the custom model's words resource. The spelling of the word is used to train the model. */
     word: string;
+    /** (Optional) Parameter for custom words. You can use the 'mapping_only' key in custom words as a form of post
+     *  processing. A boolean value that indicates whether the added word should be used to fine-tune the mode for
+     *  selected next-gen models. This field appears in the response body only when it's 'For a custom model that is
+     *  based on a previous-generation model', the mapping_only field is populated with the value set by the user, but
+     *  would not be used.
+     */
+    mapping_only?: string[];
     /** An array of as many as five pronunciations for the word.
      *  * _For a custom model that is based on a previous-generation model_, in addition to sounds-like pronunciations
      *  that were added by a user, the array can include a sounds-like pronunciation that is automatically generated by
