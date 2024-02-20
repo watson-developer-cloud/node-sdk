@@ -3462,6 +3462,8 @@ class AssistantV1 extends BaseService {
    * filter. For more information, see the
    * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-filter-reference#filter-reference).
    * @param {number} [params.pageLimit] - The number of records to return in each page of results.
+   *
+   * **Note:** If the API is not returning your data, try lowering the page_limit value.
    * @param {string} [params.cursor] - A token identifying the page of results to retrieve.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV1.Response<AssistantV1.LogCollection>>}
@@ -4904,7 +4906,10 @@ namespace AssistantV1 {
      *  see the [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-filter-reference#filter-reference).
      */
     filter?: string;
-    /** The number of records to return in each page of results. */
+    /** The number of records to return in each page of results.
+     *
+     *  **Note:** If the API is not returning your data, try lowering the page_limit value.
+     */
     pageLimit?: number;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
@@ -5800,7 +5805,7 @@ namespace AssistantV1 {
     location?: number[];
     /** The entity value that was recognized in the user input. */
     value: string;
-    /** A decimal percentage that represents Watson's confidence in the recognized entity. */
+    /** A decimal percentage that represents confidence in the recognized entity. */
     confidence?: number;
     /** The recognized capture groups for the entity, as defined by the entity pattern. */
     groups?: CaptureGroup[];
@@ -5828,7 +5833,7 @@ namespace AssistantV1 {
   export interface RuntimeEntityAlternative {
     /** The entity value that was recognized in the user input. */
     value?: string;
-    /** A decimal percentage that represents Watson's confidence in the recognized entity. */
+    /** A decimal percentage that represents confidence in the recognized entity. */
     confidence?: number;
   }
 
@@ -5961,8 +5966,8 @@ namespace AssistantV1 {
   export interface RuntimeIntent {
     /** The name of the recognized intent. */
     intent: string;
-    /** A decimal percentage that represents Watson's confidence in the intent. If you are specifying an intent as
-     *  part of a request, but you do not have a calculated confidence value, specify `1`.
+    /** A decimal percentage that represents confidence in the intent. If you are specifying an intent as part of a
+     *  request, but you do not have a calculated confidence value, specify `1`.
      */
     confidence?: number;
   }

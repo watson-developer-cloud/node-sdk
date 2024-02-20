@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2023.
+ * (C) Copyright IBM Corp. 2018, 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,9 @@
  */
 
 // need to import the whole package to mock getAuthenticatorFromEnvironment
-const core = require('ibm-cloud-sdk-core');
+const sdkCorePackage = require('ibm-cloud-sdk-core');
 
-const { NoAuthAuthenticator, unitTestUtils } = core;
-
+const { NoAuthAuthenticator, unitTestUtils } = sdkCorePackage;
 const SpeechToTextV1 = require('../../dist/speech-to-text/v1');
 
 const {
@@ -46,11 +45,10 @@ function mock_createRequest() {
 }
 
 // dont actually construct an authenticator
-const getAuthenticatorMock = jest.spyOn(core, 'getAuthenticatorFromEnvironment');
+const getAuthenticatorMock = jest.spyOn(sdkCorePackage, 'getAuthenticatorFromEnvironment');
 getAuthenticatorMock.mockImplementation(() => new NoAuthAuthenticator());
 
 describe('SpeechToTextV1', () => {
-
   beforeEach(() => {
     mock_createRequest();
   });
@@ -279,25 +277,26 @@ describe('SpeechToTextV1', () => {
         const acousticCustomizationId = 'testString';
         const baseModelVersion = 'testString';
         const customizationWeight = 72.5;
-        const inactivityTimeout = 38;
+        const inactivityTimeout = 30;
         const keywords = ['testString'];
         const keywordsThreshold = 36.0;
-        const maxAlternatives = 38;
+        const maxAlternatives = 1;
         const wordAlternativesThreshold = 36.0;
         const wordConfidence = false;
         const timestamps = false;
         const profanityFilter = true;
         const smartFormatting = false;
+        const smartFormattingVersion = false;
         const speakerLabels = false;
         const grammarName = 'testString';
         const redaction = false;
         const audioMetrics = false;
-        const endOfPhraseSilenceTime = 72.5;
+        const endOfPhraseSilenceTime = 0.8;
         const splitTranscriptAtPhraseEnd = false;
-        const speechDetectorSensitivity = 36.0;
-        const backgroundAudioSuppression = 36.0;
+        const speechDetectorSensitivity = 0.5;
+        const backgroundAudioSuppression = 0.0;
         const lowLatency = false;
-        const characterInsertionBias = 36.0;
+        const characterInsertionBias = 0.0;
         const recognizeParams = {
           audio,
           contentType,
@@ -315,6 +314,7 @@ describe('SpeechToTextV1', () => {
           timestamps,
           profanityFilter,
           smartFormatting,
+          smartFormattingVersion,
           speakerLabels,
           grammarName,
           redaction,
@@ -357,6 +357,7 @@ describe('SpeechToTextV1', () => {
         expect(mockRequestOptions.qs.timestamps).toEqual(timestamps);
         expect(mockRequestOptions.qs.profanity_filter).toEqual(profanityFilter);
         expect(mockRequestOptions.qs.smart_formatting).toEqual(smartFormatting);
+        expect(mockRequestOptions.qs.smart_formatting_version).toEqual(smartFormattingVersion);
         expect(mockRequestOptions.qs.speaker_labels).toEqual(speakerLabels);
         expect(mockRequestOptions.qs.grammar_name).toEqual(grammarName);
         expect(mockRequestOptions.qs.redaction).toEqual(redaction);
@@ -613,27 +614,28 @@ describe('SpeechToTextV1', () => {
         const acousticCustomizationId = 'testString';
         const baseModelVersion = 'testString';
         const customizationWeight = 72.5;
-        const inactivityTimeout = 38;
+        const inactivityTimeout = 30;
         const keywords = ['testString'];
         const keywordsThreshold = 36.0;
-        const maxAlternatives = 38;
+        const maxAlternatives = 1;
         const wordAlternativesThreshold = 36.0;
         const wordConfidence = false;
         const timestamps = false;
         const profanityFilter = true;
         const smartFormatting = false;
+        const smartFormattingVersion = false;
         const speakerLabels = false;
         const grammarName = 'testString';
         const redaction = false;
         const processingMetrics = false;
-        const processingMetricsInterval = 36.0;
+        const processingMetricsInterval = 1.0;
         const audioMetrics = false;
-        const endOfPhraseSilenceTime = 72.5;
+        const endOfPhraseSilenceTime = 0.8;
         const splitTranscriptAtPhraseEnd = false;
-        const speechDetectorSensitivity = 36.0;
-        const backgroundAudioSuppression = 36.0;
+        const speechDetectorSensitivity = 0.5;
+        const backgroundAudioSuppression = 0.0;
         const lowLatency = false;
-        const characterInsertionBias = 36.0;
+        const characterInsertionBias = 0.0;
         const createJobParams = {
           audio,
           contentType,
@@ -655,6 +657,7 @@ describe('SpeechToTextV1', () => {
           timestamps,
           profanityFilter,
           smartFormatting,
+          smartFormattingVersion,
           speakerLabels,
           grammarName,
           redaction,
@@ -703,6 +706,7 @@ describe('SpeechToTextV1', () => {
         expect(mockRequestOptions.qs.timestamps).toEqual(timestamps);
         expect(mockRequestOptions.qs.profanity_filter).toEqual(profanityFilter);
         expect(mockRequestOptions.qs.smart_formatting).toEqual(smartFormatting);
+        expect(mockRequestOptions.qs.smart_formatting_version).toEqual(smartFormattingVersion);
         expect(mockRequestOptions.qs.speaker_labels).toEqual(speakerLabels);
         expect(mockRequestOptions.qs.grammar_name).toEqual(grammarName);
         expect(mockRequestOptions.qs.redaction).toEqual(redaction);
@@ -1338,11 +1342,13 @@ describe('SpeechToTextV1', () => {
         const wordTypeToAdd = 'all';
         const customizationWeight = 72.5;
         const strict = true;
+        const force = false;
         const trainLanguageModelParams = {
           customizationId,
           wordTypeToAdd,
           customizationWeight,
           strict,
+          force,
         };
 
         const trainLanguageModelResult = speechToTextService.trainLanguageModel(trainLanguageModelParams);
@@ -1362,6 +1368,7 @@ describe('SpeechToTextV1', () => {
         expect(mockRequestOptions.qs.word_type_to_add).toEqual(wordTypeToAdd);
         expect(mockRequestOptions.qs.customization_weight).toEqual(customizationWeight);
         expect(mockRequestOptions.qs.strict).toEqual(strict);
+        expect(mockRequestOptions.qs.force).toEqual(force);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);
       }
 
@@ -2048,6 +2055,7 @@ describe('SpeechToTextV1', () => {
       // CustomWord
       const customWordModel = {
         word: 'testString',
+        mapping_only: ['testString'],
         sounds_like: ['testString'],
         display_as: 'testString',
       };
@@ -2146,12 +2154,14 @@ describe('SpeechToTextV1', () => {
         const customizationId = 'testString';
         const wordName = 'testString';
         const word = 'testString';
+        const mappingOnly = ['testString'];
         const soundsLike = ['testString'];
         const displayAs = 'testString';
         const addWordParams = {
           customizationId,
           wordName,
           word,
+          mappingOnly,
           soundsLike,
           displayAs,
         };
@@ -2171,6 +2181,7 @@ describe('SpeechToTextV1', () => {
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.body.word).toEqual(word);
+        expect(mockRequestOptions.body.mapping_only).toEqual(mappingOnly);
         expect(mockRequestOptions.body.sounds_like).toEqual(soundsLike);
         expect(mockRequestOptions.body.display_as).toEqual(displayAs);
         expect(mockRequestOptions.path.customization_id).toEqual(customizationId);

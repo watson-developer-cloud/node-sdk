@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2017, 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ import { getSdkHeaders } from '../lib/common';
  * models](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-customizing)
  * with Watson Knowledge Studio to detect custom entities and relations in Natural Language Understanding.
  *
- * IBM is sunsetting Watson Natural Language Understanding Custom Sentiment (BETA). From **June 1, 2023** onward, you
+ * IBM is sunsetting Watson Natural Language Understanding Custom Sentiment (BETA). From **June 3, 2023** onward, you
  * will no longer be able to use the Custom Sentiment feature.<br /><br />To ensure we continue providing our clients
  * with robust and powerful text classification capabilities, IBM recently announced the general availability of a new
  * [single-label text classification
@@ -1516,7 +1516,7 @@ namespace NaturalLanguageUnderstandingV1 {
     sadness?: number;
   }
 
-  /** Identifies people, cities, organizations, and other entities in the content. For more information, see [Entity types and subtypes](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-entity-types). Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish, Swedish. Arabic, Chinese, and Dutch are supported only through custom models. */
+  /** Identifies people, cities, organizations, and other entities in the content. For more information, see [Entity types and subtypes](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-entity-type-systems). Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish, Swedish. Arabic, Chinese, and Dutch are supported only through custom models. */
   export interface EntitiesOptions {
     /** Maximum number of entities to return. */
     limit?: number;
@@ -1596,7 +1596,7 @@ namespace NaturalLanguageUnderstandingV1 {
     emotion?: EmotionOptions;
     /** Identifies people, cities, organizations, and other entities in the content. For more information, see
      *  [Entity types and
-     *  subtypes](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-entity-types).
+     *  subtypes](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-entity-type-systems).
      *
      *  Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish, Swedish.
      *  Arabic, Chinese, and Dutch are supported only through custom models.

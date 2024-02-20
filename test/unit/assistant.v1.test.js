@@ -15,10 +15,9 @@
  */
 
 // need to import the whole package to mock getAuthenticatorFromEnvironment
-const core = require('ibm-cloud-sdk-core');
+const sdkCorePackage = require('ibm-cloud-sdk-core');
 
-const { NoAuthAuthenticator, unitTestUtils } = core;
-
+const { NoAuthAuthenticator, unitTestUtils } = sdkCorePackage;
 const AssistantV1 = require('../../dist/assistant/v1');
 
 const {
@@ -46,14 +45,13 @@ function mock_createRequest() {
 }
 
 // dont actually construct an authenticator
-const getAuthenticatorMock = jest.spyOn(core, 'getAuthenticatorFromEnvironment');
+const getAuthenticatorMock = jest.spyOn(sdkCorePackage, 'getAuthenticatorFromEnvironment');
 getAuthenticatorMock.mockImplementation(() => new NoAuthAuthenticator());
 
 // used for the service construction tests
 let requiredGlobals;
 
 describe('AssistantV1', () => {
-
   beforeEach(() => {
     mock_createRequest();
     // these are changed when passed into the factory/constructor, so re-init
@@ -237,7 +235,7 @@ describe('AssistantV1', () => {
       // Context
       const contextModel = {
         conversation_id: 'testString',
-        system: { foo: 'bar' },
+        system: { anyKey: 'anyValue' },
         metadata: messageContextMetadataModel,
         foo: 'testString',
       };
@@ -490,7 +488,7 @@ describe('AssistantV1', () => {
     describe('positive tests', () => {
       function __listWorkspacesTest() {
         // Construct the params object for operation listWorkspaces
-        const pageLimit = 38;
+        const pageLimit = 100;
         const includeCount = false;
         const sort = 'name';
         const cursor = 'testString';
@@ -582,7 +580,7 @@ describe('AssistantV1', () => {
         response_type: 'text',
         values: [dialogNodeOutputTextValuesElementModel],
         selection_policy: 'sequential',
-        delimiter: '\n',
+        delimiter: '\\n',
         channels: [responseGenericChannelModel],
       };
 
@@ -594,14 +592,14 @@ describe('AssistantV1', () => {
       // DialogNodeOutput
       const dialogNodeOutputModel = {
         generic: [dialogNodeOutputGenericModel],
-        integrations: { 'key1': { foo: 'bar' } },
+        integrations: { 'key1': { anyKey: 'anyValue' } },
         modifiers: dialogNodeOutputModifiersModel,
         foo: 'testString',
       };
 
       // DialogNodeContext
       const dialogNodeContextModel = {
-        integrations: { 'key1': { foo: 'bar' } },
+        integrations: { 'key1': { anyKey: 'anyValue' } },
         foo: 'testString',
       };
 
@@ -616,7 +614,7 @@ describe('AssistantV1', () => {
       const dialogNodeActionModel = {
         name: 'testString',
         type: 'client',
-        parameters: { foo: 'bar' },
+        parameters: { anyKey: 'anyValue' },
         result_variable: 'testString',
         credentials: 'testString',
       };
@@ -630,7 +628,7 @@ describe('AssistantV1', () => {
         previous_sibling: 'testString',
         output: dialogNodeOutputModel,
         context: dialogNodeContextModel,
-        metadata: { foo: 'bar' },
+        metadata: { anyKey: 'anyValue' },
         next_step: dialogNodeNextStepModel,
         title: 'testString',
         type: 'standard',
@@ -684,7 +682,7 @@ describe('AssistantV1', () => {
       const workspaceSystemSettingsModel = {
         tooling: workspaceSystemSettingsToolingModel,
         disambiguation: workspaceSystemSettingsDisambiguationModel,
-        human_agent_assist: { foo: 'bar' },
+        human_agent_assist: { anyKey: 'anyValue' },
         spelling_suggestions: false,
         spelling_auto_correct: false,
         system_entities: workspaceSystemSettingsSystemEntitiesModel,
@@ -728,7 +726,7 @@ describe('AssistantV1', () => {
       // CreateValue
       const createValueModel = {
         value: 'testString',
-        metadata: { foo: 'bar' },
+        metadata: { anyKey: 'anyValue' },
         type: 'synonyms',
         synonyms: ['testString'],
         patterns: ['testString'],
@@ -738,7 +736,7 @@ describe('AssistantV1', () => {
       const createEntityModel = {
         entity: 'testString',
         description: 'testString',
-        metadata: { foo: 'bar' },
+        metadata: { anyKey: 'anyValue' },
         fuzzy_match: true,
         values: [createValueModel],
       };
@@ -750,7 +748,7 @@ describe('AssistantV1', () => {
         const language = 'testString';
         const dialogNodes = [dialogNodeModel];
         const counterexamples = [counterexampleModel];
-        const metadata = { foo: 'bar' };
+        const metadata = { anyKey: 'anyValue' };
         const learningOptOut = false;
         const systemSettings = workspaceSystemSettingsModel;
         const webhooks = [webhookModel];
@@ -952,7 +950,7 @@ describe('AssistantV1', () => {
         response_type: 'text',
         values: [dialogNodeOutputTextValuesElementModel],
         selection_policy: 'sequential',
-        delimiter: '\n',
+        delimiter: '\\n',
         channels: [responseGenericChannelModel],
       };
 
@@ -964,14 +962,14 @@ describe('AssistantV1', () => {
       // DialogNodeOutput
       const dialogNodeOutputModel = {
         generic: [dialogNodeOutputGenericModel],
-        integrations: { 'key1': { foo: 'bar' } },
+        integrations: { 'key1': { anyKey: 'anyValue' } },
         modifiers: dialogNodeOutputModifiersModel,
         foo: 'testString',
       };
 
       // DialogNodeContext
       const dialogNodeContextModel = {
-        integrations: { 'key1': { foo: 'bar' } },
+        integrations: { 'key1': { anyKey: 'anyValue' } },
         foo: 'testString',
       };
 
@@ -986,7 +984,7 @@ describe('AssistantV1', () => {
       const dialogNodeActionModel = {
         name: 'testString',
         type: 'client',
-        parameters: { foo: 'bar' },
+        parameters: { anyKey: 'anyValue' },
         result_variable: 'testString',
         credentials: 'testString',
       };
@@ -1000,7 +998,7 @@ describe('AssistantV1', () => {
         previous_sibling: 'testString',
         output: dialogNodeOutputModel,
         context: dialogNodeContextModel,
-        metadata: { foo: 'bar' },
+        metadata: { anyKey: 'anyValue' },
         next_step: dialogNodeNextStepModel,
         title: 'testString',
         type: 'standard',
@@ -1054,7 +1052,7 @@ describe('AssistantV1', () => {
       const workspaceSystemSettingsModel = {
         tooling: workspaceSystemSettingsToolingModel,
         disambiguation: workspaceSystemSettingsDisambiguationModel,
-        human_agent_assist: { foo: 'bar' },
+        human_agent_assist: { anyKey: 'anyValue' },
         spelling_suggestions: false,
         spelling_auto_correct: false,
         system_entities: workspaceSystemSettingsSystemEntitiesModel,
@@ -1098,7 +1096,7 @@ describe('AssistantV1', () => {
       // CreateValue
       const createValueModel = {
         value: 'testString',
-        metadata: { foo: 'bar' },
+        metadata: { anyKey: 'anyValue' },
         type: 'synonyms',
         synonyms: ['testString'],
         patterns: ['testString'],
@@ -1108,7 +1106,7 @@ describe('AssistantV1', () => {
       const createEntityModel = {
         entity: 'testString',
         description: 'testString',
-        metadata: { foo: 'bar' },
+        metadata: { anyKey: 'anyValue' },
         fuzzy_match: true,
         values: [createValueModel],
       };
@@ -1121,7 +1119,7 @@ describe('AssistantV1', () => {
         const language = 'testString';
         const dialogNodes = [dialogNodeModel];
         const counterexamples = [counterexampleModel];
-        const metadata = { foo: 'bar' };
+        const metadata = { anyKey: 'anyValue' };
         const learningOptOut = false;
         const systemSettings = workspaceSystemSettingsModel;
         const webhooks = [webhookModel];
@@ -1339,7 +1337,7 @@ describe('AssistantV1', () => {
         response_type: 'text',
         values: [dialogNodeOutputTextValuesElementModel],
         selection_policy: 'sequential',
-        delimiter: '\n',
+        delimiter: '\\n',
         channels: [responseGenericChannelModel],
       };
 
@@ -1351,14 +1349,14 @@ describe('AssistantV1', () => {
       // DialogNodeOutput
       const dialogNodeOutputModel = {
         generic: [dialogNodeOutputGenericModel],
-        integrations: { 'key1': { foo: 'bar' } },
+        integrations: { 'key1': { anyKey: 'anyValue' } },
         modifiers: dialogNodeOutputModifiersModel,
         foo: 'testString',
       };
 
       // DialogNodeContext
       const dialogNodeContextModel = {
-        integrations: { 'key1': { foo: 'bar' } },
+        integrations: { 'key1': { anyKey: 'anyValue' } },
         foo: 'testString',
       };
 
@@ -1373,7 +1371,7 @@ describe('AssistantV1', () => {
       const dialogNodeActionModel = {
         name: 'testString',
         type: 'client',
-        parameters: { foo: 'bar' },
+        parameters: { anyKey: 'anyValue' },
         result_variable: 'testString',
         credentials: 'testString',
       };
@@ -1387,7 +1385,7 @@ describe('AssistantV1', () => {
         previous_sibling: 'testString',
         output: dialogNodeOutputModel,
         context: dialogNodeContextModel,
-        metadata: { foo: 'bar' },
+        metadata: { anyKey: 'anyValue' },
         next_step: dialogNodeNextStepModel,
         title: 'testString',
         type: 'standard',
@@ -1441,7 +1439,7 @@ describe('AssistantV1', () => {
       const workspaceSystemSettingsModel = {
         tooling: workspaceSystemSettingsToolingModel,
         disambiguation: workspaceSystemSettingsDisambiguationModel,
-        human_agent_assist: { foo: 'bar' },
+        human_agent_assist: { anyKey: 'anyValue' },
         spelling_suggestions: false,
         spelling_auto_correct: false,
         system_entities: workspaceSystemSettingsSystemEntitiesModel,
@@ -1485,7 +1483,7 @@ describe('AssistantV1', () => {
       // CreateValue
       const createValueModel = {
         value: 'testString',
-        metadata: { foo: 'bar' },
+        metadata: { anyKey: 'anyValue' },
         type: 'synonyms',
         synonyms: ['testString'],
         patterns: ['testString'],
@@ -1495,7 +1493,7 @@ describe('AssistantV1', () => {
       const createEntityModel = {
         entity: 'testString',
         description: 'testString',
-        metadata: { foo: 'bar' },
+        metadata: { anyKey: 'anyValue' },
         fuzzy_match: true,
         values: [createValueModel],
       };
@@ -1507,7 +1505,7 @@ describe('AssistantV1', () => {
         const language = 'testString';
         const dialogNodes = [dialogNodeModel];
         const counterexamples = [counterexampleModel];
-        const metadata = { foo: 'bar' };
+        const metadata = { anyKey: 'anyValue' };
         const learningOptOut = false;
         const systemSettings = workspaceSystemSettingsModel;
         const webhooks = [webhookModel];
@@ -1612,7 +1610,7 @@ describe('AssistantV1', () => {
         response_type: 'text',
         values: [dialogNodeOutputTextValuesElementModel],
         selection_policy: 'sequential',
-        delimiter: '\n',
+        delimiter: '\\n',
         channels: [responseGenericChannelModel],
       };
 
@@ -1624,14 +1622,14 @@ describe('AssistantV1', () => {
       // DialogNodeOutput
       const dialogNodeOutputModel = {
         generic: [dialogNodeOutputGenericModel],
-        integrations: { 'key1': { foo: 'bar' } },
+        integrations: { 'key1': { anyKey: 'anyValue' } },
         modifiers: dialogNodeOutputModifiersModel,
         foo: 'testString',
       };
 
       // DialogNodeContext
       const dialogNodeContextModel = {
-        integrations: { 'key1': { foo: 'bar' } },
+        integrations: { 'key1': { anyKey: 'anyValue' } },
         foo: 'testString',
       };
 
@@ -1646,7 +1644,7 @@ describe('AssistantV1', () => {
       const dialogNodeActionModel = {
         name: 'testString',
         type: 'client',
-        parameters: { foo: 'bar' },
+        parameters: { anyKey: 'anyValue' },
         result_variable: 'testString',
         credentials: 'testString',
       };
@@ -1660,7 +1658,7 @@ describe('AssistantV1', () => {
         previous_sibling: 'testString',
         output: dialogNodeOutputModel,
         context: dialogNodeContextModel,
-        metadata: { foo: 'bar' },
+        metadata: { anyKey: 'anyValue' },
         next_step: dialogNodeNextStepModel,
         title: 'testString',
         type: 'standard',
@@ -1714,7 +1712,7 @@ describe('AssistantV1', () => {
       const workspaceSystemSettingsModel = {
         tooling: workspaceSystemSettingsToolingModel,
         disambiguation: workspaceSystemSettingsDisambiguationModel,
-        human_agent_assist: { foo: 'bar' },
+        human_agent_assist: { anyKey: 'anyValue' },
         spelling_suggestions: false,
         spelling_auto_correct: false,
         system_entities: workspaceSystemSettingsSystemEntitiesModel,
@@ -1758,7 +1756,7 @@ describe('AssistantV1', () => {
       // CreateValue
       const createValueModel = {
         value: 'testString',
-        metadata: { foo: 'bar' },
+        metadata: { anyKey: 'anyValue' },
         type: 'synonyms',
         synonyms: ['testString'],
         patterns: ['testString'],
@@ -1768,7 +1766,7 @@ describe('AssistantV1', () => {
       const createEntityModel = {
         entity: 'testString',
         description: 'testString',
-        metadata: { foo: 'bar' },
+        metadata: { anyKey: 'anyValue' },
         fuzzy_match: true,
         values: [createValueModel],
       };
@@ -1781,7 +1779,7 @@ describe('AssistantV1', () => {
         const language = 'testString';
         const dialogNodes = [dialogNodeModel];
         const counterexamples = [counterexampleModel];
-        const metadata = { foo: 'bar' };
+        const metadata = { anyKey: 'anyValue' };
         const learningOptOut = false;
         const systemSettings = workspaceSystemSettingsModel;
         const webhooks = [webhookModel];
@@ -1992,7 +1990,7 @@ describe('AssistantV1', () => {
         // Construct the params object for operation listIntents
         const workspaceId = 'testString';
         const _export = false;
-        const pageLimit = 38;
+        const pageLimit = 100;
         const includeCount = false;
         const sort = 'intent';
         const cursor = 'testString';
@@ -2513,7 +2511,7 @@ describe('AssistantV1', () => {
         // Construct the params object for operation listExamples
         const workspaceId = 'testString';
         const intent = 'testString';
-        const pageLimit = 38;
+        const pageLimit = 100;
         const includeCount = false;
         const sort = 'text';
         const cursor = 'testString';
@@ -3031,7 +3029,7 @@ describe('AssistantV1', () => {
       function __listCounterexamplesTest() {
         // Construct the params object for operation listCounterexamples
         const workspaceId = 'testString';
-        const pageLimit = 38;
+        const pageLimit = 100;
         const includeCount = false;
         const sort = 'text';
         const cursor = 'testString';
@@ -3504,7 +3502,7 @@ describe('AssistantV1', () => {
         // Construct the params object for operation listEntities
         const workspaceId = 'testString';
         const _export = false;
-        const pageLimit = 38;
+        const pageLimit = 100;
         const includeCount = false;
         const sort = 'entity';
         const cursor = 'testString';
@@ -3608,7 +3606,7 @@ describe('AssistantV1', () => {
       // CreateValue
       const createValueModel = {
         value: 'testString',
-        metadata: { foo: 'bar' },
+        metadata: { anyKey: 'anyValue' },
         type: 'synonyms',
         synonyms: ['testString'],
         patterns: ['testString'],
@@ -3619,7 +3617,7 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const entity = 'testString';
         const description = 'testString';
-        const metadata = { foo: 'bar' };
+        const metadata = { anyKey: 'anyValue' };
         const fuzzyMatch = true;
         const values = [createValueModel];
         const includeAudit = false;
@@ -3820,7 +3818,7 @@ describe('AssistantV1', () => {
       // CreateValue
       const createValueModel = {
         value: 'testString',
-        metadata: { foo: 'bar' },
+        metadata: { anyKey: 'anyValue' },
         type: 'synonyms',
         synonyms: ['testString'],
         patterns: ['testString'],
@@ -3832,7 +3830,7 @@ describe('AssistantV1', () => {
         const entity = 'testString';
         const newEntity = 'testString';
         const newDescription = 'testString';
-        const newMetadata = { foo: 'bar' };
+        const newMetadata = { anyKey: 'anyValue' };
         const newFuzzyMatch = true;
         const newValues = [createValueModel];
         const append = false;
@@ -4128,7 +4126,7 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const entity = 'testString';
         const _export = false;
-        const pageLimit = 38;
+        const pageLimit = 100;
         const includeCount = false;
         const sort = 'value';
         const cursor = 'testString';
@@ -4236,7 +4234,7 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const entity = 'testString';
         const value = 'testString';
-        const metadata = { foo: 'bar' };
+        const metadata = { anyKey: 'anyValue' };
         const type = 'synonyms';
         const synonyms = ['testString'];
         const patterns = ['testString'];
@@ -4448,7 +4446,7 @@ describe('AssistantV1', () => {
         const entity = 'testString';
         const value = 'testString';
         const newValue = 'testString';
-        const newMetadata = { foo: 'bar' };
+        const newMetadata = { anyKey: 'anyValue' };
         const newType = 'synonyms';
         const newSynonyms = ['testString'];
         const newPatterns = ['testString'];
@@ -4658,7 +4656,7 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const entity = 'testString';
         const value = 'testString';
-        const pageLimit = 38;
+        const pageLimit = 100;
         const includeCount = false;
         const sort = 'synonym';
         const cursor = 'testString';
@@ -5178,7 +5176,7 @@ describe('AssistantV1', () => {
       function __listDialogNodesTest() {
         // Construct the params object for operation listDialogNodes
         const workspaceId = 'testString';
-        const pageLimit = 38;
+        const pageLimit = 100;
         const includeCount = false;
         const sort = 'dialog_node';
         const cursor = 'testString';
@@ -5292,7 +5290,7 @@ describe('AssistantV1', () => {
         response_type: 'text',
         values: [dialogNodeOutputTextValuesElementModel],
         selection_policy: 'sequential',
-        delimiter: '\n',
+        delimiter: '\\n',
         channels: [responseGenericChannelModel],
       };
 
@@ -5304,14 +5302,14 @@ describe('AssistantV1', () => {
       // DialogNodeOutput
       const dialogNodeOutputModel = {
         generic: [dialogNodeOutputGenericModel],
-        integrations: { 'key1': { foo: 'bar' } },
+        integrations: { 'key1': { anyKey: 'anyValue' } },
         modifiers: dialogNodeOutputModifiersModel,
         foo: 'testString',
       };
 
       // DialogNodeContext
       const dialogNodeContextModel = {
-        integrations: { 'key1': { foo: 'bar' } },
+        integrations: { 'key1': { anyKey: 'anyValue' } },
         foo: 'testString',
       };
 
@@ -5326,7 +5324,7 @@ describe('AssistantV1', () => {
       const dialogNodeActionModel = {
         name: 'testString',
         type: 'client',
-        parameters: { foo: 'bar' },
+        parameters: { anyKey: 'anyValue' },
         result_variable: 'testString',
         credentials: 'testString',
       };
@@ -5341,7 +5339,7 @@ describe('AssistantV1', () => {
         const previousSibling = 'testString';
         const output = dialogNodeOutputModel;
         const context = dialogNodeContextModel;
-        const metadata = { foo: 'bar' };
+        const metadata = { anyKey: 'anyValue' };
         const nextStep = dialogNodeNextStepModel;
         const title = 'testString';
         const type = 'standard';
@@ -5588,7 +5586,7 @@ describe('AssistantV1', () => {
         response_type: 'text',
         values: [dialogNodeOutputTextValuesElementModel],
         selection_policy: 'sequential',
-        delimiter: '\n',
+        delimiter: '\\n',
         channels: [responseGenericChannelModel],
       };
 
@@ -5600,14 +5598,14 @@ describe('AssistantV1', () => {
       // DialogNodeOutput
       const dialogNodeOutputModel = {
         generic: [dialogNodeOutputGenericModel],
-        integrations: { 'key1': { foo: 'bar' } },
+        integrations: { 'key1': { anyKey: 'anyValue' } },
         modifiers: dialogNodeOutputModifiersModel,
         foo: 'testString',
       };
 
       // DialogNodeContext
       const dialogNodeContextModel = {
-        integrations: { 'key1': { foo: 'bar' } },
+        integrations: { 'key1': { anyKey: 'anyValue' } },
         foo: 'testString',
       };
 
@@ -5622,7 +5620,7 @@ describe('AssistantV1', () => {
       const dialogNodeActionModel = {
         name: 'testString',
         type: 'client',
-        parameters: { foo: 'bar' },
+        parameters: { anyKey: 'anyValue' },
         result_variable: 'testString',
         credentials: 'testString',
       };
@@ -5638,7 +5636,7 @@ describe('AssistantV1', () => {
         const newPreviousSibling = 'testString';
         const newOutput = dialogNodeOutputModel;
         const newContext = dialogNodeContextModel;
-        const newMetadata = { foo: 'bar' };
+        const newMetadata = { anyKey: 'anyValue' };
         const newNextStep = dialogNodeNextStepModel;
         const newTitle = 'testString';
         const newType = 'standard';
@@ -5872,7 +5870,7 @@ describe('AssistantV1', () => {
         const workspaceId = 'testString';
         const sort = 'testString';
         const filter = 'testString';
-        const pageLimit = 38;
+        const pageLimit = 100;
         const cursor = 'testString';
         const listLogsParams = {
           workspaceId,
@@ -5968,7 +5966,7 @@ describe('AssistantV1', () => {
         // Construct the params object for operation listAllLogs
         const filter = 'testString';
         const sort = 'testString';
-        const pageLimit = 38;
+        const pageLimit = 100;
         const cursor = 'testString';
         const listAllLogsParams = {
           filter,

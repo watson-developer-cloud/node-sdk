@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2018, 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,12 @@ import {
 import { getSdkHeaders } from '../lib/common';
 
 /**
+ * IBM&reg; is announcing the deprecation of the Watson&reg; Language Translator service for IBM Cloud&reg; in all
+ * regions. As of 10 June 2023, the Language Translator tile will be removed from the IBM Cloud Platform for new
+ * customers; only existing customers will be able to access the product. As of 10 June 2024, the service will reach its
+ * End of Support date. As of 10 December 2024, the service will be withdrawn entirely and will no longer be available
+ * to any customers.{: deprecated}
+ *
  * IBM Watson&trade; Language Translator translates text from one language to another. The service offers multiple
  * IBM-provided translation models that you can customize based on your unique terminology and language. Use Language
  * Translator to take news from across the globe and present it in your language, communicate with your customers in

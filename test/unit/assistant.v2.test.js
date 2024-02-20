@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2023.
+ * (C) Copyright IBM Corp. 2018, 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,10 +15,9 @@
  */
 
 // need to import the whole package to mock getAuthenticatorFromEnvironment
-const core = require('ibm-cloud-sdk-core');
+const sdkCorePackage = require('ibm-cloud-sdk-core');
 
-const { NoAuthAuthenticator, unitTestUtils } = core;
-
+const { NoAuthAuthenticator, unitTestUtils } = sdkCorePackage;
 const AssistantV2 = require('../../dist/assistant/v2');
 
 const {
@@ -46,14 +45,13 @@ function mock_createRequest() {
 }
 
 // dont actually construct an authenticator
-const getAuthenticatorMock = jest.spyOn(core, 'getAuthenticatorFromEnvironment');
+const getAuthenticatorMock = jest.spyOn(sdkCorePackage, 'getAuthenticatorFromEnvironment');
 getAuthenticatorMock.mockImplementation(() => new NoAuthAuthenticator());
 
 // used for the service construction tests
 let requiredGlobals;
 
 describe('AssistantV2', () => {
-
   beforeEach(() => {
     mock_createRequest();
     // these are changed when passed into the factory/constructor, so re-init
@@ -226,7 +224,7 @@ describe('AssistantV2', () => {
     describe('positive tests', () => {
       function __listAssistantsTest() {
         // Construct the params object for operation listAssistants
-        const pageLimit = 38;
+        const pageLimit = 100;
         const includeCount = false;
         const sort = 'name';
         const cursor = 'testString';
@@ -665,6 +663,7 @@ describe('AssistantV2', () => {
       const messageInputOptionsModel = {
         restart: false,
         alternate_intents: false,
+        async_callout: false,
         spelling: messageInputOptionsSpellingModel,
         debug: false,
         return_context: false,
@@ -706,31 +705,31 @@ describe('AssistantV2', () => {
         foo: 'testString',
       };
 
-      // MessageContextSkillDialog
-      const messageContextSkillDialogModel = {
-        user_defined: { foo: 'bar' },
+      // MessageContextDialogSkill
+      const messageContextDialogSkillModel = {
+        user_defined: { anyKey: 'anyValue' },
         system: messageContextSkillSystemModel,
       };
 
-      // MessageContextSkillAction
-      const messageContextSkillActionModel = {
-        user_defined: { foo: 'bar' },
+      // MessageContextActionSkill
+      const messageContextActionSkillModel = {
+        user_defined: { anyKey: 'anyValue' },
         system: messageContextSkillSystemModel,
-        action_variables: { foo: 'bar' },
-        skill_variables: { foo: 'bar' },
+        action_variables: { anyKey: 'anyValue' },
+        skill_variables: { anyKey: 'anyValue' },
       };
 
       // MessageContextSkills
       const messageContextSkillsModel = {
-        'main skill': messageContextSkillDialogModel,
-        'actions skill': messageContextSkillActionModel,
+        'main skill': messageContextDialogSkillModel,
+        'actions skill': messageContextActionSkillModel,
       };
 
       // MessageContext
       const messageContextModel = {
         global: messageContextGlobalModel,
         skills: messageContextSkillsModel,
-        integrations: { foo: 'bar' },
+        integrations: { anyKey: 'anyValue' },
       };
 
       function __messageTest() {
@@ -920,16 +919,17 @@ describe('AssistantV2', () => {
         auto_correct: true,
       };
 
-      // MessageInputOptionsStateless
-      const messageInputOptionsStatelessModel = {
+      // StatelessMessageInputOptions
+      const statelessMessageInputOptionsModel = {
         restart: false,
         alternate_intents: false,
+        async_callout: false,
         spelling: messageInputOptionsSpellingModel,
         debug: false,
       };
 
-      // MessageInputStateless
-      const messageInputStatelessModel = {
+      // StatelessMessageInput
+      const statelessMessageInputModel = {
         message_type: 'text',
         text: 'testString',
         intents: [runtimeIntentModel],
@@ -937,7 +937,7 @@ describe('AssistantV2', () => {
         suggestion_id: 'testString',
         attachments: [messageInputAttachmentModel],
         analytics: requestAnalyticsModel,
-        options: messageInputOptionsStatelessModel,
+        options: statelessMessageInputOptionsModel,
       };
 
       // MessageContextGlobalSystem
@@ -952,8 +952,8 @@ describe('AssistantV2', () => {
         skip_user_input: true,
       };
 
-      // MessageContextGlobalStateless
-      const messageContextGlobalStatelessModel = {
+      // StatelessMessageContextGlobal
+      const statelessMessageContextGlobalModel = {
         system: messageContextGlobalSystemModel,
         session_id: 'testString',
       };
@@ -964,38 +964,40 @@ describe('AssistantV2', () => {
         foo: 'testString',
       };
 
-      // MessageContextSkillDialog
-      const messageContextSkillDialogModel = {
-        user_defined: { foo: 'bar' },
+      // MessageContextDialogSkill
+      const messageContextDialogSkillModel = {
+        user_defined: { anyKey: 'anyValue' },
         system: messageContextSkillSystemModel,
       };
 
-      // MessageContextSkillAction
-      const messageContextSkillActionModel = {
-        user_defined: { foo: 'bar' },
+      // StatelessMessageContextSkillsActionsSkill
+      const statelessMessageContextSkillsActionsSkillModel = {
+        user_defined: { anyKey: 'anyValue' },
         system: messageContextSkillSystemModel,
-        action_variables: { foo: 'bar' },
-        skill_variables: { foo: 'bar' },
+        action_variables: { anyKey: 'anyValue' },
+        skill_variables: { anyKey: 'anyValue' },
+        private_action_variables: { anyKey: 'anyValue' },
+        private_skill_variables: { anyKey: 'anyValue' },
       };
 
-      // MessageContextSkills
-      const messageContextSkillsModel = {
-        'main skill': messageContextSkillDialogModel,
-        'actions skill': messageContextSkillActionModel,
+      // StatelessMessageContextSkills
+      const statelessMessageContextSkillsModel = {
+        'main skill': messageContextDialogSkillModel,
+        'actions skill': statelessMessageContextSkillsActionsSkillModel,
       };
 
-      // MessageContextStateless
-      const messageContextStatelessModel = {
-        global: messageContextGlobalStatelessModel,
-        skills: messageContextSkillsModel,
-        integrations: { foo: 'bar' },
+      // StatelessMessageContext
+      const statelessMessageContextModel = {
+        global: statelessMessageContextGlobalModel,
+        skills: statelessMessageContextSkillsModel,
+        integrations: { anyKey: 'anyValue' },
       };
 
       function __messageStatelessTest() {
         // Construct the params object for operation messageStateless
         const assistantId = 'testString';
-        const input = messageInputStatelessModel;
-        const context = messageContextStatelessModel;
+        const input = statelessMessageInputModel;
+        const context = statelessMessageContextModel;
         const userId = 'testString';
         const messageStatelessParams = {
           assistantId,
@@ -1187,7 +1189,7 @@ describe('AssistantV2', () => {
         const assistantId = 'testString';
         const sort = 'testString';
         const filter = 'testString';
-        const pageLimit = 38;
+        const pageLimit = 100;
         const cursor = 'testString';
         const listLogsParams = {
           assistantId,
@@ -1367,7 +1369,7 @@ describe('AssistantV2', () => {
       function __listEnvironmentsTest() {
         // Construct the params object for operation listEnvironments
         const assistantId = 'testString';
-        const pageLimit = 38;
+        const pageLimit = 100;
         const includeCount = false;
         const sort = 'name';
         const cursor = 'testString';
@@ -1559,6 +1561,11 @@ describe('AssistantV2', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
 
+      // BaseEnvironmentOrchestration
+      const baseEnvironmentOrchestrationModel = {
+        search_skill_fallback: true,
+      };
+
       // EnvironmentSkill
       const environmentSkillModel = {
         skill_id: 'testString',
@@ -1574,6 +1581,7 @@ describe('AssistantV2', () => {
         const environmentId = 'testString';
         const name = 'testString';
         const description = 'testString';
+        const orchestration = baseEnvironmentOrchestrationModel;
         const sessionTimeout = 10;
         const skillReferences = [environmentSkillModel];
         const updateEnvironmentParams = {
@@ -1581,6 +1589,7 @@ describe('AssistantV2', () => {
           environmentId,
           name,
           description,
+          orchestration,
           sessionTimeout,
           skillReferences,
         };
@@ -1601,6 +1610,7 @@ describe('AssistantV2', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.body.name).toEqual(name);
         expect(mockRequestOptions.body.description).toEqual(description);
+        expect(mockRequestOptions.body.orchestration).toEqual(orchestration);
         expect(mockRequestOptions.body.session_timeout).toEqual(sessionTimeout);
         expect(mockRequestOptions.body.skill_references).toEqual(skillReferences);
         expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
@@ -1761,7 +1771,7 @@ describe('AssistantV2', () => {
       function __listReleasesTest() {
         // Construct the params object for operation listReleases
         const assistantId = 'testString';
-        const pageLimit = 38;
+        const pageLimit = 100;
         const includeCount = false;
         const sort = 'name';
         const cursor = 'testString';
@@ -2277,8 +2287,8 @@ describe('AssistantV2', () => {
         const skillId = 'testString';
         const name = 'testString';
         const description = 'testString';
-        const workspace = { foo: 'bar' };
-        const dialogSettings = { foo: 'bar' };
+        const workspace = { anyKey: 'anyValue' };
+        const dialogSettings = { anyKey: 'anyValue' };
         const searchSettings = searchSettingsModel;
         const updateSkillParams = {
           assistantId,
@@ -2510,8 +2520,8 @@ describe('AssistantV2', () => {
       const skillImportModel = {
         name: 'testString',
         description: 'testString',
-        workspace: { foo: 'bar' },
-        dialog_settings: { foo: 'bar' },
+        workspace: { anyKey: 'anyValue' },
+        dialog_settings: { anyKey: 'anyValue' },
         search_settings: searchSettingsModel,
         language: 'testString',
         type: 'action',
