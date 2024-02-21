@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2019, 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -45,7 +45,7 @@ class DiscoveryV2 extends BaseService {
   static DEFAULT_SERVICE_NAME: string = 'discovery';
 
   /** Release date of the version of the API you want to use. Specify dates in YYYY-MM-DD format. The current
-   *  version is `2020-08-30`.
+   *  version is `2023-03-31`.
    */
   version: string;
 
@@ -54,7 +54,7 @@ class DiscoveryV2 extends BaseService {
    *
    * @param {Object} options - Options for the service.
    * @param {string} options.version - Release date of the version of the API you want to use. Specify dates in
-   * YYYY-MM-DD format. The current version is `2020-08-30`.
+   * YYYY-MM-DD format. The current version is `2023-03-31`.
    * @param {string} [options.serviceUrl] - The base URL for the service
    * @param {OutgoingHttpHeaders} [options.headers] - Default headers that shall be included with every request to the service.
    * @param {string} [options.serviceName] - The name of the service to configure
@@ -559,7 +559,7 @@ class DiscoveryV2 extends BaseService {
   }
 
   /**
-   * Get collection.
+   * Get collection details.
    *
    * Get details about the specified collection.
    *
@@ -617,7 +617,18 @@ class DiscoveryV2 extends BaseService {
   /**
    * Update a collection.
    *
-   * Updates the specified collection's name, description, and enrichments.
+   * Updates the specified collection's name, description, enrichments, and configuration.
+   *
+   * If you apply normalization rules to data in an existing collection, you must initiate reprocessing of the
+   * collection. To do so, from the *Manage fields* page in the product user interface, temporarily change the data type
+   * of a field to enable the reprocess button. Change the data type of the field back to its original value, and then
+   * click **Apply changes and reprocess**.
+   *
+   * To remove a configuration that applies JSON normalization operations as part of the conversion phase of ingestion,
+   * specify an empty `json_normalizations` object (`[]`) in the request.
+   *
+   * To remove a configuration that applies JSON normalization operations after enrichments are applied, specify an
+   * empty `normalizations` object (`[]`) in the request.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
@@ -746,9 +757,8 @@ class DiscoveryV2 extends BaseService {
    * Lists the documents in the specified collection. The list includes only the document ID of each document and
    * returns information for up to 10,000 documents.
    *
-   * **Note**: This method is available only from Cloud Pak for Data version 4.0.9 and later installed instances and
-   * from Plus and Enterprise plan IBM Cloud-managed instances. It is not currently available from Premium plan
-   * instances.
+   * **Note**: This method is available only from Cloud Pak for Data version 4.0.9 and later installed instances, and
+   * from IBM Cloud-managed instances.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
@@ -872,12 +882,12 @@ class DiscoveryV2 extends BaseService {
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
    * Deploy* page in Discovery.
    * @param {string} params.collectionId - The ID of the collection.
-   * @param {NodeJS.ReadableStream | Buffer} [params.file] - When adding a document, the content of the document to
-   * ingest. For maximum supported file size limits, see [the
-   * documentation](/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
+   * @param {NodeJS.ReadableStream | Buffer} [params.file] - **Add a document**: The content of the document to ingest.
+   * For the supported file types and maximum supported file size limits when adding a document, see [the
+   * documentation](/docs/discovery-data?topic=discovery-data-collections#supportedfiletypes).
    *
-   * When analyzing a document, the content of the document to analyze but not ingest. Only the `application/json`
-   * content type is supported currently. For maximum supported file size limits, see [the product
+   * **Analyze a document**: The content of the document to analyze but not ingest. Only the `application/json` content
+   * type is supported by the Analyze API. For maximum supported file size limits, see [the product
    * documentation](/docs/discovery-data?topic=discovery-data-analyzeapi#analyzeapi-limits).
    * @param {string} [params.filename] - The filename for file.
    * @param {string} [params.fileContentType] - The content type of file.
@@ -959,9 +969,8 @@ class DiscoveryV2 extends BaseService {
    * Get details about a specific document, whether the document is added by uploading a file or by crawling an external
    * data source.
    *
-   * **Note**: This method is available only from Cloud Pak for Data version 4.0.9 and later installed instances and
-   * from Plus and Enterprise plan IBM Cloud-managed instances. It is not currently available from Premium plan
-   * instances.
+   * **Note**: This method is available only from Cloud Pak for Data version 4.0.9 and later installed instances, and
+   * from IBM Cloud-managed instances.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
@@ -1040,12 +1049,12 @@ class DiscoveryV2 extends BaseService {
    * Deploy* page in Discovery.
    * @param {string} params.collectionId - The ID of the collection.
    * @param {string} params.documentId - The ID of the document.
-   * @param {NodeJS.ReadableStream | Buffer} [params.file] - When adding a document, the content of the document to
-   * ingest. For maximum supported file size limits, see [the
-   * documentation](/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
+   * @param {NodeJS.ReadableStream | Buffer} [params.file] - **Add a document**: The content of the document to ingest.
+   * For the supported file types and maximum supported file size limits when adding a document, see [the
+   * documentation](/docs/discovery-data?topic=discovery-data-collections#supportedfiletypes).
    *
-   * When analyzing a document, the content of the document to analyze but not ingest. Only the `application/json`
-   * content type is supported currently. For maximum supported file size limits, see [the product
+   * **Analyze a document**: The content of the document to analyze but not ingest. Only the `application/json` content
+   * type is supported by the Analyze API. For maximum supported file size limits, see [the product
    * documentation](/docs/discovery-data?topic=discovery-data-analyzeapi#analyzeapi-limits).
    * @param {string} [params.filename] - The filename for file.
    * @param {string} [params.fileContentType] - The content type of file.
@@ -1217,9 +1226,12 @@ class DiscoveryV2 extends BaseService {
    * parameter runs first. This parameter is useful for limiting results to those that contain specific metadata values.
    * @param {string} [params.query] - A query search that is written in the Discovery Query Language and returns all
    * matching documents in your data set with full enrichments and full text, and with the most relevant documents
-   * listed first. Use a query search when you want to find the most relevant search results.
+   * listed first. Use a query search when you want to find the most relevant search results. You can use this parameter
+   * or the **natural_language_query** parameter to specify the query input, but not both.
    * @param {string} [params.naturalLanguageQuery] - A natural language query that returns relevant documents by using
-   * training data and natural language understanding.
+   * training data and natural language understanding. You can use this parameter or the **query** parameter to specify
+   * the query input, but not both. To filter the results based on criteria you specify, include the **filter**
+   * parameter in the request.
    * @param {string} [params.aggregation] - An aggregation search that returns an exact answer by combining query search
    * with filters. Useful for applications to build lists, tables, and time series. For more information about the
    * supported types of aggregations, see the [Discovery
@@ -1319,6 +1331,9 @@ class DiscoveryV2 extends BaseService {
    *
    * Returns completion query suggestions for the specified prefix.
    *
+   * Suggested words are based on terms from the project documents. Suggestions are not based on terms from the
+   * project's search history, and the project does not learn from previous user choices.
+   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
    * Deploy* page in Discovery.
@@ -1394,9 +1409,11 @@ class DiscoveryV2 extends BaseService {
    * parameter runs first. This parameter is useful for limiting results to those that contain specific metadata values.
    * @param {string} [params.query] - A query search that is written in the Discovery Query Language and returns all
    * matching documents in your data set with full enrichments and full text, and with the most relevant documents
-   * listed first.
+   * listed first. You can use this parameter or the **natural_language_query** parameter to specify the query input,
+   * but not both.
    * @param {string} [params.naturalLanguageQuery] - A natural language query that returns relevant documents by using
-   * training data and natural language understanding.
+   * natural language understanding. You can use this parameter or the **query** parameter to specify the query input,
+   * but not both. To filter the results based on criteria you specify, include the **filter** parameter in the request.
    * @param {number} [params.count] - Number of results to return. The maximum for the **count** and **offset** values
    * together in any one query is **10,000**.
    * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
@@ -1469,9 +1486,11 @@ class DiscoveryV2 extends BaseService {
    * parameter runs first. This parameter is useful for limiting results to those that contain specific metadata values.
    * @param {string} [params.query] - A query search that is written in the Discovery Query Language and returns all
    * matching documents in your data set with full enrichments and full text, and with the most relevant documents
-   * listed first.
+   * listed first. You can use this parameter or the **natural_language_query** parameter to specify the query input,
+   * but not both.
    * @param {string} [params.naturalLanguageQuery] - A natural language query that returns relevant documents by using
-   * training data and natural language understanding.
+   * natural language understanding. You can use this parameter or the **query** parameter to specify the query input,
+   * but not both. To filter the results based on criteria you specify, include the **filter** parameter in the request.
    * @param {number} [params.count] - Number of results to return. The maximum for the **count** and **offset** values
    * together in any one query is **10,000**.
    * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
@@ -2074,9 +2093,11 @@ class DiscoveryV2 extends BaseService {
   }
 
   /**
-   * Create training query.
+   * Create a training query.
    *
    * Add a query to the training data for this project. The query can contain a filter and natural language query.
+   *
+   * **Note**: You cannot apply relevancy training to a `content_mining` project type.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
@@ -2084,7 +2105,9 @@ class DiscoveryV2 extends BaseService {
    * @param {string} params.naturalLanguageQuery - The natural text query that is used as the training query.
    * @param {TrainingExample[]} params.examples - Array of training examples.
    * @param {string} [params.filter] - The filter used on the collection before the **natural_language_query** is
-   * applied.
+   * applied. Only specify a filter if the documents that you consider to be most relevant are not included in the top
+   * 100 results when you submit test queries. If you specify a filter during training, apply the same filter to queries
+   * that are submitted at runtime for optimal ranking results.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>>}
    */
@@ -2198,7 +2221,7 @@ class DiscoveryV2 extends BaseService {
   /**
    * Update a training query.
    *
-   * Updates an existing training query and it's examples.
+   * Updates an existing training query and its examples. You must resubmit all of the examples with the update request.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
@@ -2207,7 +2230,9 @@ class DiscoveryV2 extends BaseService {
    * @param {string} params.naturalLanguageQuery - The natural text query that is used as the training query.
    * @param {TrainingExample[]} params.examples - Array of training examples.
    * @param {string} [params.filter] - The filter used on the collection before the **natural_language_query** is
-   * applied.
+   * applied. Only specify a filter if the documents that you consider to be most relevant are not included in the top
+   * 100 results when you submit test queries. If you specify a filter during training, apply the same filter to queries
+   * that are submitted at runtime for optimal ranking results.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>>}
    */
@@ -2267,6 +2292,9 @@ class DiscoveryV2 extends BaseService {
    * Delete a training data query.
    *
    * Removes details from a training data query, including the query string and all examples.
+   *
+   * To delete an example, use the *Update a training query* method and omit the example that you want to delete from
+   * the example set.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
@@ -2389,7 +2417,7 @@ class DiscoveryV2 extends BaseService {
    * @param {NodeJS.ReadableStream | Buffer} [params.file] - The enrichment file to upload. Expected file types per
    * enrichment are as follows:
    *
-   * * CSV for `dictionary`
+   * * CSV for `dictionary` and `sentence_classifier` (the training data CSV file to upload).
    *
    * * PEAR for `uima_annotator` and `rule_based` (Explorer)
    *
@@ -3294,7 +3322,7 @@ class DiscoveryV2 extends BaseService {
    ************************/
 
   /**
-   * Analyze a Document.
+   * Analyze a document.
    *
    * Process a document and return it for realtime use. Supports JSON files only.
    *
@@ -3304,18 +3332,22 @@ class DiscoveryV2 extends BaseService {
    * collection configuration. Then, when you analyze the file, the text in the `Quote` field is analyzed and results
    * are written to a field named `enriched_Quote`.
    *
+   * Submit a request against only one collection at a time. Remember, the documents in the collection are not
+   * significant. It is the enrichments that are defined for the collection that matter. If you submit requests to
+   * several collections, then several models are initiated at the same time, which can cause request failures.
+   *
    * **Note:** This method is supported with Enterprise plan deployments and installed deployments only.
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
    * Deploy* page in Discovery.
    * @param {string} params.collectionId - The ID of the collection.
-   * @param {NodeJS.ReadableStream | Buffer} [params.file] - When adding a document, the content of the document to
-   * ingest. For maximum supported file size limits, see [the
-   * documentation](/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
+   * @param {NodeJS.ReadableStream | Buffer} [params.file] - **Add a document**: The content of the document to ingest.
+   * For the supported file types and maximum supported file size limits when adding a document, see [the
+   * documentation](/docs/discovery-data?topic=discovery-data-collections#supportedfiletypes).
    *
-   * When analyzing a document, the content of the document to analyze but not ingest. Only the `application/json`
-   * content type is supported currently. For maximum supported file size limits, see [the product
+   * **Analyze a document**: The content of the document to analyze but not ingest. Only the `application/json` content
+   * type is supported by the Analyze API. For maximum supported file size limits, see [the product
    * documentation](/docs/discovery-data?topic=discovery-data-analyzeapi#analyzeapi-limits).
    * @param {string} [params.filename] - The filename for file.
    * @param {string} [params.fileContentType] - The content type of file.
@@ -3455,7 +3487,7 @@ namespace DiscoveryV2 {
   /** Options for the `DiscoveryV2` constructor. */
   export interface Options extends UserOptions {
     /** Release date of the version of the API you want to use. Specify dates in YYYY-MM-DD format. The current
-     *  version is `2020-08-30`.
+     *  version is `2023-03-31`.
      */
     version: string;
   }
@@ -3673,11 +3705,12 @@ namespace DiscoveryV2 {
     projectId: string;
     /** The ID of the collection. */
     collectionId: string;
-    /** When adding a document, the content of the document to ingest. For maximum supported file size limits, see
-     *  [the documentation](/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
+    /** **Add a document**: The content of the document to ingest. For the supported file types and maximum
+     *  supported file size limits when adding a document, see [the
+     *  documentation](/docs/discovery-data?topic=discovery-data-collections#supportedfiletypes).
      *
-     *  When analyzing a document, the content of the document to analyze but not ingest. Only the `application/json`
-     *  content type is supported currently. For maximum supported file size limits, see [the product
+     *  **Analyze a document**: The content of the document to analyze but not ingest. Only the `application/json`
+     *  content type is supported by the Analyze API. For maximum supported file size limits, see [the product
      *  documentation](/docs/discovery-data?topic=discovery-data-analyzeapi#analyzeapi-limits).
      */
     file?: NodeJS.ReadableStream | Buffer;
@@ -3737,11 +3770,12 @@ namespace DiscoveryV2 {
     collectionId: string;
     /** The ID of the document. */
     documentId: string;
-    /** When adding a document, the content of the document to ingest. For maximum supported file size limits, see
-     *  [the documentation](/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
+    /** **Add a document**: The content of the document to ingest. For the supported file types and maximum
+     *  supported file size limits when adding a document, see [the
+     *  documentation](/docs/discovery-data?topic=discovery-data-collections#supportedfiletypes).
      *
-     *  When analyzing a document, the content of the document to analyze but not ingest. Only the `application/json`
-     *  content type is supported currently. For maximum supported file size limits, see [the product
+     *  **Analyze a document**: The content of the document to analyze but not ingest. Only the `application/json`
+     *  content type is supported by the Analyze API. For maximum supported file size limits, see [the product
      *  documentation](/docs/discovery-data?topic=discovery-data-analyzeapi#analyzeapi-limits).
      */
     file?: NodeJS.ReadableStream | Buffer;
@@ -3811,11 +3845,13 @@ namespace DiscoveryV2 {
     filter?: string;
     /** A query search that is written in the Discovery Query Language and returns all matching documents in your
      *  data set with full enrichments and full text, and with the most relevant documents listed first. Use a query
-     *  search when you want to find the most relevant search results.
+     *  search when you want to find the most relevant search results. You can use this parameter or the
+     *  **natural_language_query** parameter to specify the query input, but not both.
      */
     query?: string;
     /** A natural language query that returns relevant documents by using training data and natural language
-     *  understanding.
+     *  understanding. You can use this parameter or the **query** parameter to specify the query input, but not both.
+     *  To filter the results based on criteria you specify, include the **filter** parameter in the request.
      */
     naturalLanguageQuery?: string;
     /** An aggregation search that returns an exact answer by combining query search with filters. Useful for
@@ -3898,11 +3934,13 @@ namespace DiscoveryV2 {
      */
     filter?: string;
     /** A query search that is written in the Discovery Query Language and returns all matching documents in your
-     *  data set with full enrichments and full text, and with the most relevant documents listed first.
+     *  data set with full enrichments and full text, and with the most relevant documents listed first. You can use
+     *  this parameter or the **natural_language_query** parameter to specify the query input, but not both.
      */
     query?: string;
-    /** A natural language query that returns relevant documents by using training data and natural language
-     *  understanding.
+    /** A natural language query that returns relevant documents by using natural language understanding. You can
+     *  use this parameter or the **query** parameter to specify the query input, but not both. To filter the results
+     *  based on criteria you specify, include the **filter** parameter in the request.
      */
     naturalLanguageQuery?: string;
     /** Number of results to return. The maximum for the **count** and **offset** values together in any one query
@@ -3928,11 +3966,13 @@ namespace DiscoveryV2 {
      */
     filter?: string;
     /** A query search that is written in the Discovery Query Language and returns all matching documents in your
-     *  data set with full enrichments and full text, and with the most relevant documents listed first.
+     *  data set with full enrichments and full text, and with the most relevant documents listed first. You can use
+     *  this parameter or the **natural_language_query** parameter to specify the query input, but not both.
      */
     query?: string;
-    /** A natural language query that returns relevant documents by using training data and natural language
-     *  understanding.
+    /** A natural language query that returns relevant documents by using natural language understanding. You can
+     *  use this parameter or the **query** parameter to specify the query input, but not both. To filter the results
+     *  based on criteria you specify, include the **filter** parameter in the request.
      */
     naturalLanguageQuery?: string;
     /** Number of results to return. The maximum for the **count** and **offset** values together in any one query
@@ -4046,7 +4086,11 @@ namespace DiscoveryV2 {
     naturalLanguageQuery: string;
     /** Array of training examples. */
     examples: TrainingExample[];
-    /** The filter used on the collection before the **natural_language_query** is applied. */
+    /** The filter used on the collection before the **natural_language_query** is applied. Only specify a filter if
+     *  the documents that you consider to be most relevant are not included in the top 100 results when you submit test
+     *  queries. If you specify a filter during training, apply the same filter to queries that are submitted at runtime
+     *  for optimal ranking results.
+     */
     filter?: string;
     headers?: OutgoingHttpHeaders;
   }
@@ -4070,7 +4114,11 @@ namespace DiscoveryV2 {
     naturalLanguageQuery: string;
     /** Array of training examples. */
     examples: TrainingExample[];
-    /** The filter used on the collection before the **natural_language_query** is applied. */
+    /** The filter used on the collection before the **natural_language_query** is applied. Only specify a filter if
+     *  the documents that you consider to be most relevant are not included in the top 100 results when you submit test
+     *  queries. If you specify a filter during training, apply the same filter to queries that are submitted at runtime
+     *  for optimal ranking results.
+     */
     filter?: string;
     headers?: OutgoingHttpHeaders;
   }
@@ -4099,7 +4147,7 @@ namespace DiscoveryV2 {
     enrichment: CreateEnrichment;
     /** The enrichment file to upload. Expected file types per enrichment are as follows:
      *
-     *  * CSV for `dictionary`
+     *  * CSV for `dictionary` and `sentence_classifier` (the training data CSV file to upload).
      *
      *  * PEAR for `uima_annotator` and `rule_based` (Explorer)
      *
@@ -4299,11 +4347,12 @@ namespace DiscoveryV2 {
     projectId: string;
     /** The ID of the collection. */
     collectionId: string;
-    /** When adding a document, the content of the document to ingest. For maximum supported file size limits, see
-     *  [the documentation](/docs/discovery-data?topic=discovery-data-collections#collections-doc-limits).
+    /** **Add a document**: The content of the document to ingest. For the supported file types and maximum
+     *  supported file size limits when adding a document, see [the
+     *  documentation](/docs/discovery-data?topic=discovery-data-collections#supportedfiletypes).
      *
-     *  When analyzing a document, the content of the document to analyze but not ingest. Only the `application/json`
-     *  content type is supported currently. For maximum supported file size limits, see [the product
+     *  **Analyze a document**: The content of the document to analyze but not ingest. Only the `application/json`
+     *  content type is supported by the Analyze API. For maximum supported file size limits, see [the product
      *  documentation](/docs/discovery-data?topic=discovery-data-analyzeapi#analyzeapi-limits).
      */
     file?: NodeJS.ReadableStream | Buffer;
@@ -4588,6 +4637,14 @@ namespace DiscoveryV2 {
      *
      *  * `watson_knowledge_studio_model`: Creates an enrichment from a Watson Knowledge Studio machine learning model
      *  that is defined in a ZIP file.
+     *
+     *  * `webhook`: Connects to an external enrichment application by using a webhook. The feature is available from
+     *  IBM Cloud-managed instances only. The external enrichment feature is beta functionality. Beta features are not
+     *  supported by the SDKs.
+     *
+     *  * `sentence_classifier`: Use sentence classifier to classify sentences in your documents. This feature is
+     *  available in IBM Cloud-managed instances only. The sentence classifier feature is beta functionality. Beta
+     *  features are not supported by the SDKs.
      */
     type?: CreateEnrichment.Constants.Type | string;
     /** An object that contains options for the current enrichment. Starting with version `2020-08-30`, the
@@ -4597,7 +4654,7 @@ namespace DiscoveryV2 {
   }
   export namespace CreateEnrichment {
     export namespace Constants {
-      /** The type of this enrichment. The following types are supported: * `classifier`: Creates a document classifier enrichment from a document classifier model that you create by using the [Document classifier API](/apidocs/discovery-data#createdocumentclassifier). **Note**: A text classifier enrichment can be created only from the product user interface. * `dictionary`: Creates a custom dictionary enrichment that you define in a CSV file. * `regular_expression`: Creates a custom regular expression enrichment from regex syntax that you specify in the request. * `rule_based`: Creates an enrichment from an advanced rules model that is created and exported as a ZIP file from Watson Knowledge Studio. * `uima_annotator`: Creates an enrichment from a custom UIMA text analysis model that is defined in a PEAR file created in one of the following ways: * Watson Explorer Content Analytics Studio. **Note**: Supported in IBM Cloud Pak for Data instances only. * Rule-based model that is created in Watson Knowledge Studio. * `watson_knowledge_studio_model`: Creates an enrichment from a Watson Knowledge Studio machine learning model that is defined in a ZIP file. */
+      /** The type of this enrichment. The following types are supported: * `classifier`: Creates a document classifier enrichment from a document classifier model that you create by using the [Document classifier API](/apidocs/discovery-data#createdocumentclassifier). **Note**: A text classifier enrichment can be created only from the product user interface. * `dictionary`: Creates a custom dictionary enrichment that you define in a CSV file. * `regular_expression`: Creates a custom regular expression enrichment from regex syntax that you specify in the request. * `rule_based`: Creates an enrichment from an advanced rules model that is created and exported as a ZIP file from Watson Knowledge Studio. * `uima_annotator`: Creates an enrichment from a custom UIMA text analysis model that is defined in a PEAR file created in one of the following ways: * Watson Explorer Content Analytics Studio. **Note**: Supported in IBM Cloud Pak for Data instances only. * Rule-based model that is created in Watson Knowledge Studio. * `watson_knowledge_studio_model`: Creates an enrichment from a Watson Knowledge Studio machine learning model that is defined in a ZIP file. * `webhook`: Connects to an external enrichment application by using a webhook. The feature is available from IBM Cloud-managed instances only. The external enrichment feature is beta functionality. Beta features are not supported by the SDKs. * `sentence_classifier`: Use sentence classifier to classify sentences in your documents. This feature is available in IBM Cloud-managed instances only. The sentence classifier feature is beta functionality. Beta features are not supported by the SDKs. */
       export enum Type {
         CLASSIFIER = 'classifier',
         DICTIONARY = 'dictionary',
@@ -4605,6 +4662,8 @@ namespace DiscoveryV2 {
         UIMA_ANNOTATOR = 'uima_annotator',
         RULE_BASED = 'rule_based',
         WATSON_KNOWLEDGE_STUDIO_MODEL = 'watson_knowledge_studio_model',
+        WEBHOOK = 'webhook',
+        SENTENCE_CLASSIFIER = 'sentence_classifier',
       }
     }
   }
@@ -4909,6 +4968,8 @@ namespace DiscoveryV2 {
         RULE_BASED = 'rule_based',
         WATSON_KNOWLEDGE_STUDIO_MODEL = 'watson_knowledge_studio_model',
         CLASSIFIER = 'classifier',
+        WEBHOOK = 'webhook',
+        SENTENCE_CLASSIFIER = 'sentence_classifier',
       }
     }
   }
@@ -4951,6 +5012,29 @@ namespace DiscoveryV2 {
      *  other type of enrichment.
      */
     top_k?: number;
+    /** A URL that uses the SSL protocol (begins with https) for the webhook. Required when type is `webhook`. Not
+     *  valid when creating any other type of enrichment.
+     */
+    url?: string;
+    /** The Discovery API version that allows to distinguish the schema. The version is specified in the
+     *  `yyyy-mm-dd` format. Optional when `type` is `webhook`. Not valid when creating any other type of enrichment.
+     */
+    version?: string;
+    /** A private key can be included in the request to authenticate with the external service. The maximum length
+     *  is 1,024 characters. Optional when `type` is `webhook`. Not valid when creating any other type of enrichment.
+     */
+    secret?: string;
+    /** An array of headers to pass with the HTTP request. Optional when `type` is `webhook`. Not valid when
+     *  creating any other type of enrichment.
+     */
+    headers?: WebhookHeader;
+    /** Discovery calculates offsets of the text's location with this encoding type in documents. Use the same
+     *  location encoding type in both Discovery and external enrichment for a document.
+     *
+     *   These encoding types are supported: `utf-8`, `utf-16`, and `utf-32`. Optional when `type` is `webhook`. Not
+     *  valid when creating any other type of enrichment.
+     */
+    location_encoding?: string;
   }
 
   /** An object that contains an array of enrichment definitions. */
@@ -5796,7 +5880,9 @@ namespace DiscoveryV2 {
     document_id: string;
     /** The collection ID associated with this training example. */
     collection_id: string;
-    /** The relevance of the training example. */
+    /** The relevance score of the training example. Scores range from `0` to `100`. Zero means not relevant. The
+     *  higher the number, the more relevant the example.
+     */
     relevance: number;
     /** The date and time the example was created. */
     created?: string;
@@ -5810,7 +5896,11 @@ namespace DiscoveryV2 {
     query_id?: string;
     /** The natural text query that is used as the training query. */
     natural_language_query: string;
-    /** The filter used on the collection before the **natural_language_query** is applied. */
+    /** The filter used on the collection before the **natural_language_query** is applied. Only specify a filter if
+     *  the documents that you consider to be most relevant are not included in the top 100 results when you submit test
+     *  queries. If you specify a filter during training, apply the same filter to queries that are submitted at runtime
+     *  for optimal ranking results.
+     */
     filter?: string;
     /** The date and time the query was created. */
     created?: string;
@@ -5834,6 +5924,14 @@ namespace DiscoveryV2 {
     name?: string;
     /** A new description for the classifier. */
     description?: string;
+  }
+
+  /** An array of headers to pass with the HTTP request. Optional when `type` is `webhook`. Not valid when creating any other type of enrichment. */
+  export interface WebhookHeader {
+    /** The name of an HTTP header. */
+    name: string;
+    /** The value of an HTTP header. */
+    value: string;
   }
 
   /** Returns a scalar calculation across all documents for the field specified. Possible calculations include min, max, sum, average, and unique_count. */
