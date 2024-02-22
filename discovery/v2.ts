@@ -5672,18 +5672,18 @@ namespace DiscoveryV2 {
     column_index_begin?: number;
     /** The `end` index of this cell's `column` location in the current table. */
     column_index_end?: number;
-    /** A list of table row header ids. */
-    row_header_ids?: TableRowHeaderIds[];
-    /** A list of table row header texts. */
-    row_header_texts?: TableRowHeaderTexts[];
-    /** A list of table row header texts normalized. */
-    row_header_texts_normalized?: TableRowHeaderTextsNormalized[];
-    /** A list of table column header ids. */
-    column_header_ids?: TableColumnHeaderIds[];
-    /** A list of table column header texts. */
-    column_header_texts?: TableColumnHeaderTexts[];
-    /** A list of table column header texts normalized. */
-    column_header_texts_normalized?: TableColumnHeaderTextsNormalized[];
+    /** A list of ID values that represent the table row headers that are associated with this body cell. */
+    row_header_ids?: string[];
+    /** A list of row header values that are associated with this body cell. */
+    row_header_texts?: string[];
+    /** A list of normalized row header values that are associated with this body cell. */
+    row_header_texts_normalized?: string[];
+    /** A list of ID values that represent the column headers that are associated with this body cell. */
+    column_header_ids?: string[];
+    /** A list of column header values that are associated with this body cell. */
+    column_header_texts?: string[];
+    /** A list of normalized column header values that are associated with this body cell. */
+    column_header_texts_normalized?: string[];
     /** A list of document attributes. */
     attributes?: DocumentAttribute[];
   }
@@ -5712,37 +5712,17 @@ namespace DiscoveryV2 {
     text?: string;
   }
 
-  /** An array of values, each being the `id` value of a column header that is applicable to the current cell. */
-  export interface TableColumnHeaderIds {
-    /** The `id` value of a column header. */
-    id?: string;
-  }
-
-  /** An array of values, each being the `text` value of a column header that is applicable to the current cell. */
-  export interface TableColumnHeaderTexts {
-    /** The `text` value of a column header. */
-    text?: string;
-  }
-
-  /** If you provide customization input, the normalized version of the column header texts according to the customization; otherwise, the same value as `column_header_texts`. */
-  export interface TableColumnHeaderTextsNormalized {
-    /** The normalized version of a column header text. */
-    text_normalized?: string;
-  }
-
   /** Column-level cells, each applicable as a header to other cells in the same column as itself, of the current table. */
   export interface TableColumnHeaders {
     /** The unique ID of the cell in the current table. */
     cell_id?: string;
-    /** The location of the column header cell in the current table as defined by its `begin` and `end` offsets,
-     *  respectfully, in the input document.
+    /** The numeric location of the identified element in the document, represented with two integers labeled
+     *  `begin` and `end`.
      */
-    location?: JsonObject;
+    location?: TableElementLocation;
     /** The textual contents of this cell from the input document without associated markup content. */
     text?: string;
-    /** If you provide customization input, the normalized version of the cell text according to the customization;
-     *  otherwise, the same value as `text`.
-     */
+    /** Normalized column header text. */
     text_normalized?: string;
     /** The `begin` index of this cell's `row` location in the current table. */
     row_index_begin?: number;
@@ -5766,10 +5746,10 @@ namespace DiscoveryV2 {
   export interface TableHeaders {
     /** The unique ID of the cell in the current table. */
     cell_id?: string;
-    /** The location of the table header cell in the current table as defined by its `begin` and `end` offsets,
-     *  respectfully, in the input document.
+    /** The numeric location of the identified element in the document, represented with two integers labeled
+     *  `begin` and `end`.
      */
-    location?: JsonObject;
+    location?: TableElementLocation;
     /** The textual contents of the cell from the input document without associated markup content. */
     text?: string;
     /** The `begin` index of this cell's `row` location in the current table. */
@@ -5822,24 +5802,6 @@ namespace DiscoveryV2 {
     contexts?: TableTextLocation[];
   }
 
-  /** An array of values, each being the `id` value of a row header that is applicable to this body cell. */
-  export interface TableRowHeaderIds {
-    /** The `id` values of a row header. */
-    id?: string;
-  }
-
-  /** An array of values, each being the `text` value of a row header that is applicable to this body cell. */
-  export interface TableRowHeaderTexts {
-    /** The `text` value of a row header. */
-    text?: string;
-  }
-
-  /** If you provide customization input, the normalized version of the row header texts according to the customization; otherwise, the same value as `row_header_texts`. */
-  export interface TableRowHeaderTextsNormalized {
-    /** The normalized version of a row header text. */
-    text_normalized?: string;
-  }
-
   /** Row-level cells, each applicable as a header to other cells in the same row as itself, of the current table. */
   export interface TableRowHeaders {
     /** The unique ID of the cell in the current table. */
@@ -5850,9 +5812,7 @@ namespace DiscoveryV2 {
     location?: TableElementLocation;
     /** The textual contents of this cell from the input document without associated markup content. */
     text?: string;
-    /** If you provide customization input, the normalized version of the cell text according to the customization;
-     *  otherwise, the same value as `text`.
-     */
+    /** Normalized row header text. */
     text_normalized?: string;
     /** The `begin` index of this cell's `row` location in the current table. */
     row_index_begin?: number;
