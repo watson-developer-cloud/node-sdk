@@ -456,11 +456,11 @@ class AssistantV2 extends BaseService {
    * **Note:** This property is the same as the **user_id** property in the global system context. If **user_id** is
    * specified in both locations, the value specified at the root is used.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<AssistantV2.Response<AssistantV2.MessageResponse>>}
+   * @returns {Promise<AssistantV2.Response<AssistantV2.StatefulMessageResponse>>}
    */
   public message(
     params: AssistantV2.MessageParams
-  ): Promise<AssistantV2.Response<AssistantV2.MessageResponse>> {
+  ): Promise<AssistantV2.Response<AssistantV2.StatefulMessageResponse>> {
     const _params = { ...params };
     const _requiredParams = ['assistantId', 'sessionId'];
     const _validParams = ['assistantId', 'sessionId', 'input', 'context', 'userId', 'headers'];
@@ -528,8 +528,8 @@ class AssistantV2 extends BaseService {
    *
    * **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
    * assistant ID in the user interface, open the assistant settings and click API Details.
-   * @param {MessageInputStateless} [params.input] - An input object that includes the input text.
-   * @param {MessageContextStateless} [params.context] - Context data for the conversation. You can use this property to
+   * @param {StatelessMessageInput} [params.input] - An input object that includes the input text.
+   * @param {StatelessMessageContext} [params.context] - Context data for the conversation. You can use this property to
    * set or modify context variables, which can also be accessed by dialog nodes. The context is not stored by the
    * assistant. To maintain session state, include the context from the previous response.
    *
@@ -543,11 +543,11 @@ class AssistantV2 extends BaseService {
    * **Note:** This property is the same as the **user_id** property in the global system context. If **user_id** is
    * specified in both locations in a message request, the value specified at the root is used.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<AssistantV2.Response<AssistantV2.MessageResponseStateless>>}
+   * @returns {Promise<AssistantV2.Response<AssistantV2.StatelessMessageResponse>>}
    */
   public messageStateless(
     params: AssistantV2.MessageStatelessParams
-  ): Promise<AssistantV2.Response<AssistantV2.MessageResponseStateless>> {
+  ): Promise<AssistantV2.Response<AssistantV2.StatelessMessageResponse>> {
     const _params = { ...params };
     const _requiredParams = ['assistantId'];
     const _validParams = ['assistantId', 'input', 'context', 'userId', 'headers'];
@@ -1986,14 +1986,14 @@ namespace AssistantV2 {
      */
     assistantId: string;
     /** An input object that includes the input text. */
-    input?: MessageInputStateless;
+    input?: StatelessMessageInput;
     /** Context data for the conversation. You can use this property to set or modify context variables, which can
      *  also be accessed by dialog nodes. The context is not stored by the assistant. To maintain session state, include
      *  the context from the previous response.
      *
      *  **Note:** The total size of the context data for a stateless session cannot exceed 250KB.
      */
-    context?: MessageContextStateless;
+    context?: StatelessMessageContext;
     /** A string value that identifies the user who is interacting with the assistant. The client must provide a
      *  unique identifier for each individual end user who accesses the application. For user-based plans, this user ID
      *  is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or
@@ -2739,10 +2739,10 @@ namespace AssistantV2 {
   export interface Log {
     /** A unique identifier for the logged event. */
     log_id: string;
-    /** A stateful message request formatted for the Watson Assistant service. */
-    request: MessageRequest;
-    /** A response from the Watson Assistant service. */
-    response: MessageResponse;
+    /** A message request formatted for the watsonx Assistant service. */
+    request: LogRequest;
+    /** A response from the watsonx Assistant service. */
+    response: LogResponse;
     /** Unique identifier of the assistant. */
     assistant_id: string;
     /** The ID of the session the message was part of. */
@@ -2785,6 +2785,117 @@ namespace AssistantV2 {
     next_cursor?: string;
   }
 
+  /** A message request formatted for the watsonx Assistant service. */
+  export interface LogRequest {
+    /** An input object that includes the input text. All private data is masked or removed. */
+    input?: LogRequestInput;
+    /** Context data for the conversation. You can use this property to set or modify context variables, which can
+     *  also be accessed by dialog nodes. The context is stored by the assistant on a per-session basis.
+     *
+     *  **Note:** The total size of the context data stored for a stateful session cannot exceed 100KB.
+     */
+    context?: MessageContext;
+    /** A string value that identifies the user who is interacting with the assistant. The client must provide a
+     *  unique identifier for each individual end user who accesses the application. For user-based plans, this user ID
+     *  is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or
+     *  tab characters. If no value is specified in the input, **user_id** is automatically set to the value of
+     *  **context.global.session_id**.
+     *
+     *  **Note:** This property is the same as the **user_id** property in the global system context. If **user_id** is
+     *  specified in both locations, the value specified at the root is used.
+     */
+    user_id?: string;
+  }
+
+  /** An input object that includes the input text. All private data is masked or removed. */
+  export interface LogRequestInput {
+    /** The type of the message:
+     *
+     *  - `text`: The user input is processed normally by the assistant.
+     *  - `search`: Only search results are returned. (Any dialog or action skill is bypassed.)
+     *
+     *  **Note:** A `search` message results in an error if no search skill is configured for the assistant.
+     */
+    message_type?: LogRequestInput.Constants.MessageType | string;
+    /** The text of the user input. This string cannot contain carriage return, newline, or tab characters. */
+    text?: string;
+    /** Intents to use when evaluating the user input. Include intents from the previous response to continue using
+     *  those intents rather than trying to recognize intents in the new input.
+     */
+    intents?: RuntimeIntent[];
+    /** Entities to use when evaluating the message. Include entities from the previous response to continue using
+     *  those entities rather than detecting entities in the new input.
+     */
+    entities?: RuntimeEntity[];
+    /** For internal use only. */
+    suggestion_id?: string;
+    /** An array of multimedia attachments to be sent with the message. Attachments are not processed by the
+     *  assistant itself, but can be sent to external services by webhooks.
+     *
+     *   **Note:** Attachments are not supported on IBM Cloud Pak for Data.
+     */
+    attachments?: MessageInputAttachment[];
+    /** An optional object containing analytics data. Currently, this data is used only for events sent to the
+     *  Segment extension.
+     */
+    analytics?: RequestAnalytics;
+    /** Optional properties that control how the assistant responds. */
+    options?: MessageInputOptions;
+  }
+  export namespace LogRequestInput {
+    export namespace Constants {
+      /** The type of the message: - `text`: The user input is processed normally by the assistant. - `search`: Only search results are returned. (Any dialog or action skill is bypassed.) **Note:** A `search` message results in an error if no search skill is configured for the assistant. */
+      export enum MessageType {
+        TEXT = 'text',
+        SEARCH = 'search',
+      }
+    }
+  }
+
+  /** A response from the watsonx Assistant service. */
+  export interface LogResponse {
+    /** Assistant output to be rendered or processed by the client. All private data is masked or removed. */
+    output: LogResponseOutput;
+    /** Context data for the conversation. You can use this property to access context variables. The context is
+     *  stored by the assistant on a per-session basis.
+     *
+     *  **Note:** The context is included in message responses only if **return_context**=`true` in the message request.
+     *  Full context is always included in logs.
+     */
+    context?: MessageContext;
+    /** A string value that identifies the user who is interacting with the assistant. The client must provide a
+     *  unique identifier for each individual end user who accesses the application. For user-based plans, this user ID
+     *  is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or
+     *  tab characters. If no value is specified in the input, **user_id** is automatically set to the value of
+     *  **context.global.session_id**.
+     *
+     *  **Note:** This property is the same as the **user_id** property in the global system context.
+     */
+    user_id: string;
+  }
+
+  /** Assistant output to be rendered or processed by the client. All private data is masked or removed. */
+  export interface LogResponseOutput {
+    /** Output intended for any channel. It is the responsibility of the client application to implement the
+     *  supported response types.
+     */
+    generic?: RuntimeResponseGeneric[];
+    /** An array of intents recognized in the user input, sorted in descending order of confidence. */
+    intents?: RuntimeIntent[];
+    /** An array of entities identified in the user input. */
+    entities?: RuntimeEntity[];
+    /** An array of objects describing any actions requested by the dialog node. */
+    actions?: DialogNodeAction[];
+    /** Additional detailed information about a message response and how it was generated. */
+    debug?: MessageOutputDebug;
+    /** An object containing any custom properties included in the response. This object includes any arbitrary
+     *  properties defined in the dialog JSON editor as part of the dialog node output.
+     */
+    user_defined?: JsonObject;
+    /** Properties describing any spelling corrections in the user input that was received. */
+    spelling?: MessageOutputSpelling;
+  }
+
   /** MessageContext. */
   export interface MessageContext {
     /** Session context data that is shared by all skills used by the assistant. */
@@ -2797,19 +2908,35 @@ namespace AssistantV2 {
     integrations?: JsonObject;
   }
 
+  /** Context variables that are used by the action skill. Private variables are persisted, but not shown. */
+  export interface MessageContextActionSkill {
+    /** An object containing any arbitrary variables that can be read and written by a particular skill. */
+    user_defined?: JsonObject;
+    /** System context data used by the skill. */
+    system?: MessageContextSkillSystem;
+    /** An object containing action variables. Action variables can be accessed only by steps in the same action,
+     *  and do not persist after the action ends.
+     */
+    action_variables?: JsonObject;
+    /** An object containing skill variables. (In the watsonx Assistant user interface, skill variables are called
+     *  _session variables_.) Skill variables can be accessed by any action and persist for the duration of the session.
+     */
+    skill_variables?: JsonObject;
+  }
+
+  /** Context variables that are used by the dialog skill. */
+  export interface MessageContextDialogSkill {
+    /** An object containing any arbitrary variables that can be read and written by a particular skill. */
+    user_defined?: JsonObject;
+    /** System context data used by the skill. */
+    system?: MessageContextSkillSystem;
+  }
+
   /** Session context data that is shared by all skills used by the assistant. */
   export interface MessageContextGlobal {
     /** Built-in system properties that apply to all skills used by the assistant. */
     system?: MessageContextGlobalSystem;
     /** The session ID. */
-    session_id?: string;
-  }
-
-  /** Session context data that is shared by all skills used by the assistant. */
-  export interface MessageContextGlobalStateless {
-    /** Built-in system properties that apply to all skills used by the assistant. */
-    system?: MessageContextGlobalSystem;
-    /** The unique identifier of the session. */
     session_id?: string;
   }
 
@@ -2891,30 +3018,6 @@ namespace AssistantV2 {
     }
   }
 
-  /** Context variables that are used by the action skill. */
-  export interface MessageContextSkillAction {
-    /** An object containing any arbitrary variables that can be read and written by a particular skill. */
-    user_defined?: JsonObject;
-    /** System context data used by the skill. */
-    system?: MessageContextSkillSystem;
-    /** An object containing action variables. Action variables can be accessed only by steps in the same action,
-     *  and do not persist after the action ends.
-     */
-    action_variables?: JsonObject;
-    /** An object containing skill variables. (In the Watson Assistant user interface, skill variables are called
-     *  _session variables_.) Skill variables can be accessed by any action and persist for the duration of the session.
-     */
-    skill_variables?: JsonObject;
-  }
-
-  /** Context variables that are used by the dialog skill. */
-  export interface MessageContextSkillDialog {
-    /** An object containing any arbitrary variables that can be read and written by a particular skill. */
-    user_defined?: JsonObject;
-    /** System context data used by the skill. */
-    system?: MessageContextSkillSystem;
-  }
-
   /** System context data used by the skill. */
   export interface MessageContextSkillSystem {
     /** An encoded string that represents the current conversation state. By saving this value and then sending it
@@ -2930,21 +3033,9 @@ namespace AssistantV2 {
   /** Context data specific to particular skills used by the assistant. */
   export interface MessageContextSkills {
     /** Context variables that are used by the dialog skill. */
-    'main skill'?: MessageContextSkillDialog;
-    /** Context variables that are used by the action skill. */
-    'actions skill'?: MessageContextSkillAction;
-  }
-
-  /** MessageContextStateless. */
-  export interface MessageContextStateless {
-    /** Session context data that is shared by all skills used by the assistant. */
-    global?: MessageContextGlobalStateless;
-    /** Context data specific to particular skills used by the assistant. */
-    skills?: MessageContextSkills;
-    /** An object containing context data that is specific to particular integrations. For more information, see the
-     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-dialog-integrations).
-     */
-    integrations?: JsonObject;
+    'main skill'?: MessageContextDialogSkill;
+    /** Context variables that are used by the action skill. Private variables are persisted, but not shown. */
+    'actions skill'?: MessageContextActionSkill;
   }
 
   /** An input object that includes the input text. */
@@ -3055,69 +3146,6 @@ namespace AssistantV2 {
     auto_correct?: boolean;
   }
 
-  /** Optional properties that control how the assistant responds. */
-  export interface MessageInputOptionsStateless {
-    /** Whether to restart dialog processing at the root of the dialog, regardless of any previously visited nodes.
-     *  **Note:** This does not affect `turn_count` or any other context variables.
-     */
-    restart?: boolean;
-    /** Whether to return more than one intent. Set to `true` to return all matching intents. */
-    alternate_intents?: boolean;
-    /** Spelling correction options for the message. Any options specified on an individual message override the
-     *  settings configured for the skill.
-     */
-    spelling?: MessageInputOptionsSpelling;
-    /** Whether to return additional diagnostic information. Set to `true` to return additional information in the
-     *  `output.debug` property.
-     */
-    debug?: boolean;
-  }
-
-  /** An input object that includes the input text. */
-  export interface MessageInputStateless {
-    /** The type of the message:
-     *
-     *  - `text`: The user input is processed normally by the assistant.
-     *  - `search`: Only search results are returned. (Any dialog or action skill is bypassed.)
-     *
-     *  **Note:** A `search` message results in an error if no search skill is configured for the assistant.
-     */
-    message_type?: MessageInputStateless.Constants.MessageType | string;
-    /** The text of the user input. This string cannot contain carriage return, newline, or tab characters. */
-    text?: string;
-    /** Intents to use when evaluating the user input. Include intents from the previous response to continue using
-     *  those intents rather than trying to recognize intents in the new input.
-     */
-    intents?: RuntimeIntent[];
-    /** Entities to use when evaluating the message. Include entities from the previous response to continue using
-     *  those entities rather than detecting entities in the new input.
-     */
-    entities?: RuntimeEntity[];
-    /** For internal use only. */
-    suggestion_id?: string;
-    /** An array of multimedia attachments to be sent with the message. Attachments are not processed by the
-     *  assistant itself, but can be sent to external services by webhooks.
-     *
-     *   **Note:** Attachments are not supported on IBM Cloud Pak for Data.
-     */
-    attachments?: MessageInputAttachment[];
-    /** An optional object containing analytics data. Currently, this data is used only for events sent to the
-     *  Segment extension.
-     */
-    analytics?: RequestAnalytics;
-    /** Optional properties that control how the assistant responds. */
-    options?: MessageInputOptionsStateless;
-  }
-  export namespace MessageInputStateless {
-    export namespace Constants {
-      /** The type of the message: - `text`: The user input is processed normally by the assistant. - `search`: Only search results are returned. (Any dialog or action skill is bypassed.) **Note:** A `search` message results in an error if no search skill is configured for the assistant. */
-      export enum MessageType {
-        TEXT = 'text',
-        SEARCH = 'search',
-      }
-    }
-  }
-
   /** Assistant output to be rendered or processed by the client. */
   export interface MessageOutput {
     /** Output intended for any channel. It is the responsibility of the client application to implement the
@@ -3189,69 +3217,6 @@ namespace AssistantV2 {
      *  enabled and autocorrection is disabled.
      */
     suggested_text?: string;
-  }
-
-  /** A stateful message request formatted for the Watson Assistant service. */
-  export interface MessageRequest {
-    /** An input object that includes the input text. */
-    input?: MessageInput;
-    /** Context data for the conversation. You can use this property to set or modify context variables, which can
-     *  also be accessed by dialog nodes. The context is stored by the assistant on a per-session basis.
-     *
-     *  **Note:** The total size of the context data stored for a stateful session cannot exceed 100KB.
-     */
-    context?: MessageContext;
-    /** A string value that identifies the user who is interacting with the assistant. The client must provide a
-     *  unique identifier for each individual end user who accesses the application. For user-based plans, this user ID
-     *  is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or
-     *  tab characters. If no value is specified in the input, **user_id** is automatically set to the value of
-     *  **context.global.session_id**.
-     *
-     *  **Note:** This property is the same as the **user_id** property in the global system context. If **user_id** is
-     *  specified in both locations, the value specified at the root is used.
-     */
-    user_id?: string;
-  }
-
-  /** A response from the Watson Assistant service. */
-  export interface MessageResponse {
-    /** Assistant output to be rendered or processed by the client. */
-    output: MessageOutput;
-    /** Context data for the conversation. You can use this property to access context variables. The context is
-     *  stored by the assistant on a per-session basis.
-     *
-     *  **Note:** The context is included in message responses only if **return_context**=`true` in the message request.
-     *  Full context is always included in logs.
-     */
-    context?: MessageContext;
-    /** A string value that identifies the user who is interacting with the assistant. The client must provide a
-     *  unique identifier for each individual end user who accesses the application. For user-based plans, this user ID
-     *  is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or
-     *  tab characters. If no value is specified in the input, **user_id** is automatically set to the value of
-     *  **context.global.session_id**.
-     *
-     *  **Note:** This property is the same as the **user_id** property in the global system context.
-     */
-    user_id: string;
-  }
-
-  /** A stateless response from the Watson Assistant service. */
-  export interface MessageResponseStateless {
-    /** Assistant output to be rendered or processed by the client. */
-    output: MessageOutput;
-    /** Context data for the conversation. You can use this property to access context variables. The context is not
-     *  stored by the assistant; to maintain session state, include the context from the response in the next message.
-     */
-    context: MessageContextStateless;
-    /** A string value that identifies the user who is interacting with the assistant. The client must provide a
-     *  unique identifier for each individual end user who accesses the application. For user-based plans, this user ID
-     *  is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or
-     *  tab characters. If no value is specified in the input, **user_id** is automatically set to the value of
-     *  **context.global.session_id**.
-     *
-     *  **Note:** This property is the same as the **user_id** property in the global system context.
-     */
-    user_id?: string;
   }
 
   /** The pagination data for the returned objects. For more information about using pagination, see [Pagination](#pagination). */
@@ -3902,6 +3867,178 @@ namespace AssistantV2 {
     assistant_skills: Skill[];
     /** Status information about the skills for the assistant. Included in responses only if **status**=`Available`. */
     assistant_state: AssistantState;
+  }
+
+  /** A response from the watsonx Assistant service. */
+  export interface StatefulMessageResponse {
+    /** Assistant output to be rendered or processed by the client. */
+    output: MessageOutput;
+    /** Context data for the conversation. You can use this property to access context variables. The context is
+     *  stored by the assistant on a per-session basis.
+     *
+     *  **Note:** The context is included in message responses only if **return_context**=`true` in the message request.
+     *  Full context is always included in logs.
+     */
+    context?: MessageContext;
+    /** A string value that identifies the user who is interacting with the assistant. The client must provide a
+     *  unique identifier for each individual end user who accesses the application. For user-based plans, this user ID
+     *  is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or
+     *  tab characters. If no value is specified in the input, **user_id** is automatically set to the value of
+     *  **context.global.session_id**.
+     *
+     *  **Note:** This property is the same as the **user_id** property in the global system context.
+     */
+    user_id: string;
+    /** Assistant output to be rendered or processed by the client. All private data is masked or removed. */
+    masked_output?: MessageOutput;
+    /** An input object that includes the input text. All private data is masked or removed. */
+    masked_input?: MessageInput;
+  }
+
+  /** StatelessMessageContext. */
+  export interface StatelessMessageContext {
+    /** Session context data that is shared by all skills used by the assistant. */
+    global?: StatelessMessageContextGlobal;
+    /** Context data specific to particular skills used by the assistant. */
+    skills?: StatelessMessageContextSkills;
+    /** An object containing context data that is specific to particular integrations. For more information, see the
+     *  [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-dialog-integrations).
+     */
+    integrations?: JsonObject;
+  }
+
+  /** Session context data that is shared by all skills used by the assistant. */
+  export interface StatelessMessageContextGlobal {
+    /** Built-in system properties that apply to all skills used by the assistant. */
+    system?: MessageContextGlobalSystem;
+    /** The unique identifier of the session. */
+    session_id?: string;
+  }
+
+  /** Context data specific to particular skills used by the assistant. */
+  export interface StatelessMessageContextSkills {
+    /** Context variables that are used by the dialog skill. */
+    'main skill'?: MessageContextDialogSkill;
+    /** Context variables that are used by the action skill. */
+    'actions skill'?: StatelessMessageContextSkillsActionsSkill;
+  }
+
+  /** Context variables that are used by the action skill. */
+  export interface StatelessMessageContextSkillsActionsSkill {
+    /** An object containing any arbitrary variables that can be read and written by a particular skill. */
+    user_defined?: JsonObject;
+    /** System context data used by the skill. */
+    system?: MessageContextSkillSystem;
+    /** An object containing action variables. Action variables can be accessed only by steps in the same action,
+     *  and do not persist after the action ends.
+     */
+    action_variables?: JsonObject;
+    /** An object containing skill variables. (In the watsonx Assistant user interface, skill variables are called
+     *  _session variables_.) Skill variables can be accessed by any action and persist for the duration of the session.
+     */
+    skill_variables?: JsonObject;
+    /** An object containing private action variables. Action variables can be accessed only by steps in the same
+     *  action, and do not persist after the action ends. Private variables are encrypted.
+     */
+    private_action_variables?: JsonObject;
+    /** An object containing private skill variables. (In the watsonx Assistant user interface, skill variables are
+     *  called _session variables_.) Skill variables can be accessed by any action and persist for the duration of the
+     *  session. Private variables are encrypted.
+     */
+    private_skill_variables?: JsonObject;
+  }
+
+  /** An input object that includes the input text. */
+  export interface StatelessMessageInput {
+    /** The type of the message:
+     *
+     *  - `text`: The user input is processed normally by the assistant.
+     *  - `search`: Only search results are returned. (Any dialog or action skill is bypassed.)
+     *
+     *  **Note:** A `search` message results in an error if no search skill is configured for the assistant.
+     */
+    message_type?: StatelessMessageInput.Constants.MessageType | string;
+    /** The text of the user input. This string cannot contain carriage return, newline, or tab characters. */
+    text?: string;
+    /** Intents to use when evaluating the user input. Include intents from the previous response to continue using
+     *  those intents rather than trying to recognize intents in the new input.
+     */
+    intents?: RuntimeIntent[];
+    /** Entities to use when evaluating the message. Include entities from the previous response to continue using
+     *  those entities rather than detecting entities in the new input.
+     */
+    entities?: RuntimeEntity[];
+    /** For internal use only. */
+    suggestion_id?: string;
+    /** An array of multimedia attachments to be sent with the message. Attachments are not processed by the
+     *  assistant itself, but can be sent to external services by webhooks.
+     *
+     *   **Note:** Attachments are not supported on IBM Cloud Pak for Data.
+     */
+    attachments?: MessageInputAttachment[];
+    /** An optional object containing analytics data. Currently, this data is used only for events sent to the
+     *  Segment extension.
+     */
+    analytics?: RequestAnalytics;
+    /** Optional properties that control how the assistant responds. */
+    options?: StatelessMessageInputOptions;
+  }
+  export namespace StatelessMessageInput {
+    export namespace Constants {
+      /** The type of the message: - `text`: The user input is processed normally by the assistant. - `search`: Only search results are returned. (Any dialog or action skill is bypassed.) **Note:** A `search` message results in an error if no search skill is configured for the assistant. */
+      export enum MessageType {
+        TEXT = 'text',
+        SEARCH = 'search',
+      }
+    }
+  }
+
+  /** Optional properties that control how the assistant responds. */
+  export interface StatelessMessageInputOptions {
+    /** Whether to restart dialog processing at the root of the dialog, regardless of any previously visited nodes.
+     *  **Note:** This does not affect `turn_count` or any other context variables.
+     */
+    restart?: boolean;
+    /** Whether to return more than one intent. Set to `true` to return all matching intents. */
+    alternate_intents?: boolean;
+    /** Whether custom extension callouts are executed asynchronously. Asynchronous execution means the response to
+     *  the extension callout will be processed on the subsequent message call, the initial message response signals to
+     *  the client that the operation may be long running. With synchronous execution the custom extension is executed
+     *  and returns the response in a single message turn. **Note:** **async_callout** defaults to true for API versions
+     *  earlier than 2023-06-15.
+     */
+    async_callout?: boolean;
+    /** Spelling correction options for the message. Any options specified on an individual message override the
+     *  settings configured for the skill.
+     */
+    spelling?: MessageInputOptionsSpelling;
+    /** Whether to return additional diagnostic information. Set to `true` to return additional information in the
+     *  `output.debug` property.
+     */
+    debug?: boolean;
+  }
+
+  /** A stateless response from the watsonx Assistant service. */
+  export interface StatelessMessageResponse {
+    /** Assistant output to be rendered or processed by the client. */
+    output: MessageOutput;
+    /** Context data for the conversation. You can use this property to access context variables. The context is not
+     *  stored by the assistant; to maintain session state, include the context from the response in the next message.
+     */
+    context: StatelessMessageContext;
+    /** Assistant output to be rendered or processed by the client. All private data is masked or removed. */
+    masked_output?: MessageOutput;
+    /** An input object that includes the input text. All private data is masked or removed. */
+    masked_input?: MessageInput;
+    /** A string value that identifies the user who is interacting with the assistant. The client must provide a
+     *  unique identifier for each individual end user who accesses the application. For user-based plans, this user ID
+     *  is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or
+     *  tab characters. If no value is specified in the input, **user_id** is automatically set to the value of
+     *  **context.global.session_id**.
+     *
+     *  **Note:** This property is the same as the **user_id** property in the global system context.
+     */
+    user_id?: string;
   }
 
   /** An object describing an error that occurred during processing of an asynchronous operation. */
