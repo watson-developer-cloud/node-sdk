@@ -141,6 +141,24 @@ To use IAM authentication, you must use an `IamAuthenticator` or a `BearerTokenA
 
 To use the SDK in a Cloud Pak, use the `CloudPakForDataAuthenticator`. This will require a username, password, and URL.
 
+##### MCSP
+
+To use the SDK through a third party cloud provider (such as AWS), use the `MCSPAuthenticator`. This will require the base endpoint URL for the MCSP token service (e.g. https://iam.platform.saas.ibm.com) and an apikey. 
+
+```js
+import AssistantV2 from 'ibm-watson/assistant/v2'
+import { McspAuthenticator } from 'ibm-watson/auth';
+
+# In the constructor, letting the SDK manage the token
+const authenticator = new McspAuthenticator({
+    url: 'token_service_endpoint',
+    apikey: 'apikey',
+})
+const assistant = AssistantV2(version='2023-06-15',
+                        authenticator=authenticator)
+assistant.setServiceUrl('<url_as_per_region>')
+```
+
 ### Cloud Authentication Prioritization
 
 When uploading your application to IBM Cloud there is a certain priority Watson services will use when looking for proper credentials. The order is as follows:
