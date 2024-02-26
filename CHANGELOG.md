@@ -1,3 +1,21 @@
+# [9.0.0](https://github.com/watson-developer-cloud/node-sdk/compare/v8.0.0...v9.0.0) (2024-02-26)
+
+
+### Features
+
+* **disco-v2:** interface changes ([619d09b](https://github.com/watson-developer-cloud/node-sdk/commit/619d09b80580a13b30fd467ca6af47d245e2f5de))
+* **disco-v2:** new params for EnrichmentOptions ([e826b89](https://github.com/watson-developer-cloud/node-sdk/commit/e826b8955ce896d34436b08c4ec7fc7854a45d66))
+* **mcsp:** expose McspAuthenticator ([94d3efc](https://github.com/watson-developer-cloud/node-sdk/commit/94d3efc9fba715ff35e5269f4e210c9a3c6dbf50))
+* **stt:** new params ([06bb328](https://github.com/watson-developer-cloud/node-sdk/commit/06bb3286fd3828bd3486845e3691d483c65bfc1e))
+* **ts:** add better ts typing and linting ([762c6bf](https://github.com/watson-developer-cloud/node-sdk/commit/762c6bf23e61003abf133ae6430f8d9fec08c56e))
+* **wa-v2:** new params orchestration and asyncCallout ([5124107](https://github.com/watson-developer-cloud/node-sdk/commit/5124107fedda2aaa574202ceda69af56739b347e))
+* **wa-v2:** support for private variables ([784c476](https://github.com/watson-developer-cloud/node-sdk/commit/784c476800cdc73ba7c1413482f5591d5d3d168f))
+
+
+### BREAKING CHANGES
+
+* **wa-v2:** Renaming and changing of multiple interfaces
+
 # [8.0.0](https://github.com/watson-developer-cloud/node-sdk/compare/v7.1.2...v8.0.0) (2023-03-16)
 
 
