@@ -275,6 +275,7 @@ namespace SpeechToTextV1 {
     timestamps?: boolean;
     profanityFilter?: boolean;
     smartFormatting?: boolean;
+    smartFormattingVersion?: number;
     speakerLabels?: boolean;
     grammarName?: string;
     redaction?: boolean;
