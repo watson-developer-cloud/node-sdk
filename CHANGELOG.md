@@ -1,3 +1,11 @@
+## [9.0.1](https://github.com/watson-developer-cloud/node-sdk/compare/v9.0.0...v9.0.1) (2024-03-13)
+
+
+### Bug Fixes
+
+* **stt:** change smartFormattingVersion type to number ([3db377b](https://github.com/watson-developer-cloud/node-sdk/commit/3db377bb58c5c2bbbfbb7d28889dd503a8116bee))
+* **wss:** add smartFormattingVersion param ([d64f155](https://github.com/watson-developer-cloud/node-sdk/commit/d64f15513ff786d167168b4d863c8a99ca8eff7e))
+
 # [9.0.0](https://github.com/watson-developer-cloud/node-sdk/compare/v8.0.0...v9.0.0) (2024-02-26)
 
 
