@@ -404,7 +404,7 @@ class SpeechToTextV1 extends BaseService {
    * **Note:** The parameter can be used with US English, Japanese, and Spanish (all dialects) transcription only.
    *
    * See [Smart formatting](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-formatting#smart-formatting).
-   * @param {boolean} [params.smartFormattingVersion] - Smart formatting version is for next-generation models and that
+   * @param {number} [params.smartFormattingVersion] - Smart formatting version is for next-generation models and that
    * is supported in US English, Brazilian Portuguese, French and German languages.
    * @param {boolean} [params.speakerLabels] - If `true`, the response includes labels that identify which words were
    * spoken by which participants in a multi-person exchange. By default, the service returns no speaker labels. Setting
@@ -972,7 +972,7 @@ class SpeechToTextV1 extends BaseService {
    * **Note:** The parameter can be used with US English, Japanese, and Spanish (all dialects) transcription only.
    *
    * See [Smart formatting](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-formatting#smart-formatting).
-   * @param {boolean} [params.smartFormattingVersion] - Smart formatting version is for next-generation models and that
+   * @param {number} [params.smartFormattingVersion] - Smart formatting version is for next-generation models and that
    * is supported in US English, Brazilian Portuguese, French and German languages.
    * @param {boolean} [params.speakerLabels] - If `true`, the response includes labels that identify which words were
    * spoken by which participants in a multi-person exchange. By default, the service returns no speaker labels. Setting
@@ -4200,7 +4200,7 @@ namespace SpeechToTextV1 {
     /** Smart formatting version is for next-generation models and that is supported in US English, Brazilian
      *  Portuguese, French and German languages.
      */
-    smartFormattingVersion?: boolean;
+    smartFormattingVersion?: number;
     /** If `true`, the response includes labels that identify which words were spoken by which participants in a
      *  multi-person exchange. By default, the service returns no speaker labels. Setting `speaker_labels` to `true`
      *  forces the `timestamps` parameter to be `true`, regardless of whether you specify `false` for the parameter.
@@ -4633,7 +4633,7 @@ namespace SpeechToTextV1 {
     /** Smart formatting version is for next-generation models and that is supported in US English, Brazilian
      *  Portuguese, French and German languages.
      */
-    smartFormattingVersion?: boolean;
+    smartFormattingVersion?: number;
     /** If `true`, the response includes labels that identify which words were spoken by which participants in a
      *  multi-person exchange. By default, the service returns no speaker labels. Setting `speaker_labels` to `true`
      *  forces the `timestamps` parameter to be `true`, regardless of whether you specify `false` for the parameter.
