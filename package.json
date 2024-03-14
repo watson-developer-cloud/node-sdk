@@ -61,7 +61,7 @@
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-prettier": "^5.0.0",
     "installed-check": "^3.0.0",
     "jest": "^28.1.3",
     "jsdoc": "^3.6.6",
