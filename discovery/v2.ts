@@ -150,6 +150,8 @@ class DiscoveryV2 extends BaseService {
    *
    * The `content_mining` and `content_intelligence` types are available with Premium plan managed deployments and
    * installed deployments only.
+   *
+   * The Intelligent Document Processing (IDP) project type is available from IBM Cloud-managed instances only.
    * @param {DefaultQueryParams} [params.defaultQueryParameters] - Default query parameters for this project.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>>}
@@ -206,8 +208,8 @@ class DiscoveryV2 extends BaseService {
    * Get details on the specified project.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>>}
    */
@@ -260,8 +262,8 @@ class DiscoveryV2 extends BaseService {
    * Update the specified project's name.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
    * @param {string} [params.name] - The new name to give this project.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>>}
@@ -324,8 +326,8 @@ class DiscoveryV2 extends BaseService {
    * collections.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>>}
    */
@@ -377,8 +379,8 @@ class DiscoveryV2 extends BaseService {
    * Gets a list of the unique fields (and their types) stored in the specified collections.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
    * @param {string[]} [params.collectionIds] - Comma separated list of the collection IDs. If this parameter is not
    * specified, all collections in the project are used.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -437,8 +439,8 @@ class DiscoveryV2 extends BaseService {
    * Lists existing collections for the specified project.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ListCollectionsResponse>>}
    */
@@ -491,12 +493,14 @@ class DiscoveryV2 extends BaseService {
    * Create a new collection in the specified project.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
    * @param {string} params.name - The name of the collection.
    * @param {string} [params.description] - A description of the collection.
    * @param {string} [params.language] - The language of the collection. For a list of supported languages, see the
    * [product documentation](/docs/discovery-data?topic=discovery-data-language-support).
+   * @param {boolean} [params.ocrEnabled] - If set to `true`, optical character recognition (OCR) is enabled. For more
+   * information, see [Optical character recognition](/docs/discovery-data?topic=discovery-data-collections#ocr).
    * @param {CollectionEnrichment[]} [params.enrichments] - An array of enrichments that are applied to this collection.
    * To get a list of enrichments that are available for a project, use the [List enrichments](#listenrichments) method.
    *
@@ -511,7 +515,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'name'];
-    const _validParams = ['projectId', 'name', 'description', 'language', 'enrichments', 'headers'];
+    const _validParams = ['projectId', 'name', 'description', 'language', 'ocrEnabled', 'enrichments', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -521,6 +525,7 @@ class DiscoveryV2 extends BaseService {
       'name': _params.name,
       'description': _params.description,
       'language': _params.language,
+      'ocr_enabled': _params.ocrEnabled,
       'enrichments': _params.enrichments,
     };
 
@@ -564,9 +569,9 @@ class DiscoveryV2 extends BaseService {
    * Get details about the specified collection.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.collectionId - The ID of the collection.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.collectionId - The Universally Unique Identifier (UUID) of the collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>>}
    */
@@ -631,11 +636,13 @@ class DiscoveryV2 extends BaseService {
    * empty `normalizations` object (`[]`) in the request.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.collectionId - The ID of the collection.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.collectionId - The Universally Unique Identifier (UUID) of the collection.
    * @param {string} [params.name] - The new name of the collection.
    * @param {string} [params.description] - The new description of the collection.
+   * @param {boolean} [params.ocrEnabled] - If set to `true`, optical character recognition (OCR) is enabled. For more
+   * information, see [Optical character recognition](/docs/discovery-data?topic=discovery-data-collections#ocr).
    * @param {CollectionEnrichment[]} [params.enrichments] - An array of enrichments that are applied to this collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>>}
@@ -645,7 +652,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'collectionId'];
-    const _validParams = ['projectId', 'collectionId', 'name', 'description', 'enrichments', 'headers'];
+    const _validParams = ['projectId', 'collectionId', 'name', 'description', 'ocrEnabled', 'enrichments', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -654,6 +661,7 @@ class DiscoveryV2 extends BaseService {
     const body = {
       'name': _params.name,
       'description': _params.description,
+      'ocr_enabled': _params.ocrEnabled,
       'enrichments': _params.enrichments,
     };
 
@@ -699,9 +707,9 @@ class DiscoveryV2 extends BaseService {
    * is also deleted.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.collectionId - The ID of the collection.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.collectionId - The Universally Unique Identifier (UUID) of the collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>>}
    */
@@ -761,9 +769,9 @@ class DiscoveryV2 extends BaseService {
    * from IBM Cloud-managed instances.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.collectionId - The ID of the collection.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.collectionId - The Universally Unique Identifier (UUID) of the collection.
    * @param {number} [params.count] - The maximum number of documents to return. Up to 1,000 documents are returned by
    * default. The maximum number allowed is 10,000.
    * @param {string} [params.status] - Filters the documents to include only documents with the specified ingestion
@@ -879,9 +887,9 @@ class DiscoveryV2 extends BaseService {
    * see the [product documentation](/docs/discovery-data?topic=discovery-data-index-overview#field-name-limits).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.collectionId - The ID of the collection.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.collectionId - The Universally Unique Identifier (UUID) of the collection.
    * @param {NodeJS.ReadableStream | Buffer} [params.file] - **Add a document**: The content of the document to ingest.
    * For the supported file types and maximum supported file size limits when adding a document, see [the
    * documentation](/docs/discovery-data?topic=discovery-data-collections#supportedfiletypes).
@@ -973,9 +981,9 @@ class DiscoveryV2 extends BaseService {
    * from IBM Cloud-managed instances.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.collectionId - The ID of the collection.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.collectionId - The Universally Unique Identifier (UUID) of the collection.
    * @param {string} params.documentId - The ID of the document.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.DocumentDetails>>}
@@ -1045,9 +1053,9 @@ class DiscoveryV2 extends BaseService {
    * overwritten, even if the updated version of the document has fewer child documents.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.collectionId - The ID of the collection.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.collectionId - The Universally Unique Identifier (UUID) of the collection.
    * @param {string} params.documentId - The ID of the document.
    * @param {NodeJS.ReadableStream | Buffer} [params.file] - **Add a document**: The content of the document to ingest.
    * For the supported file types and maximum supported file size limits when adding a document, see [the
@@ -1145,9 +1153,9 @@ class DiscoveryV2 extends BaseService {
    * You can get the document ID of the original document from the `parent_document_id` of the subdocument result.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.collectionId - The ID of the collection.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.collectionId - The Universally Unique Identifier (UUID) of the collection.
    * @param {string} params.documentId - The ID of the document.
    * @param {boolean} [params.xWatsonDiscoveryForce] - When `true`, the uploaded document is added to the collection
    * even if the data for that collection is shared with other collections.
@@ -1217,8 +1225,8 @@ class DiscoveryV2 extends BaseService {
    * characters in English.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
    * @param {string[]} [params.collectionIds] - A comma-separated list of collection IDs to be queried against.
    * @param {string} [params.filter] - Searches for documents that match the Discovery Query Language criteria that is
    * specified as input. Filter calls are cached and are faster than query calls because the results are not ordered by
@@ -1335,8 +1343,8 @@ class DiscoveryV2 extends BaseService {
    * project's search history, and the project does not learn from previous user choices.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
    * @param {string} params.prefix - The prefix to use for autocompletion. For example, the prefix `Ho` could
    * autocomplete to `hot`, `housing`, or `how`.
    * @param {string[]} [params.collectionIds] - Comma separated list of the collection IDs. If this parameter is not
@@ -1400,9 +1408,9 @@ class DiscoveryV2 extends BaseService {
    * Finds collection-level notices (errors and warnings) that are generated when documents are ingested.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.collectionId - The ID of the collection.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.collectionId - The Universally Unique Identifier (UUID) of the collection.
    * @param {string} [params.filter] - Searches for documents that match the Discovery Query Language criteria that is
    * specified as input. Filter calls are cached and are faster than query calls because the results are not ordered by
    * relevance. When used with the `aggregation`, `query`, or `natural_language_query` parameters, the `filter`
@@ -1478,8 +1486,8 @@ class DiscoveryV2 extends BaseService {
    * training.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
    * @param {string} [params.filter] - Searches for documents that match the Discovery Query Language criteria that is
    * specified as input. Filter calls are cached and are faster than query calls because the results are not ordered by
    * relevance. When used with the `aggregation`, `query`, or `natural_language_query` parameters, the `filter`
@@ -1558,9 +1566,9 @@ class DiscoveryV2 extends BaseService {
    * documentation](/docs/discovery-data?topic=discovery-data-stopwords).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.collectionId - The ID of the collection.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.collectionId - The Universally Unique Identifier (UUID) of the collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.StopWordList>>}
    */
@@ -1623,9 +1631,9 @@ class DiscoveryV2 extends BaseService {
    * documentation](/docs/discovery-data?topic=discovery-data-stopwords).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.collectionId - The ID of the collection.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.collectionId - The Universally Unique Identifier (UUID) of the collection.
    * @param {string[]} [params.stopwords] - List of stop words.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.StopWordList>>}
@@ -1687,9 +1695,9 @@ class DiscoveryV2 extends BaseService {
    * is deleted, the default stop words list is used.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.collectionId - The ID of the collection.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.collectionId - The Universally Unique Identifier (UUID) of the collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>>}
    */
@@ -1743,9 +1751,9 @@ class DiscoveryV2 extends BaseService {
    * expansions array is returned.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.collectionId - The ID of the collection.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.collectionId - The Universally Unique Identifier (UUID) of the collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Expansions>>}
    */
@@ -1801,9 +1809,9 @@ class DiscoveryV2 extends BaseService {
    * scope of a query beyond exact matches. The maximum number of expanded terms allowed per collection is 5,000.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.collectionId - The ID of the collection.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.collectionId - The Universally Unique Identifier (UUID) of the collection.
    * @param {Expansion[]} params.expansions - An array of query expansion definitions.
    *
    *  Each object in the **expansions** array represents a term or set of terms that will be expanded into other terms.
@@ -1876,9 +1884,9 @@ class DiscoveryV2 extends BaseService {
    * expansion list.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.collectionId - The ID of the collection.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.collectionId - The Universally Unique Identifier (UUID) of the collection.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>>}
    */
@@ -1934,8 +1942,8 @@ class DiscoveryV2 extends BaseService {
    * Returns default configuration settings for components.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ComponentSettingsResponse>>}
    */
@@ -1991,8 +1999,8 @@ class DiscoveryV2 extends BaseService {
    * List the training queries for the specified project.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuerySet>>}
    */
@@ -2045,8 +2053,8 @@ class DiscoveryV2 extends BaseService {
    * Removes all training queries for the specified project.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>>}
    */
@@ -2100,8 +2108,8 @@ class DiscoveryV2 extends BaseService {
    * **Note**: You cannot apply relevancy training to a `content_mining` project type.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
    * @param {string} params.naturalLanguageQuery - The natural text query that is used as the training query.
    * @param {TrainingExample[]} params.examples - Array of training examples.
    * @param {string} [params.filter] - The filter used on the collection before the **natural_language_query** is
@@ -2168,8 +2176,8 @@ class DiscoveryV2 extends BaseService {
    * Get details for a specific training data query, including the query string and all examples.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
    * @param {string} params.queryId - The ID of the query used for training.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>>}
@@ -2224,8 +2232,8 @@ class DiscoveryV2 extends BaseService {
    * Updates an existing training query and its examples. You must resubmit all of the examples with the update request.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
    * @param {string} params.queryId - The ID of the query used for training.
    * @param {string} params.naturalLanguageQuery - The natural text query that is used as the training query.
    * @param {TrainingExample[]} params.examples - Array of training examples.
@@ -2297,8 +2305,8 @@ class DiscoveryV2 extends BaseService {
    * the example set.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
    * @param {string} params.queryId - The ID of the query used for training.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>>}
@@ -2356,8 +2364,8 @@ class DiscoveryV2 extends BaseService {
    * be listed, but are reserved for internal use only.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Enrichments>>}
    */
@@ -2411,8 +2419,8 @@ class DiscoveryV2 extends BaseService {
    * use the [Collections API](/apidocs/discovery-data#createcollection).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
    * @param {CreateEnrichment} params.enrichment - Information about a specific enrichment.
    * @param {NodeJS.ReadableStream | Buffer} [params.file] - The enrichment file to upload. Expected file types per
    * enrichment are as follows:
@@ -2484,9 +2492,9 @@ class DiscoveryV2 extends BaseService {
    * Get details about a specific enrichment.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.enrichmentId - The ID of the enrichment.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.enrichmentId - The Universally Unique Identifier (UUID) of the enrichment.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.Enrichment>>}
    */
@@ -2540,9 +2548,9 @@ class DiscoveryV2 extends BaseService {
    * Updates an existing enrichment's name and description.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.enrichmentId - The ID of the enrichment.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.enrichmentId - The Universally Unique Identifier (UUID) of the enrichment.
    * @param {string} params.name - A new name for the enrichment.
    * @param {string} [params.description] - A new description for the enrichment.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -2607,9 +2615,9 @@ class DiscoveryV2 extends BaseService {
    * **Note:** Only enrichments that have been manually created can be deleted.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.enrichmentId - The ID of the enrichment.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.enrichmentId - The Universally Unique Identifier (UUID) of the enrichment.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>>}
    */
@@ -2666,8 +2674,8 @@ class DiscoveryV2 extends BaseService {
    * classifier.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifiers>>}
    */
@@ -2725,8 +2733,8 @@ class DiscoveryV2 extends BaseService {
    * Enterprise plan instances.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
    * @param {NodeJS.ReadableStream | Buffer} params.trainingData - The training data CSV file to upload. The CSV file
    * must have headers. The file must include a field that contains the text you want to classify and a field that
    * contains the classification labels that you want to use to classify your data. If you want to specify multiple
@@ -2803,9 +2811,9 @@ class DiscoveryV2 extends BaseService {
    * Get details about a specific document classifier.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.classifierId - The ID of the classifier.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.classifierId - The Universally Unique Identifier (UUID) of the classifier.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifier>>}
    */
@@ -2859,9 +2867,9 @@ class DiscoveryV2 extends BaseService {
    * Update the document classifier name or description, update the training data, or add or update the test data.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.classifierId - The ID of the classifier.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.classifierId - The Universally Unique Identifier (UUID) of the classifier.
    * @param {UpdateDocumentClassifier} params.classifier - An object that contains a new name or description for a
    * document classifier, updated training data, or new or updated test data.
    * @param {NodeJS.ReadableStream | Buffer} [params.trainingData] - The training data CSV file to upload. The CSV file
@@ -2939,9 +2947,9 @@ class DiscoveryV2 extends BaseService {
    * Deletes an existing document classifier from the specified project.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.classifierId - The ID of the classifier.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.classifierId - The Universally Unique Identifier (UUID) of the classifier.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>>}
    */
@@ -2998,9 +3006,9 @@ class DiscoveryV2 extends BaseService {
    * classifier model.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.classifierId - The ID of the classifier.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.classifierId - The Universally Unique Identifier (UUID) of the classifier.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifierModels>>}
    */
@@ -3058,9 +3066,9 @@ class DiscoveryV2 extends BaseService {
    * Enterprise plan instances.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.classifierId - The ID of the classifier.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.classifierId - The Universally Unique Identifier (UUID) of the classifier.
    * @param {string} params.name - The name of the document classifier model.
    * @param {string} [params.description] - A description of the document classifier model.
    * @param {number} [params.learningRate] - A tuning parameter in an optimization algorithm that determines the step
@@ -3142,10 +3150,10 @@ class DiscoveryV2 extends BaseService {
    * Get details about a specific document classifier model.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.classifierId - The ID of the classifier.
-   * @param {string} params.modelId - The ID of the classifier model.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.classifierId - The Universally Unique Identifier (UUID) of the classifier.
+   * @param {string} params.modelId - The Universally Unique Identifier (UUID) of the classifier model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifierModel>>}
    */
@@ -3200,10 +3208,10 @@ class DiscoveryV2 extends BaseService {
    * Update the document classifier model name or description.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.classifierId - The ID of the classifier.
-   * @param {string} params.modelId - The ID of the classifier model.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.classifierId - The Universally Unique Identifier (UUID) of the classifier.
+   * @param {string} params.modelId - The Universally Unique Identifier (UUID) of the classifier model.
    * @param {string} [params.name] - A new name for the enrichment.
    * @param {string} [params.description] - A new description for the enrichment.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -3267,10 +3275,10 @@ class DiscoveryV2 extends BaseService {
    * Deletes an existing document classifier model from the specified project.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.classifierId - The ID of the classifier.
-   * @param {string} params.modelId - The ID of the classifier model.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.classifierId - The Universally Unique Identifier (UUID) of the classifier.
+   * @param {string} params.modelId - The Universally Unique Identifier (UUID) of the classifier model.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>>}
    */
@@ -3339,9 +3347,9 @@ class DiscoveryV2 extends BaseService {
    * **Note:** This method is supported with Enterprise plan deployments and installed deployments only.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.projectId - The ID of the project. This information can be found from the *Integrate and
-   * Deploy* page in Discovery.
-   * @param {string} params.collectionId - The ID of the collection.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.collectionId - The Universally Unique Identifier (UUID) of the collection.
    * @param {NodeJS.ReadableStream | Buffer} [params.file] - **Add a document**: The content of the document to ingest.
    * For the supported file types and maximum supported file size limits when adding a document, see [the
    * documentation](/docs/discovery-data?topic=discovery-data-collections#supportedfiletypes).
@@ -3531,6 +3539,8 @@ namespace DiscoveryV2 {
      *
      *  The `content_mining` and `content_intelligence` types are available with Premium plan managed deployments and
      *  installed deployments only.
+     *
+     *  The Intelligent Document Processing (IDP) project type is available from IBM Cloud-managed instances only.
      */
     type: CreateProjectConstants.Type | string;
     /** Default query parameters for this project. */
@@ -3540,8 +3550,9 @@ namespace DiscoveryV2 {
 
   /** Constants for the `createProject` operation. */
   export namespace CreateProjectConstants {
-    /** The type of project. The `content_intelligence` type is a *Document Retrieval for Contracts* project and the `other` type is a *Custom* project. The `content_mining` and `content_intelligence` types are available with Premium plan managed deployments and installed deployments only. */
+    /** The type of project. The `content_intelligence` type is a *Document Retrieval for Contracts* project and the `other` type is a *Custom* project. The `content_mining` and `content_intelligence` types are available with Premium plan managed deployments and installed deployments only. The Intelligent Document Processing (IDP) project type is available from IBM Cloud-managed instances only. */
     export enum Type {
+      INTELLIGENT_DOCUMENT_PROCESSING = 'intelligent_document_processing',
       DOCUMENT_RETRIEVAL = 'document_retrieval',
       CONVERSATIONAL_SEARCH = 'conversational_search',
       CONTENT_INTELLIGENCE = 'content_intelligence',
@@ -3552,14 +3563,18 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `getProject` operation. */
   export interface GetProjectParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `updateProject` operation. */
   export interface UpdateProjectParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
     /** The new name to give this project. */
     name?: string;
@@ -3568,14 +3583,18 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `deleteProject` operation. */
   export interface DeleteProjectParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listFields` operation. */
   export interface ListFieldsParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
     /** Comma separated list of the collection IDs. If this parameter is not specified, all collections in the
      *  project are used.
@@ -3586,14 +3605,18 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `listCollections` operation. */
   export interface ListCollectionsParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `createCollection` operation. */
   export interface CreateCollectionParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
     /** The name of the collection. */
     name: string;
@@ -3603,6 +3626,10 @@ namespace DiscoveryV2 {
      *  documentation](/docs/discovery-data?topic=discovery-data-language-support).
      */
     language?: string;
+    /** If set to `true`, optical character recognition (OCR) is enabled. For more information, see [Optical
+     *  character recognition](/docs/discovery-data?topic=discovery-data-collections#ocr).
+     */
+    ocrEnabled?: boolean;
     /** An array of enrichments that are applied to this collection. To get a list of enrichments that are available
      *  for a project, use the [List enrichments](#listenrichments) method.
      *
@@ -3616,23 +3643,31 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `getCollection` operation. */
   export interface GetCollectionParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the collection. */
+    /** The Universally Unique Identifier (UUID) of the collection. */
     collectionId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `updateCollection` operation. */
   export interface UpdateCollectionParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the collection. */
+    /** The Universally Unique Identifier (UUID) of the collection. */
     collectionId: string;
     /** The new name of the collection. */
     name?: string;
     /** The new description of the collection. */
     description?: string;
+    /** If set to `true`, optical character recognition (OCR) is enabled. For more information, see [Optical
+     *  character recognition](/docs/discovery-data?topic=discovery-data-collections#ocr).
+     */
+    ocrEnabled?: boolean;
     /** An array of enrichments that are applied to this collection. */
     enrichments?: CollectionEnrichment[];
     headers?: OutgoingHttpHeaders;
@@ -3640,18 +3675,22 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `deleteCollection` operation. */
   export interface DeleteCollectionParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the collection. */
+    /** The Universally Unique Identifier (UUID) of the collection. */
     collectionId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listDocuments` operation. */
   export interface ListDocumentsParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the collection. */
+    /** The Universally Unique Identifier (UUID) of the collection. */
     collectionId: string;
     /** The maximum number of documents to return. Up to 1,000 documents are returned by default. The maximum number
      *  allowed is 10,000.
@@ -3701,9 +3740,11 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `addDocument` operation. */
   export interface AddDocumentParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the collection. */
+    /** The Universally Unique Identifier (UUID) of the collection. */
     collectionId: string;
     /** **Add a document**: The content of the document to ingest. For the supported file types and maximum
      *  supported file size limits when adding a document, see [the
@@ -3753,9 +3794,11 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `getDocument` operation. */
   export interface GetDocumentParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the collection. */
+    /** The Universally Unique Identifier (UUID) of the collection. */
     collectionId: string;
     /** The ID of the document. */
     documentId: string;
@@ -3764,9 +3807,11 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `updateDocument` operation. */
   export interface UpdateDocumentParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the collection. */
+    /** The Universally Unique Identifier (UUID) of the collection. */
     collectionId: string;
     /** The ID of the document. */
     documentId: string;
@@ -3818,9 +3863,11 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `deleteDocument` operation. */
   export interface DeleteDocumentParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the collection. */
+    /** The Universally Unique Identifier (UUID) of the collection. */
     collectionId: string;
     /** The ID of the document. */
     documentId: string;
@@ -3833,7 +3880,9 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `query` operation. */
   export interface QueryParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
     /** A comma-separated list of collection IDs to be queried against. */
     collectionIds?: string[];
@@ -3904,7 +3953,9 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `getAutocompletion` operation. */
   export interface GetAutocompletionParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
     /** The prefix to use for autocompletion. For example, the prefix `Ho` could autocomplete to `hot`, `housing`,
      *  or `how`.
@@ -3923,9 +3974,11 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `queryCollectionNotices` operation. */
   export interface QueryCollectionNoticesParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the collection. */
+    /** The Universally Unique Identifier (UUID) of the collection. */
     collectionId: string;
     /** Searches for documents that match the Discovery Query Language criteria that is specified as input. Filter
      *  calls are cached and are faster than query calls because the results are not ordered by relevance. When used
@@ -3957,7 +4010,9 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `queryNotices` operation. */
   export interface QueryNoticesParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
     /** Searches for documents that match the Discovery Query Language criteria that is specified as input. Filter
      *  calls are cached and are faster than query calls because the results are not ordered by relevance. When used
@@ -3989,18 +4044,22 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `getStopwordList` operation. */
   export interface GetStopwordListParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the collection. */
+    /** The Universally Unique Identifier (UUID) of the collection. */
     collectionId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `createStopwordList` operation. */
   export interface CreateStopwordListParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the collection. */
+    /** The Universally Unique Identifier (UUID) of the collection. */
     collectionId: string;
     /** List of stop words. */
     stopwords?: string[];
@@ -4009,27 +4068,33 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `deleteStopwordList` operation. */
   export interface DeleteStopwordListParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the collection. */
+    /** The Universally Unique Identifier (UUID) of the collection. */
     collectionId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listExpansions` operation. */
   export interface ListExpansionsParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the collection. */
+    /** The Universally Unique Identifier (UUID) of the collection. */
     collectionId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `createExpansions` operation. */
   export interface CreateExpansionsParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the collection. */
+    /** The Universally Unique Identifier (UUID) of the collection. */
     collectionId: string;
     /** An array of query expansion definitions.
      *
@@ -4050,37 +4115,47 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `deleteExpansions` operation. */
   export interface DeleteExpansionsParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the collection. */
+    /** The Universally Unique Identifier (UUID) of the collection. */
     collectionId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `getComponentSettings` operation. */
   export interface GetComponentSettingsParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listTrainingQueries` operation. */
   export interface ListTrainingQueriesParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `deleteTrainingQueries` operation. */
   export interface DeleteTrainingQueriesParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `createTrainingQuery` operation. */
   export interface CreateTrainingQueryParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
     /** The natural text query that is used as the training query. */
     naturalLanguageQuery: string;
@@ -4097,7 +4172,9 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `getTrainingQuery` operation. */
   export interface GetTrainingQueryParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
     /** The ID of the query used for training. */
     queryId: string;
@@ -4106,7 +4183,9 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `updateTrainingQuery` operation. */
   export interface UpdateTrainingQueryParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
     /** The ID of the query used for training. */
     queryId: string;
@@ -4125,7 +4204,9 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `deleteTrainingQuery` operation. */
   export interface DeleteTrainingQueryParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
     /** The ID of the query used for training. */
     queryId: string;
@@ -4134,14 +4215,18 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `listEnrichments` operation. */
   export interface ListEnrichmentsParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `createEnrichment` operation. */
   export interface CreateEnrichmentParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
     /** Information about a specific enrichment. */
     enrichment: CreateEnrichment;
@@ -4159,18 +4244,22 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `getEnrichment` operation. */
   export interface GetEnrichmentParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the enrichment. */
+    /** The Universally Unique Identifier (UUID) of the enrichment. */
     enrichmentId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `updateEnrichment` operation. */
   export interface UpdateEnrichmentParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the enrichment. */
+    /** The Universally Unique Identifier (UUID) of the enrichment. */
     enrichmentId: string;
     /** A new name for the enrichment. */
     name: string;
@@ -4181,23 +4270,29 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `deleteEnrichment` operation. */
   export interface DeleteEnrichmentParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the enrichment. */
+    /** The Universally Unique Identifier (UUID) of the enrichment. */
     enrichmentId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listDocumentClassifiers` operation. */
   export interface ListDocumentClassifiersParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `createDocumentClassifier` operation. */
   export interface CreateDocumentClassifierParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
     /** The training data CSV file to upload. The CSV file must have headers. The file must include a field that
      *  contains the text you want to classify and a field that contains the classification labels that you want to use
@@ -4218,18 +4313,22 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `getDocumentClassifier` operation. */
   export interface GetDocumentClassifierParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the classifier. */
+    /** The Universally Unique Identifier (UUID) of the classifier. */
     classifierId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `updateDocumentClassifier` operation. */
   export interface UpdateDocumentClassifierParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the classifier. */
+    /** The Universally Unique Identifier (UUID) of the classifier. */
     classifierId: string;
     /** An object that contains a new name or description for a document classifier, updated training data, or new
      *  or updated test data.
@@ -4252,27 +4351,33 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `deleteDocumentClassifier` operation. */
   export interface DeleteDocumentClassifierParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the classifier. */
+    /** The Universally Unique Identifier (UUID) of the classifier. */
     classifierId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listDocumentClassifierModels` operation. */
   export interface ListDocumentClassifierModelsParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the classifier. */
+    /** The Universally Unique Identifier (UUID) of the classifier. */
     classifierId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `createDocumentClassifierModel` operation. */
   export interface CreateDocumentClassifierModelParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the classifier. */
+    /** The Universally Unique Identifier (UUID) of the classifier. */
     classifierId: string;
     /** The name of the document classifier model. */
     name: string;
@@ -4306,22 +4411,26 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `getDocumentClassifierModel` operation. */
   export interface GetDocumentClassifierModelParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the classifier. */
+    /** The Universally Unique Identifier (UUID) of the classifier. */
     classifierId: string;
-    /** The ID of the classifier model. */
+    /** The Universally Unique Identifier (UUID) of the classifier model. */
     modelId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `updateDocumentClassifierModel` operation. */
   export interface UpdateDocumentClassifierModelParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the classifier. */
+    /** The Universally Unique Identifier (UUID) of the classifier. */
     classifierId: string;
-    /** The ID of the classifier model. */
+    /** The Universally Unique Identifier (UUID) of the classifier model. */
     modelId: string;
     /** A new name for the enrichment. */
     name?: string;
@@ -4332,20 +4441,24 @@ namespace DiscoveryV2 {
 
   /** Parameters for the `deleteDocumentClassifierModel` operation. */
   export interface DeleteDocumentClassifierModelParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the classifier. */
+    /** The Universally Unique Identifier (UUID) of the classifier. */
     classifierId: string;
-    /** The ID of the classifier model. */
+    /** The Universally Unique Identifier (UUID) of the classifier model. */
     modelId: string;
     headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `analyzeDocument` operation. */
   export interface AnalyzeDocumentParams {
-    /** The ID of the project. This information can be found from the *Integrate and Deploy* page in Discovery. */
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
     projectId: string;
-    /** The ID of the collection. */
+    /** The Universally Unique Identifier (UUID) of the collection. */
     collectionId: string;
     /** **Add a document**: The content of the document to ingest. For the supported file types and maximum
      *  supported file size limits when adding a document, see [the
@@ -4442,7 +4555,7 @@ namespace DiscoveryV2 {
 
   /** A collection for storing documents. */
   export interface Collection {
-    /** The unique identifier of the collection. */
+    /** The Universally Unique Identifier (UUID) of the collection. */
     collection_id?: string;
     /** The name of the collection. */
     name?: string;
@@ -4450,7 +4563,7 @@ namespace DiscoveryV2 {
 
   /** A collection for storing documents. */
   export interface CollectionDetails {
-    /** The unique identifier of the collection. */
+    /** The Universally Unique Identifier (UUID) of the collection. */
     collection_id?: string;
     /** The name of the collection. */
     name: string;
@@ -4462,6 +4575,10 @@ namespace DiscoveryV2 {
      *  documentation](/docs/discovery-data?topic=discovery-data-language-support).
      */
     language?: string;
+    /** If set to `true`, optical character recognition (OCR) is enabled. For more information, see [Optical
+     *  character recognition](/docs/discovery-data?topic=discovery-data-collections#ocr).
+     */
+    ocr_enabled?: boolean;
     /** An array of enrichments that are applied to this collection. To get a list of enrichments that are available
      *  for a project, use the [List enrichments](#listenrichments) method.
      *
@@ -4782,7 +4899,7 @@ namespace DiscoveryV2 {
 
   /** Information about a document classifier. */
   export interface DocumentClassifier {
-    /** A unique identifier of the document classifier. */
+    /** The Universally Unique Identifier (UUID) of the document classifier. */
     classifier_id?: string;
     /** A human-readable name of the document classifier. */
     name: string;
@@ -4818,7 +4935,7 @@ namespace DiscoveryV2 {
 
   /** An object that describes enrichments that are applied to the training and test data that is used by the document classifier. */
   export interface DocumentClassifierEnrichment {
-    /** A unique identifier of the enrichment. */
+    /** The Universally Unique Identifier (UUID) of the enrichment. */
     enrichment_id: string;
     /** An array of field names where the enrichment is applied. */
     fields: string[];
@@ -4826,7 +4943,7 @@ namespace DiscoveryV2 {
 
   /** Information about a document classifier model. */
   export interface DocumentClassifierModel {
-    /** A unique identifier of the document classifier model. */
+    /** The Universally Unique Identifier (UUID) of the document classifier model. */
     model_id?: string;
     /** A human-readable name of the document classifier model. */
     name: string;
@@ -4846,7 +4963,9 @@ namespace DiscoveryV2 {
     status?: DocumentClassifierModel.Constants.Status | string;
     /** An object that contains information about a trained document classifier model. */
     evaluation?: ClassifierModelEvaluation;
-    /** A unique identifier of the enrichment that is generated by this document classifier model. */
+    /** The Universally Unique Identifier (UUID) of the enrichment that is generated by this document classifier
+     *  model.
+     */
     enrichment_id?: string;
     /** The date that the document classifier model was deployed. */
     deployed_at?: string;
@@ -4942,7 +5061,7 @@ namespace DiscoveryV2 {
 
   /** Information about a specific enrichment. */
   export interface Enrichment {
-    /** The unique identifier of this enrichment. */
+    /** The Universally Unique Identifier (UUID) of this enrichment. */
     enrichment_id?: string;
     /** The human readable name for this enrichment. */
     name?: string;
@@ -4993,12 +5112,12 @@ namespace DiscoveryV2 {
      *  or `classifier`. Not valid when creating any other type of enrichment.
      */
     result_field?: string;
-    /** A unique identifier of the document classifier. Required when **type** is `classifier`. Not valid when
-     *  creating any other type of enrichment.
+    /** The Universally Unique Identifier (UUID) of the document classifier. Required when **type** is `classifier`.
+     *  Not valid when creating any other type of enrichment.
      */
     classifier_id?: string;
-    /** A unique identifier of the document classifier model. Required when **type** is `classifier`. Not valid when
-     *  creating any other type of enrichment.
+    /** The Universally Unique Identifier (UUID) of the document classifier model. Required when **type** is
+     *  `classifier`. Not valid when creating any other type of enrichment.
      */
     model_id?: string;
     /** Specifies a threshold. Only classes with evaluation confidence scores that are higher than the specified
@@ -5217,7 +5336,7 @@ namespace DiscoveryV2 {
 
   /** Detailed information about the specified project. */
   export interface ProjectDetails {
-    /** The unique identifier of this project. */
+    /** The Universally Unique Identifier (UUID) of this project. */
     project_id?: string;
     /** The human readable name of this project. */
     name?: string;
@@ -5228,6 +5347,8 @@ namespace DiscoveryV2 {
      *
      *  The `content_mining` and `content_intelligence` types are available with Premium plan managed deployments and
      *  installed deployments only.
+     *
+     *  The Intelligent Document Processing (IDP) project type is available from IBM Cloud-managed instances only.
      */
     type?: ProjectDetails.Constants.Type | string;
     /** Relevancy training status information for this project. */
@@ -5239,8 +5360,9 @@ namespace DiscoveryV2 {
   }
   export namespace ProjectDetails {
     export namespace Constants {
-      /** The type of project. The `content_intelligence` type is a *Document Retrieval for Contracts* project and the `other` type is a *Custom* project. The `content_mining` and `content_intelligence` types are available with Premium plan managed deployments and installed deployments only. */
+      /** The type of project. The `content_intelligence` type is a *Document Retrieval for Contracts* project and the `other` type is a *Custom* project. The `content_mining` and `content_intelligence` types are available with Premium plan managed deployments and installed deployments only. The Intelligent Document Processing (IDP) project type is available from IBM Cloud-managed instances only. */
       export enum Type {
+        INTELLIGENT_DOCUMENT_PROCESSING = 'intelligent_document_processing',
         DOCUMENT_RETRIEVAL = 'document_retrieval',
         CONVERSATIONAL_SEARCH = 'conversational_search',
         CONTENT_MINING = 'content_mining',
@@ -5252,7 +5374,7 @@ namespace DiscoveryV2 {
 
   /** Details about a specific project. */
   export interface ProjectListDetails {
-    /** The unique identifier of this project. */
+    /** The Universally Unique Identifier (UUID) of this project. */
     project_id?: string;
     /** The human readable name of this project. */
     name?: string;
@@ -5263,6 +5385,8 @@ namespace DiscoveryV2 {
      *
      *  The `content_mining` and `content_intelligence` types are available with Premium plan managed deployments and
      *  installed deployments only.
+     *
+     *  The Intelligent Document Processing (IDP) project type is available from IBM Cloud-managed instances only.
      */
     type?: ProjectListDetails.Constants.Type | string;
     /** Relevancy training status information for this project. */
@@ -5272,8 +5396,9 @@ namespace DiscoveryV2 {
   }
   export namespace ProjectListDetails {
     export namespace Constants {
-      /** The type of project. The `content_intelligence` type is a *Document Retrieval for Contracts* project and the `other` type is a *Custom* project. The `content_mining` and `content_intelligence` types are available with Premium plan managed deployments and installed deployments only. */
+      /** The type of project. The `content_intelligence` type is a *Document Retrieval for Contracts* project and the `other` type is a *Custom* project. The `content_mining` and `content_intelligence` types are available with Premium plan managed deployments and installed deployments only. The Intelligent Document Processing (IDP) project type is available from IBM Cloud-managed instances only. */
       export enum Type {
+        INTELLIGENT_DOCUMENT_PROCESSING = 'intelligent_document_processing',
         DOCUMENT_RETRIEVAL = 'document_retrieval',
         CONVERSATIONAL_SEARCH = 'conversational_search',
         CONTENT_MINING = 'content_mining',
