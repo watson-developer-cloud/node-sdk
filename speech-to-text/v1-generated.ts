@@ -42,8 +42,8 @@ import { getSdkHeaders } from '../lib/common';
  *
  *
  * Effective **31 July 2023**, all previous-generation models will be removed from the service and the documentation.
- * Most previous-generation models were deprecated on 15 March 2022. You must migrate to the equivalent next-generation
- * model by 31 July 2023. For more information, see [Migrating to next-generation
+ * Most previous-generation models were deprecated on 15 March 2022. You must migrate to the equivalent large speech
+ * model or next-generation model by 31 July 2023. For more information, see [Migrating to large speech
  * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-migrate).{: deprecated}
  *
  * For speech recognition, the service supports synchronous and asynchronous HTTP Representational State Transfer (REST)
@@ -262,19 +262,21 @@ class SpeechToTextV1 extends BaseService {
    *  **See also:** [Supported audio
    * formats](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-audio-formats).
    *
-   * ### Next-generation models
+   * ### Large speech models and Next-generation models
    *
-   *  The service supports next-generation `Multimedia` (16 kHz) and `Telephony` (8 kHz) models for many languages.
-   * Next-generation models have higher throughput than the service's previous generation of `Broadband` and
-   * `Narrowband` models. When you use next-generation models, the service can return transcriptions more quickly and
-   * also provide noticeably better transcription accuracy.
+   *  The service supports large speech models and next-generation `Multimedia` (16 kHz) and `Telephony` (8 kHz) models
+   * for many languages. Large speech models and next-generation models have higher throughput than the service's
+   * previous generation of `Broadband` and `Narrowband` models. When you use large speech models and next-generation
+   * models, the service can return transcriptions more quickly and also provide noticeably better transcription
+   * accuracy.
    *
-   * You specify a next-generation model by using the `model` query parameter, as you do a previous-generation model.
-   * Most next-generation models support the `low_latency` parameter, and all next-generation models support the
-   * `character_insertion_bias` parameter. These parameters are not available with previous-generation models.
+   * You specify a large speech model or next-generation model by using the `model` query parameter, as you do a
+   * previous-generation model. Only the next-generation models support the `low_latency` parameter, and all large
+   * speech models and next-generation models support the `character_insertion_bias` parameter. These parameters are not
+   * available with previous-generation models.
    *
-   * Next-generation models do not support all of the speech recognition parameters that are available for use with
-   * previous-generation models. Next-generation models do not support the following parameters:
+   * Large speech models and next-generation models do not support all of the speech recognition parameters that are
+   * available for use with previous-generation models. Next-generation models do not support the following parameters:
    * * `acoustic_customization_id`
    * * `keywords` and `keywords_threshold`
    * * `processing_metrics` and `processing_metrics_interval`
@@ -282,10 +284,14 @@ class SpeechToTextV1 extends BaseService {
    *
    * **Important:** Effective **31 July 2023**, all previous-generation models will be removed from the service and the
    * documentation. Most previous-generation models were deprecated on 15 March 2022. You must migrate to the equivalent
-   * next-generation model by 31 July 2023. For more information, see [Migrating to next-generation
+   * large speech model or next-generation model by 31 July 2023. For more information, see [Migrating to large speech
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-migrate).
    *
    * **See also:**
+   * * [Large speech languages and
+   * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-large-speech-languages)
+   * * [Supported features for large speech
+   * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-large-speech-languages#models-lsm-supported-features)
    * * [Next-generation languages and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng)
    * * [Supported features for next-generation
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng#models-ng-features)
@@ -321,6 +327,12 @@ class SpeechToTextV1 extends BaseService {
    * * [Using a model for speech recognition](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use)
    * * [Using the default
    * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use#models-use-default).
+   * @param {boolean} [params.speechBeginEvent] - If `true`, the service returns a response object `SpeechActivity`
+   * which contains the time when a speech activity is detected in the stream. This can be used both in standard and low
+   * latency mode. This feature enables client applications to know that some words/speech has been detected and the
+   * service is in the process of decoding. This can be used in lieu of interim results in standard mode. See [Using
+   * speech recognition
+   * parameters](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-service-features#features-parameters).
    * @param {string} [params.languageCustomizationId] - The customization ID (GUID) of a custom language model that is
    * to be used with the recognition request. The base model of the specified custom language model must match the model
    * specified with the `model` parameter. You must make the request with credentials for the instance of the service
@@ -345,6 +357,7 @@ class SpeechToTextV1 extends BaseService {
    *
    * Specify a value between 0.0 and 1.0. Unless a different customization weight was specified for the custom model
    * when the model was trained, the default value is:
+   * * 0.5 for large speech models
    * * 0.3 for previous-generation models
    * * 0.2 for most next-generation models
    * * 0.1 for next-generation English and Japanese models
@@ -404,8 +417,9 @@ class SpeechToTextV1 extends BaseService {
    * **Note:** The parameter can be used with US English, Japanese, and Spanish (all dialects) transcription only.
    *
    * See [Smart formatting](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-formatting#smart-formatting).
-   * @param {number} [params.smartFormattingVersion] - Smart formatting version is for next-generation models and that
-   * is supported in US English, Brazilian Portuguese, French and German languages.
+   * @param {number} [params.smartFormattingVersion] - Smart formatting version for large speech models and
+   * next-generation models is supported in US English, Brazilian Portuguese, French, German, Spanish and French
+   * Canadian languages.
    * @param {boolean} [params.speakerLabels] - If `true`, the response includes labels that identify which words were
    * spoken by which participants in a multi-person exchange. By default, the service returns no speaker labels. Setting
    * `speaker_labels` to `true` forces the `timestamps` parameter to be `true`, regardless of whether you specify
@@ -413,8 +427,7 @@ class SpeechToTextV1 extends BaseService {
    * * _For previous-generation models,_ the parameter can be used with Australian English, US English, German,
    * Japanese, Korean, and Spanish (both broadband and narrowband models) and UK English (narrowband model)
    * transcription only.
-   * * _For next-generation models,_ the parameter can be used with Czech, English (Australian, Indian, UK, and US),
-   * German, Japanese, Korean, and Spanish transcription only.
+   * * _For large speech models and next-generation models,_ the parameter can be used with all available languages.
    *
    * See [Speaker labels](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-speaker-labels).
    * @param {string} [params.grammarName] - The name of a grammar that is to be used with the recognition request. If
@@ -481,8 +494,8 @@ class SpeechToTextV1 extends BaseService {
    * The values increase on a monotonic curve. Specifying one or two decimal places of precision (for example, `0.55`)
    * is typically more than sufficient.
    *
-   * The parameter is supported with all next-generation models and with most previous-generation models. See [Speech
-   * detector
+   * The parameter is supported with all large speech models, next-generation models and with most previous-generation
+   * models. See [Speech detector
    * sensitivity](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#detection-parameters-sensitivity)
    * and [Language model
    * support](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#detection-support).
@@ -498,8 +511,8 @@ class SpeechToTextV1 extends BaseService {
    * The values increase on a monotonic curve. Specifying one or two decimal places of precision (for example, `0.55`)
    * is typically more than sufficient.
    *
-   * The parameter is supported with all next-generation models and with most previous-generation models. See
-   * [Background audio
+   * The parameter is supported with all large speech models, next-generation models and with most previous-generation
+   * models. See [Background audio
    * suppression](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#detection-parameters-suppression)
    * and [Language model
    * support](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#detection-support).
@@ -508,15 +521,15 @@ class SpeechToTextV1 extends BaseService {
    * models produce transcription results faster than previous-generation models. The `low_latency` parameter causes the
    * models to produce results even more quickly, though the results might be less accurate when the parameter is used.
    *
-   * The parameter is not available for previous-generation `Broadband` and `Narrowband` models. It is available for
-   * most next-generation models.
+   * The parameter is not available for large speech models and previous-generation `Broadband` and `Narrowband` models.
+   * It is available for most next-generation models.
    * * For a list of next-generation models that support low latency, see [Supported next-generation language
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng#models-ng-supported).
    * * For more information about the `low_latency` parameter, see [Low
    * latency](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-interim#low-latency).
-   * @param {number} [params.characterInsertionBias] - For next-generation models, an indication of whether the service
-   * is biased to recognize shorter or longer strings of characters when developing transcription hypotheses. By
-   * default, the service is optimized to produce the best balance of strings of different lengths.
+   * @param {number} [params.characterInsertionBias] - For large speech models and next-generation models, an indication
+   * of whether the service is biased to recognize shorter or longer strings of characters when developing transcription
+   * hypotheses. By default, the service is optimized to produce the best balance of strings of different lengths.
    *
    * The default bias is 0.0. The allowable range of values is -1.0 to 1.0.
    * * Negative values bias the service to favor hypotheses with shorter strings of characters.
@@ -539,7 +552,7 @@ class SpeechToTextV1 extends BaseService {
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechRecognitionResults>> {
     const _params = { ...params };
     const _requiredParams = ['audio'];
-    const _validParams = ['audio', 'contentType', 'model', 'languageCustomizationId', 'acousticCustomizationId', 'baseModelVersion', 'customizationWeight', 'inactivityTimeout', 'keywords', 'keywordsThreshold', 'maxAlternatives', 'wordAlternativesThreshold', 'wordConfidence', 'timestamps', 'profanityFilter', 'smartFormatting', 'smartFormattingVersion', 'speakerLabels', 'grammarName', 'redaction', 'audioMetrics', 'endOfPhraseSilenceTime', 'splitTranscriptAtPhraseEnd', 'speechDetectorSensitivity', 'backgroundAudioSuppression', 'lowLatency', 'characterInsertionBias', 'headers'];
+    const _validParams = ['audio', 'contentType', 'model', 'speechBeginEvent', 'languageCustomizationId', 'acousticCustomizationId', 'baseModelVersion', 'customizationWeight', 'inactivityTimeout', 'keywords', 'keywordsThreshold', 'maxAlternatives', 'wordAlternativesThreshold', 'wordConfidence', 'timestamps', 'profanityFilter', 'smartFormatting', 'smartFormattingVersion', 'speakerLabels', 'grammarName', 'redaction', 'audioMetrics', 'endOfPhraseSilenceTime', 'splitTranscriptAtPhraseEnd', 'speechDetectorSensitivity', 'backgroundAudioSuppression', 'lowLatency', 'characterInsertionBias', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -548,6 +561,7 @@ class SpeechToTextV1 extends BaseService {
     const body = _params.audio;
     const query = {
       'model': _params.model,
+      'speech_begin_event': _params.speechBeginEvent,
       'language_customization_id': _params.languageCustomizationId,
       'acoustic_customization_id': _params.acousticCustomizationId,
       'base_model_version': _params.baseModelVersion,
@@ -818,19 +832,21 @@ class SpeechToTextV1 extends BaseService {
    *  **See also:** [Supported audio
    * formats](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-audio-formats).
    *
-   * ### Next-generation models
+   * ### Large speech models and Next-generation models
    *
-   *  The service supports next-generation `Multimedia` (16 kHz) and `Telephony` (8 kHz) models for many languages.
-   * Next-generation models have higher throughput than the service's previous generation of `Broadband` and
-   * `Narrowband` models. When you use next-generation models, the service can return transcriptions more quickly and
-   * also provide noticeably better transcription accuracy.
+   *  The service supports large speech models and next-generation `Multimedia` (16 kHz) and `Telephony` (8 kHz) models
+   * for many languages. Large speech models and next-generation models have higher throughput than the service's
+   * previous generation of `Broadband` and `Narrowband` models. When you use large speech models and next-generation
+   * models, the service can return transcriptions more quickly and also provide noticeably better transcription
+   * accuracy.
    *
-   * You specify a next-generation model by using the `model` query parameter, as you do a previous-generation model.
-   * Most next-generation models support the `low_latency` parameter, and all next-generation models support the
-   * `character_insertion_bias` parameter. These parameters are not available with previous-generation models.
+   * You specify a large speech model or next-generation model by using the `model` query parameter, as you do a
+   * previous-generation model. Only the next-generation models support the `low_latency` parameter, and all large
+   * speech models and next-generation models support the `character_insertion_bias` parameter. These parameters are not
+   * available with previous-generation models.
    *
-   * Next-generation models do not support all of the speech recognition parameters that are available for use with
-   * previous-generation models. Next-generation models do not support the following parameters:
+   * Large speech models and next-generation models do not support all of the speech recognition parameters that are
+   * available for use with previous-generation models. Next-generation models do not support the following parameters:
    * * `acoustic_customization_id`
    * * `keywords` and `keywords_threshold`
    * * `processing_metrics` and `processing_metrics_interval`
@@ -838,10 +854,14 @@ class SpeechToTextV1 extends BaseService {
    *
    * **Important:** Effective **31 July 2023**, all previous-generation models will be removed from the service and the
    * documentation. Most previous-generation models were deprecated on 15 March 2022. You must migrate to the equivalent
-   * next-generation model by 31 July 2023. For more information, see [Migrating to next-generation
+   * large speech model or next-generation model by 31 July 2023. For more information, see [Migrating to large speech
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-migrate).
    *
    * **See also:**
+   * * [Large speech languages and
+   * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-large-speech-languages)
+   * * [Supported features for large speech
+   * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-large-speech-languages#models-lsm-supported-features)
    * * [Next-generation languages and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng)
    * * [Supported features for next-generation
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng#models-ng-features).
@@ -913,6 +933,7 @@ class SpeechToTextV1 extends BaseService {
    *
    * Specify a value between 0.0 and 1.0. Unless a different customization weight was specified for the custom model
    * when the model was trained, the default value is:
+   * * 0.5 for large speech models
    * * 0.3 for previous-generation models
    * * 0.2 for most next-generation models
    * * 0.1 for next-generation English and Japanese models
@@ -972,8 +993,9 @@ class SpeechToTextV1 extends BaseService {
    * **Note:** The parameter can be used with US English, Japanese, and Spanish (all dialects) transcription only.
    *
    * See [Smart formatting](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-formatting#smart-formatting).
-   * @param {number} [params.smartFormattingVersion] - Smart formatting version is for next-generation models and that
-   * is supported in US English, Brazilian Portuguese, French and German languages.
+   * @param {number} [params.smartFormattingVersion] - Smart formatting version for large speech models and
+   * next-generation models is supported in US English, Brazilian Portuguese, French, German, Spanish and French
+   * Canadian languages.
    * @param {boolean} [params.speakerLabels] - If `true`, the response includes labels that identify which words were
    * spoken by which participants in a multi-person exchange. By default, the service returns no speaker labels. Setting
    * `speaker_labels` to `true` forces the `timestamps` parameter to be `true`, regardless of whether you specify
@@ -981,8 +1003,7 @@ class SpeechToTextV1 extends BaseService {
    * * _For previous-generation models,_ the parameter can be used with Australian English, US English, German,
    * Japanese, Korean, and Spanish (both broadband and narrowband models) and UK English (narrowband model)
    * transcription only.
-   * * _For next-generation models,_ the parameter can be used with Czech, English (Australian, Indian, UK, and US),
-   * German, Japanese, Korean, and Spanish transcription only.
+   * * _For large speech models and next-generation models,_ the parameter can be used with all available languages.
    *
    * See [Speaker labels](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-speaker-labels).
    * @param {string} [params.grammarName] - The name of a grammar that is to be used with the recognition request. If
@@ -1069,8 +1090,8 @@ class SpeechToTextV1 extends BaseService {
    * The values increase on a monotonic curve. Specifying one or two decimal places of precision (for example, `0.55`)
    * is typically more than sufficient.
    *
-   * The parameter is supported with all next-generation models and with most previous-generation models. See [Speech
-   * detector
+   * The parameter is supported with all large speech models, next-generation models and with most previous-generation
+   * models. See [Speech detector
    * sensitivity](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#detection-parameters-sensitivity)
    * and [Language model
    * support](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#detection-support).
@@ -1086,8 +1107,8 @@ class SpeechToTextV1 extends BaseService {
    * The values increase on a monotonic curve. Specifying one or two decimal places of precision (for example, `0.55`)
    * is typically more than sufficient.
    *
-   * The parameter is supported with all next-generation models and with most previous-generation models. See
-   * [Background audio
+   * The parameter is supported with all large speech models, next-generation models and with most previous-generation
+   * models. See [Background audio
    * suppression](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#detection-parameters-suppression)
    * and [Language model
    * support](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#detection-support).
@@ -1096,15 +1117,15 @@ class SpeechToTextV1 extends BaseService {
    * models produce transcription results faster than previous-generation models. The `low_latency` parameter causes the
    * models to produce results even more quickly, though the results might be less accurate when the parameter is used.
    *
-   * The parameter is not available for previous-generation `Broadband` and `Narrowband` models. It is available for
-   * most next-generation models.
+   * The parameter is not available for large speech models and previous-generation `Broadband` and `Narrowband` models.
+   * It is available for most next-generation models.
    * * For a list of next-generation models that support low latency, see [Supported next-generation language
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng#models-ng-supported).
    * * For more information about the `low_latency` parameter, see [Low
    * latency](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-interim#low-latency).
-   * @param {number} [params.characterInsertionBias] - For next-generation models, an indication of whether the service
-   * is biased to recognize shorter or longer strings of characters when developing transcription hypotheses. By
-   * default, the service is optimized to produce the best balance of strings of different lengths.
+   * @param {number} [params.characterInsertionBias] - For large speech models and next-generation models, an indication
+   * of whether the service is biased to recognize shorter or longer strings of characters when developing transcription
+   * hypotheses. By default, the service is optimized to produce the best balance of strings of different lengths.
    *
    * The default bias is 0.0. The allowable range of values is -1.0 to 1.0.
    * * Negative values bias the service to favor hypotheses with shorter strings of characters.
@@ -1370,14 +1391,48 @@ class SpeechToTextV1 extends BaseService {
    *
    * **Important:** Effective **31 July 2023**, all previous-generation models will be removed from the service and the
    * documentation. Most previous-generation models were deprecated on 15 March 2022. You must migrate to the equivalent
-   * next-generation model by 31 July 2023. For more information, see [Migrating to next-generation
+   * large speech model or next-generation model by 31 July 2023. For more information, see [Migrating to large speech
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-migrate).
    *
    * **See also:**
    * * [Create a custom language
    * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-languageCreate#createModel-language)
    * * [Language support for
-   * customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-support).
+   * customization](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-support)
+   *
+   * ### Large speech models and Next-generation models
+   *
+   *  The service supports large speech models and next-generation `Multimedia` (16 kHz) and `Telephony` (8 kHz) models
+   * for many languages. Large speech models and next-generation models have higher throughput than the service's
+   * previous generation of `Broadband` and `Narrowband` models. When you use large speech models and next-generation
+   * models, the service can return transcriptions more quickly and also provide noticeably better transcription
+   * accuracy.
+   *
+   * You specify a large speech model or next-generation model by using the `model` query parameter, as you do a
+   * previous-generation model. Only the next-generation models support the `low_latency` parameter, and all large
+   * speech models and next-generation models support the `character_insertion_bias` parameter. These parameters are not
+   * available with previous-generation models.
+   *
+   * Large speech models and next-generation models do not support all of the speech recognition parameters that are
+   * available for use with previous-generation models. Next-generation models do not support the following parameters:
+   * * `acoustic_customization_id`
+   * * `keywords` and `keywords_threshold`
+   * * `processing_metrics` and `processing_metrics_interval`
+   * * `word_alternatives_threshold`
+   *
+   * **Important:** Effective **31 July 2023**, all previous-generation models will be removed from the service and the
+   * documentation. Most previous-generation models were deprecated on 15 March 2022. You must migrate to the equivalent
+   * large speech model or next-generation model by 31 July 2023. For more information, see [Migrating to large speech
+   * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-migrate).
+   *
+   * **See also:**
+   * * [Large speech languages and
+   * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-large-speech-languages)
+   * * [Supported features for large speech
+   * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-large-speech-languages#models-lsm-supported-features)
+   * * [Next-generation languages and models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng)
+   * * [Supported features for next-generation
+   * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng#models-ng-features).
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.name - A user-defined name for the new custom language model. Use a localized name that
@@ -1688,11 +1743,13 @@ class SpeechToTextV1 extends BaseService {
    * * `user` trains the model only on custom words that were added or modified by the user directly. The model is not
    * trained on new words extracted from corpora or grammars.
    *
-   * _For custom models that are based on next-generation models_, the service ignores the parameter. The words resource
-   * contains only custom words that the user adds or modifies directly, so the parameter is unnecessary.
+   * _For custom models that are based on large speech models and next-generation models_, the service ignores the
+   * `word_type_to_add` parameter. The words resource contains only custom words that the user adds or modifies
+   * directly, so the parameter is unnecessary.
    * @param {number} [params.customizationWeight] - Specifies a customization weight for the custom language model. The
    * customization weight tells the service how much weight to give to words from the custom language model compared to
    * those from the base model for speech recognition. Specify a value between 0.0 and 1.0. The default value is:
+   * * 0.5 for large speech models
    * * 0.3 for previous-generation models
    * * 0.2 for most next-generation models
    * * 0.1 for next-generation English and Japanese models
@@ -1978,6 +2035,9 @@ class SpeechToTextV1 extends BaseService {
    * service's analysis of the corpus for the current request completes. Use the [Get a corpus](#getcorpus) method to
    * check the status of the analysis.
    *
+   * _For custom models that are based on large speech models_, the service parses and extracts word sequences from one
+   * or multiple corpora files. The characters help the service learn and predict character sequences from audio.
+   *
    * _For custom models that are based on previous-generation models_, the service auto-populates the model's words
    * resource with words from the corpus that are not found in its base vocabulary. These words are referred to as
    * out-of-vocabulary (OOV) words. After adding a corpus, you must validate the words resource to ensure that each OOV
@@ -2002,11 +2062,11 @@ class SpeechToTextV1 extends BaseService {
    * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-languageCreate#addCorpus)
    * * [Working with corpora for previous-generation
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corporaWords#workingCorpora)
-   * * [Working with corpora for next-generation
+   * * [Working with corpora for large speech models and next-generation
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corporaWords-ng#workingCorpora-ng)
    * * [Validating a words resource for previous-generation
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corporaWords#validateModel)
-   * * [Validating a words resource for next-generation
+   * * [Validating a words resource for large speech models and next-generation
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corporaWords-ng#validateModel-ng).
    *
    * @param {Object} params - The parameters to send to the service.
@@ -2357,11 +2417,11 @@ class SpeechToTextV1 extends BaseService {
    * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-languageCreate#addWords)
    * * [Working with custom words for previous-generation
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corporaWords#workingWords)
-   * * [Working with custom words for next-generation
+   * * [Working with custom words for large speech models and next-generation
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corporaWords-ng#workingWords-ng)
    * * [Validating a words resource for previous-generation
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corporaWords#validateModel)
-   * * [Validating a words resource for next-generation
+   * * [Validating a words resource for large speech models and next-generation
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corporaWords-ng#validateModel-ng).
    *
    * @param {Object} params - The parameters to send to the service.
@@ -2455,11 +2515,11 @@ class SpeechToTextV1 extends BaseService {
    * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-languageCreate#addWords)
    * * [Working with custom words for previous-generation
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corporaWords#workingWords)
-   * * [Working with custom words for next-generation
+   * * [Working with custom words for large speech models and next-generation
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corporaWords-ng#workingWords-ng)
    * * [Validating a words resource for previous-generation
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corporaWords#validateModel)
-   * * [Validating a words resource for next-generation
+   * * [Validating a words resource for large speech models and next-generation
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-corporaWords-ng#validateModel-ng).
    *
    * @param {Object} params - The parameters to send to the service.
@@ -2987,11 +3047,11 @@ class SpeechToTextV1 extends BaseService {
    * model count is below the limit.
    *
    * **Note:** Acoustic model customization is supported only for use with previous-generation models. It is not
-   * supported for next-generation models.
+   * supported for large speech models and next-generation models.
    *
    * **Important:** Effective **31 July 2023**, all previous-generation models will be removed from the service and the
    * documentation. Most previous-generation models were deprecated on 15 March 2022. You must migrate to the equivalent
-   * next-generation model by 31 July 2023. For more information, see [Migrating to next-generation
+   * large speech model or next-generation model by 31 July 2023. For more information, see [Migrating to large speech
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-migrate).
    *
    * **See also:** [Create a custom acoustic
@@ -3065,7 +3125,7 @@ class SpeechToTextV1 extends BaseService {
    * list information about it.
    *
    * **Note:** Acoustic model customization is supported only for use with previous-generation models. It is not
-   * supported for next-generation models.
+   * supported for large speech models and next-generation models.
    *
    * **See also:** [Listing custom acoustic
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-manageAcousticModels#listModels-acoustic).
@@ -3126,7 +3186,7 @@ class SpeechToTextV1 extends BaseService {
    * that owns a model to list information about it.
    *
    * **Note:** Acoustic model customization is supported only for use with previous-generation models. It is not
-   * supported for next-generation models.
+   * supported for large speech models and next-generation models.
    *
    * **See also:** [Listing custom acoustic
    * models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-manageAcousticModels#listModels-acoustic).
@@ -3184,7 +3244,7 @@ class SpeechToTextV1 extends BaseService {
    * that owns a model to delete it.
    *
    * **Note:** Acoustic model customization is supported only for use with previous-generation models. It is not
-   * supported for next-generation models.
+   * supported for large speech models and next-generation models.
    *
    * **See also:** [Deleting a custom acoustic
    * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-manageAcousticModels#deleteModel-acoustic).
@@ -3264,7 +3324,7 @@ class SpeechToTextV1 extends BaseService {
    * trained and available.
    *
    * **Note:** Acoustic model customization is supported only for use with previous-generation models. It is not
-   * supported for next-generation models.
+   * supported for large speech models and next-generation models.
    *
    * **See also:**
    * * [Train the custom acoustic
@@ -3363,7 +3423,7 @@ class SpeechToTextV1 extends BaseService {
    * model to reset it.
    *
    * **Note:** Acoustic model customization is supported only for use with previous-generation models. It is not
-   * supported for next-generation models.
+   * supported for large speech models and next-generation models.
    *
    * **See also:** [Resetting a custom acoustic
    * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-manageAcousticModels#resetModel-acoustic).
@@ -3438,7 +3498,7 @@ class SpeechToTextV1 extends BaseService {
    * was not trained with a custom language model.
    *
    * **Note:** Acoustic model customization is supported only for use with previous-generation models. It is not
-   * supported for next-generation models.
+   * supported for large speech models and next-generation models.
    *
    * **See also:** [Upgrading a custom acoustic
    * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-custom-upgrade#custom-upgrade-acoustic).
@@ -3516,7 +3576,7 @@ class SpeechToTextV1 extends BaseService {
    * its audio resources.
    *
    * **Note:** Acoustic model customization is supported only for use with previous-generation models. It is not
-   * supported for next-generation models.
+   * supported for large speech models and next-generation models.
    *
    * **See also:** [Listing audio resources for a custom acoustic
    * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-manageAudio#listAudio).
@@ -3601,7 +3661,7 @@ class SpeechToTextV1 extends BaseService {
    * seconds until it becomes `ok`.
    *
    * **Note:** Acoustic model customization is supported only for use with previous-generation models. It is not
-   * supported for next-generation models.
+   * supported for large speech models and next-generation models.
    *
    * **See also:** [Add audio to the custom acoustic
    * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-acoustic#addAudio).
@@ -3768,7 +3828,7 @@ class SpeechToTextV1 extends BaseService {
    * You must use credentials for the instance of the service that owns a model to list its audio resources.
    *
    * **Note:** Acoustic model customization is supported only for use with previous-generation models. It is not
-   * supported for next-generation models.
+   * supported for large speech models and next-generation models.
    *
    * **See also:** [Listing audio resources for a custom acoustic
    * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-manageAudio#listAudio).
@@ -3832,7 +3892,7 @@ class SpeechToTextV1 extends BaseService {
    * service that owns a model to delete its audio resources.
    *
    * **Note:** Acoustic model customization is supported only for use with previous-generation models. It is not
-   * supported for next-generation models.
+   * supported for large speech models and next-generation models.
    *
    * **See also:** [Deleting an audio resource from a custom acoustic
    * model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-manageAudio#deleteAudio).
@@ -4000,15 +4060,19 @@ namespace SpeechToTextV1 {
       DE_DE_MULTIMEDIA = 'de-DE_Multimedia',
       DE_DE_NARROWBANDMODEL = 'de-DE_NarrowbandModel',
       DE_DE_TELEPHONY = 'de-DE_Telephony',
+      EN_AU = 'en-AU',
       EN_AU_BROADBANDMODEL = 'en-AU_BroadbandModel',
       EN_AU_MULTIMEDIA = 'en-AU_Multimedia',
       EN_AU_NARROWBANDMODEL = 'en-AU_NarrowbandModel',
       EN_AU_TELEPHONY = 'en-AU_Telephony',
+      EN_GB = 'en-GB',
       EN_GB_BROADBANDMODEL = 'en-GB_BroadbandModel',
       EN_GB_MULTIMEDIA = 'en-GB_Multimedia',
       EN_GB_NARROWBANDMODEL = 'en-GB_NarrowbandModel',
       EN_GB_TELEPHONY = 'en-GB_Telephony',
+      EN_IN = 'en-IN',
       EN_IN_TELEPHONY = 'en-IN_Telephony',
+      EN_US = 'en-US',
       EN_US_BROADBANDMODEL = 'en-US_BroadbandModel',
       EN_US_MULTIMEDIA = 'en-US_Multimedia',
       EN_US_NARROWBANDMODEL = 'en-US_NarrowbandModel',
@@ -4030,10 +4094,12 @@ namespace SpeechToTextV1 {
       ES_MX_NARROWBANDMODEL = 'es-MX_NarrowbandModel',
       ES_PE_BROADBANDMODEL = 'es-PE_BroadbandModel',
       ES_PE_NARROWBANDMODEL = 'es-PE_NarrowbandModel',
+      FR_CA = 'fr-CA',
       FR_CA_BROADBANDMODEL = 'fr-CA_BroadbandModel',
       FR_CA_MULTIMEDIA = 'fr-CA_Multimedia',
       FR_CA_NARROWBANDMODEL = 'fr-CA_NarrowbandModel',
       FR_CA_TELEPHONY = 'fr-CA_Telephony',
+      FR_FR = 'fr-FR',
       FR_FR_BROADBANDMODEL = 'fr-FR_BroadbandModel',
       FR_FR_MULTIMEDIA = 'fr-FR_Multimedia',
       FR_FR_NARROWBANDMODEL = 'fr-FR_NarrowbandModel',
@@ -4043,6 +4109,7 @@ namespace SpeechToTextV1 {
       IT_IT_NARROWBANDMODEL = 'it-IT_NarrowbandModel',
       IT_IT_MULTIMEDIA = 'it-IT_Multimedia',
       IT_IT_TELEPHONY = 'it-IT_Telephony',
+      JA_JP = 'ja-JP',
       JA_JP_BROADBANDMODEL = 'ja-JP_BroadbandModel',
       JA_JP_MULTIMEDIA = 'ja-JP_Multimedia',
       JA_JP_NARROWBANDMODEL = 'ja-JP_NarrowbandModel',
@@ -4088,6 +4155,13 @@ namespace SpeechToTextV1 {
      *  model](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-use#models-use-default).
      */
     model?: RecognizeConstants.Model | string;
+    /** If `true`, the service returns a response object `SpeechActivity` which contains the time when a speech
+     *  activity is detected in the stream. This can be used both in standard and low latency mode. This feature enables
+     *  client applications to know that some words/speech has been detected and the service is in the process of
+     *  decoding. This can be used in lieu of interim results in standard mode. See [Using speech recognition
+     *  parameters](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-service-features#features-parameters).
+     */
+    speechBeginEvent?: boolean;
     /** The customization ID (GUID) of a custom language model that is to be used with the recognition request. The
      *  base model of the specified custom language model must match the model specified with the `model` parameter. You
      *  must make the request with credentials for the instance of the service that owns the custom model. By default,
@@ -4118,6 +4192,7 @@ namespace SpeechToTextV1 {
      *
      *  Specify a value between 0.0 and 1.0. Unless a different customization weight was specified for the custom model
      *  when the model was trained, the default value is:
+     *  * 0.5 for large speech models
      *  * 0.3 for previous-generation models
      *  * 0.2 for most next-generation models
      *  * 0.1 for next-generation English and Japanese models
@@ -4197,8 +4272,8 @@ namespace SpeechToTextV1 {
      *  formatting](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-formatting#smart-formatting).
      */
     smartFormatting?: boolean;
-    /** Smart formatting version is for next-generation models and that is supported in US English, Brazilian
-     *  Portuguese, French and German languages.
+    /** Smart formatting version for large speech models and next-generation models is supported in US English,
+     *  Brazilian Portuguese, French, German, Spanish and French Canadian languages.
      */
     smartFormattingVersion?: number;
     /** If `true`, the response includes labels that identify which words were spoken by which participants in a
@@ -4207,8 +4282,7 @@ namespace SpeechToTextV1 {
      *  * _For previous-generation models,_ the parameter can be used with Australian English, US English, German,
      *  Japanese, Korean, and Spanish (both broadband and narrowband models) and UK English (narrowband model)
      *  transcription only.
-     *  * _For next-generation models,_ the parameter can be used with Czech, English (Australian, Indian, UK, and US),
-     *  German, Japanese, Korean, and Spanish transcription only.
+     *  * _For large speech models and next-generation models,_ the parameter can be used with all available languages.
      *
      *  See [Speaker labels](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-speaker-labels).
      */
@@ -4284,8 +4358,8 @@ namespace SpeechToTextV1 {
      *  The values increase on a monotonic curve. Specifying one or two decimal places of precision (for example,
      *  `0.55`) is typically more than sufficient.
      *
-     *  The parameter is supported with all next-generation models and with most previous-generation models. See [Speech
-     *  detector
+     *  The parameter is supported with all large speech models, next-generation models and with most
+     *  previous-generation models. See [Speech detector
      *  sensitivity](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#detection-parameters-sensitivity)
      *  and [Language model
      *  support](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#detection-support).
@@ -4302,8 +4376,8 @@ namespace SpeechToTextV1 {
      *  The values increase on a monotonic curve. Specifying one or two decimal places of precision (for example,
      *  `0.55`) is typically more than sufficient.
      *
-     *  The parameter is supported with all next-generation models and with most previous-generation models. See
-     *  [Background audio
+     *  The parameter is supported with all large speech models, next-generation models and with most
+     *  previous-generation models. See [Background audio
      *  suppression](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#detection-parameters-suppression)
      *  and [Language model
      *  support](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#detection-support).
@@ -4314,17 +4388,17 @@ namespace SpeechToTextV1 {
      *  results faster than previous-generation models. The `low_latency` parameter causes the models to produce results
      *  even more quickly, though the results might be less accurate when the parameter is used.
      *
-     *  The parameter is not available for previous-generation `Broadband` and `Narrowband` models. It is available for
-     *  most next-generation models.
+     *  The parameter is not available for large speech models and previous-generation `Broadband` and `Narrowband`
+     *  models. It is available for most next-generation models.
      *  * For a list of next-generation models that support low latency, see [Supported next-generation language
      *  models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng#models-ng-supported).
      *  * For more information about the `low_latency` parameter, see [Low
      *  latency](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-interim#low-latency).
      */
     lowLatency?: boolean;
-    /** For next-generation models, an indication of whether the service is biased to recognize shorter or longer
-     *  strings of characters when developing transcription hypotheses. By default, the service is optimized to produce
-     *  the best balance of strings of different lengths.
+    /** For large speech models and next-generation models, an indication of whether the service is biased to
+     *  recognize shorter or longer strings of characters when developing transcription hypotheses. By default, the
+     *  service is optimized to produce the best balance of strings of different lengths.
      *
      *  The default bias is 0.0. The allowable range of values is -1.0 to 1.0.
      *  * Negative values bias the service to favor hypotheses with shorter strings of characters.
@@ -4374,15 +4448,19 @@ namespace SpeechToTextV1 {
       DE_DE_MULTIMEDIA = 'de-DE_Multimedia',
       DE_DE_NARROWBANDMODEL = 'de-DE_NarrowbandModel',
       DE_DE_TELEPHONY = 'de-DE_Telephony',
+      EN_AU = 'en-AU',
       EN_AU_BROADBANDMODEL = 'en-AU_BroadbandModel',
       EN_AU_MULTIMEDIA = 'en-AU_Multimedia',
       EN_AU_NARROWBANDMODEL = 'en-AU_NarrowbandModel',
       EN_AU_TELEPHONY = 'en-AU_Telephony',
+      EN_IN = 'en-IN',
       EN_IN_TELEPHONY = 'en-IN_Telephony',
+      EN_GB = 'en-GB',
       EN_GB_BROADBANDMODEL = 'en-GB_BroadbandModel',
       EN_GB_MULTIMEDIA = 'en-GB_Multimedia',
       EN_GB_NARROWBANDMODEL = 'en-GB_NarrowbandModel',
       EN_GB_TELEPHONY = 'en-GB_Telephony',
+      EN_US = 'en-US',
       EN_US_BROADBANDMODEL = 'en-US_BroadbandModel',
       EN_US_MULTIMEDIA = 'en-US_Multimedia',
       EN_US_NARROWBANDMODEL = 'en-US_NarrowbandModel',
@@ -4404,10 +4482,12 @@ namespace SpeechToTextV1 {
       ES_MX_NARROWBANDMODEL = 'es-MX_NarrowbandModel',
       ES_PE_BROADBANDMODEL = 'es-PE_BroadbandModel',
       ES_PE_NARROWBANDMODEL = 'es-PE_NarrowbandModel',
+      FR_CA = 'fr-CA',
       FR_CA_BROADBANDMODEL = 'fr-CA_BroadbandModel',
       FR_CA_MULTIMEDIA = 'fr-CA_Multimedia',
       FR_CA_NARROWBANDMODEL = 'fr-CA_NarrowbandModel',
       FR_CA_TELEPHONY = 'fr-CA_Telephony',
+      FR_FR = 'fr-FR',
       FR_FR_BROADBANDMODEL = 'fr-FR_BroadbandModel',
       FR_FR_MULTIMEDIA = 'fr-FR_Multimedia',
       FR_FR_NARROWBANDMODEL = 'fr-FR_NarrowbandModel',
@@ -4417,6 +4497,7 @@ namespace SpeechToTextV1 {
       IT_IT_NARROWBANDMODEL = 'it-IT_NarrowbandModel',
       IT_IT_MULTIMEDIA = 'it-IT_Multimedia',
       IT_IT_TELEPHONY = 'it-IT_Telephony',
+      JA_JP = 'ja-JP',
       JA_JP_BROADBANDMODEL = 'ja-JP_BroadbandModel',
       JA_JP_MULTIMEDIA = 'ja-JP_Multimedia',
       JA_JP_NARROWBANDMODEL = 'ja-JP_NarrowbandModel',
@@ -4551,6 +4632,7 @@ namespace SpeechToTextV1 {
      *
      *  Specify a value between 0.0 and 1.0. Unless a different customization weight was specified for the custom model
      *  when the model was trained, the default value is:
+     *  * 0.5 for large speech models
      *  * 0.3 for previous-generation models
      *  * 0.2 for most next-generation models
      *  * 0.1 for next-generation English and Japanese models
@@ -4630,8 +4712,8 @@ namespace SpeechToTextV1 {
      *  formatting](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-formatting#smart-formatting).
      */
     smartFormatting?: boolean;
-    /** Smart formatting version is for next-generation models and that is supported in US English, Brazilian
-     *  Portuguese, French and German languages.
+    /** Smart formatting version for large speech models and next-generation models is supported in US English,
+     *  Brazilian Portuguese, French, German, Spanish and French Canadian languages.
      */
     smartFormattingVersion?: number;
     /** If `true`, the response includes labels that identify which words were spoken by which participants in a
@@ -4640,8 +4722,7 @@ namespace SpeechToTextV1 {
      *  * _For previous-generation models,_ the parameter can be used with Australian English, US English, German,
      *  Japanese, Korean, and Spanish (both broadband and narrowband models) and UK English (narrowband model)
      *  transcription only.
-     *  * _For next-generation models,_ the parameter can be used with Czech, English (Australian, Indian, UK, and US),
-     *  German, Japanese, Korean, and Spanish transcription only.
+     *  * _For large speech models and next-generation models,_ the parameter can be used with all available languages.
      *
      *  See [Speaker labels](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-speaker-labels).
      */
@@ -4740,8 +4821,8 @@ namespace SpeechToTextV1 {
      *  The values increase on a monotonic curve. Specifying one or two decimal places of precision (for example,
      *  `0.55`) is typically more than sufficient.
      *
-     *  The parameter is supported with all next-generation models and with most previous-generation models. See [Speech
-     *  detector
+     *  The parameter is supported with all large speech models, next-generation models and with most
+     *  previous-generation models. See [Speech detector
      *  sensitivity](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#detection-parameters-sensitivity)
      *  and [Language model
      *  support](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#detection-support).
@@ -4758,8 +4839,8 @@ namespace SpeechToTextV1 {
      *  The values increase on a monotonic curve. Specifying one or two decimal places of precision (for example,
      *  `0.55`) is typically more than sufficient.
      *
-     *  The parameter is supported with all next-generation models and with most previous-generation models. See
-     *  [Background audio
+     *  The parameter is supported with all large speech models, next-generation models and with most
+     *  previous-generation models. See [Background audio
      *  suppression](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#detection-parameters-suppression)
      *  and [Language model
      *  support](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#detection-support).
@@ -4770,17 +4851,17 @@ namespace SpeechToTextV1 {
      *  results faster than previous-generation models. The `low_latency` parameter causes the models to produce results
      *  even more quickly, though the results might be less accurate when the parameter is used.
      *
-     *  The parameter is not available for previous-generation `Broadband` and `Narrowband` models. It is available for
-     *  most next-generation models.
+     *  The parameter is not available for large speech models and previous-generation `Broadband` and `Narrowband`
+     *  models. It is available for most next-generation models.
      *  * For a list of next-generation models that support low latency, see [Supported next-generation language
      *  models](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-models-ng#models-ng-supported).
      *  * For more information about the `low_latency` parameter, see [Low
      *  latency](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-interim#low-latency).
      */
     lowLatency?: boolean;
-    /** For next-generation models, an indication of whether the service is biased to recognize shorter or longer
-     *  strings of characters when developing transcription hypotheses. By default, the service is optimized to produce
-     *  the best balance of strings of different lengths.
+    /** For large speech models and next-generation models, an indication of whether the service is biased to
+     *  recognize shorter or longer strings of characters when developing transcription hypotheses. By default, the
+     *  service is optimized to produce the best balance of strings of different lengths.
      *
      *  The default bias is 0.0. The allowable range of values is -1.0 to 1.0.
      *  * Negative values bias the service to favor hypotheses with shorter strings of characters.
@@ -4830,15 +4911,19 @@ namespace SpeechToTextV1 {
       DE_DE_MULTIMEDIA = 'de-DE_Multimedia',
       DE_DE_NARROWBANDMODEL = 'de-DE_NarrowbandModel',
       DE_DE_TELEPHONY = 'de-DE_Telephony',
+      EN_AU = 'en-AU',
       EN_AU_BROADBANDMODEL = 'en-AU_BroadbandModel',
       EN_AU_MULTIMEDIA = 'en-AU_Multimedia',
       EN_AU_NARROWBANDMODEL = 'en-AU_NarrowbandModel',
       EN_AU_TELEPHONY = 'en-AU_Telephony',
+      EN_IN = 'en-IN',
       EN_IN_TELEPHONY = 'en-IN_Telephony',
+      EN_GB = 'en-GB',
       EN_GB_BROADBANDMODEL = 'en-GB_BroadbandModel',
       EN_GB_MULTIMEDIA = 'en-GB_Multimedia',
       EN_GB_NARROWBANDMODEL = 'en-GB_NarrowbandModel',
       EN_GB_TELEPHONY = 'en-GB_Telephony',
+      EN_US = 'en-US',
       EN_US_BROADBANDMODEL = 'en-US_BroadbandModel',
       EN_US_MULTIMEDIA = 'en-US_Multimedia',
       EN_US_NARROWBANDMODEL = 'en-US_NarrowbandModel',
@@ -4860,10 +4945,12 @@ namespace SpeechToTextV1 {
       ES_MX_NARROWBANDMODEL = 'es-MX_NarrowbandModel',
       ES_PE_BROADBANDMODEL = 'es-PE_BroadbandModel',
       ES_PE_NARROWBANDMODEL = 'es-PE_NarrowbandModel',
+      FR_CA = 'fr-CA',
       FR_CA_BROADBANDMODEL = 'fr-CA_BroadbandModel',
       FR_CA_MULTIMEDIA = 'fr-CA_Multimedia',
       FR_CA_NARROWBANDMODEL = 'fr-CA_NarrowbandModel',
       FR_CA_TELEPHONY = 'fr-CA_Telephony',
+      FR_FR = 'fr-FR',
       FR_FR_BROADBANDMODEL = 'fr-FR_BroadbandModel',
       FR_FR_MULTIMEDIA = 'fr-FR_Multimedia',
       FR_FR_NARROWBANDMODEL = 'fr-FR_NarrowbandModel',
@@ -4873,6 +4960,7 @@ namespace SpeechToTextV1 {
       IT_IT_NARROWBANDMODEL = 'it-IT_NarrowbandModel',
       IT_IT_MULTIMEDIA = 'it-IT_Multimedia',
       IT_IT_TELEPHONY = 'it-IT_Telephony',
+      JA_JP = 'ja-JP',
       JA_JP_BROADBANDMODEL = 'ja-JP_BroadbandModel',
       JA_JP_MULTIMEDIA = 'ja-JP_Multimedia',
       JA_JP_NARROWBANDMODEL = 'ja-JP_NarrowbandModel',
@@ -4977,15 +5065,19 @@ namespace SpeechToTextV1 {
       DE_DE_MULTIMEDIA = 'de-DE_Multimedia',
       DE_DE_NARROWBANDMODEL = 'de-DE_NarrowbandModel',
       DE_DE_TELEPHONY = 'de-DE_Telephony',
+      EN_AU = 'en-AU',
       EN_AU_BROADBANDMODEL = 'en-AU_BroadbandModel',
       EN_AU_MULTIMEDIA = 'en-AU_Multimedia',
       EN_AU_NARROWBANDMODEL = 'en-AU_NarrowbandModel',
       EN_AU_TELEPHONY = 'en-AU_Telephony',
+      EN_GB = 'en-GB',
       EN_GB_BROADBANDMODEL = 'en-GB_BroadbandModel',
       EN_GB_MULTIMEDIA = 'en-GB_Multimedia',
       EN_GB_NARROWBANDMODEL = 'en-GB_NarrowbandModel',
       EN_GB_TELEPHONY = 'en-GB_Telephony',
+      EN_IN = 'en-IN',
       EN_IN_TELEPHONY = 'en-IN_Telephony',
+      EN_US = 'en-US',
       EN_US_BROADBANDMODEL = 'en-US_BroadbandModel',
       EN_US_MULTIMEDIA = 'en-US_Multimedia',
       EN_US_NARROWBANDMODEL = 'en-US_NarrowbandModel',
@@ -5007,10 +5099,12 @@ namespace SpeechToTextV1 {
       ES_MX_NARROWBANDMODEL = 'es-MX_NarrowbandModel',
       ES_PE_BROADBANDMODEL = 'es-PE_BroadbandModel',
       ES_PE_NARROWBANDMODEL = 'es-PE_NarrowbandModel',
+      FR_CA = 'fr-CA',
       FR_CA_BROADBANDMODEL = 'fr-CA_BroadbandModel',
       FR_CA_MULTIMEDIA = 'fr-CA_Multimedia',
       FR_CA_NARROWBANDMODEL = 'fr-CA_NarrowbandModel',
       FR_CA_TELEPHONY = 'fr-CA_Telephony',
+      FR_FR = 'fr-FR',
       FR_FR_BROADBANDMODEL = 'fr-FR_BroadbandModel',
       FR_FR_MULTIMEDIA = 'fr-FR_Multimedia',
       FR_FR_NARROWBANDMODEL = 'fr-FR_NarrowbandModel',
@@ -5020,6 +5114,7 @@ namespace SpeechToTextV1 {
       IT_IT_NARROWBANDMODEL = 'it-IT_NarrowbandModel',
       IT_IT_MULTIMEDIA = 'it-IT_Multimedia',
       IT_IT_TELEPHONY = 'it-IT_Telephony',
+      JA_JP = 'ja-JP',
       JA_JP_BROADBANDMODEL = 'ja-JP_BroadbandModel',
       JA_JP_MULTIMEDIA = 'ja-JP_Multimedia',
       JA_JP_NARROWBANDMODEL = 'ja-JP_NarrowbandModel',
@@ -5120,13 +5215,15 @@ namespace SpeechToTextV1 {
      *  * `user` trains the model only on custom words that were added or modified by the user directly. The model is
      *  not trained on new words extracted from corpora or grammars.
      *
-     *  _For custom models that are based on next-generation models_, the service ignores the parameter. The words
-     *  resource contains only custom words that the user adds or modifies directly, so the parameter is unnecessary.
+     *  _For custom models that are based on large speech models and next-generation models_, the service ignores the
+     *  `word_type_to_add` parameter. The words resource contains only custom words that the user adds or modifies
+     *  directly, so the parameter is unnecessary.
      */
     wordTypeToAdd?: TrainLanguageModelConstants.WordTypeToAdd | string;
     /** Specifies a customization weight for the custom language model. The customization weight tells the service
      *  how much weight to give to words from the custom language model compared to those from the base model for speech
      *  recognition. Specify a value between 0.0 and 1.0. The default value is:
+     *  * 0.5 for large speech models
      *  * 0.3 for previous-generation models
      *  * 0.2 for most next-generation models
      *  * 0.1 for next-generation English and Japanese models
@@ -5162,7 +5259,7 @@ namespace SpeechToTextV1 {
 
   /** Constants for the `trainLanguageModel` operation. */
   export namespace TrainLanguageModelConstants {
-    /** _For custom models that are based on previous-generation models_, the type of words from the custom language model's words resource on which to train the model: * `all` (the default) trains the model on all new words, regardless of whether they were extracted from corpora or grammars or were added or modified by the user. * `user` trains the model only on custom words that were added or modified by the user directly. The model is not trained on new words extracted from corpora or grammars. _For custom models that are based on next-generation models_, the service ignores the parameter. The words resource contains only custom words that the user adds or modifies directly, so the parameter is unnecessary. */
+    /** _For custom models that are based on previous-generation models_, the type of words from the custom language model's words resource on which to train the model: * `all` (the default) trains the model on all new words, regardless of whether they were extracted from corpora or grammars or were added or modified by the user. * `user` trains the model only on custom words that were added or modified by the user directly. The model is not trained on new words extracted from corpora or grammars. _For custom models that are based on large speech models and next-generation models_, the service ignores the `word_type_to_add` parameter. The words resource contains only custom words that the user adds or modifies directly, so the parameter is unnecessary. */
     export enum WordTypeToAdd {
       ALL = 'all',
       USER = 'user',
@@ -6083,8 +6180,8 @@ namespace SpeechToTextV1 {
     name: string;
     /** The total number of words in the corpus. The value is `0` while the corpus is being processed. */
     total_words: number;
-    /** _For custom models that are based on previous-generation models_, the number of OOV words extracted from the
-     *  corpus. The value is `0` while the corpus is being processed.
+    /** _For custom models that are based on large speech models and previous-generation models_, the number of OOV
+     *  words extracted from the corpus. The value is `0` while the corpus is being processed.
      *
      *  _For custom models that are based on next-generation models_, no OOV words are extracted from corpora, so the
      *  value is always `0`.
@@ -6505,13 +6602,13 @@ namespace SpeechToTextV1 {
      *  elements: the word followed by its start and end time in seconds, for example:
      *  `[["hello",0.0,1.2],["world",1.2,2.5]]`. Timestamps are returned only for the best alternative.
      */
-    timestamps?: [string, number, number][];
+    timestamps?: string[];
     /** A confidence score for each word of the transcript as a list of lists. Each inner list consists of two
      *  elements: the word and its confidence score in the range of 0.0 to 1.0, for example:
      *  `[["hello",0.95],["world",0.86]]`. Confidence scores are returned only for the best alternative and only with
      *  results marked as final.
      */
-    word_confidence?: [string, number][];
+    word_confidence?: string[];
   }
 
   /** Component results for a speech recognition request. */
