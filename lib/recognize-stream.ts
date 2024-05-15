@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2014, 2020.
+ * (C) Copyright IBM Corp. 2014, 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -62,7 +62,7 @@ class RecognizeStream extends Duplex {
    *
    * Uses WebSockets under the hood. For audio with no recognizable speech, no `data` events are emitted.
    *
-   * By default, only finalized text is emitted in the data events, however when `objectMode`/`readableObjectMode` and `interim_results` are enabled, both interim and final results objects are emitted.
+   * By default, only finalized text is emitted in the data events, however when `objectMode`/`readableObjectMode` is enabled, both interim and final results objects are emitted.
    * WriteableElementStream uses this, for example, to live-update the DOM with word-by-word transcriptions.
    *
    * Note that the WebSocket connection is not established until the first chunk of data is recieved. This allows for auto-detection of content type (for wav/flac/opus audio).
@@ -86,7 +86,6 @@ class RecognizeStream extends Duplex {
    * @param {string} [options.contentType] - The format (MIME type) of the audio
    * @param {number} [options.customizationWeight] - Tell the service how much weight to give to words from the custom language model compared to those from the base model for the current request
    * @param {number} [options.inactivityTimeout] - The time in seconds after which, if only silence (no speech) is detected in the audio, the connection is closed (default=30)
-   * @param {boolean} [options.interimResults] - If true, the service returns interim results as a stream of JSON SpeechRecognitionResults objects (default=false)
    * @param {string[]} [options.keywords] - An array of keyword strings to spot in the audio
    * @param {number} [options.keywordsThreshold] - A confidence value that is the lower bound for spotting a keyword
    * @param {number} [options.maxAlternatives] - The maximum number of alternative transcripts that the service is to return (default=1)
@@ -105,7 +104,6 @@ class RecognizeStream extends Duplex {
    * @param {boolean} [options.splitTranscriptAtPhraseEnd] - If `true`, directs the service to split the transcript into multiple final results based on semantic features of the input
    * @param {number} [options.speechDetectorSensitivity] - The sensitivity of speech activity detection that the service is to perform
    * @param {number} [options.backgroundAudioSuppression] - The level to which the service is to suppress background audio based on its volume to prevent it from being transcribed as speech
-   * @param {boolean} [params.lowLatency] - If `true` for next-generation `Multimedia` and `Telephony` models that support low latency, directs the service to produce results even more quickly than it usually does
    * @constructor
    */
   constructor(options: RecognizeStream.Options) {
@@ -168,7 +166,6 @@ class RecognizeStream extends Duplex {
       'timestamps',
       'word_confidence',
       'content-type',
-      'interim_results',
       'keywords',
       'keywords_threshold',
       'max_alternatives',
@@ -182,7 +179,6 @@ class RecognizeStream extends Duplex {
       'split_transcript_at_phrase_end',
       'speech_detector_sensitivity',
       'background_audio_suppression',
-      'low_latency',
     ];
     const openingMessage = processUserParameters(options, openingMessageParamsAllowed);
     openingMessage.action = 'start';

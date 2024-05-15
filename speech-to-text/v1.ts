@@ -266,7 +266,6 @@ namespace SpeechToTextV1 {
     contentType?: string;
     customizationWeight?: number;
     inactivityTimeout?: number;
-    interimResults?: boolean;
     keywords?: string[];
     keywordsThreshold?: number;
     maxAlternatives?: number;
@@ -286,7 +285,6 @@ namespace SpeechToTextV1 {
     splitTranscriptAtPhraseEnd?: boolean;
     speechDetectorSensitivity?: number;
     backgroundAudioSuppression?: number;
-    lowLatency?: boolean;
     characterInsertionBias?: number;
   }
 }
