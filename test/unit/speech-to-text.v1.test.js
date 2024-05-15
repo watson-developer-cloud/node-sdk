@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2024.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -273,6 +273,7 @@ describe('SpeechToTextV1', () => {
         const audio = Buffer.from('This is a mock file.');
         const contentType = 'application/octet-stream';
         const model = 'en-US_BroadbandModel';
+        const speechBeginEvent = false;
         const languageCustomizationId = 'testString';
         const acousticCustomizationId = 'testString';
         const baseModelVersion = 'testString';
@@ -301,6 +302,7 @@ describe('SpeechToTextV1', () => {
           audio,
           contentType,
           model,
+          speechBeginEvent,
           languageCustomizationId,
           acousticCustomizationId,
           baseModelVersion,
@@ -344,6 +346,7 @@ describe('SpeechToTextV1', () => {
         checkUserHeader(createRequestMock, 'Content-Type', contentType);
         expect(mockRequestOptions.body).toEqual(audio);
         expect(mockRequestOptions.qs.model).toEqual(model);
+        expect(mockRequestOptions.qs.speech_begin_event).toEqual(speechBeginEvent);
         expect(mockRequestOptions.qs.language_customization_id).toEqual(languageCustomizationId);
         expect(mockRequestOptions.qs.acoustic_customization_id).toEqual(acousticCustomizationId);
         expect(mockRequestOptions.qs.base_model_version).toEqual(baseModelVersion);
