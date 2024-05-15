@@ -255,7 +255,7 @@ describe('DiscoveryV2', () => {
       function __createProjectTest() {
         // Construct the params object for operation createProject
         const name = 'testString';
-        const type = 'document_retrieval';
+        const type = 'intelligent_document_processing';
         const defaultQueryParameters = defaultQueryParamsModel;
         const createProjectParams = {
           name,
@@ -301,7 +301,7 @@ describe('DiscoveryV2', () => {
       test('should prioritize user-given headers', () => {
         // parameters
         const name = 'testString';
-        const type = 'document_retrieval';
+        const type = 'intelligent_document_processing';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const createProjectParams = {
@@ -790,12 +790,14 @@ describe('DiscoveryV2', () => {
         const name = 'testString';
         const description = 'testString';
         const language = 'en';
+        const ocrEnabled = false;
         const enrichments = [collectionEnrichmentModel];
         const createCollectionParams = {
           projectId,
           name,
           description,
           language,
+          ocrEnabled,
           enrichments,
         };
 
@@ -816,6 +818,7 @@ describe('DiscoveryV2', () => {
         expect(mockRequestOptions.body.name).toEqual(name);
         expect(mockRequestOptions.body.description).toEqual(description);
         expect(mockRequestOptions.body.language).toEqual(language);
+        expect(mockRequestOptions.body.ocr_enabled).toEqual(ocrEnabled);
         expect(mockRequestOptions.body.enrichments).toEqual(enrichments);
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.project_id).toEqual(projectId);
@@ -987,12 +990,14 @@ describe('DiscoveryV2', () => {
         const collectionId = 'testString';
         const name = 'testString';
         const description = 'testString';
+        const ocrEnabled = false;
         const enrichments = [collectionEnrichmentModel];
         const updateCollectionParams = {
           projectId,
           collectionId,
           name,
           description,
+          ocrEnabled,
           enrichments,
         };
 
@@ -1012,6 +1017,7 @@ describe('DiscoveryV2', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.body.name).toEqual(name);
         expect(mockRequestOptions.body.description).toEqual(description);
+        expect(mockRequestOptions.body.ocr_enabled).toEqual(ocrEnabled);
         expect(mockRequestOptions.body.enrichments).toEqual(enrichments);
         expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
         expect(mockRequestOptions.path.project_id).toEqual(projectId);
