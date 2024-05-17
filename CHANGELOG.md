@@ -1,3 +1,12 @@
+# [9.1.0](https://github.com/watson-developer-cloud/node-sdk/compare/v9.0.1...v9.1.0) (2024-05-17)
+
+
+### Features
+
+* **discov2:** add ocrEnabled parameter ([5a9c30e](https://github.com/watson-developer-cloud/node-sdk/commit/5a9c30e181e043f7ba6aee8af1772944c94a0a3a))
+* **stt:** add speechBeginEvent param to recognize func ([8f19640](https://github.com/watson-developer-cloud/node-sdk/commit/8f196401c48674ddb3503069dcd17ff7a6e16b2a))
+* **stt:** remove interimResults and lowLatency wss params ([6c79d93](https://github.com/watson-developer-cloud/node-sdk/commit/6c79d93e8f4e57422238a4076eb90fe49c9f14bf))
+
 ## [9.0.1](https://github.com/watson-developer-cloud/node-sdk/compare/v9.0.0...v9.0.1) (2024-03-13)
 
 
