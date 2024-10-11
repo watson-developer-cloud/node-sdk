@@ -27,10 +27,10 @@ npm install ibm-watson
 ## Usage
 
 ```js
-import DiscoveryV1 from 'ibm-watson/discovery/v1';
+import AssistantV2 from 'ibm-watson/assistant/v2';
 import { IamAuthenticator } from 'ibm-watson/auth';
 
-const discoveryClient = new DiscoveryV1({
+const assistantClient = new AssistantV2({
   authenticator: new IamAuthenticator({ apikey: '{apikey}' }),
   version: '{version}',
 });
@@ -55,7 +55,8 @@ Watson services are migrating to token-based Identity and Access Management (IAM
 
 - With some service instances, you authenticate to the API by using **[IAM](#iam)**.
 - In other instances, you authenticate by providing the **[username and password](#username-and-password)** for the service instance.
-- If you're using a Watson service on ICP, you'll need to authenticate in [a specific way](#icp).
+- If you are using a Watson service on ICP, you will need to authenticate in [a specific way](#icp).
+- If you are using a Watson service on AWS, you will need to authenticate using [mcsp](#mcsp).
 
 Authentication is accomplished using dedicated Authenticators for each authentication scheme. Import authenticators from `ibm-watson/auth` or rely on externally-configured credentials which will be read from a credentials file or environment variables.
 
@@ -89,32 +90,26 @@ The file downloaded will be called `ibm-credentials.env`. This is the name the S
 - Your system's home directory
 - Your current working directory (the directory Node is executed from)
 
-As long as you set that up correctly, you don't have to worry about setting any authentication options in your code. So, for example, if you created and downloaded the credential file for your Discovery instance, you just need to do the following:
+As long as you set that up correctly, you don't have to worry about setting any authentication options in your code. So, for example, if you created and downloaded the credential file for your Assistant instance, you just need to do the following:
 
 ```js
-const DiscoveryV1 = require('ibm-watson/discovery/v1');
-const discovery = new DiscoveryV1({ version: '2019-02-01' });
+const AssistantV2 = require('ibm-watson/assistant/v2');
+const assistant = new AssistantV2({ version: '2024-08-25' });
 ```
 
 And that's it!
 
 If you're using more than one service at a time in your code and get two different `ibm-credentials.env` files, just put the contents together in one `ibm-credentials.env` file and the SDK will handle assigning credentials to their appropriate services.
 
-**Special Note**: Due to legacy issues in Assistant V1 and V2 as well as Visual Recognition V3 and V4, the following parameter `serviceName` must be added when creating the service object:
+**Special Note**: Due to legacy issues in Assistant V1 and V2, the following parameter `serviceName` must be added when creating the service object:
 ```js
-const AssistantV1 = require('ibm-watson/assistant/v1');
-const assistant = new AssistantV1({
-  version: '2020-04-01',
+const AssistantV2 = require('ibm-watson/assistant/v2');
+const assistant = new AssistantV2({
+  version: '2024-08-25',
   serviceName: 'assistant',
 })
 ```
-```js
-const VisualRecognitionV3 = require('ibm-watson/visual-recognition/v3');
-const assistant = new VisualRecognitionV3({
-  version: '2018-03-19',
-  serviceName: 'visual-recognition',
-})
-```
+
 It is worth noting that if you are planning to rely on VCAP_SERVICES for authentication then the `serviceName` parameter **MUST** be removed otherwise VCAP_SERVICES will not be able to authenticate you. See [Cloud Authentication Prioritization](#cloud-authentication-prioritization) for more details.
 
 If you would like to configure the location/name of your credential file, you can set an environment variable called `IBM_CREDENTIALS_FILE`. **This will take precedence over the locations specified above.** Here's how you can do that:
@@ -154,7 +149,7 @@ const authenticator = new McspAuthenticator({
     url: 'token_service_endpoint',
     apikey: 'apikey',
 })
-const assistant = AssistantV2(version='2023-06-15',
+const assistant = AssistantV2(version='2024-08-25',
                         authenticator=authenticator)
 assistant.setServiceUrl('<url_as_per_region>')
 ```
@@ -170,27 +165,27 @@ When uploading your application to IBM Cloud there is a certain priority Watson 
 You can set or reset the base URL after constructing the client instance using the `setServiceUrl` method:
 
 ```js
-const DiscoveryV1 = require('ibm-watson/discovery/v1');
+const AssistantV2 = require('ibm-watson/assistant/v2');
 
-const discovery = DiscoveryV1({
+const assistant = AssistantV2({
 /* authenticator, version, etc... */
 });
 
-discovery.setServiceUrl('<new url>');
+assistant.setServiceUrl('<new url>');
 ```
 
 ## Promises
 
 All SDK methods are asynchronous, as they are making network requests to Watson services. To handle receiving the data from these requests, the SDK offers support with Promises.
 ```js
-const DiscoveryV1 = require('ibm-watson/discovery/v1');
+const AssistantV2 = require('ibm-watson/assistant/v2');
 
-const discovery = new DiscoveryV1({
+const assistant = new AssistantV2({
 /* authenticator, version, serviceUrl, etc... */
 });
 
 // using Promises
-discovery.listEnvironments()
+assistant.listAssistants()
   .then(body => {
     console.log(JSON.stringify(body, null, 2));
   })
@@ -199,8 +194,8 @@ discovery.listEnvironments()
   });
 
 // using Promises provides the ability to use async / await
-async function callDiscovery() { // note that callDiscovery also returns a Promise
-  const body = await discovery.listEnvironments();
+async function callAssistant() { // note that callAssistant also returns a Promise
+  const body = await assistant.listAssistants();
 }
 ```
 
@@ -211,7 +206,7 @@ Custom headers can be passed with any request. Each method has an optional param
 For example, this is how you can pass in custom headers to Watson Assistant service. In this example, the `'custom'` value for `'Accept-Language'` will override the default header for `'Accept-Language'`, and the `'Custom-Header'` while not overriding the default headers, will additionally be sent with the request.
 
 ```js
-const assistant = new watson.AssistantV1({
+const assistant = new watson.AssistantV2({
 /* authenticator, version, serviceUrl, etc... */
 });
 
@@ -238,7 +233,7 @@ The SDK now returns the full HTTP response by default for each method.
 Here is an example of how to access the response headers for Watson Assistant:
 
 ```js
-const assistant = new AssistantV1({
+const assistant = new AssistantV2({
 /* authenticator, version, serviceUrl, etc... */
 });
 
@@ -261,11 +256,11 @@ assistant.message(params).then(
 ```
 
 ### Global Transaction ID
-Every SDK call returns a response with a transaction ID in the `X-Global-Transaction-Id` header. Together the service instance region, this ID helps support teams troubleshoot issues from relevant logs.
+Every SDK call returns a response with a transaction ID in the `X-Global-Transaction-Id` header. Together with the service instance region, this ID helps support teams troubleshoot issues from relevant logs.
 
 #### HTTP Example
 ```js
-const assistant = new AssistantV1({
+const assistant = new AssistantV2({
 /* authenticator, version, serviceUrl, etc... */
 });
 
@@ -296,7 +291,7 @@ recognizeStream.getTransactionId().then(
 However, the transaction ID isn't available when the API doesn't return a response for some reason. In that case, you can set your own transaction ID in the request. For example, replace `<my-unique-transaction-id>` in the following example with a unique transaction ID.
 
 ```js
-const assistant = new AssistantV1({
+const assistant = new AssistantV2({
 /* authenticator, version, serviceUrl, etc... */
 });
 
@@ -338,7 +333,7 @@ To use the SDK (which makes HTTPS requests) behind an HTTP proxy, a special tunn
 See this example configuration:
 ```js
 const tunnel = require('tunnel');
-const AssistantV1 = require('ibm-watson/assistant/v1');
+const AssistantV2 = require('ibm-watson/assistant/v2');
 const { IamAuthenticator } = require('ibm-watson/auth');
 
 const httpsAgent = tunnel.httpsOverHttp({
@@ -348,13 +343,13 @@ const httpsAgent = tunnel.httpsOverHttp({
   },
 });
 
-const assistant = new AssistantV1({
+const assistant = new AssistantV2({
   authenticator: new IamAuthenticator({
     apikey: 'fakekey-1234'
     httpsAgent, // not necessary if using Basic or BearerToken authentication
     proxy: false,
   }),
-  version: '2020-01-28',
+  version: '2024-08-25',
   httpsAgent,
   proxy: false,
 });
@@ -363,13 +358,13 @@ const assistant = new AssistantV1({
 ### Sending custom certificates
 To send custom certificates as a security measure in your request, use the `cert`, `key`, and/or `ca` properties of the HTTPS Agent. See [this documentation](https://nodejs.org/api/tls.html#tls_tls_createsecurecontext_options) for more information about the options. Note that the entire contents of the file must be provided - not just the file name.
 ```js
-const AssistantV1 = require('ibm-watson/assistant/v1');
+const AssistantV2 = require('ibm-watson/assistant/v2');
 const { IamAuthenticator } = require('ibm-watson/auth');
 
 const certFile = fs.readFileSync('./my-cert.pem');
 const keyFile = fs.readFileSync('./my-key.pem');
 
-const assistant = new AssistantV1({
+const assistant = new AssistantV2({
   authenticator: new IamAuthenticator({
     apikey: 'fakekey-1234',
     httpsAgent: new https.Agent({
@@ -377,7 +372,7 @@ const assistant = new AssistantV1({
       cert: certFile,
     })
   }),
-  version: '2019-02-28',
+  version: '2024-08-25',
   httpsAgent: new https.Agent({
     key: keyFile,
     cert: certFile,
@@ -392,7 +387,7 @@ The HTTP client can be configured to disable SSL verification. **Note that this 
 To do this, set `disableSslVerification` to `true` in the service constructor and/or authenticator constructor, like below:
 
 ```js
-const discovery = new DiscoveryV1({
+const assistant = new AssistantV2({
   serviceUrl: '<service_url>',
   version: '<version-date>',
   authenticator: new IamAuthenticator({ apikey: '<apikey>', disableSslVerification: true }), // this will disable SSL verification for requests to the token endpoint
@@ -406,8 +401,6 @@ To see all possible https agent configuration options go to this [link](https://
 ## Documentation
 
 You can find links to the documentation at https://cloud.ibm.com/developer/watson/documentation. Find the service that you're interested in, click **API reference**, and then select the **Node** tab.
-
-There are also auto-generated JSDocs available at http://watson-developer-cloud.github.io/node-sdk/master/
 
 ## Questions
 
@@ -452,13 +445,13 @@ Use the [Assistant][assistant] service to determine the intent of a message.
 Note: You must first create a workspace via IBM Cloud. See [the documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-index#about) for details.
 
 ```js
-const AssistantV1 = require('ibm-watson/assistant/v1');
+const AssistantV2 = require('ibm-watson/assistant/v2');
 const { IamAuthenticator } = require('ibm-watson/auth');
 
-const assistant = new AssistantV1({
+const assistant = new AssistantV2({
   authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
   serviceUrl: 'https://api.us-south.assistant.watson.cloud.ibm.com',
-  version: '2018-02-16'
+  version: '2024-08-25'
 });
 
 assistant.message(
@@ -499,73 +492,6 @@ discovery.query(
   })
   .catch(err => {
     console.log(err);
-  });
-```
-### Discovery v1
-
-Use the [Discovery Service][discovery] to search and analyze structured and unstructured data.
-
-```js
-const DiscoveryV1 = require('ibm-watson/discovery/v1');
-const { IamAuthenticator } = require('ibm-watson/auth');
-
-const discovery = new DiscoveryV1({
-  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  serviceUrl: 'https://api.us-south.discovery.watson.cloud.ibm.com',
-  version: '2017-09-01'
-});
-
-discovery.query(
-  {
-    environmentId: '<environment_id>',
-    collectionId: '<collection_id>',
-    query: 'my_query'
-  })
-  .then(response => {
-    console.log(JSON.stringify(response.result, null, 2));
-  })
-  .catch(err => {
-    console.log(err);
-  });
-```
-
-### Language Translator
-
-Translate text from one language to another or idenfity a language using the [Language Translator][language_translator] service.
-
-```js
-const LanguageTranslatorV3 = require('ibm-watson/language-translator/v3');
-const { IamAuthenticator } = require('ibm-watson/auth');
-
-const languageTranslator = new LanguageTranslatorV3({
-  authenticator: new IamAuthenticator({ apikey: '<apikey>' }),
-  serviceUrl: 'https://api.us-south.language-translator.watson.cloud.ibm.com',
-  version: 'YYYY-MM-DD',
-});
-
-languageTranslator.translate(
-  {
-    text: 'A sentence must have a verb',
-    source: 'en',
-    target: 'es'
-  })
-  .then(response => {
-    console.log(JSON.stringify(response.result, null, 2));
-  })
-  .catch(err => {
-    console.log('error: ', err);
-  });
-
-languageTranslator.identify(
-  {
-    text:
-      'The language translator service takes text input and identifies the language used.'
-  })
-  .then(response => {
-    console.log(JSON.stringify(response.result, null, 2));
-  })
-  .catch(err => {
-    console.log('error: ', err);
   });
 ```
 
@@ -689,7 +615,7 @@ The SDK always expects an authenticator to be passed in. To make an unautuhentic
 const watson = require('ibm-watson');
 const { NoAuthAuthenticator } = require('ibm-watson/auth');
 
-const assistant = new watson.AssistantV1({
+const assistant = new watson.AssistantV2({
   authenticator: new NoAuthAuthenticator(),
 });
 ```
@@ -727,9 +653,7 @@ See [CONTRIBUTING](https://github.com/watson-developer-cloud/node-sdk/blob/maste
 We love to highlight cool open-source projects that use this SDK! If you'd like to get your project added to the list, feel free to make an issue linking us to it.
 - [Watson Speech to Text Demo App](https://github.com/watson-developer-cloud/speech-to-text-nodejs)
 - [Watson Assistant Demo App](https://github.com/watson-developer-cloud/assistant-demo)
-- [Virtual TJBot Node-RED Nodes](https://github.com/jeancarl/node-red-contrib-virtual-tjbot)
 - [CLI tool for Watson Assistant](https://github.com/Themandunord/IWAC)
-- [CLI tool for Watson Visual Recognition](https://github.com/boneskull/puddlenuts)
 
 ## License
 This library is licensed under Apache 2.0. Full license text is available in
@@ -737,11 +661,7 @@ This library is licensed under Apache 2.0. Full license text is available in
 
 [assistant]: https://www.ibm.com/cloud/watson-assistant/
 [discovery]: https://www.ibm.com/cloud/watson-discovery
-[personality_insights]: https://www.ibm.com/watson/services/personality-insights/
-[visual_recognition]: https://www.ibm.com/watson/services/visual-recognition/
-[tone_analyzer]: https://www.ibm.com/watson/services/tone-analyzer/
 [text_to_speech]: https://www.ibm.com/watson/services/text-to-speech/
 [speech_to_text]: https://www.ibm.com/watson/services/speech-to-text/
-[language_translator]: https://www.ibm.com/watson/services/language-translator/
 [examples]: https://github.com/watson-developer-cloud/node-sdk/tree/master/examples
 [ibm-cloud-onboarding]: http://cloud.ibm.com/registration?target=/developer/watson&cm_sp=WatsonPlatform-WatsonServices-_-OnPageNavLink-IBMWatson_SDKs-_-Node
