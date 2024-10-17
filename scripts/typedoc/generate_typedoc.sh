@@ -1,6 +1,6 @@
 ./node_modules/.bin/typedoc --mode file --theme ./scripts/typedoc/theme --excludeExternals --excludePrivate --excludeProtected \
     --out ./doc ./authorization/v1.ts \
-    ./discovery/v1.ts ./language-translator/v3.ts \
+    ./language-translator/v3.ts \
     ./natural-language-classifier/v1.ts ./natural-language-understanding/v1.ts \
     ./personality-insights/v3.ts \
     ./speech-to-text/v1-generated.ts ./text-to-speech/v1-generated.ts \
