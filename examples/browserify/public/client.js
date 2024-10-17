@@ -11,12 +11,11 @@
 //
 // * fetch() is a modern version of XMLHttpRequest. A pollyfill is available for older browsers: https://github.com/github/fetch
 
-const ToneAnalyzerV3 = require('ibm-watson/tone-analyzer/v3');
+const TextToSpeechV1 = require('ibm-watson/text-to-speech/v1');
 const { BearerTokenAuthenticator } = require('ibm-watson/auth');
+const fs = require('fs');
 
 const btn = document.getElementById('analyze-btn');
-const input = document.getElementById('input');
-const output = document.getElementById('output');
 
 /**
  * @return {Promise<String>} returns a promise that resolves to a string token
@@ -26,23 +25,28 @@ function getToken() {
 }
 
 function analyze(credentials) {
-  const toneAnalyzer = new ToneAnalyzerV3({
+  const textToSpeech = new TextToSpeechV1({
     authenticator: new BearerTokenAuthenticator({
       bearerToken: credentials.accessToken,
     }),
     url: credentials.url,
-    version: '2016-05-19',
+    version: '2023-03-31',
   });
-  toneAnalyzer
-    .tone({
-      toneInput: { text: input.value },
-      contentType: 'application/json',
+
+  const synthesizeParams = {
+    text: 'Hello from IBM Watson',
+    accept: 'audio/mp3',
+    voice: 'en-US_AllisonVoice',
+  };
+
+  textToSpeech
+    .synthesize(synthesizeParams)
+    .then(response => {
+      const audio = response.result;
+      audio.pipe(fs.createWriteStream('hello_world.mp3'));
     })
-    .then(({ result }) => {
-      output.innerHTML = JSON.stringify(result, null, 2);
-    })
-    .catch(error => {
-      output.innerHTML = error;
+    .catch(err => {
+      console.log('error:', err);
     });
 }
 
