@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.85.0-75c38f8f-20240206-210220
+ * IBM OpenAPI SDK Code Generator Version: 3.96.0-d6dec9d7-20241008-212902
  */
 
 import * as extend from 'extend';
@@ -37,15 +37,6 @@ import { getSdkHeaders } from '../lib/common';
  * You can create [custom
  * models](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-customizing)
  * with Watson Knowledge Studio to detect custom entities and relations in Natural Language Understanding.
- *
- * IBM is sunsetting Watson Natural Language Understanding Custom Sentiment (BETA). From **June 3, 2023** onward, you
- * will no longer be able to use the Custom Sentiment feature.<br /><br />To ensure we continue providing our clients
- * with robust and powerful text classification capabilities, IBM recently announced the general availability of a new
- * [single-label text classification
- * capability](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-classifications).
- * This new feature includes extended language support and training data customizations suited for building a custom
- * sentiment classifier.<br /><br />If you would like more information or further guidance, please contact IBM Cloud
- * Support.{: deprecated}
  *
  * API Version: 1.0
  * See: https://cloud.ibm.com/docs/natural-language-understanding
@@ -116,7 +107,6 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
    * - Semantic roles
    * - Sentiment
    * - Syntax
-   * - Summarization (Experimental)
    *
    * If a language for the input text is not specified with the `language` parameter, the service [automatically detects
    * the
@@ -1211,7 +1201,9 @@ namespace NaturalLanguageUnderstandingV1 {
    * model interfaces
    ************************/
 
-  /** Results of the analysis, organized by feature. */
+  /**
+   * Results of the analysis, organized by feature.
+   */
   export interface AnalysisResults {
     /** Language used to analyze the text. */
     language?: string;
@@ -1245,7 +1237,9 @@ namespace NaturalLanguageUnderstandingV1 {
     syntax?: SyntaxResult;
   }
 
-  /** API usage information for the request. */
+  /**
+   * API usage information for the request.
+   */
   export interface AnalysisResultsUsage {
     /** Number of features used in the API call. */
     features?: number;
@@ -1255,13 +1249,17 @@ namespace NaturalLanguageUnderstandingV1 {
     text_units?: number;
   }
 
-  /** The author of the analyzed content. */
+  /**
+   * The author of the analyzed content.
+   */
   export interface Author {
     /** Name of the author. */
     name?: string;
   }
 
-  /** Categories model. */
+  /**
+   * Categories model.
+   */
   export interface CategoriesModel {
     /** An optional name for the model. */
     name?: string;
@@ -1305,13 +1303,19 @@ namespace NaturalLanguageUnderstandingV1 {
     }
   }
 
-  /** List of categories models. */
+  /**
+   * List of categories models.
+   */
   export interface CategoriesModelList {
     /** The categories models. */
     models?: CategoriesModel[];
   }
 
-  /** Returns a hierarchical taxonomy of the content. The top three categories are returned by default. Supported languages: Arabic, English, French, German, Italian, Japanese, Korean, Portuguese, Spanish. */
+  /**
+   * Returns a hierarchical taxonomy of the content. The top three categories are returned by default.
+   *
+   * Supported languages: Arabic, English, French, German, Italian, Japanese, Korean, Portuguese, Spanish.
+   */
   export interface CategoriesOptions {
     /** Set this to `true` to return explanations for each categorization. **This is available only for English
      *  categories.**.
@@ -1326,13 +1330,17 @@ namespace NaturalLanguageUnderstandingV1 {
     model?: string;
   }
 
-  /** Relevant text that contributed to the categorization. */
+  /**
+   * Relevant text that contributed to the categorization.
+   */
   export interface CategoriesRelevantText {
     /** Text from the analyzed source that supports the categorization. */
     text?: string;
   }
 
-  /** A categorization of the analyzed text. */
+  /**
+   * A categorization of the analyzed text.
+   */
   export interface CategoriesResult {
     /** The path to the category through the multi-level taxonomy hierarchy. For more information about the
      *  categories, see [Categories
@@ -1345,7 +1353,9 @@ namespace NaturalLanguageUnderstandingV1 {
     explanation?: CategoriesResultExplanation;
   }
 
-  /** Information that helps to explain what contributed to the categories result. */
+  /**
+   * Information that helps to explain what contributed to the categories result.
+   */
   export interface CategoriesResultExplanation {
     /** An array of relevant text from the source that contributed to the categorization. The sorted array begins
      *  with the phrase that contributed most significantly to the result, followed by phrases that were less and less
@@ -1354,7 +1364,9 @@ namespace NaturalLanguageUnderstandingV1 {
     relevant_text?: CategoriesRelevantText[];
   }
 
-  /** Classifications model. */
+  /**
+   * Classifications model.
+   */
   export interface ClassificationsModel {
     /** An optional name for the model. */
     name?: string;
@@ -1398,13 +1410,17 @@ namespace NaturalLanguageUnderstandingV1 {
     }
   }
 
-  /** List of classifications models. */
+  /**
+   * List of classifications models.
+   */
   export interface ClassificationsModelList {
     /** The classifications models. */
     models?: ClassificationsModel[];
   }
 
-  /** Returns text classifications for the content. */
+  /**
+   * Returns text classifications for the content.
+   */
   export interface ClassificationsOptions {
     /** Enter a [custom
      *  model](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-customizing)
@@ -1417,7 +1433,9 @@ namespace NaturalLanguageUnderstandingV1 {
     model?: string;
   }
 
-  /** A classification of the analyzed text. */
+  /**
+   * A classification of the analyzed text.
+   */
   export interface ClassificationsResult {
     /** Classification assigned to the text. */
     class_name?: string;
@@ -1425,7 +1443,9 @@ namespace NaturalLanguageUnderstandingV1 {
     confidence?: number;
   }
 
-  /** Optional classifications training parameters along with model train requests. */
+  /**
+   * Optional classifications training parameters along with model train requests.
+   */
   export interface ClassificationsTrainingParameters {
     /** Model type selector to train either a single_label or a multi_label classifier. */
     model_type?: ClassificationsTrainingParameters.Constants.ModelType | string;
@@ -1440,13 +1460,20 @@ namespace NaturalLanguageUnderstandingV1 {
     }
   }
 
-  /** Returns high-level concepts in the content. For example, a research paper about deep learning might return the concept, "Artificial Intelligence" although the term is not mentioned. Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Spanish. */
+  /**
+   * Returns high-level concepts in the content. For example, a research paper about deep learning might return the
+   * concept, "Artificial Intelligence" although the term is not mentioned.
+   *
+   * Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Spanish.
+   */
   export interface ConceptsOptions {
     /** Maximum number of concepts to return. */
     limit?: number;
   }
 
-  /** The general concepts referenced or alluded to in the analyzed text. */
+  /**
+   * The general concepts referenced or alluded to in the analyzed text.
+   */
   export interface ConceptsResult {
     /** Name of the concept. */
     text?: string;
@@ -1456,13 +1483,17 @@ namespace NaturalLanguageUnderstandingV1 {
     dbpedia_resource?: string;
   }
 
-  /** Delete model results. */
+  /**
+   * Delete model results.
+   */
   export interface DeleteModelResults {
     /** model_id of the deleted model. */
     deleted?: string;
   }
 
-  /** Disambiguation information for the entity. */
+  /**
+   * Disambiguation information for the entity.
+   */
   export interface DisambiguationResult {
     /** Common entity name. */
     name?: string;
@@ -1472,13 +1503,17 @@ namespace NaturalLanguageUnderstandingV1 {
     subtype?: string[];
   }
 
-  /** Emotion results for the document as a whole. */
+  /**
+   * Emotion results for the document as a whole.
+   */
   export interface DocumentEmotionResults {
     /** Emotion results for the document as a whole. */
     emotion?: EmotionScores;
   }
 
-  /** DocumentSentimentResults. */
+  /**
+   * DocumentSentimentResults.
+   */
   export interface DocumentSentimentResults {
     /** Indicates whether the sentiment is positive, neutral, or negative. */
     label?: string;
@@ -1486,7 +1521,13 @@ namespace NaturalLanguageUnderstandingV1 {
     score?: number;
   }
 
-  /** Detects anger, disgust, fear, joy, or sadness that is conveyed in the content or by the context around target phrases specified in the targets parameter. You can analyze emotion for detected entities with `entities.emotion` and for keywords with `keywords.emotion`. Supported languages: English. */
+  /**
+   * Detects anger, disgust, fear, joy, or sadness that is conveyed in the content or by the context around target
+   * phrases specified in the targets parameter. You can analyze emotion for detected entities with `entities.emotion`
+   * and for keywords with `keywords.emotion`.
+   *
+   * Supported languages: English.
+   */
   export interface EmotionOptions {
     /** Set this to `false` to hide document-level emotion results. */
     document?: boolean;
@@ -1494,7 +1535,10 @@ namespace NaturalLanguageUnderstandingV1 {
     targets?: string[];
   }
 
-  /** The detected anger, disgust, fear, joy, or sadness that is conveyed by the content. Emotion information can be returned for detected entities, keywords, or user-specified target phrases found in the text. */
+  /**
+   * The detected anger, disgust, fear, joy, or sadness that is conveyed by the content. Emotion information can be
+   * returned for detected entities, keywords, or user-specified target phrases found in the text.
+   */
   export interface EmotionResult {
     /** Emotion results for the document as a whole. */
     document?: DocumentEmotionResults;
@@ -1502,7 +1546,9 @@ namespace NaturalLanguageUnderstandingV1 {
     targets?: TargetedEmotionResults[];
   }
 
-  /** EmotionScores. */
+  /**
+   * EmotionScores.
+   */
   export interface EmotionScores {
     /** Anger score from 0 to 1. A higher score means that the text is more likely to convey anger. */
     anger?: number;
@@ -1516,7 +1562,14 @@ namespace NaturalLanguageUnderstandingV1 {
     sadness?: number;
   }
 
-  /** Identifies people, cities, organizations, and other entities in the content. For more information, see [Entity types and subtypes](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-entity-type-systems). Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish, Swedish. Arabic, Chinese, and Dutch are supported only through custom models. */
+  /**
+   * Identifies people, cities, organizations, and other entities in the content. For more information, see [Entity
+   * types and
+   * subtypes](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-entity-type-systems).
+   *
+   * Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish, Swedish.
+   * Arabic, Chinese, and Dutch are supported only through custom models.
+   */
   export interface EntitiesOptions {
     /** Maximum number of entities to return. */
     limit?: number;
@@ -1533,7 +1586,9 @@ namespace NaturalLanguageUnderstandingV1 {
     emotion?: boolean;
   }
 
-  /** The important people, places, geopolitical entities and other types of entities in your content. */
+  /**
+   * The important people, places, geopolitical entities and other types of entities in your content.
+   */
   export interface EntitiesResult {
     /** Entity type. */
     type?: string;
@@ -1558,7 +1613,9 @@ namespace NaturalLanguageUnderstandingV1 {
     disambiguation?: DisambiguationResult;
   }
 
-  /** EntityMention. */
+  /**
+   * EntityMention.
+   */
   export interface EntityMention {
     /** Entity mention text. */
     text?: string;
@@ -1571,13 +1628,17 @@ namespace NaturalLanguageUnderstandingV1 {
     confidence?: number;
   }
 
-  /** FeatureSentimentResults. */
+  /**
+   * FeatureSentimentResults.
+   */
   export interface FeatureSentimentResults {
     /** Sentiment score from -1 (negative) to 1 (positive). */
     score?: number;
   }
 
-  /** Analysis features and options. */
+  /**
+   * Analysis features and options.
+   */
   export interface Features {
     /** Returns text classifications for the content. */
     classifications?: ClassificationsOptions;
@@ -1630,13 +1691,6 @@ namespace NaturalLanguageUnderstandingV1 {
      *   Supported languages: Arabic, English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish.
      */
     sentiment?: SentimentOptions;
-    /** (Experimental) Returns a summary of content.
-     *
-     *  Supported languages: English only.
-     *
-     *  Supported regions: Dallas region only.
-     */
-    summarization?: SummarizationOptions;
     /** Returns a hierarchical taxonomy of the content. The top three categories are returned by default.
      *
      *  Supported languages: Arabic, English, French, German, Italian, Japanese, Korean, Portuguese, Spanish.
@@ -1646,7 +1700,9 @@ namespace NaturalLanguageUnderstandingV1 {
     syntax?: SyntaxOptions;
   }
 
-  /** Webpage metadata, such as the author and the title of the page. */
+  /**
+   * Webpage metadata, such as the author and the title of the page.
+   */
   export interface FeaturesResultsMetadata {
     /** The authors of the document. */
     authors?: Author[];
@@ -1660,13 +1716,19 @@ namespace NaturalLanguageUnderstandingV1 {
     feeds?: Feed[];
   }
 
-  /** RSS or ATOM feed found on the webpage. */
+  /**
+   * RSS or ATOM feed found on the webpage.
+   */
   export interface Feed {
     /** URL of the RSS or ATOM feed. */
     link?: string;
   }
 
-  /** Returns important keywords in the content. Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish, Swedish. */
+  /**
+   * Returns important keywords in the content.
+   *
+   * Supported languages: English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish, Swedish.
+   */
   export interface KeywordsOptions {
     /** Maximum number of keywords to return. */
     limit?: number;
@@ -1676,7 +1738,9 @@ namespace NaturalLanguageUnderstandingV1 {
     emotion?: boolean;
   }
 
-  /** The important keywords in the content, organized by relevance. */
+  /**
+   * The important keywords in the content, organized by relevance.
+   */
   export interface KeywordsResult {
     /** Number of times the keyword appears in the analyzed text. */
     count?: number;
@@ -1690,13 +1754,17 @@ namespace NaturalLanguageUnderstandingV1 {
     sentiment?: FeatureSentimentResults;
   }
 
-  /** Custom models that are available for entities and relations. */
+  /**
+   * Custom models that are available for entities and relations.
+   */
   export interface ListModelsResults {
     /** An array of available models. */
     models?: Model[];
   }
 
-  /** Model. */
+  /**
+   * Model.
+   */
   export interface Model {
     /** When the status is `available`, the model is ready to use. */
     status?: Model.Constants.Status | string;
@@ -1731,13 +1799,17 @@ namespace NaturalLanguageUnderstandingV1 {
     }
   }
 
-  /** A list of messages describing model training issues when model status is `error`. */
+  /**
+   * A list of messages describing model training issues when model status is `error`.
+   */
   export interface Notice {
     /** Describes deficiencies or inconsistencies in training data. */
     message?: string;
   }
 
-  /** RelationArgument. */
+  /**
+   * RelationArgument.
+   */
   export interface RelationArgument {
     /** An array of extracted entities. */
     entities?: RelationEntity[];
@@ -1747,7 +1819,9 @@ namespace NaturalLanguageUnderstandingV1 {
     text?: string;
   }
 
-  /** An entity that corresponds with an argument in a relation. */
+  /**
+   * An entity that corresponds with an argument in a relation.
+   */
   export interface RelationEntity {
     /** Text that corresponds to the entity. */
     text?: string;
@@ -1755,7 +1829,14 @@ namespace NaturalLanguageUnderstandingV1 {
     type?: string;
   }
 
-  /** Recognizes when two entities are related and identifies the type of relation. For example, an `awardedTo` relation might connect the entities "Nobel Prize" and "Albert Einstein". For more information, see [Relation types](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-relations). Supported languages: Arabic, English, German, Japanese, Korean, Spanish. Chinese, Dutch, French, Italian, and Portuguese custom models are also supported. */
+  /**
+   * Recognizes when two entities are related and identifies the type of relation. For example, an `awardedTo` relation
+   * might connect the entities "Nobel Prize" and "Albert Einstein". For more information, see [Relation
+   * types](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-relations).
+   *
+   * Supported languages: Arabic, English, German, Japanese, Korean, Spanish. Chinese, Dutch, French, Italian, and
+   * Portuguese custom models are also supported.
+   */
   export interface RelationsOptions {
     /** Enter a [custom
      *  model](https://cloud.ibm.com/docs/natural-language-understanding?topic=natural-language-understanding-customizing)
@@ -1764,7 +1845,9 @@ namespace NaturalLanguageUnderstandingV1 {
     model?: string;
   }
 
-  /** The relations between entities found in the content. */
+  /**
+   * The relations between entities found in the content.
+   */
   export interface RelationsResult {
     /** Confidence score for the relation. Higher values indicate greater confidence. */
     score?: number;
@@ -1776,7 +1859,9 @@ namespace NaturalLanguageUnderstandingV1 {
     arguments?: RelationArgument[];
   }
 
-  /** SemanticRolesEntity. */
+  /**
+   * SemanticRolesEntity.
+   */
   export interface SemanticRolesEntity {
     /** Entity type. */
     type?: string;
@@ -1784,13 +1869,19 @@ namespace NaturalLanguageUnderstandingV1 {
     text?: string;
   }
 
-  /** SemanticRolesKeyword. */
+  /**
+   * SemanticRolesKeyword.
+   */
   export interface SemanticRolesKeyword {
     /** The keyword text. */
     text?: string;
   }
 
-  /** Parses sentences into subject, action, and object form. Supported languages: English, German, Japanese, Korean, Spanish. */
+  /**
+   * Parses sentences into subject, action, and object form.
+   *
+   * Supported languages: English, German, Japanese, Korean, Spanish.
+   */
   export interface SemanticRolesOptions {
     /** Maximum number of semantic_roles results to return. */
     limit?: number;
@@ -1800,7 +1891,9 @@ namespace NaturalLanguageUnderstandingV1 {
     entities?: boolean;
   }
 
-  /** The object containing the actions and the objects the actions act upon. */
+  /**
+   * The object containing the actions and the objects the actions act upon.
+   */
   export interface SemanticRolesResult {
     /** Sentence from the source that contains the subject, action, and object. */
     sentence?: string;
@@ -1812,7 +1905,9 @@ namespace NaturalLanguageUnderstandingV1 {
     object?: SemanticRolesResultObject;
   }
 
-  /** The extracted action from the sentence. */
+  /**
+   * The extracted action from the sentence.
+   */
   export interface SemanticRolesResultAction {
     /** Analyzed text that corresponds to the action. */
     text?: string;
@@ -1821,7 +1916,9 @@ namespace NaturalLanguageUnderstandingV1 {
     verb?: SemanticRolesVerb;
   }
 
-  /** The extracted object from the sentence. */
+  /**
+   * The extracted object from the sentence.
+   */
   export interface SemanticRolesResultObject {
     /** Object text. */
     text?: string;
@@ -1829,7 +1926,9 @@ namespace NaturalLanguageUnderstandingV1 {
     keywords?: SemanticRolesKeyword[];
   }
 
-  /** The extracted subject from the sentence. */
+  /**
+   * The extracted subject from the sentence.
+   */
   export interface SemanticRolesResultSubject {
     /** Text that corresponds to the subject role. */
     text?: string;
@@ -1839,7 +1938,9 @@ namespace NaturalLanguageUnderstandingV1 {
     keywords?: SemanticRolesKeyword[];
   }
 
-  /** SemanticRolesVerb. */
+  /**
+   * SemanticRolesVerb.
+   */
   export interface SemanticRolesVerb {
     /** The keyword text. */
     text?: string;
@@ -1847,7 +1948,9 @@ namespace NaturalLanguageUnderstandingV1 {
     tense?: string;
   }
 
-  /** SentenceResult. */
+  /**
+   * SentenceResult.
+   */
   export interface SentenceResult {
     /** The sentence. */
     text?: string;
@@ -1855,7 +1958,12 @@ namespace NaturalLanguageUnderstandingV1 {
     location?: number[];
   }
 
-  /** Analyzes the general sentiment of your content or the sentiment toward specific target phrases. You can analyze sentiment for detected entities with `entities.sentiment` and for keywords with `keywords.sentiment`. Supported languages: Arabic, English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish. */
+  /**
+   * Analyzes the general sentiment of your content or the sentiment toward specific target phrases. You can analyze
+   * sentiment for detected entities with `entities.sentiment` and for keywords with `keywords.sentiment`.
+   *
+   *  Supported languages: Arabic, English, French, German, Italian, Japanese, Korean, Portuguese, Russian, Spanish.
+   */
   export interface SentimentOptions {
     /** Set this to `false` to hide document-level sentiment results. */
     document?: boolean;
@@ -1863,7 +1971,9 @@ namespace NaturalLanguageUnderstandingV1 {
     targets?: string[];
   }
 
-  /** The sentiment of the content. */
+  /**
+   * The sentiment of the content.
+   */
   export interface SentimentResult {
     /** The document level sentiment. */
     document?: DocumentSentimentResults;
@@ -1871,13 +1981,9 @@ namespace NaturalLanguageUnderstandingV1 {
     targets?: TargetedSentimentResults[];
   }
 
-  /** (Experimental) Returns a summary of content. Supported languages: English only. Supported regions: Dallas region only. */
-  export interface SummarizationOptions {
-    /** Maximum number of summary sentences to return. */
-    limit?: number;
-  }
-
-  /** Returns tokens and sentences from the input text. */
+  /**
+   * Returns tokens and sentences from the input text.
+   */
   export interface SyntaxOptions {
     /** Tokenization options. */
     tokens?: SyntaxOptionsTokens;
@@ -1885,7 +1991,9 @@ namespace NaturalLanguageUnderstandingV1 {
     sentences?: boolean;
   }
 
-  /** Tokenization options. */
+  /**
+   * Tokenization options.
+   */
   export interface SyntaxOptionsTokens {
     /** Set this to `true` to return the lemma for each token. */
     lemma?: boolean;
@@ -1893,13 +2001,17 @@ namespace NaturalLanguageUnderstandingV1 {
     part_of_speech?: boolean;
   }
 
-  /** Tokens and sentences returned from syntax analysis. */
+  /**
+   * Tokens and sentences returned from syntax analysis.
+   */
   export interface SyntaxResult {
     tokens?: TokenResult[];
     sentences?: SentenceResult[];
   }
 
-  /** Emotion results for a specified target. */
+  /**
+   * Emotion results for a specified target.
+   */
   export interface TargetedEmotionResults {
     /** Targeted text. */
     text?: string;
@@ -1907,7 +2019,9 @@ namespace NaturalLanguageUnderstandingV1 {
     emotion?: EmotionScores;
   }
 
-  /** TargetedSentimentResults. */
+  /**
+   * TargetedSentimentResults.
+   */
   export interface TargetedSentimentResults {
     /** Targeted text. */
     text?: string;
@@ -1915,7 +2029,9 @@ namespace NaturalLanguageUnderstandingV1 {
     score?: number;
   }
 
-  /** TokenResult. */
+  /**
+   * TokenResult.
+   */
   export interface TokenResult {
     /** The token as it appears in the analyzed text. */
     text?: string;

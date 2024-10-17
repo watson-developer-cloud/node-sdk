@@ -17,7 +17,7 @@
 // need to import the whole package to mock getAuthenticatorFromEnvironment
 const sdkCorePackage = require('ibm-cloud-sdk-core');
 
-const { NoAuthAuthenticator, unitTestUtils } = sdkCorePackage;
+const { NoAuthAuthenticator } = sdkCorePackage;
 const NaturalLanguageUnderstandingV1 = require('../../dist/natural-language-understanding/v1');
 
 const {
@@ -26,7 +26,7 @@ const {
   checkMediaHeaders,
   expectToBePromise,
   checkForSuccessfulExecution,
-} = unitTestUtils;
+} = require('@ibm-cloud/sdk-test-utilities');
 
 const naturalLanguageUnderstandingServiceOptions = {
   authenticator: new NoAuthAuthenticator(),
@@ -203,11 +203,6 @@ describe('NaturalLanguageUnderstandingV1', () => {
         targets: ['testString'],
       };
 
-      // SummarizationOptions
-      const summarizationOptionsModel = {
-        limit: 3,
-      };
-
       // CategoriesOptions
       const categoriesOptionsModel = {
         explanation: false,
@@ -238,7 +233,6 @@ describe('NaturalLanguageUnderstandingV1', () => {
         relations: relationsOptionsModel,
         semantic_roles: semanticRolesOptionsModel,
         sentiment: sentimentOptionsModel,
-        summarization: summarizationOptionsModel,
         categories: categoriesOptionsModel,
         syntax: syntaxOptionsModel,
       };
