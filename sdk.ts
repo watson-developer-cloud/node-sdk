@@ -25,8 +25,6 @@ export import AssistantV1 = require('./assistant/v1');
 
 export import AssistantV2 = require('./assistant/v2');
 
-export import LanguageTranslatorV3 = require('./language-translator/v3');
-
 export import NaturalLanguageUnderstandingV1 = require('./natural-language-understanding/v1');
 
 export import SpeechToTextV1 = require('./speech-to-text/v1');
