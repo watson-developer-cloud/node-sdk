@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.85.0-75c38f8f-20240206-210220
+ * IBM OpenAPI SDK Code Generator Version: 3.96.0-d6dec9d7-20241008-212902
  */
 
 import * as extend from 'extend';
@@ -4947,13 +4947,17 @@ namespace AssistantV1 {
    * model interfaces
    ************************/
 
-  /** AgentAvailabilityMessage. */
+  /**
+   * AgentAvailabilityMessage.
+   */
   export interface AgentAvailabilityMessage {
     /** The text of the message. */
     message?: string;
   }
 
-  /** BulkClassifyOutput. */
+  /**
+   * BulkClassifyOutput.
+   */
   export interface BulkClassifyOutput {
     /** The user input utterance to classify. */
     input?: BulkClassifyUtterance;
@@ -4963,19 +4967,25 @@ namespace AssistantV1 {
     intents?: RuntimeIntent[];
   }
 
-  /** BulkClassifyResponse. */
+  /**
+   * BulkClassifyResponse.
+   */
   export interface BulkClassifyResponse {
     /** An array of objects that contain classification information for the submitted input utterances. */
     output?: BulkClassifyOutput[];
   }
 
-  /** The user input utterance to classify. */
+  /**
+   * The user input utterance to classify.
+   */
   export interface BulkClassifyUtterance {
     /** The text of the input utterance. */
     text: string;
   }
 
-  /** A recognized capture group for a pattern-based entity. */
+  /**
+   * A recognized capture group for a pattern-based entity.
+   */
   export interface CaptureGroup {
     /** A recognized capture group for the entity. */
     group: string;
@@ -4983,7 +4993,9 @@ namespace AssistantV1 {
     location?: number[];
   }
 
-  /** Information used by an integration to transfer the conversation to a different channel. */
+  /**
+   * Information used by an integration to transfer the conversation to a different channel.
+   */
   export interface ChannelTransferInfo {
     /** An object specifying target channels available for the transfer. Each property of this object represents an
      *  available transfer target. Currently, the only supported property is **chat**, representing the web chat
@@ -4992,19 +5004,29 @@ namespace AssistantV1 {
     target: ChannelTransferTarget;
   }
 
-  /** An object specifying target channels available for the transfer. Each property of this object represents an available transfer target. Currently, the only supported property is **chat**, representing the web chat integration. */
+  /**
+   * An object specifying target channels available for the transfer. Each property of this object represents an
+   * available transfer target. Currently, the only supported property is **chat**, representing the web chat
+   * integration.
+   */
   export interface ChannelTransferTarget {
     /** Information for transferring to the web chat integration. */
     chat?: ChannelTransferTargetChat;
   }
 
-  /** Information for transferring to the web chat integration. */
+  /**
+   * Information for transferring to the web chat integration.
+   */
   export interface ChannelTransferTargetChat {
     /** The URL of the target web chat. */
     url?: string;
   }
 
-  /** State information for the conversation. To maintain state, include the context from the previous response. */
+  /**
+   * State information for the conversation. To maintain state, include the context from the previous response.
+   *
+   * This type supports additional properties of type any. Any context variable.
+   */
   export interface Context {
     /** The unique identifier of the conversation. The conversation ID cannot contain any of the following
      *  characters: `+` `=` `&&` `||` `>` `<` `!` `(` `)` `{` `}` `[` `]` `^` `"` `~` `*` `?` `:` `\` `/`.
@@ -5014,11 +5036,16 @@ namespace AssistantV1 {
     system?: JsonObject;
     /** Metadata related to the message. */
     metadata?: MessageContextMetadata;
-    /** Context accepts additional properties. */
+
+    /**
+     * Context accepts additional properties of type any. Any context variable.
+     */
     [propName: string]: any;
   }
 
-  /** Counterexample. */
+  /**
+   * Counterexample.
+   */
   export interface Counterexample {
     /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions:
      *  - It cannot contain carriage return, newline, or tab characters.
@@ -5031,7 +5058,9 @@ namespace AssistantV1 {
     updated?: string;
   }
 
-  /** CounterexampleCollection. */
+  /**
+   * CounterexampleCollection.
+   */
   export interface CounterexampleCollection {
     /** An array of objects describing the examples marked as irrelevant input. */
     counterexamples: Counterexample[];
@@ -5041,7 +5070,9 @@ namespace AssistantV1 {
     pagination: Pagination;
   }
 
-  /** CreateEntity. */
+  /**
+   * CreateEntity.
+   */
   export interface CreateEntity {
     /** The name of the entity. This string must conform to the following restrictions:
      *  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.
@@ -5063,7 +5094,9 @@ namespace AssistantV1 {
     values?: CreateValue[];
   }
 
-  /** CreateIntent. */
+  /**
+   * CreateIntent.
+   */
   export interface CreateIntent {
     /** The name of the intent. This string must conform to the following restrictions:
      *  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.
@@ -5080,7 +5113,9 @@ namespace AssistantV1 {
     examples?: Example[];
   }
 
-  /** CreateValue. */
+  /**
+   * CreateValue.
+   */
   export interface CreateValue {
     /** The text of the entity value. This string must conform to the following restrictions:
      *  - It cannot contain carriage return, newline, or tab characters.
@@ -5118,7 +5153,9 @@ namespace AssistantV1 {
     }
   }
 
-  /** DialogNode. */
+  /**
+   * DialogNode.
+   */
   export interface DialogNode {
     /** The unique ID of the dialog node. This is an internal identifier used to refer to the dialog node from other
      *  dialog nodes and in the diagnostic information included with message responses.
@@ -5229,7 +5266,9 @@ namespace AssistantV1 {
     }
   }
 
-  /** DialogNodeAction. */
+  /**
+   * DialogNodeAction.
+   */
   export interface DialogNodeAction {
     /** The name of the action. */
     name: string;
@@ -5255,7 +5294,9 @@ namespace AssistantV1 {
     }
   }
 
-  /** An array of dialog nodes. */
+  /**
+   * An array of dialog nodes.
+   */
   export interface DialogNodeCollection {
     /** An array of objects describing the dialog nodes defined for the workspace. */
     dialog_nodes: DialogNode[];
@@ -5265,15 +5306,24 @@ namespace AssistantV1 {
     pagination: Pagination;
   }
 
-  /** The context for the dialog node. */
+  /**
+   * The context for the dialog node.
+   *
+   * This type supports additional properties of type any. Any context variable.
+   */
   export interface DialogNodeContext {
     /** Context data intended for specific integrations. */
     integrations?: JsonObject;
-    /** DialogNodeContext accepts additional properties. */
+
+    /**
+     * DialogNodeContext accepts additional properties of type any. Any context variable.
+     */
     [propName: string]: any;
   }
 
-  /** The next step to execute following this dialog node. */
+  /**
+   * The next step to execute following this dialog node.
+   */
   export interface DialogNodeNextStep {
     /** What happens after the dialog node completes. The valid values depend on the node type:
      *  - The following values are valid for any node:
@@ -5322,7 +5372,12 @@ namespace AssistantV1 {
     }
   }
 
-  /** The output of the dialog node. For more information about how to specify dialog node output, see the [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-dialog-overview#dialog-overview-responses). */
+  /**
+   * The output of the dialog node. For more information about how to specify dialog node output, see the
+   * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-dialog-overview#dialog-overview-responses).
+   *
+   * This type supports additional properties of type any. Any additional data included in the dialog node output.
+   */
   export interface DialogNodeOutput {
     /** An array of objects describing the output defined for the dialog node. */
     generic?: DialogNodeOutputGeneric[];
@@ -5332,20 +5387,30 @@ namespace AssistantV1 {
     integrations?: JsonObject;
     /** Options that modify how specified output is handled. */
     modifiers?: DialogNodeOutputModifiers;
-    /** DialogNodeOutput accepts additional properties. */
+
+    /**
+     * DialogNodeOutput accepts additional properties of type any. Any additional data included in the dialog node
+     * output.
+     */
     [propName: string]: any;
   }
 
-  /** Routing or other contextual information to be used by target service desk systems. */
+  /**
+   * Routing or other contextual information to be used by target service desk systems.
+   */
   export interface DialogNodeOutputConnectToAgentTransferInfo {
     target?: JsonObject;
   }
 
-  /** DialogNodeOutputGeneric. */
+  /**
+   * DialogNodeOutputGeneric.
+   */
   export interface DialogNodeOutputGeneric {
   }
 
-  /** Options that modify how specified output is handled. */
+  /**
+   * Options that modify how specified output is handled.
+   */
   export interface DialogNodeOutputModifiers {
     /** Whether values in the output will overwrite output values in an array specified by previously executed
      *  dialog nodes. If this option is set to `false`, new values will be appended to previously specified values.
@@ -5353,7 +5418,9 @@ namespace AssistantV1 {
     overwrite?: boolean;
   }
 
-  /** DialogNodeOutputOptionsElement. */
+  /**
+   * DialogNodeOutputOptionsElement.
+   */
   export interface DialogNodeOutputOptionsElement {
     /** The user-facing label for the option. */
     label: string;
@@ -5363,7 +5430,10 @@ namespace AssistantV1 {
     value: DialogNodeOutputOptionsElementValue;
   }
 
-  /** An object defining the message input to be sent to the Watson Assistant service if the user selects the corresponding option. */
+  /**
+   * An object defining the message input to be sent to the Watson Assistant service if the user selects the
+   * corresponding option.
+   */
   export interface DialogNodeOutputOptionsElementValue {
     /** An input object that includes the input text. */
     input?: MessageInput;
@@ -5381,7 +5451,9 @@ namespace AssistantV1 {
     entities?: RuntimeEntity[];
   }
 
-  /** DialogNodeOutputTextValuesElement. */
+  /**
+   * DialogNodeOutputTextValuesElement.
+   */
   export interface DialogNodeOutputTextValuesElement {
     /** The text of a response. This string can include newline characters (`\n`), Markdown tagging, or other
      *  special characters, if supported by the channel.
@@ -5389,7 +5461,9 @@ namespace AssistantV1 {
     text?: string;
   }
 
-  /** DialogNodeVisitedDetails. */
+  /**
+   * DialogNodeVisitedDetails.
+   */
   export interface DialogNodeVisitedDetails {
     /** The unique ID of a dialog node that was triggered during processing of the input message. */
     dialog_node?: string;
@@ -5399,7 +5473,9 @@ namespace AssistantV1 {
     conditions?: string;
   }
 
-  /** DialogSuggestion. */
+  /**
+   * DialogSuggestion.
+   */
   export interface DialogSuggestion {
     /** The user-facing label for the disambiguation option. This label is taken from the **title** or
      *  **user_label** property of the corresponding dialog node.
@@ -5422,7 +5498,13 @@ namespace AssistantV1 {
     dialog_node?: string;
   }
 
-  /** An object defining the message input, intents, and entities to be sent to the Watson Assistant service if the user selects the corresponding disambiguation option. **Note:** These properties must be included in the request body of the next message sent to the assistant. Do not modify or remove any of the included properties. */
+  /**
+   * An object defining the message input, intents, and entities to be sent to the Watson Assistant service if the user
+   * selects the corresponding disambiguation option.
+   *
+   *  **Note:** These properties must be included in the request body of the next message sent to the assistant. Do not
+   * modify or remove any of the included properties.
+   */
   export interface DialogSuggestionValue {
     /** An input object that includes the input text. */
     input?: MessageInput;
@@ -5432,7 +5514,9 @@ namespace AssistantV1 {
     entities?: RuntimeEntity[];
   }
 
-  /** Entity. */
+  /**
+   * Entity.
+   */
   export interface Entity {
     /** The name of the entity. This string must conform to the following restrictions:
      *  - It can contain only Unicode alphanumeric, underscore, and hyphen characters.
@@ -5454,7 +5538,9 @@ namespace AssistantV1 {
     values?: Value[];
   }
 
-  /** An array of objects describing the entities for the workspace. */
+  /**
+   * An array of objects describing the entities for the workspace.
+   */
   export interface EntityCollection {
     /** An array of objects describing the entities defined for the workspace. */
     entities: Entity[];
@@ -5464,7 +5550,9 @@ namespace AssistantV1 {
     pagination: Pagination;
   }
 
-  /** An object describing a contextual entity mention. */
+  /**
+   * An object describing a contextual entity mention.
+   */
   export interface EntityMention {
     /** The text of the user input example. */
     text: string;
@@ -5476,7 +5564,9 @@ namespace AssistantV1 {
     location: number[];
   }
 
-  /** EntityMentionCollection. */
+  /**
+   * EntityMentionCollection.
+   */
   export interface EntityMentionCollection {
     /** An array of objects describing the entity mentions defined for an entity. */
     examples: EntityMention[];
@@ -5486,7 +5576,9 @@ namespace AssistantV1 {
     pagination: Pagination;
   }
 
-  /** Example. */
+  /**
+   * Example.
+   */
   export interface Example {
     /** The text of a user input example. This string must conform to the following restrictions:
      *  - It cannot contain carriage return, newline, or tab characters.
@@ -5501,7 +5593,9 @@ namespace AssistantV1 {
     updated?: string;
   }
 
-  /** ExampleCollection. */
+  /**
+   * ExampleCollection.
+   */
   export interface ExampleCollection {
     /** An array of objects describing the examples defined for the intent. */
     examples: Example[];
@@ -5511,7 +5605,9 @@ namespace AssistantV1 {
     pagination: Pagination;
   }
 
-  /** Intent. */
+  /**
+   * Intent.
+   */
   export interface Intent {
     /** The name of the intent. This string must conform to the following restrictions:
      *  - It can contain only Unicode alphanumeric, underscore, hyphen, and dot characters.
@@ -5528,7 +5624,9 @@ namespace AssistantV1 {
     examples?: Example[];
   }
 
-  /** IntentCollection. */
+  /**
+   * IntentCollection.
+   */
   export interface IntentCollection {
     /** An array of objects describing the intents defined for the workspace. */
     intents: Intent[];
@@ -5538,7 +5636,9 @@ namespace AssistantV1 {
     pagination: Pagination;
   }
 
-  /** Log. */
+  /**
+   * Log.
+   */
   export interface Log {
     /** A request sent to the workspace, including the user input and context. */
     request: MessageRequest;
@@ -5556,7 +5656,9 @@ namespace AssistantV1 {
     language: string;
   }
 
-  /** LogCollection. */
+  /**
+   * LogCollection.
+   */
   export interface LogCollection {
     /** An array of objects describing log events. */
     logs: Log[];
@@ -5566,7 +5668,9 @@ namespace AssistantV1 {
     pagination: LogPagination;
   }
 
-  /** Log message details. */
+  /**
+   * Log message details.
+   */
   export interface LogMessage {
     /** The severity of the log message. */
     level: LogMessage.Constants.Level | string;
@@ -5588,7 +5692,9 @@ namespace AssistantV1 {
     }
   }
 
-  /** An object that identifies the dialog element that generated the error message. */
+  /**
+   * An object that identifies the dialog element that generated the error message.
+   */
   export interface LogMessageSource {
     /** A string that indicates the type of dialog element that generated the error message. */
     type?: LogMessageSource.Constants.Type | string;
@@ -5604,7 +5710,10 @@ namespace AssistantV1 {
     }
   }
 
-  /** The pagination data for the returned objects. For more information about using pagination, see [Pagination](#pagination). */
+  /**
+   * The pagination data for the returned objects. For more information about using pagination, see
+   * [Pagination](#pagination).
+   */
   export interface LogPagination {
     /** The URL that will return the next page of results, if any. */
     next_url?: string;
@@ -5614,7 +5723,9 @@ namespace AssistantV1 {
     next_cursor?: string;
   }
 
-  /** A mention of a contextual entity. */
+  /**
+   * A mention of a contextual entity.
+   */
   export interface Mention {
     /** The name of the entity. */
     entity: string;
@@ -5624,7 +5735,9 @@ namespace AssistantV1 {
     location: number[];
   }
 
-  /** Metadata related to the message. */
+  /**
+   * Metadata related to the message.
+   */
   export interface MessageContextMetadata {
     /** A label identifying the deployment environment, used for filtering log data. This string cannot contain
      *  carriage return, newline, or tab characters.
@@ -5642,7 +5755,11 @@ namespace AssistantV1 {
     user_id?: string;
   }
 
-  /** An input object that includes the input text. */
+  /**
+   * An input object that includes the input text.
+   *
+   * This type supports additional properties of type any. Any additional data included with the message input.
+   */
   export interface MessageInput {
     /** The text of the user input. This string cannot contain carriage return, newline, or tab characters. */
     text?: string;
@@ -5665,11 +5782,16 @@ namespace AssistantV1 {
      *  was corrected.
      */
     original_text?: string;
-    /** MessageInput accepts additional properties. */
+
+    /**
+     * MessageInput accepts additional properties of type any. Any additional data included with the message input.
+     */
     [propName: string]: any;
   }
 
-  /** A request sent to the workspace, including the user input and context. */
+  /**
+   * A request sent to the workspace, including the user input and context.
+   */
   export interface MessageRequest {
     /** An input object that includes the input text. */
     input?: MessageInput;
@@ -5703,7 +5825,9 @@ namespace AssistantV1 {
     user_id?: string;
   }
 
-  /** The response sent by the workspace, including the output text, detected intents and entities, and context. */
+  /**
+   * The response sent by the workspace, including the output text, detected intents and entities, and context.
+   */
   export interface MessageResponse {
     /** An input object that includes the input text. */
     input: MessageInput;
@@ -5733,7 +5857,12 @@ namespace AssistantV1 {
     user_id: string;
   }
 
-  /** An output object that includes the response to the user, the dialog nodes that were triggered, and messages from the log. */
+  /**
+   * An output object that includes the response to the user, the dialog nodes that were triggered, and messages from
+   * the log.
+   *
+   * This type supports additional properties of type any. Any additional data included with the output.
+   */
   export interface OutputData {
     /** An array of the nodes that were triggered to create the response, in the order in which they were visited.
      *  This information is useful for debugging and for tracing the path taken through the node tree.
@@ -5750,11 +5879,17 @@ namespace AssistantV1 {
      *  supported response types.
      */
     generic?: RuntimeResponseGeneric[];
-    /** OutputData accepts additional properties. */
+
+    /**
+     * OutputData accepts additional properties of type any. Any additional data included with the output.
+     */
     [propName: string]: any;
   }
 
-  /** The pagination data for the returned objects. For more information about using pagination, see [Pagination](#pagination). */
+  /**
+   * The pagination data for the returned objects. For more information about using pagination, see
+   * [Pagination](#pagination).
+   */
   export interface Pagination {
     /** The URL that will return the same page of results. */
     refresh_url: string;
@@ -5772,7 +5907,9 @@ namespace AssistantV1 {
     next_cursor?: string;
   }
 
-  /** ResponseGenericChannel. */
+  /**
+   * ResponseGenericChannel.
+   */
   export interface ResponseGenericChannel {
     /** A channel for which the response is intended.
      *
@@ -5795,7 +5932,9 @@ namespace AssistantV1 {
     }
   }
 
-  /** A term from the request that was identified as an entity. */
+  /**
+   * A term from the request that was identified as an entity.
+   */
   export interface RuntimeEntity {
     /** An entity detected in the input. */
     entity: string;
@@ -5829,7 +5968,9 @@ namespace AssistantV1 {
     role?: RuntimeEntityRole;
   }
 
-  /** An alternative value for the recognized entity. */
+  /**
+   * An alternative value for the recognized entity.
+   */
   export interface RuntimeEntityAlternative {
     /** The entity value that was recognized in the user input. */
     value?: string;
@@ -5837,7 +5978,9 @@ namespace AssistantV1 {
     confidence?: number;
   }
 
-  /** RuntimeEntityInterpretation. */
+  /**
+   * RuntimeEntityInterpretation.
+   */
   export interface RuntimeEntityInterpretation {
     /** The calendar used to represent a recognized date (for example, `Gregorian`). */
     calendar_type?: string;
@@ -5943,7 +6086,11 @@ namespace AssistantV1 {
     }
   }
 
-  /** An object describing the role played by a system entity that is specifies the beginning or end of a range recognized in the user input. This property is included only if the new system entities are enabled for the workspace. */
+  /**
+   * An object describing the role played by a system entity that is specifies the beginning or end of a range
+   * recognized in the user input. This property is included only if the new system entities are enabled for the
+   * workspace.
+   */
   export interface RuntimeEntityRole {
     /** The relationship of the entity to the range. */
     type?: RuntimeEntityRole.Constants.Type | string;
@@ -5962,7 +6109,9 @@ namespace AssistantV1 {
     }
   }
 
-  /** An intent identified in the user input. */
+  /**
+   * An intent identified in the user input.
+   */
   export interface RuntimeIntent {
     /** The name of the recognized intent. */
     intent: string;
@@ -5972,17 +6121,23 @@ namespace AssistantV1 {
     confidence?: number;
   }
 
-  /** RuntimeResponseGeneric. */
+  /**
+   * RuntimeResponseGeneric.
+   */
   export interface RuntimeResponseGeneric {
   }
 
-  /** An object describing an error that occurred during processing of an asynchronous operation. */
+  /**
+   * An object describing an error that occurred during processing of an asynchronous operation.
+   */
   export interface StatusError {
     /** The text of the error message. */
     message?: string;
   }
 
-  /** Synonym. */
+  /**
+   * Synonym.
+   */
   export interface Synonym {
     /** The text of the synonym. This string must conform to the following restrictions:
      *  - It cannot contain carriage return, newline, or tab characters.
@@ -5995,7 +6150,9 @@ namespace AssistantV1 {
     updated?: string;
   }
 
-  /** SynonymCollection. */
+  /**
+   * SynonymCollection.
+   */
   export interface SynonymCollection {
     /** An array of synonyms. */
     synonyms: Synonym[];
@@ -6005,7 +6162,9 @@ namespace AssistantV1 {
     pagination: Pagination;
   }
 
-  /** Value. */
+  /**
+   * Value.
+   */
   export interface Value {
     /** The text of the entity value. This string must conform to the following restrictions:
      *  - It cannot contain carriage return, newline, or tab characters.
@@ -6043,7 +6202,9 @@ namespace AssistantV1 {
     }
   }
 
-  /** ValueCollection. */
+  /**
+   * ValueCollection.
+   */
   export interface ValueCollection {
     /** An array of entity values. */
     values: Value[];
@@ -6053,7 +6214,11 @@ namespace AssistantV1 {
     pagination: Pagination;
   }
 
-  /** A webhook that can be used by dialog nodes to make programmatic calls to an external function. **Note:** Currently, only a single webhook named `main_webhook` is supported. */
+  /**
+   * A webhook that can be used by dialog nodes to make programmatic calls to an external function.
+   *
+   * **Note:** Currently, only a single webhook named `main_webhook` is supported.
+   */
   export interface Webhook {
     /** The URL for the external service or application to which you want to send HTTP POST requests. */
     url: string;
@@ -6063,7 +6228,9 @@ namespace AssistantV1 {
     headers?: WebhookHeader[];
   }
 
-  /** A key/value pair defining an HTTP header and a value. */
+  /**
+   * A key/value pair defining an HTTP header and a value.
+   */
   export interface WebhookHeader {
     /** The name of an HTTP header (for example, `Authorization`). */
     name: string;
@@ -6071,7 +6238,9 @@ namespace AssistantV1 {
     value: string;
   }
 
-  /** Workspace. */
+  /**
+   * Workspace.
+   */
   export interface Workspace {
     /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters. */
     name: string;
@@ -6133,7 +6302,9 @@ namespace AssistantV1 {
     }
   }
 
-  /** WorkspaceCollection. */
+  /**
+   * WorkspaceCollection.
+   */
   export interface WorkspaceCollection {
     /** An array of objects describing the workspaces associated with the service instance. */
     workspaces: Workspace[];
@@ -6143,7 +6314,11 @@ namespace AssistantV1 {
     pagination: Pagination;
   }
 
-  /** An object containing properties that indicate how many intents, entities, and dialog nodes are defined in the workspace. This property is included only in responses from the **Export workspace asynchronously** method, and only when the **verbose** query parameter is set to `true`. */
+  /**
+   * An object containing properties that indicate how many intents, entities, and dialog nodes are defined in the
+   * workspace. This property is included only in responses from the **Export workspace asynchronously** method, and
+   * only when the **verbose** query parameter is set to `true`.
+   */
   export interface WorkspaceCounts {
     /** The number of intents defined in the workspace. */
     intent?: number;
@@ -6153,7 +6328,11 @@ namespace AssistantV1 {
     node?: number;
   }
 
-  /** Global settings for the workspace. */
+  /**
+   * Global settings for the workspace.
+   *
+   * This type supports additional properties of type any. For internal use only.
+   */
   export interface WorkspaceSystemSettings {
     /** Workspace settings related to the Watson Assistant user interface. */
     tooling?: WorkspaceSystemSettingsTooling;
@@ -6175,11 +6354,16 @@ namespace AssistantV1 {
     off_topic?: WorkspaceSystemSettingsOffTopic;
     /** Workspace settings related to the version of the training algorithms currently used by the skill. */
     nlp?: WorkspaceSystemSettingsNlp;
-    /** WorkspaceSystemSettings accepts additional properties. */
+
+    /**
+     * WorkspaceSystemSettings accepts additional properties of type any. For internal use only.
+     */
     [propName: string]: any;
   }
 
-  /** Workspace settings related to the disambiguation feature. */
+  /**
+   * Workspace settings related to the disambiguation feature.
+   */
   export interface WorkspaceSystemSettingsDisambiguation {
     /** The text of the introductory prompt that accompanies disambiguation options presented to the user. */
     prompt?: string;
@@ -6216,7 +6400,9 @@ namespace AssistantV1 {
     }
   }
 
-  /** Workspace settings related to the version of the training algorithms currently used by the skill. */
+  /**
+   * Workspace settings related to the version of the training algorithms currently used by the skill.
+   */
   export interface WorkspaceSystemSettingsNlp {
     /** The policy the skill follows for selecting the algorithm version to use. For more information, see the
      *  [documentation](/docs/watson-assistant?topic=watson-assistant-algorithm-version).
@@ -6229,25 +6415,33 @@ namespace AssistantV1 {
     model?: string;
   }
 
-  /** Workspace settings related to detection of irrelevant input. */
+  /**
+   * Workspace settings related to detection of irrelevant input.
+   */
   export interface WorkspaceSystemSettingsOffTopic {
     /** Whether enhanced irrelevance detection is enabled for the workspace. */
     enabled?: boolean;
   }
 
-  /** Workspace settings related to the behavior of system entities. */
+  /**
+   * Workspace settings related to the behavior of system entities.
+   */
   export interface WorkspaceSystemSettingsSystemEntities {
     /** Whether the new system entities are enabled for the workspace. */
     enabled?: boolean;
   }
 
-  /** Workspace settings related to the Watson Assistant user interface. */
+  /**
+   * Workspace settings related to the Watson Assistant user interface.
+   */
   export interface WorkspaceSystemSettingsTooling {
     /** Whether the dialog JSON editor displays text responses within the `output.generic` object. */
     store_generic_responses?: boolean;
   }
 
-  /** DialogNodeOutputGenericDialogNodeOutputResponseTypeAudio. */
+  /**
+   * DialogNodeOutputGenericDialogNodeOutputResponseTypeAudio.
+   */
   export interface DialogNodeOutputGenericDialogNodeOutputResponseTypeAudio extends DialogNodeOutputGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6271,7 +6465,9 @@ namespace AssistantV1 {
     alt_text?: string;
   }
 
-  /** DialogNodeOutputGenericDialogNodeOutputResponseTypeChannelTransfer. */
+  /**
+   * DialogNodeOutputGenericDialogNodeOutputResponseTypeChannelTransfer.
+   */
   export interface DialogNodeOutputGenericDialogNodeOutputResponseTypeChannelTransfer extends DialogNodeOutputGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6287,7 +6483,9 @@ namespace AssistantV1 {
     channels?: ResponseGenericChannel[];
   }
 
-  /** DialogNodeOutputGenericDialogNodeOutputResponseTypeConnectToAgent. */
+  /**
+   * DialogNodeOutputGenericDialogNodeOutputResponseTypeConnectToAgent.
+   */
   export interface DialogNodeOutputGenericDialogNodeOutputResponseTypeConnectToAgent extends DialogNodeOutputGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6309,7 +6507,9 @@ namespace AssistantV1 {
     channels?: ResponseGenericChannel[];
   }
 
-  /** DialogNodeOutputGenericDialogNodeOutputResponseTypeIframe. */
+  /**
+   * DialogNodeOutputGenericDialogNodeOutputResponseTypeIframe.
+   */
   export interface DialogNodeOutputGenericDialogNodeOutputResponseTypeIframe extends DialogNodeOutputGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6329,7 +6529,9 @@ namespace AssistantV1 {
     channels?: ResponseGenericChannel[];
   }
 
-  /** DialogNodeOutputGenericDialogNodeOutputResponseTypeImage. */
+  /**
+   * DialogNodeOutputGenericDialogNodeOutputResponseTypeImage.
+   */
   export interface DialogNodeOutputGenericDialogNodeOutputResponseTypeImage extends DialogNodeOutputGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6347,7 +6549,9 @@ namespace AssistantV1 {
     alt_text?: string;
   }
 
-  /** DialogNodeOutputGenericDialogNodeOutputResponseTypeOption. */
+  /**
+   * DialogNodeOutputGenericDialogNodeOutputResponseTypeOption.
+   */
   export interface DialogNodeOutputGenericDialogNodeOutputResponseTypeOption extends DialogNodeOutputGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6374,7 +6578,9 @@ namespace AssistantV1 {
     }
   }
 
-  /** DialogNodeOutputGenericDialogNodeOutputResponseTypePause. */
+  /**
+   * DialogNodeOutputGenericDialogNodeOutputResponseTypePause.
+   */
   export interface DialogNodeOutputGenericDialogNodeOutputResponseTypePause extends DialogNodeOutputGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6390,7 +6596,9 @@ namespace AssistantV1 {
     channels?: ResponseGenericChannel[];
   }
 
-  /** DialogNodeOutputGenericDialogNodeOutputResponseTypeSearchSkill. */
+  /**
+   * DialogNodeOutputGenericDialogNodeOutputResponseTypeSearchSkill.
+   */
   export interface DialogNodeOutputGenericDialogNodeOutputResponseTypeSearchSkill extends DialogNodeOutputGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6426,7 +6634,9 @@ namespace AssistantV1 {
     }
   }
 
-  /** DialogNodeOutputGenericDialogNodeOutputResponseTypeText. */
+  /**
+   * DialogNodeOutputGenericDialogNodeOutputResponseTypeText.
+   */
   export interface DialogNodeOutputGenericDialogNodeOutputResponseTypeText extends DialogNodeOutputGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6452,7 +6662,9 @@ namespace AssistantV1 {
     }
   }
 
-  /** DialogNodeOutputGenericDialogNodeOutputResponseTypeUserDefined. */
+  /**
+   * DialogNodeOutputGenericDialogNodeOutputResponseTypeUserDefined.
+   */
   export interface DialogNodeOutputGenericDialogNodeOutputResponseTypeUserDefined extends DialogNodeOutputGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6466,7 +6678,9 @@ namespace AssistantV1 {
     channels?: ResponseGenericChannel[];
   }
 
-  /** DialogNodeOutputGenericDialogNodeOutputResponseTypeVideo. */
+  /**
+   * DialogNodeOutputGenericDialogNodeOutputResponseTypeVideo.
+   */
   export interface DialogNodeOutputGenericDialogNodeOutputResponseTypeVideo extends DialogNodeOutputGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6488,7 +6702,9 @@ namespace AssistantV1 {
     alt_text?: string;
   }
 
-  /** RuntimeResponseGenericRuntimeResponseTypeAudio. */
+  /**
+   * RuntimeResponseGenericRuntimeResponseTypeAudio.
+   */
   export interface RuntimeResponseGenericRuntimeResponseTypeAudio extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6512,7 +6728,9 @@ namespace AssistantV1 {
     alt_text?: string;
   }
 
-  /** RuntimeResponseGenericRuntimeResponseTypeChannelTransfer. */
+  /**
+   * RuntimeResponseGenericRuntimeResponseTypeChannelTransfer.
+   */
   export interface RuntimeResponseGenericRuntimeResponseTypeChannelTransfer extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6530,7 +6748,9 @@ namespace AssistantV1 {
     channels?: ResponseGenericChannel[];
   }
 
-  /** RuntimeResponseGenericRuntimeResponseTypeConnectToAgent. */
+  /**
+   * RuntimeResponseGenericRuntimeResponseTypeConnectToAgent.
+   */
   export interface RuntimeResponseGenericRuntimeResponseTypeConnectToAgent extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6562,7 +6782,9 @@ namespace AssistantV1 {
     channels?: ResponseGenericChannel[];
   }
 
-  /** RuntimeResponseGenericRuntimeResponseTypeIframe. */
+  /**
+   * RuntimeResponseGenericRuntimeResponseTypeIframe.
+   */
   export interface RuntimeResponseGenericRuntimeResponseTypeIframe extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6582,7 +6804,9 @@ namespace AssistantV1 {
     channels?: ResponseGenericChannel[];
   }
 
-  /** RuntimeResponseGenericRuntimeResponseTypeImage. */
+  /**
+   * RuntimeResponseGenericRuntimeResponseTypeImage.
+   */
   export interface RuntimeResponseGenericRuntimeResponseTypeImage extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6602,7 +6826,9 @@ namespace AssistantV1 {
     alt_text?: string;
   }
 
-  /** RuntimeResponseGenericRuntimeResponseTypeOption. */
+  /**
+   * RuntimeResponseGenericRuntimeResponseTypeOption.
+   */
   export interface RuntimeResponseGenericRuntimeResponseTypeOption extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6631,7 +6857,9 @@ namespace AssistantV1 {
     }
   }
 
-  /** RuntimeResponseGenericRuntimeResponseTypePause. */
+  /**
+   * RuntimeResponseGenericRuntimeResponseTypePause.
+   */
   export interface RuntimeResponseGenericRuntimeResponseTypePause extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6647,7 +6875,9 @@ namespace AssistantV1 {
     channels?: ResponseGenericChannel[];
   }
 
-  /** RuntimeResponseGenericRuntimeResponseTypeSuggestion. */
+  /**
+   * RuntimeResponseGenericRuntimeResponseTypeSuggestion.
+   */
   export interface RuntimeResponseGenericRuntimeResponseTypeSuggestion extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6663,7 +6893,9 @@ namespace AssistantV1 {
     channels?: ResponseGenericChannel[];
   }
 
-  /** RuntimeResponseGenericRuntimeResponseTypeText. */
+  /**
+   * RuntimeResponseGenericRuntimeResponseTypeText.
+   */
   export interface RuntimeResponseGenericRuntimeResponseTypeText extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6677,7 +6909,9 @@ namespace AssistantV1 {
     channels?: ResponseGenericChannel[];
   }
 
-  /** RuntimeResponseGenericRuntimeResponseTypeUserDefined. */
+  /**
+   * RuntimeResponseGenericRuntimeResponseTypeUserDefined.
+   */
   export interface RuntimeResponseGenericRuntimeResponseTypeUserDefined extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6691,7 +6925,9 @@ namespace AssistantV1 {
     channels?: ResponseGenericChannel[];
   }
 
-  /** RuntimeResponseGenericRuntimeResponseTypeVideo. */
+  /**
+   * RuntimeResponseGenericRuntimeResponseTypeVideo.
+   */
   export interface RuntimeResponseGenericRuntimeResponseTypeVideo extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.

@@ -17,7 +17,7 @@
 // need to import the whole package to mock getAuthenticatorFromEnvironment
 const sdkCorePackage = require('ibm-cloud-sdk-core');
 
-const { NoAuthAuthenticator, unitTestUtils } = sdkCorePackage;
+const { NoAuthAuthenticator } = sdkCorePackage;
 const DiscoveryV2 = require('../../dist/discovery/v2');
 
 const {
@@ -27,7 +27,7 @@ const {
   expectToBePromise,
   checkUserHeader,
   checkForSuccessfulExecution,
-} = unitTestUtils;
+} = require('@ibm-cloud/sdk-test-utilities');
 
 const discoveryServiceOptions = {
   authenticator: new NoAuthAuthenticator(),
@@ -3848,6 +3848,293 @@ describe('DiscoveryV2', () => {
         let err;
         try {
           await discoveryService.deleteEnrichment();
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+    });
+  });
+
+  describe('listBatches', () => {
+    describe('positive tests', () => {
+      function __listBatchesTest() {
+        // Construct the params object for operation listBatches
+        const projectId = 'testString';
+        const collectionId = 'testString';
+        const listBatchesParams = {
+          projectId,
+          collectionId,
+        };
+
+        const listBatchesResult = discoveryService.listBatches(listBatchesParams);
+
+        // all methods should return a Promise
+        expectToBePromise(listBatchesResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/collections/{collection_id}/batches', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
+        expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listBatchesTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __listBatchesTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __listBatchesTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const projectId = 'testString';
+        const collectionId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const listBatchesParams = {
+          projectId,
+          collectionId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        discoveryService.listBatches(listBatchesParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async () => {
+        let err;
+        try {
+          await discoveryService.listBatches({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.listBatches();
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+    });
+  });
+
+  describe('pullBatches', () => {
+    describe('positive tests', () => {
+      function __pullBatchesTest() {
+        // Construct the params object for operation pullBatches
+        const projectId = 'testString';
+        const collectionId = 'testString';
+        const batchId = 'testString';
+        const pullBatchesParams = {
+          projectId,
+          collectionId,
+          batchId,
+        };
+
+        const pullBatchesResult = discoveryService.pullBatches(pullBatchesParams);
+
+        // all methods should return a Promise
+        expectToBePromise(pullBatchesResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/collections/{collection_id}/batches/{batch_id}', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
+        expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+        expect(mockRequestOptions.path.batch_id).toEqual(batchId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __pullBatchesTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __pullBatchesTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __pullBatchesTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const projectId = 'testString';
+        const collectionId = 'testString';
+        const batchId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const pullBatchesParams = {
+          projectId,
+          collectionId,
+          batchId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        discoveryService.pullBatches(pullBatchesParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async () => {
+        let err;
+        try {
+          await discoveryService.pullBatches({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.pullBatches();
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+    });
+  });
+
+  describe('pushBatches', () => {
+    describe('positive tests', () => {
+      function __pushBatchesTest() {
+        // Construct the params object for operation pushBatches
+        const projectId = 'testString';
+        const collectionId = 'testString';
+        const batchId = 'testString';
+        const file = Buffer.from('This is a mock file.');
+        const filename = 'testString';
+        const pushBatchesParams = {
+          projectId,
+          collectionId,
+          batchId,
+          file,
+          filename,
+        };
+
+        const pushBatchesResult = discoveryService.pushBatches(pushBatchesParams);
+
+        // all methods should return a Promise
+        expectToBePromise(pushBatchesResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v2/projects/{project_id}/collections/{collection_id}/batches/{batch_id}', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'multipart/form-data';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.formData.file.data).toEqual(file);
+        expect(mockRequestOptions.formData.file.filename).toEqual(filename);
+        expect(mockRequestOptions.formData.file.contentType).toEqual('application/octet-stream');
+        expect(mockRequestOptions.qs.version).toEqual(discoveryServiceOptions.version);
+        expect(mockRequestOptions.path.project_id).toEqual(projectId);
+        expect(mockRequestOptions.path.collection_id).toEqual(collectionId);
+        expect(mockRequestOptions.path.batch_id).toEqual(batchId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __pushBatchesTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.enableRetries();
+        __pushBatchesTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        discoveryService.disableRetries();
+        __pushBatchesTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const projectId = 'testString';
+        const collectionId = 'testString';
+        const batchId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const pushBatchesParams = {
+          projectId,
+          collectionId,
+          batchId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        discoveryService.pushBatches(pushBatchesParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async () => {
+        let err;
+        try {
+          await discoveryService.pushBatches({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await discoveryService.pushBatches();
         } catch (e) {
           err = e;
         }

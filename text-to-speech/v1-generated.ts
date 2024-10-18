@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.85.0-75c38f8f-20240206-210220
+ * IBM OpenAPI SDK Code Generator Version: 3.96.0-d6dec9d7-20241008-212902
  */
 
 import * as extend from 'extend';
@@ -2346,7 +2346,9 @@ namespace TextToSpeechV1 {
    * model interfaces
    ************************/
 
-  /** Information about an existing custom model. */
+  /**
+   * Information about an existing custom model.
+   */
   export interface CustomModel {
     /** The customization ID (GUID) of the custom model. The [Create a custom model](#createcustommodel) method
      *  returns only this field. It does not not return the other fields of this object.
@@ -2382,7 +2384,9 @@ namespace TextToSpeechV1 {
     prompts?: Prompt[];
   }
 
-  /** Information about existing custom models. */
+  /**
+   * Information about existing custom models.
+   */
   export interface CustomModels {
     /** An array of `CustomModel` objects that provides information about each available custom model. The array is
      *  empty if the requesting credentials own no custom models (if no language is specified) or own no custom models
@@ -2391,7 +2395,9 @@ namespace TextToSpeechV1 {
     customizations: CustomModel[];
   }
 
-  /** Information about a custom prompt. */
+  /**
+   * Information about a custom prompt.
+   */
   export interface Prompt {
     /** The user-specified text of the prompt. */
     prompt: string;
@@ -2415,7 +2421,12 @@ namespace TextToSpeechV1 {
     speaker_id?: string;
   }
 
-  /** Information about the prompt that is to be added to a custom model. The following example of a `PromptMetadata` object includes both the required prompt text and an optional speaker model ID: `{ "prompt_text": "Thank you and good-bye!", "speaker_id": "823068b2-ed4e-11ea-b6e0-7b6456aa95cc" }`. */
+  /**
+   * Information about the prompt that is to be added to a custom model. The following example of a `PromptMetadata`
+   * object includes both the required prompt text and an optional speaker model ID:
+   *
+   * `{ "prompt_text": "Thank you and good-bye!", "speaker_id": "823068b2-ed4e-11ea-b6e0-7b6456aa95cc" }`.
+   */
   export interface PromptMetadata {
     /** The required written text of the spoken prompt. The length of a prompt's text is limited to a few sentences.
      *  Speaking one or two sentences of text is the recommended limit. A prompt cannot contain more than 1000
@@ -2429,7 +2440,9 @@ namespace TextToSpeechV1 {
     speaker_id?: string;
   }
 
-  /** Information about the custom prompts that are defined for a custom model. */
+  /**
+   * Information about the custom prompts that are defined for a custom model.
+   */
   export interface Prompts {
     /** An array of `Prompt` objects that provides information about the prompts that are defined for the specified
      *  custom model. The array is empty if no prompts are defined for the custom model.
@@ -2437,7 +2450,9 @@ namespace TextToSpeechV1 {
     prompts: Prompt[];
   }
 
-  /** The pronunciation of the specified text. */
+  /**
+   * The pronunciation of the specified text.
+   */
   export interface Pronunciation {
     /** The pronunciation of the specified text in the requested voice and format. If a custom model is specified,
      *  the pronunciation also reflects that custom model.
@@ -2445,7 +2460,9 @@ namespace TextToSpeechV1 {
     pronunciation: string;
   }
 
-  /** Information about a speaker model. */
+  /**
+   * Information about a speaker model.
+   */
   export interface Speaker {
     /** The speaker ID (GUID) of the speaker. */
     speaker_id: string;
@@ -2453,7 +2470,9 @@ namespace TextToSpeechV1 {
     name: string;
   }
 
-  /** A custom models for which the speaker has defined prompts. */
+  /**
+   * A custom models for which the speaker has defined prompts.
+   */
   export interface SpeakerCustomModel {
     /** The customization ID (GUID) of a custom model for which the speaker has defined one or more prompts. */
     customization_id: string;
@@ -2463,7 +2482,9 @@ namespace TextToSpeechV1 {
     prompts: SpeakerPrompt[];
   }
 
-  /** Custom models for which the speaker has defined prompts. */
+  /**
+   * Custom models for which the speaker has defined prompts.
+   */
   export interface SpeakerCustomModels {
     /** An array of `SpeakerCustomModel` objects. Each object provides information about the prompts that are
      *  defined for a specified speaker in the custom models that are owned by a specified service instance. The array
@@ -2472,13 +2493,17 @@ namespace TextToSpeechV1 {
     customizations: SpeakerCustomModel[];
   }
 
-  /** The speaker ID of the speaker model. */
+  /**
+   * The speaker ID of the speaker model.
+   */
   export interface SpeakerModel {
     /** The speaker ID (GUID) of the speaker model. */
     speaker_id: string;
   }
 
-  /** A prompt that a speaker has defined for a custom model. */
+  /**
+   * A prompt that a speaker has defined for a custom model.
+   */
   export interface SpeakerPrompt {
     /** The user-specified text of the prompt. */
     prompt: string;
@@ -2498,7 +2523,9 @@ namespace TextToSpeechV1 {
     error?: string;
   }
 
-  /** Information about all speaker models for the service instance. */
+  /**
+   * Information about all speaker models for the service instance.
+   */
   export interface Speakers {
     /** An array of `Speaker` objects that provides information about the speakers for the service instance. The
      *  array is empty if the service instance has no speakers.
@@ -2506,7 +2533,9 @@ namespace TextToSpeechV1 {
     speakers: Speaker[];
   }
 
-  /** Additional service features that are supported with the voice. */
+  /**
+   * Additional service features that are supported with the voice.
+   */
   export interface SupportedFeatures {
     /** If `true`, the voice can be customized; if `false`, the voice cannot be customized. (Same as
      *  `customizable`.).
@@ -2519,7 +2548,9 @@ namespace TextToSpeechV1 {
     voice_transformation: boolean;
   }
 
-  /** Information about the translation for the specified text. */
+  /**
+   * Information about the translation for the specified text.
+   */
   export interface Translation {
     /** The phonetic or sounds-like translation for the word. A phonetic translation is based on the SSML format for
      *  representing the phonetic string of a word either as an IPA translation or as an IBM SPR translation. A
@@ -2559,7 +2590,9 @@ namespace TextToSpeechV1 {
     }
   }
 
-  /** Information about an available voice. */
+  /**
+   * Information about an available voice.
+   */
   export interface Voice {
     /** The URI of the voice. */
     url: string;
@@ -2583,13 +2616,17 @@ namespace TextToSpeechV1 {
     customization?: CustomModel;
   }
 
-  /** Information about all available voices. */
+  /**
+   * Information about all available voices.
+   */
   export interface Voices {
     /** A list of available voices. */
     voices: Voice[];
   }
 
-  /** Information about a word for the custom model. */
+  /**
+   * Information about a word for the custom model.
+   */
   export interface Word {
     /** The word for the custom model. The maximum length of a word is 49 characters. */
     word: string;
@@ -2632,7 +2669,12 @@ namespace TextToSpeechV1 {
     }
   }
 
-  /** For the [Add custom words](#addwords) method, one or more words that are to be added or updated for the custom model and the translation for each specified word. For the [List custom words](#listwords) method, the words and their translations from the custom model. */
+  /**
+   * For the [Add custom words](#addwords) method, one or more words that are to be added or updated for the custom
+   * model and the translation for each specified word.
+   *
+   * For the [List custom words](#listwords) method, the words and their translations from the custom model.
+   */
   export interface Words {
     /** The [Add custom words](#addwords) method accepts an array of `Word` objects. Each object provides a word
      *  that is to be added or updated for the custom model and the word's translation.

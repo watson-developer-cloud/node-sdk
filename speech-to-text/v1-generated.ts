@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.85.0-75c38f8f-20240206-210220
+ * IBM OpenAPI SDK Code Generator Version: 3.96.0-d6dec9d7-20241008-212902
  */
 
 import * as extend from 'extend';
@@ -5930,7 +5930,9 @@ namespace SpeechToTextV1 {
    * model interfaces
    ************************/
 
-  /** Information about an existing custom acoustic model. */
+  /**
+   * Information about an existing custom acoustic model.
+   */
   export interface AcousticModel {
     /** The customization ID (GUID) of the custom acoustic model. The [Create a custom acoustic
      *  model](#createacousticmodel) method returns only this field of the object; it does not return the other fields.
@@ -5995,7 +5997,9 @@ namespace SpeechToTextV1 {
     }
   }
 
-  /** Information about existing custom acoustic models. */
+  /**
+   * Information about existing custom acoustic models.
+   */
   export interface AcousticModels {
     /** An array of `AcousticModel` objects that provides information about each available custom acoustic model.
      *  The array is empty if the requesting credentials own no custom acoustic models (if no language is specified) or
@@ -6004,7 +6008,9 @@ namespace SpeechToTextV1 {
     customizations: AcousticModel[];
   }
 
-  /** Information about an audio resource from a custom acoustic model. */
+  /**
+   * Information about an audio resource from a custom acoustic model.
+   */
   export interface AudioDetails {
     /** The type of the audio resource:
      *  * `audio` for an individual audio file
@@ -6043,7 +6049,9 @@ namespace SpeechToTextV1 {
     }
   }
 
-  /** Information about an audio resource from a custom acoustic model. */
+  /**
+   * Information about an audio resource from a custom acoustic model.
+   */
   export interface AudioListing {
     /** _For an audio-type resource_, the total seconds of audio in the resource. Omitted for an archive-type
      *  resource.
@@ -6086,7 +6094,9 @@ namespace SpeechToTextV1 {
     }
   }
 
-  /** If audio metrics are requested, information about the signal characteristics of the input audio. */
+  /**
+   * If audio metrics are requested, information about the signal characteristics of the input audio.
+   */
   export interface AudioMetrics {
     /** The interval in seconds (typically 0.1 seconds) at which the service calculated the audio metrics. In other
      *  words, how often the service calculated the metrics. A single unit in each histogram (see the
@@ -6097,7 +6107,9 @@ namespace SpeechToTextV1 {
     accumulated: AudioMetricsDetails;
   }
 
-  /** Detailed information about the signal characteristics of the input audio. */
+  /**
+   * Detailed information about the signal characteristics of the input audio.
+   */
   export interface AudioMetricsDetails {
     /** If `true`, indicates the end of the audio stream, meaning that transcription is complete. Currently, the
      *  field is always `true`. The service returns metrics just once per audio stream. The results provide aggregated
@@ -6143,7 +6155,11 @@ namespace SpeechToTextV1 {
     non_speech_level: AudioMetricsHistogramBin[];
   }
 
-  /** A bin with defined boundaries that indicates the number of values in a range of signal characteristics for a histogram. The first and last bins of a histogram are the boundary bins. They cover the intervals between negative infinity and the first boundary, and between the last boundary and positive infinity, respectively. */
+  /**
+   * A bin with defined boundaries that indicates the number of values in a range of signal characteristics for a
+   * histogram. The first and last bins of a histogram are the boundary bins. They cover the intervals between negative
+   * infinity and the first boundary, and between the last boundary and positive infinity, respectively.
+   */
   export interface AudioMetricsHistogramBin {
     /** The lower boundary of the bin in the histogram. */
     begin: number;
@@ -6153,7 +6169,9 @@ namespace SpeechToTextV1 {
     count: number;
   }
 
-  /** Information about an audio resource from a custom acoustic model. */
+  /**
+   * Information about an audio resource from a custom acoustic model.
+   */
   export interface AudioResource {
     /** The total seconds of audio in the audio resource. */
     duration: number;
@@ -6188,7 +6206,9 @@ namespace SpeechToTextV1 {
     }
   }
 
-  /** Information about the audio resources from a custom acoustic model. */
+  /**
+   * Information about the audio resources from a custom acoustic model.
+   */
   export interface AudioResources {
     /** The total minutes of accumulated audio summed over all of the valid audio resources for the custom acoustic
      *  model. You can use this value to determine whether the custom model has too little or too much audio to begin
@@ -6201,7 +6221,9 @@ namespace SpeechToTextV1 {
     audio: AudioResource[];
   }
 
-  /** Information about the corpora from a custom language model. */
+  /**
+   * Information about the corpora from a custom language model.
+   */
   export interface Corpora {
     /** An array of `Corpus` objects that provides information about the corpora for the custom model. The array is
      *  empty if the custom model has no corpora.
@@ -6209,7 +6231,9 @@ namespace SpeechToTextV1 {
     corpora: Corpus[];
   }
 
-  /** Information about a corpus from a custom language model. */
+  /**
+   * Information about a corpus from a custom language model.
+   */
   export interface Corpus {
     /** The name of the corpus. */
     name: string;
@@ -6247,7 +6271,9 @@ namespace SpeechToTextV1 {
     }
   }
 
-  /** Information about a word that is to be added to a custom language model. */
+  /**
+   * Information about a word that is to be added to a custom language model.
+   */
   export interface CustomWord {
     /** For the [Add custom words](#addwords) method, you must specify the custom word that is to be added to or
      *  updated in the custom model. Do not use characters that need to be URL-encoded, for example, spaces, slashes,
@@ -6289,7 +6315,9 @@ namespace SpeechToTextV1 {
     display_as?: string;
   }
 
-  /** Information about a grammar from a custom language model. */
+  /**
+   * Information about a grammar from a custom language model.
+   */
   export interface Grammar {
     /** The name of the grammar. */
     name: string;
@@ -6326,7 +6354,9 @@ namespace SpeechToTextV1 {
     }
   }
 
-  /** Information about the grammars from a custom language model. */
+  /**
+   * Information about the grammars from a custom language model.
+   */
   export interface Grammars {
     /** An array of `Grammar` objects that provides information about the grammars for the custom model. The array
      *  is empty if the custom model has no grammars.
@@ -6334,7 +6364,9 @@ namespace SpeechToTextV1 {
     grammars: Grammar[];
   }
 
-  /** Information about a match for a keyword from speech recognition results. */
+  /**
+   * Information about a match for a keyword from speech recognition results.
+   */
   export interface KeywordResult {
     /** A specified keyword normalized to the spoken phrase that matched in the audio input. */
     normalized_text: string;
@@ -6346,7 +6378,9 @@ namespace SpeechToTextV1 {
     confidence: number;
   }
 
-  /** Information about an existing custom language model. */
+  /**
+   * Information about an existing custom language model.
+   */
   export interface LanguageModel {
     /** The customization ID (GUID) of the custom language model. The [Create a custom language
      *  model](#createlanguagemodel) method returns only this field of the object; it does not return the other fields.
@@ -6431,7 +6465,9 @@ namespace SpeechToTextV1 {
     }
   }
 
-  /** Information about existing custom language models. */
+  /**
+   * Information about existing custom language models.
+   */
   export interface LanguageModels {
     /** An array of `LanguageModel` objects that provides information about each available custom language model.
      *  The array is empty if the requesting credentials own no custom language models (if no language is specified) or
@@ -6440,7 +6476,9 @@ namespace SpeechToTextV1 {
     customizations: LanguageModel[];
   }
 
-  /** Detailed timing information about the service's processing of the input audio. */
+  /**
+   * Detailed timing information about the service's processing of the input audio.
+   */
   export interface ProcessedAudio {
     /** The seconds of audio that the service has received as of this response. The value of the field is greater
      *  than the values of the `transcription` and `speaker_labels` fields during speech recognition processing, since
@@ -6465,7 +6503,10 @@ namespace SpeechToTextV1 {
     speaker_labels?: number;
   }
 
-  /** If processing metrics are requested, information about the service's processing of the input audio. Processing metrics are not available with the synchronous [Recognize audio](#recognize) method. */
+  /**
+   * If processing metrics are requested, information about the service's processing of the input audio. Processing
+   * metrics are not available with the synchronous [Recognize audio](#recognize) method.
+   */
   export interface ProcessingMetrics {
     /** Detailed timing information about the service's processing of the input audio. */
     processed_audio: ProcessedAudio;
@@ -6488,7 +6529,9 @@ namespace SpeechToTextV1 {
     periodic: boolean;
   }
 
-  /** Information about a current asynchronous speech recognition job. */
+  /**
+   * Information about a current asynchronous speech recognition job.
+   */
   export interface RecognitionJob {
     /** The ID of the asynchronous job. */
     id: string;
@@ -6546,7 +6589,9 @@ namespace SpeechToTextV1 {
     }
   }
 
-  /** Information about current asynchronous speech recognition jobs. */
+  /**
+   * Information about current asynchronous speech recognition jobs.
+   */
   export interface RecognitionJobs {
     /** An array of `RecognitionJob` objects that provides the status for each of the user's current jobs. The array
      *  is empty if the user has no current jobs.
@@ -6554,7 +6599,9 @@ namespace SpeechToTextV1 {
     recognitions: RecognitionJob[];
   }
 
-  /** Information about a request to register a callback for asynchronous speech recognition. */
+  /**
+   * Information about a request to register a callback for asynchronous speech recognition.
+   */
   export interface RegisterStatus {
     /** The current status of the job:
      *  * `created`: The service successfully allowlisted the callback URL as a result of the call.
@@ -6574,7 +6621,9 @@ namespace SpeechToTextV1 {
     }
   }
 
-  /** Information about the speakers from speech recognition results. */
+  /**
+   * Information about the speakers from speech recognition results.
+   */
   export interface SpeakerLabelsResult {
     /** The start time of a word from the transcript. The value matches the start time of a word from the
      *  `timestamps` array.
@@ -6601,7 +6650,9 @@ namespace SpeechToTextV1 {
     final: boolean;
   }
 
-  /** Information about an available language model. */
+  /**
+   * Information about an available language model.
+   */
   export interface SpeechModel {
     /** The name of the model for use as an identifier in calls to the service (for example,
      *  `en-US_BroadbandModel`).
@@ -6619,13 +6670,17 @@ namespace SpeechToTextV1 {
     description: string;
   }
 
-  /** Information about the available language models. */
+  /**
+   * Information about the available language models.
+   */
   export interface SpeechModels {
     /** An array of `SpeechModel` objects that provides information about each available model. */
     models: SpeechModel[];
   }
 
-  /** An alternative transcript from speech recognition results. */
+  /**
+   * An alternative transcript from speech recognition results.
+   */
   export interface SpeechRecognitionAlternative {
     /** A transcription of the audio. */
     transcript: string;
@@ -6637,16 +6692,18 @@ namespace SpeechToTextV1 {
      *  elements: the word followed by its start and end time in seconds, for example:
      *  `[["hello",0.0,1.2],["world",1.2,2.5]]`. Timestamps are returned only for the best alternative.
      */
-    timestamps?: [string, number, number][];
+    timestamps?: string[];
     /** A confidence score for each word of the transcript as a list of lists. Each inner list consists of two
      *  elements: the word and its confidence score in the range of 0.0 to 1.0, for example:
      *  `[["hello",0.95],["world",0.86]]`. Confidence scores are returned only for the best alternative and only with
      *  results marked as final.
      */
-    word_confidence?: [string, number][];
+    word_confidence?: string[];
   }
 
-  /** Component results for a speech recognition request. */
+  /**
+   * Component results for a speech recognition request.
+   */
   export interface SpeechRecognitionResult {
     /** An indication of whether the transcription results are final:
      *  * If `true`, the results for this utterance are final. They are guaranteed not to be updated further.
@@ -6694,7 +6751,9 @@ namespace SpeechToTextV1 {
     }
   }
 
-  /** The complete results for a speech recognition request. */
+  /**
+   * The complete results for a speech recognition request.
+   */
   export interface SpeechRecognitionResults {
     /** An array of `SpeechRecognitionResult` objects that can include interim and final results (interim results
      *  are returned only if supported by the method). Final results are guaranteed not to change; interim results might
@@ -6742,7 +6801,9 @@ namespace SpeechToTextV1 {
     warnings?: string[];
   }
 
-  /** Indicates whether select service features are supported with the model. */
+  /**
+   * Indicates whether select service features are supported with the model.
+   */
   export interface SupportedFeatures {
     /** Indicates whether the customization interface can be used to create a custom language model based on the
      *  language model.
@@ -6772,7 +6833,9 @@ namespace SpeechToTextV1 {
     low_latency?: boolean;
   }
 
-  /** The response from training of a custom language or custom acoustic model. */
+  /**
+   * The response from training of a custom language or custom acoustic model.
+   */
   export interface TrainingResponse {
     /** An array of `TrainingWarning` objects that lists any invalid resources contained in the custom model. For
      *  custom language models, invalid resources are grouped and identified by type of resource. The method can return
@@ -6781,7 +6844,9 @@ namespace SpeechToTextV1 {
     warnings?: TrainingWarning[];
   }
 
-  /** A warning from training of a custom language or custom acoustic model. */
+  /**
+   * A warning from training of a custom language or custom acoustic model.
+   */
   export interface TrainingWarning {
     /** An identifier for the type of invalid resources listed in the `description` field. */
     code: TrainingWarning.Constants.Code | string;
@@ -6803,7 +6868,9 @@ namespace SpeechToTextV1 {
     }
   }
 
-  /** Information about a word from a custom language model. */
+  /**
+   * Information about a word from a custom language model.
+   */
   export interface Word {
     /** A word from the custom model's words resource. The spelling of the word is used to train the model. */
     word: string;
@@ -6855,7 +6922,9 @@ namespace SpeechToTextV1 {
     error?: WordError[];
   }
 
-  /** An alternative hypothesis for a word from speech recognition results. */
+  /**
+   * An alternative hypothesis for a word from speech recognition results.
+   */
   export interface WordAlternativeResult {
     /** A confidence score for the word alternative hypothesis in the range of 0.0 to 1.0. */
     confidence: number;
@@ -6863,7 +6932,9 @@ namespace SpeechToTextV1 {
     word: string;
   }
 
-  /** Information about alternative hypotheses for words from speech recognition results. */
+  /**
+   * Information about alternative hypotheses for words from speech recognition results.
+   */
   export interface WordAlternativeResults {
     /** The start time in seconds of the word from the input audio that corresponds to the word alternatives. */
     start_time: number;
@@ -6873,7 +6944,9 @@ namespace SpeechToTextV1 {
     alternatives: WordAlternativeResult[];
   }
 
-  /** An error associated with a word from a custom language model. */
+  /**
+   * An error associated with a word from a custom language model.
+   */
   export interface WordError {
     /** A key-value pair that describes an error associated with the definition of a word in the words resource. The
      *  pair has the format `"element": "message"`, where `element` is the aspect of the definition that caused the
@@ -6884,7 +6957,9 @@ namespace SpeechToTextV1 {
     element: string;
   }
 
-  /** Information about the words from a custom language model. */
+  /**
+   * Information about the words from a custom language model.
+   */
   export interface Words {
     /** An array of `Word` objects that provides information about each word in the custom model's words resource.
      *  The array is empty if the custom model has no words.
