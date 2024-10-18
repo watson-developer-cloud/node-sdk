@@ -17,7 +17,7 @@
 // need to import the whole package to mock getAuthenticatorFromEnvironment
 const sdkCorePackage = require('ibm-cloud-sdk-core');
 
-const { NoAuthAuthenticator, unitTestUtils } = sdkCorePackage;
+const { NoAuthAuthenticator } = sdkCorePackage;
 const TextToSpeechV1 = require('../../dist/text-to-speech/v1');
 
 const {
@@ -27,7 +27,7 @@ const {
   expectToBePromise,
   checkUserHeader,
   checkForSuccessfulExecution,
-} = unitTestUtils;
+} = require('@ibm-cloud/sdk-test-utilities');
 
 const textToSpeechServiceOptions = {
   authenticator: new NoAuthAuthenticator(),

@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.85.0-75c38f8f-20240206-210220
+ * IBM OpenAPI SDK Code Generator Version: 3.96.0-d6dec9d7-20241008-212902
  */
 
 import * as extend from 'extend';
@@ -1248,8 +1248,15 @@ class DiscoveryV2 extends BaseService {
    * @param {string[]} [params._return] - A list of the fields in the document hierarchy to return. You can specify both
    * root-level (`text`) and nested (`extracted_metadata.filename`) fields. If this parameter is an empty list, then all
    * fields are returned.
-   * @param {number} [params.offset] - The number of query results to skip at the beginning. For example, if the total
-   * number of results that are returned is 10 and the offset is 8, it returns the last two results.
+   * @param {number} [params.offset] - The number of query results to skip at the beginning. Consider that the `count`
+   * is set to 10 (the default value) and the total number of results that are returned is 100. In this case, the
+   * following examples show the returned results for different `offset` values:
+   *
+   *  * If `offset` is set to 95, it returns the last 5 results.
+   *
+   *  * If `offset` is set to 10, it returns the second batch of 10 results.
+   *
+   *  * If `offset` is set to 100 or more, it returns empty results.
    * @param {string} [params.sort] - A comma-separated list of fields in the document to sort on. You can optionally
    * specify a sort direction by prefixing the field with `-` for descending or `+` for ascending. Ascending is the
    * default sort direction if no prefix is specified.
@@ -2664,6 +2671,215 @@ class DiscoveryV2 extends BaseService {
     return this.createRequest(parameters);
   }
   /*************************
+   * batches
+   ************************/
+
+  /**
+   * List batches.
+   *
+   * A batch is a set of documents that are ready for enrichment by an external application. After you apply a webhook
+   * enrichment to a collection, and then process or upload documents to the collection, Discovery creates a batch with
+   * a unique **batch_id**.
+   *
+   *  To start, you must register your external application as a **webhook** type by using the [Create enrichment
+   * API](/apidocs/discovery-data#createenrichment) method.
+   *
+   * Use the List batches API to get the following:
+   *
+   *  * Notified batches that are not yet pulled by the external enrichment application.
+   *
+   *  * Batches that are pulled, but not yet pushed to Discovery by the external enrichment application.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.collectionId - The Universally Unique Identifier (UUID) of the collection.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.ListBatchesResponse>>}
+   */
+  public listBatches(
+    params: DiscoveryV2.ListBatchesParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.ListBatchesResponse>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId', 'collectionId'];
+    const _validParams = ['projectId', 'collectionId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+      'collection_id': _params.collectionId,
+    };
+
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'listBatches');
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/collections/{collection_id}/batches',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Pull batches.
+   *
+   * Pull a batch of documents from Discovery for enrichment by an external application. Ensure to include the
+   * `Accept-Encoding: gzip` header in this method to get the file. You can also implement retry logic when calling this
+   * method to avoid any network errors.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.collectionId - The Universally Unique Identifier (UUID) of the collection.
+   * @param {string} params.batchId - The Universally Unique Identifier (UUID) of the document batch that is being
+   * requested from Discovery.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<DiscoveryV2.PullBatchesResponse>>}
+   */
+  public pullBatches(
+    params: DiscoveryV2.PullBatchesParams
+  ): Promise<DiscoveryV2.Response<DiscoveryV2.PullBatchesResponse>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId', 'collectionId', 'batchId'];
+    const _validParams = ['projectId', 'collectionId', 'batchId', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+      'collection_id': _params.collectionId,
+      'batch_id': _params.batchId,
+    };
+
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'pullBatches');
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/collections/{collection_id}/batches/{batch_id}',
+        method: 'GET',
+        qs: query,
+        path,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Push batches.
+   *
+   * Push a batch of documents to Discovery after annotation by an external application. You can implement retry logic
+   * when calling this method to avoid any network errors.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
+   * found from the *Integrate and Deploy* page in Discovery.
+   * @param {string} params.collectionId - The Universally Unique Identifier (UUID) of the collection.
+   * @param {string} params.batchId - The Universally Unique Identifier (UUID) of the document batch that is being
+   * requested from Discovery.
+   * @param {NodeJS.ReadableStream | Buffer} [params.file] - A compressed newline-delimited JSON (NDJSON), which is a
+   * JSON file with one row of data per line. For example, `{batch_id}.ndjson.gz`. For more information, see [Binary
+   * attachment in the push batches
+   * method](/docs/discovery-data?topic=discovery-data-external-enrichment#binary-attachment-push-batches).
+   *
+   * There is no limitation on the name of the file because Discovery does not use the name for processing. The list of
+   * features in the document is specified in the `features` object.
+   * @param {string} [params.filename] - The filename for file.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<DiscoveryV2.Response<boolean>>}
+   */
+  public pushBatches(
+    params: DiscoveryV2.PushBatchesParams
+  ): Promise<DiscoveryV2.Response<boolean>> {
+    const _params = { ...params };
+    const _requiredParams = ['projectId', 'collectionId', 'batchId'];
+    const _validParams = ['projectId', 'collectionId', 'batchId', 'file', 'filename', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const formData = {
+      'file': {
+        data: _params.file,
+        filename: _params.filename,
+        contentType: 'application/octet-stream',
+      },
+    };
+
+    const query = {
+      'version': this.version,
+    };
+
+    const path = {
+      'project_id': _params.projectId,
+      'collection_id': _params.collectionId,
+      'batch_id': _params.batchId,
+    };
+
+    const sdkHeaders = getSdkHeaders(DiscoveryV2.DEFAULT_SERVICE_NAME, 'v2', 'pushBatches');
+
+    const parameters = {
+      options: {
+        url: '/v2/projects/{project_id}/collections/{collection_id}/batches/{batch_id}',
+        method: 'POST',
+        qs: query,
+        path,
+        formData
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/json',
+            'Content-Type': 'multipart/form-data',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+  /*************************
    * documentClassifiers
    ************************/
 
@@ -3914,8 +4130,15 @@ namespace DiscoveryV2 {
      *  nested (`extracted_metadata.filename`) fields. If this parameter is an empty list, then all fields are returned.
      */
     _return?: string[];
-    /** The number of query results to skip at the beginning. For example, if the total number of results that are
-     *  returned is 10 and the offset is 8, it returns the last two results.
+    /** The number of query results to skip at the beginning. Consider that the `count` is set to 10 (the default
+     *  value) and the total number of results that are returned is 100. In this case, the following examples show the
+     *  returned results for different `offset` values:
+     *
+     *   * If `offset` is set to 95, it returns the last 5 results.
+     *
+     *   * If `offset` is set to 10, it returns the second batch of 10 results.
+     *
+     *   * If `offset` is set to 100 or more, it returns empty results.
      */
     offset?: number;
     /** A comma-separated list of fields in the document to sort on. You can optionally specify a sort direction by
@@ -4279,6 +4502,53 @@ namespace DiscoveryV2 {
     headers?: OutgoingHttpHeaders;
   }
 
+  /** Parameters for the `listBatches` operation. */
+  export interface ListBatchesParams {
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
+    projectId: string;
+    /** The Universally Unique Identifier (UUID) of the collection. */
+    collectionId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `pullBatches` operation. */
+  export interface PullBatchesParams {
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
+    projectId: string;
+    /** The Universally Unique Identifier (UUID) of the collection. */
+    collectionId: string;
+    /** The Universally Unique Identifier (UUID) of the document batch that is being requested from Discovery. */
+    batchId: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
+  /** Parameters for the `pushBatches` operation. */
+  export interface PushBatchesParams {
+    /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
+     *  and Deploy* page in Discovery.
+     */
+    projectId: string;
+    /** The Universally Unique Identifier (UUID) of the collection. */
+    collectionId: string;
+    /** The Universally Unique Identifier (UUID) of the document batch that is being requested from Discovery. */
+    batchId: string;
+    /** A compressed newline-delimited JSON (NDJSON), which is a JSON file with one row of data per line. For
+     *  example, `{batch_id}.ndjson.gz`. For more information, see [Binary attachment in the push batches
+     *  method](/docs/discovery-data?topic=discovery-data-external-enrichment#binary-attachment-push-batches).
+     *
+     *  There is no limitation on the name of the file because Discovery does not use the name for processing. The list
+     *  of features in the document is specified in the `features` object.
+     */
+    file?: NodeJS.ReadableStream | Buffer;
+    /** The filename for file. */
+    filename?: string;
+    headers?: OutgoingHttpHeaders;
+  }
+
   /** Parameters for the `listDocumentClassifiers` operation. */
   export interface ListDocumentClassifiersParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
@@ -4513,7 +4783,10 @@ namespace DiscoveryV2 {
    * model interfaces
    ************************/
 
-  /** An object that contains the converted document and any identified enrichments. Root-level fields from the original file are returned also. */
+  /**
+   * An object that contains the converted document and any identified enrichments. Root-level fields from the original
+   * file are returned also.
+   */
   export interface AnalyzedDocument {
     /** Array of notices that are triggered when the files are processed. */
     notices?: Notice[];
@@ -4521,15 +4794,38 @@ namespace DiscoveryV2 {
     result?: AnalyzedResult;
   }
 
-  /** Result of the document analysis. */
+  /**
+   * Result of the document analysis.
+   *
+   * This type supports additional properties of type any. The remaining key-value pairs.
+   */
   export interface AnalyzedResult {
     /** Metadata that was specified with the request. */
     metadata?: JsonObject;
-    /** AnalyzedResult accepts additional properties. */
+
+    /**
+     * AnalyzedResult accepts additional properties of type any. The remaining key-value pairs.
+     */
     [propName: string]: any;
   }
 
-  /** An object with details for creating federated document classifier models. */
+  /**
+   * A batch is a set of documents that are ready for enrichment by an external application. After you apply a webhook
+   * enrichment to a collection, and then process or upload documents to the collection, Discovery creates a batch with
+   * a unique **batch_id**.
+   */
+  export interface BatchDetails {
+    /** The Universally Unique Identifier (UUID) for a batch of documents. */
+    batch_id?: string;
+    /** The date and time (RFC3339) that the batch was created. */
+    created?: string;
+    /** The Universally Unique Identifier (UUID) for the external enrichment. */
+    enrichment_id?: string;
+  }
+
+  /**
+   * An object with details for creating federated document classifier models.
+   */
   export interface ClassifierFederatedModel {
     /** Name of the field that contains the values from which multiple classifier models are defined. For example,
      *  you can specify a field that lists product lines to create a separate model per product line.
@@ -4537,7 +4833,9 @@ namespace DiscoveryV2 {
     field: string;
   }
 
-  /** An object that contains information about a trained document classifier model. */
+  /**
+   * An object that contains information about a trained document classifier model.
+   */
   export interface ClassifierModelEvaluation {
     /** A micro-average aggregates the contributions of all classes to compute the average metric. Classes refers to
      *  the classification labels that are specified in the **answer_field**.
@@ -4553,7 +4851,9 @@ namespace DiscoveryV2 {
     per_class: PerClassModelEvaluation[];
   }
 
-  /** A collection for storing documents. */
+  /**
+   * A collection for storing documents.
+   */
   export interface Collection {
     /** The Universally Unique Identifier (UUID) of the collection. */
     collection_id?: string;
@@ -4561,7 +4861,9 @@ namespace DiscoveryV2 {
     name?: string;
   }
 
-  /** A collection for storing documents. */
+  /**
+   * A collection for storing documents.
+   */
   export interface CollectionDetails {
     /** The Universally Unique Identifier (UUID) of the collection. */
     collection_id?: string;
@@ -4591,7 +4893,9 @@ namespace DiscoveryV2 {
     smart_document_understanding?: CollectionDetailsSmartDocumentUnderstanding;
   }
 
-  /** An object that describes the Smart Document Understanding model for a collection. */
+  /**
+   * An object that describes the Smart Document Understanding model for a collection.
+   */
   export interface CollectionDetailsSmartDocumentUnderstanding {
     /** When `true`, smart document understanding conversion is enabled for the collection. */
     enabled?: boolean;
@@ -4624,7 +4928,9 @@ namespace DiscoveryV2 {
     }
   }
 
-  /** An object describing an enrichment for a collection. */
+  /**
+   * An object describing an enrichment for a collection.
+   */
   export interface CollectionEnrichment {
     /** The unique identifier of this enrichment. For more information about how to determine the ID of an
      *  enrichment, see [the product
@@ -4639,13 +4945,17 @@ namespace DiscoveryV2 {
     fields?: string[];
   }
 
-  /** An object that contains an array of autocompletion suggestions. */
+  /**
+   * An object that contains an array of autocompletion suggestions.
+   */
   export interface Completions {
     /** Array of autocomplete suggestion based on the provided prefix. */
     completions?: string[];
   }
 
-  /** Display settings for aggregations. */
+  /**
+   * Display settings for aggregations.
+   */
   export interface ComponentSettingsAggregation {
     /** Identifier used to map aggregation settings to aggregation configuration. */
     name?: string;
@@ -4668,7 +4978,9 @@ namespace DiscoveryV2 {
     }
   }
 
-  /** Fields shown in the results section of the UI. */
+  /**
+   * Fields shown in the results section of the UI.
+   */
   export interface ComponentSettingsFieldsShown {
     /** Body label. */
     body?: ComponentSettingsFieldsShownBody;
@@ -4676,7 +4988,9 @@ namespace DiscoveryV2 {
     title?: ComponentSettingsFieldsShownTitle;
   }
 
-  /** Body label. */
+  /**
+   * Body label.
+   */
   export interface ComponentSettingsFieldsShownBody {
     /** Use the whole passage as the body. */
     use_passage?: boolean;
@@ -4684,13 +4998,17 @@ namespace DiscoveryV2 {
     field?: string;
   }
 
-  /** Title label. */
+  /**
+   * Title label.
+   */
   export interface ComponentSettingsFieldsShownTitle {
     /** Use a specific field as the title. */
     field?: string;
   }
 
-  /** The default component settings for this project. */
+  /**
+   * The default component settings for this project.
+   */
   export interface ComponentSettingsResponse {
     /** Fields shown in the results section of the UI. */
     fields_shown?: ComponentSettingsFieldsShown;
@@ -4704,7 +5022,9 @@ namespace DiscoveryV2 {
     aggregations?: ComponentSettingsAggregation[];
   }
 
-  /** An object that manages the settings and data that is required to train a document classification model. */
+  /**
+   * An object that manages the settings and data that is required to train a document classification model.
+   */
   export interface CreateDocumentClassifier {
     /** A human-readable name of the document classifier. */
     name: string;
@@ -4725,7 +5045,9 @@ namespace DiscoveryV2 {
     federated_classification?: ClassifierFederatedModel;
   }
 
-  /** Information about a specific enrichment. */
+  /**
+   * Information about a specific enrichment.
+   */
   export interface CreateEnrichment {
     /** The human readable name for this enrichment. */
     name?: string;
@@ -4755,9 +5077,7 @@ namespace DiscoveryV2 {
      *  * `watson_knowledge_studio_model`: Creates an enrichment from a Watson Knowledge Studio machine learning model
      *  that is defined in a ZIP file.
      *
-     *  * `webhook`: Connects to an external enrichment application by using a webhook. The feature is available from
-     *  IBM Cloud-managed instances only. The external enrichment feature is beta functionality. Beta features are not
-     *  supported by the SDKs.
+     *  * `webhook`: Connects to an external enrichment application by using a webhook.
      *
      *  * `sentence_classifier`: Use sentence classifier to classify sentences in your documents. This feature is
      *  available in IBM Cloud-managed instances only. The sentence classifier feature is beta functionality. Beta
@@ -4771,7 +5091,7 @@ namespace DiscoveryV2 {
   }
   export namespace CreateEnrichment {
     export namespace Constants {
-      /** The type of this enrichment. The following types are supported: * `classifier`: Creates a document classifier enrichment from a document classifier model that you create by using the [Document classifier API](/apidocs/discovery-data#createdocumentclassifier). **Note**: A text classifier enrichment can be created only from the product user interface. * `dictionary`: Creates a custom dictionary enrichment that you define in a CSV file. * `regular_expression`: Creates a custom regular expression enrichment from regex syntax that you specify in the request. * `rule_based`: Creates an enrichment from an advanced rules model that is created and exported as a ZIP file from Watson Knowledge Studio. * `uima_annotator`: Creates an enrichment from a custom UIMA text analysis model that is defined in a PEAR file created in one of the following ways: * Watson Explorer Content Analytics Studio. **Note**: Supported in IBM Cloud Pak for Data instances only. * Rule-based model that is created in Watson Knowledge Studio. * `watson_knowledge_studio_model`: Creates an enrichment from a Watson Knowledge Studio machine learning model that is defined in a ZIP file. * `webhook`: Connects to an external enrichment application by using a webhook. The feature is available from IBM Cloud-managed instances only. The external enrichment feature is beta functionality. Beta features are not supported by the SDKs. * `sentence_classifier`: Use sentence classifier to classify sentences in your documents. This feature is available in IBM Cloud-managed instances only. The sentence classifier feature is beta functionality. Beta features are not supported by the SDKs. */
+      /** The type of this enrichment. The following types are supported: * `classifier`: Creates a document classifier enrichment from a document classifier model that you create by using the [Document classifier API](/apidocs/discovery-data#createdocumentclassifier). **Note**: A text classifier enrichment can be created only from the product user interface. * `dictionary`: Creates a custom dictionary enrichment that you define in a CSV file. * `regular_expression`: Creates a custom regular expression enrichment from regex syntax that you specify in the request. * `rule_based`: Creates an enrichment from an advanced rules model that is created and exported as a ZIP file from Watson Knowledge Studio. * `uima_annotator`: Creates an enrichment from a custom UIMA text analysis model that is defined in a PEAR file created in one of the following ways: * Watson Explorer Content Analytics Studio. **Note**: Supported in IBM Cloud Pak for Data instances only. * Rule-based model that is created in Watson Knowledge Studio. * `watson_knowledge_studio_model`: Creates an enrichment from a Watson Knowledge Studio machine learning model that is defined in a ZIP file. * `webhook`: Connects to an external enrichment application by using a webhook. * `sentence_classifier`: Use sentence classifier to classify sentences in your documents. This feature is available in IBM Cloud-managed instances only. The sentence classifier feature is beta functionality. Beta features are not supported by the SDKs. */
       export enum Type {
         CLASSIFIER = 'classifier',
         DICTIONARY = 'dictionary',
@@ -4785,7 +5105,9 @@ namespace DiscoveryV2 {
     }
   }
 
-  /** Default query parameters for this project. */
+  /**
+   * Default query parameters for this project.
+   */
   export interface DefaultQueryParams {
     /** An array of collection identifiers to query. If empty or omitted all collections in the project are queried. */
     collection_ids?: string[];
@@ -4812,7 +5134,9 @@ namespace DiscoveryV2 {
     return?: string[];
   }
 
-  /** Default settings configuration for passage search options. */
+  /**
+   * Default settings configuration for passage search options.
+   */
   export interface DefaultQueryParamsPassages {
     /** When `true`, a passage search is performed by default. */
     enabled?: boolean;
@@ -4832,7 +5156,11 @@ namespace DiscoveryV2 {
     max_per_document?: number;
   }
 
-  /** Object that contains suggested refinement settings. **Note**: The `suggested_refinements` parameter that identified dynamic facets from the data is deprecated. */
+  /**
+   * Object that contains suggested refinement settings.
+   *
+   * **Note**: The `suggested_refinements` parameter that identified dynamic facets from the data is deprecated.
+   */
   export interface DefaultQueryParamsSuggestedRefinements {
     /** When `true`, suggested refinements for the query are returned by default. */
     enabled?: boolean;
@@ -4840,7 +5168,9 @@ namespace DiscoveryV2 {
     count?: number;
   }
 
-  /** Default project query settings for table results. */
+  /**
+   * Default project query settings for table results.
+   */
   export interface DefaultQueryParamsTableResults {
     /** When `true`, a table results for the query are returned by default. */
     enabled?: boolean;
@@ -4850,7 +5180,9 @@ namespace DiscoveryV2 {
     per_document?: number;
   }
 
-  /** Information returned when a document is deleted. */
+  /**
+   * Information returned when a document is deleted.
+   */
   export interface DeleteDocumentResponse {
     /** The unique identifier of the document. */
     document_id?: string;
@@ -4866,7 +5198,9 @@ namespace DiscoveryV2 {
     }
   }
 
-  /** Information returned after an uploaded document is accepted. */
+  /**
+   * Information returned after an uploaded document is accepted.
+   */
   export interface DocumentAccepted {
     /** The unique identifier of the ingested document. */
     document_id?: string;
@@ -4885,7 +5219,9 @@ namespace DiscoveryV2 {
     }
   }
 
-  /** List of document attributes. */
+  /**
+   * List of document attributes.
+   */
   export interface DocumentAttribute {
     /** The type of attribute. */
     type?: string;
@@ -4897,7 +5233,9 @@ namespace DiscoveryV2 {
     location?: TableElementLocation;
   }
 
-  /** Information about a document classifier. */
+  /**
+   * Information about a document classifier.
+   */
   export interface DocumentClassifier {
     /** The Universally Unique Identifier (UUID) of the document classifier. */
     classifier_id?: string;
@@ -4933,7 +5271,10 @@ namespace DiscoveryV2 {
     federated_classification?: ClassifierFederatedModel;
   }
 
-  /** An object that describes enrichments that are applied to the training and test data that is used by the document classifier. */
+  /**
+   * An object that describes enrichments that are applied to the training and test data that is used by the document
+   * classifier.
+   */
   export interface DocumentClassifierEnrichment {
     /** The Universally Unique Identifier (UUID) of the enrichment. */
     enrichment_id: string;
@@ -4941,7 +5282,9 @@ namespace DiscoveryV2 {
     fields: string[];
   }
 
-  /** Information about a document classifier model. */
+  /**
+   * Information about a document classifier model.
+   */
   export interface DocumentClassifierModel {
     /** The Universally Unique Identifier (UUID) of the document classifier model. */
     model_id?: string;
@@ -4981,19 +5324,25 @@ namespace DiscoveryV2 {
     }
   }
 
-  /** An object that contains a list of document classifier model definitions. */
+  /**
+   * An object that contains a list of document classifier model definitions.
+   */
   export interface DocumentClassifierModels {
     /** An array of document classifier model definitions. */
     models?: DocumentClassifierModel[];
   }
 
-  /** An object that contains a list of document classifier definitions. */
+  /**
+   * An object that contains a list of document classifier definitions.
+   */
   export interface DocumentClassifiers {
     /** An array of document classifier definitions. */
     classifiers?: DocumentClassifier[];
   }
 
-  /** Information about a document. */
+  /**
+   * Information about a document.
+   */
   export interface DocumentDetails {
     /** The unique identifier of the document. */
     document_id?: string;
@@ -5047,7 +5396,10 @@ namespace DiscoveryV2 {
     }
   }
 
-  /** Information about the child documents that are generated from a single document during ingestion or other processing. */
+  /**
+   * Information about the child documents that are generated from a single document during ingestion or other
+   * processing.
+   */
   export interface DocumentDetailsChildren {
     /** Indicates whether the child documents have any notices. The value is `false` if the document does not have
      *  child documents.
@@ -5059,7 +5411,9 @@ namespace DiscoveryV2 {
     count?: number;
   }
 
-  /** Information about a specific enrichment. */
+  /**
+   * Information about a specific enrichment.
+   */
   export interface Enrichment {
     /** The Universally Unique Identifier (UUID) of this enrichment. */
     enrichment_id?: string;
@@ -5093,7 +5447,10 @@ namespace DiscoveryV2 {
     }
   }
 
-  /** An object that contains options for the current enrichment. Starting with version `2020-08-30`, the enrichment options are not included in responses from the List Enrichments method. */
+  /**
+   * An object that contains options for the current enrichment. Starting with version `2020-08-30`, the enrichment
+   * options are not included in responses from the List Enrichments method.
+   */
   export interface EnrichmentOptions {
     /** An array of supported languages for this enrichment. When creating an enrichment, only specify a language
      *  that is used by the model or in the dictionary. Required when **type** is `dictionary`. Optional when **type**
@@ -5156,13 +5513,25 @@ namespace DiscoveryV2 {
     location_encoding?: string;
   }
 
-  /** An object that contains an array of enrichment definitions. */
+  /**
+   * An object that contains an array of enrichment definitions.
+   */
   export interface Enrichments {
     /** An array of enrichment definitions. */
     enrichments?: Enrichment[];
   }
 
-  /** An expansion definition. Each object respresents one set of expandable strings. For example, you could have expansions for the word `hot` in one object, and expansions for the word `cold` in another. Follow these guidelines when you add terms: * Specify the terms in lowercase. Lowercase terms expand to uppercase. * Multiword terms are supported only in bidirectional expansions. * Do not specify a term that is specified in the stop words list for the collection. */
+  /**
+   * An expansion definition. Each object respresents one set of expandable strings. For example, you could have
+   * expansions for the word `hot` in one object, and expansions for the word `cold` in another. Follow these guidelines
+   * when you add terms:
+   *
+   * * Specify the terms in lowercase. Lowercase terms expand to uppercase.
+   *
+   * * Multiword terms are supported only in bidirectional expansions.
+   *
+   * * Do not specify a term that is specified in the stop words list for the collection.
+   */
   export interface Expansion {
     /** A list of terms that will be expanded for this expansion. If specified, only the items in this list are
      *  expanded.
@@ -5174,7 +5543,9 @@ namespace DiscoveryV2 {
     expanded_terms: string[];
   }
 
-  /** The query expansion definitions for the specified collection. */
+  /**
+   * The query expansion definitions for the specified collection.
+   */
   export interface Expansions {
     /** An array of query expansion definitions.
      *
@@ -5192,7 +5563,9 @@ namespace DiscoveryV2 {
     expansions: Expansion[];
   }
 
-  /** Object that contains field details. */
+  /**
+   * Object that contains field details.
+   */
   export interface Field {
     /** The name of the field. */
     field?: string;
@@ -5220,13 +5593,25 @@ namespace DiscoveryV2 {
     }
   }
 
-  /** Response object that contains an array of collection details. */
+  /**
+   * An object that contains a list of batches that are ready for enrichment by the external application.
+   */
+  export interface ListBatchesResponse {
+    /** An array that lists the batches in a collection. */
+    batches?: BatchDetails[];
+  }
+
+  /**
+   * Response object that contains an array of collection details.
+   */
   export interface ListCollectionsResponse {
     /** An array that contains information about each collection in the project. */
     collections?: Collection[];
   }
 
-  /** Response object that contains an array of documents. */
+  /**
+   * Response object that contains an array of documents.
+   */
   export interface ListDocumentsResponse {
     /** The number of matching results for the document query. */
     matching_results?: number;
@@ -5236,19 +5621,34 @@ namespace DiscoveryV2 {
     documents?: DocumentDetails[];
   }
 
-  /** The list of fetched fields. The fields are returned using a fully qualified name format, however, the format differs slightly from that used by the query operations. * Fields which contain nested objects are assigned a type of "nested". * Fields which belong to a nested object are prefixed with `.properties` (for example, `warnings.properties.severity` means that the `warnings` object has a property called `severity`). */
+  /**
+   * The list of fetched fields.
+   *
+   * The fields are returned using a fully qualified name format, however, the format differs slightly from that used by
+   * the query operations.
+   *
+   *   * Fields which contain nested objects are assigned a type of "nested".
+   *
+   *   * Fields which belong to a nested object are prefixed with `.properties` (for example,
+   * `warnings.properties.severity` means that the `warnings` object has a property called `severity`).
+   */
   export interface ListFieldsResponse {
     /** An array that contains information about each field in the collections. */
     fields?: Field[];
   }
 
-  /** A list of projects in this instance. */
+  /**
+   * A list of projects in this instance.
+   */
   export interface ListProjectsResponse {
     /** An array of project details. */
     projects?: ProjectListDetails[];
   }
 
-  /** A macro-average computes metric independently for each class and then takes the average. Class refers to the classification label that is specified in the **answer_field**. */
+  /**
+   * A macro-average computes metric independently for each class and then takes the average. Class refers to the
+   * classification label that is specified in the **answer_field**.
+   */
   export interface ModelEvaluationMacroAverage {
     /** A metric that measures how many of the overall documents are classified correctly. */
     precision: number;
@@ -5263,7 +5663,10 @@ namespace DiscoveryV2 {
     f1: number;
   }
 
-  /** A micro-average aggregates the contributions of all classes to compute the average metric. Classes refers to the classification labels that are specified in the **answer_field**. */
+  /**
+   * A micro-average aggregates the contributions of all classes to compute the average metric. Classes refers to the
+   * classification labels that are specified in the **answer_field**.
+   */
   export interface ModelEvaluationMicroAverage {
     /** A metric that measures how many of the overall documents are classified correctly. */
     precision: number;
@@ -5278,7 +5681,9 @@ namespace DiscoveryV2 {
     f1: number;
   }
 
-  /** A notice produced for the collection. */
+  /**
+   * A notice produced for the collection.
+   */
   export interface Notice {
     /** Identifies the notice. Many notices might have the same ID. This field exists so that user applications can
      *  programmatically identify a notice and take automatic corrective action. Typical notice IDs include:
@@ -5317,7 +5722,9 @@ namespace DiscoveryV2 {
     }
   }
 
-  /** An object that measures the metrics from a training run for each classification label separately. */
+  /**
+   * An object that measures the metrics from a training run for each classification label separately.
+   */
   export interface PerClassModelEvaluation {
     /** Class name. Each class name is derived from a value in the **answer_field**. */
     name: string;
@@ -5334,7 +5741,9 @@ namespace DiscoveryV2 {
     f1: number;
   }
 
-  /** Detailed information about the specified project. */
+  /**
+   * Detailed information about the specified project.
+   */
   export interface ProjectDetails {
     /** The Universally Unique Identifier (UUID) of this project. */
     project_id?: string;
@@ -5372,7 +5781,9 @@ namespace DiscoveryV2 {
     }
   }
 
-  /** Details about a specific project. */
+  /**
+   * Details about a specific project.
+   */
   export interface ProjectListDetails {
     /** The Universally Unique Identifier (UUID) of this project. */
     project_id?: string;
@@ -5408,7 +5819,9 @@ namespace DiscoveryV2 {
     }
   }
 
-  /** Relevancy training status information for this project. */
+  /**
+   * Relevancy training status information for this project.
+   */
   export interface ProjectListDetailsRelevancyTrainingStatus {
     /** When the training data was updated. */
     data_updated?: string;
@@ -5430,11 +5843,15 @@ namespace DiscoveryV2 {
     minimum_queries_added?: boolean;
   }
 
-  /** An object that defines how to aggregate query results. */
+  /**
+   * An object that defines how to aggregate query results.
+   */
   export interface QueryAggregation {
   }
 
-  /** Result group for the `group_by` aggregation. */
+  /**
+   * Result group for the `group_by` aggregation.
+   */
   export interface QueryGroupByAggregationResult {
     /** The condition that is met by the documents in this group. For example, `YEARTXT<2000`. */
     key: string;
@@ -5454,7 +5871,9 @@ namespace DiscoveryV2 {
     aggregations?: JsonObject[];
   }
 
-  /** Histogram numeric interval result. */
+  /**
+   * Histogram numeric interval result.
+   */
   export interface QueryHistogramAggregationResult {
     /** The value of the upper bound for the numeric segment. */
     key: number;
@@ -5464,7 +5883,9 @@ namespace DiscoveryV2 {
     aggregations?: JsonObject[];
   }
 
-  /** Configuration for passage retrieval. */
+  /**
+   * Configuration for passage retrieval.
+   */
   export interface QueryLargePassages {
     /** A passages query that returns the most relevant passages from the results. */
     enabled?: boolean;
@@ -5511,7 +5932,11 @@ namespace DiscoveryV2 {
     max_answers_per_passage?: number;
   }
 
-  /** Finds results from documents that are similar to documents of interest. Use this parameter to add a *More like these* function to your search. You can include this parameter with or without a **query**, **filter** or **natural_language_query** parameter. */
+  /**
+   * Finds results from documents that are similar to documents of interest. Use this parameter to add a *More like
+   * these* function to your search. You can include this parameter with or without a **query**, **filter** or
+   * **natural_language_query** parameter.
+   */
   export interface QueryLargeSimilar {
     /** When `true`, includes documents in the query results that are similar to documents you specify. */
     enabled?: boolean;
@@ -5523,7 +5948,11 @@ namespace DiscoveryV2 {
     fields?: string[];
   }
 
-  /** Configuration for suggested refinements. **Note**: The **suggested_refinements** parameter that identified dynamic facets from the data is deprecated. */
+  /**
+   * Configuration for suggested refinements.
+   *
+   * **Note**: The **suggested_refinements** parameter that identified dynamic facets from the data is deprecated.
+   */
   export interface QueryLargeSuggestedRefinements {
     /** Whether to perform suggested refinements. */
     enabled?: boolean;
@@ -5531,7 +5960,9 @@ namespace DiscoveryV2 {
     count?: number;
   }
 
-  /** Configuration for table retrieval. */
+  /**
+   * Configuration for table retrieval.
+   */
   export interface QueryLargeTableResults {
     /** Whether to enable table retrieval. */
     enabled?: boolean;
@@ -5539,7 +5970,9 @@ namespace DiscoveryV2 {
     count?: number;
   }
 
-  /** Object that contains notice query results. */
+  /**
+   * Object that contains notice query results.
+   */
   export interface QueryNoticesResponse {
     /** The number of matching results. */
     matching_results?: number;
@@ -5547,7 +5980,9 @@ namespace DiscoveryV2 {
     notices?: Notice[];
   }
 
-  /** Result for the `pair` aggregation. */
+  /**
+   * Result for the `pair` aggregation.
+   */
   export interface QueryPairAggregationResult {
     /** Array of subaggregations of type `term`, `group_by`, `histogram`, or `timeslice`. Each element of the matrix
      *  that is returned contains a **relevancy** value that is calculated from the combination of each value from the
@@ -5556,7 +5991,9 @@ namespace DiscoveryV2 {
     aggregations?: JsonObject[];
   }
 
-  /** A response that contains the documents and aggregations for the query. */
+  /**
+   * A response that contains the documents and aggregations for the query.
+   */
   export interface QueryResponse {
     /** The number of matching results for the query. Results that match due to a curation only are not counted in
      *  the total.
@@ -5582,7 +6019,9 @@ namespace DiscoveryV2 {
     passages?: QueryResponsePassage[];
   }
 
-  /** A passage query response. */
+  /**
+   * A passage query response.
+   */
   export interface QueryResponsePassage {
     /** The content of the extracted passage. */
     passage_text?: string;
@@ -5606,7 +6045,11 @@ namespace DiscoveryV2 {
     answers?: ResultPassageAnswer[];
   }
 
-  /** Result document for the specified query. */
+  /**
+   * Result document for the specified query.
+   *
+   * This type supports additional properties of type any. The remaining key-value pairs.
+   */
   export interface QueryResult {
     /** The unique identifier of the document. */
     document_id: string;
@@ -5616,11 +6059,16 @@ namespace DiscoveryV2 {
     result_metadata: QueryResultMetadata;
     /** Passages from the document that best matches the query. Returned if **passages.per_document** is `true`. */
     document_passages?: QueryResultPassage[];
-    /** QueryResult accepts additional properties. */
+
+    /**
+     * QueryResult accepts additional properties of type any. The remaining key-value pairs.
+     */
     [propName: string]: any;
   }
 
-  /** Metadata of a query result. */
+  /**
+   * Metadata of a query result.
+   */
   export interface QueryResultMetadata {
     /** The document retrieval source that produced this search result. */
     document_retrieval_source?: QueryResultMetadata.Constants.DocumentRetrievalSource | string;
@@ -5643,7 +6091,9 @@ namespace DiscoveryV2 {
     }
   }
 
-  /** A passage query result. */
+  /**
+   * A passage query result.
+   */
   export interface QueryResultPassage {
     /** The content of the extracted passage. */
     passage_text?: string;
@@ -5659,13 +6109,18 @@ namespace DiscoveryV2 {
     answers?: ResultPassageAnswer[];
   }
 
-  /** A suggested additional query term or terms user to filter results. **Note**: The `suggested_refinements` parameter is deprecated. */
+  /**
+   * A suggested additional query term or terms user to filter results. **Note**: The `suggested_refinements` parameter
+   * is deprecated.
+   */
   export interface QuerySuggestedRefinement {
     /** The text used to filter. */
     text?: string;
   }
 
-  /** A tables whose content or context match a search query. */
+  /**
+   * A tables whose content or context match a search query.
+   */
   export interface QueryTableResult {
     /** The identifier for the retrieved table. */
     table_id?: string;
@@ -5681,7 +6136,9 @@ namespace DiscoveryV2 {
     table?: TableResultTable;
   }
 
-  /** Top value result for the `term` aggregation. */
+  /**
+   * Top value result for the `term` aggregation.
+   */
   export interface QueryTermAggregationResult {
     /** Value of the field with a nonzero frequency in the document set. */
     key: string;
@@ -5703,7 +6160,9 @@ namespace DiscoveryV2 {
     aggregations?: JsonObject[];
   }
 
-  /** A timeslice interval segment. */
+  /**
+   * A timeslice interval segment.
+   */
   export interface QueryTimesliceAggregationResult {
     /** String date value of the upper bound for the timeslice interval in ISO-8601 format. */
     key_as_string: string;
@@ -5715,7 +6174,9 @@ namespace DiscoveryV2 {
     aggregations?: JsonObject[];
   }
 
-  /** A query response that contains the matching documents for the preceding aggregations. */
+  /**
+   * A query response that contains the matching documents for the preceding aggregations.
+   */
   export interface QueryTopHitsAggregationResult {
     /** Number of matching results. */
     matching_results: number;
@@ -5723,7 +6184,9 @@ namespace DiscoveryV2 {
     hits?: JsonObject[];
   }
 
-  /** Result for the `topic` aggregation. */
+  /**
+   * Result for the `topic` aggregation.
+   */
   export interface QueryTopicAggregationResult {
     /** Array of subaggregations  of type `term` or `group_by` and `timeslice`. Each element of the matrix that is
      *  returned contains a **topic_indicator** that is calculated from the combination of each aggregation value and
@@ -5732,7 +6195,9 @@ namespace DiscoveryV2 {
     aggregations?: JsonObject[];
   }
 
-  /** Result for the `trend` aggregation. */
+  /**
+   * Result for the `trend` aggregation.
+   */
   export interface QueryTrendAggregationResult {
     /** Array of subaggregations of type `term` or `group_by` and `timeslice`. Each element of the matrix that is
      *  returned contains a **trend_indicator** that is calculated from the combination of each aggregation value and
@@ -5741,7 +6206,9 @@ namespace DiscoveryV2 {
     aggregations?: JsonObject[];
   }
 
-  /** Object that contains a potential answer to the specified query. */
+  /**
+   * Object that contains a potential answer to the specified query.
+   */
   export interface ResultPassageAnswer {
     /** Answer text for the specified query as identified by Discovery. */
     answer_text?: string;
@@ -5753,7 +6220,9 @@ namespace DiscoveryV2 {
     confidence?: number;
   }
 
-  /** An object contain retrieval type information. */
+  /**
+   * An object contain retrieval type information.
+   */
   export interface RetrievalDetails {
     /** Identifies the document retrieval strategy used for this query. `relevancy_training` indicates that the
      *  results were returned using a relevancy trained model.
@@ -5773,13 +6242,17 @@ namespace DiscoveryV2 {
     }
   }
 
-  /** List of words to filter out of text that is submitted in queries. */
+  /**
+   * List of words to filter out of text that is submitted in queries.
+   */
   export interface StopWordList {
     /** List of stop words. */
     stopwords: string[];
   }
 
-  /** Cells that are not table header, column header, or row header cells. */
+  /**
+   * Cells that are not table header, column header, or row header cells.
+   */
   export interface TableBodyCells {
     /** The unique ID of the cell in the current table. */
     cell_id?: string;
@@ -5813,7 +6286,9 @@ namespace DiscoveryV2 {
     attributes?: DocumentAttribute[];
   }
 
-  /** A key in a key-value pair. */
+  /**
+   * A key in a key-value pair.
+   */
   export interface TableCellKey {
     /** The unique ID of the key in the table. */
     cell_id?: string;
@@ -5825,7 +6300,9 @@ namespace DiscoveryV2 {
     text?: string;
   }
 
-  /** A value in a key-value pair. */
+  /**
+   * A value in a key-value pair.
+   */
   export interface TableCellValues {
     /** The unique ID of the value in the table. */
     cell_id?: string;
@@ -5837,7 +6314,9 @@ namespace DiscoveryV2 {
     text?: string;
   }
 
-  /** Column-level cells, each applicable as a header to other cells in the same column as itself, of the current table. */
+  /**
+   * Column-level cells, each applicable as a header to other cells in the same column as itself, of the current table.
+   */
   export interface TableColumnHeaders {
     /** The unique ID of the cell in the current table. */
     cell_id?: string;
@@ -5859,7 +6338,10 @@ namespace DiscoveryV2 {
     column_index_end?: number;
   }
 
-  /** The numeric location of the identified element in the document, represented with two integers labeled `begin` and `end`. */
+  /**
+   * The numeric location of the identified element in the document, represented with two integers labeled `begin` and
+   * `end`.
+   */
   export interface TableElementLocation {
     /** The element's `begin` index. */
     begin: number;
@@ -5867,7 +6349,9 @@ namespace DiscoveryV2 {
     end: number;
   }
 
-  /** The contents of the current table's header. */
+  /**
+   * The contents of the current table's header.
+   */
   export interface TableHeaders {
     /** The unique ID of the cell in the current table. */
     cell_id?: string;
@@ -5887,7 +6371,9 @@ namespace DiscoveryV2 {
     column_index_end?: number;
   }
 
-  /** Key-value pairs detected across cell boundaries. */
+  /**
+   * Key-value pairs detected across cell boundaries.
+   */
   export interface TableKeyValuePairs {
     /** A key in a key-value pair. */
     key?: TableCellKey;
@@ -5895,7 +6381,9 @@ namespace DiscoveryV2 {
     value?: TableCellValues[];
   }
 
-  /** Full table object retrieved from Table Understanding Enrichment. */
+  /**
+   * Full table object retrieved from Table Understanding Enrichment.
+   */
   export interface TableResultTable {
     /** The numeric location of the identified element in the document, represented with two integers labeled
      *  `begin` and `end`.
@@ -5927,7 +6415,9 @@ namespace DiscoveryV2 {
     contexts?: TableTextLocation[];
   }
 
-  /** Row-level cells, each applicable as a header to other cells in the same row as itself, of the current table. */
+  /**
+   * Row-level cells, each applicable as a header to other cells in the same row as itself, of the current table.
+   */
   export interface TableRowHeaders {
     /** The unique ID of the cell in the current table. */
     cell_id?: string;
@@ -5949,7 +6439,9 @@ namespace DiscoveryV2 {
     column_index_end?: number;
   }
 
-  /** Text and associated location within a table. */
+  /**
+   * Text and associated location within a table.
+   */
   export interface TableTextLocation {
     /** The text retrieved. */
     text?: string;
@@ -5959,7 +6451,9 @@ namespace DiscoveryV2 {
     location?: TableElementLocation;
   }
 
-  /** Object that contains example response details for a training query. */
+  /**
+   * Object that contains example response details for a training query.
+   */
   export interface TrainingExample {
     /** The document ID associated with this training example. */
     document_id: string;
@@ -5975,7 +6469,9 @@ namespace DiscoveryV2 {
     updated?: string;
   }
 
-  /** Object that contains training query details. */
+  /**
+   * Object that contains training query details.
+   */
   export interface TrainingQuery {
     /** The query ID associated with the training query. */
     query_id?: string;
@@ -5995,7 +6491,9 @@ namespace DiscoveryV2 {
     examples: TrainingExample[];
   }
 
-  /** Object specifying the training queries contained in the identified training set. */
+  /**
+   * Object specifying the training queries contained in the identified training set.
+   */
   export interface TrainingQuerySet {
     /** Array of training queries. At least 50 queries are required for training to begin. A maximum of 10,000
      *  queries are returned.
@@ -6003,7 +6501,10 @@ namespace DiscoveryV2 {
     queries?: TrainingQuery[];
   }
 
-  /** An object that contains a new name or description for a document classifier, updated training data, or new or updated test data. */
+  /**
+   * An object that contains a new name or description for a document classifier, updated training data, or new or
+   * updated test data.
+   */
   export interface UpdateDocumentClassifier {
     /** A new name for the classifier. */
     name?: string;
@@ -6011,7 +6512,10 @@ namespace DiscoveryV2 {
     description?: string;
   }
 
-  /** An array of headers to pass with the HTTP request. Optional when `type` is `webhook`. Not valid when creating any other type of enrichment. */
+  /**
+   * An array of headers to pass with the HTTP request. Optional when `type` is `webhook`. Not valid when creating any
+   * other type of enrichment.
+   */
   export interface WebhookHeader {
     /** The name of an HTTP header. */
     name: string;
@@ -6019,7 +6523,21 @@ namespace DiscoveryV2 {
     value: string;
   }
 
-  /** Returns a scalar calculation across all documents for the field specified. Possible calculations include min, max, sum, average, and unique_count. */
+  /**
+   * A compressed newline delimited JSON (NDJSON) file containing the document. The NDJSON format is used to describe
+   * structured data. The file name format is `{batch_id}.ndjson.gz`. For more information, see [Binary attachment from
+   * the pull batches
+   * method](/docs/discovery-data?topic=discovery-data-external-enrichment#binary-attachment-pull-batches).
+   */
+  export interface PullBatchesResponse {
+    /** A compressed NDJSON file containing the document. */
+    file?: string;
+  }
+
+  /**
+   * Returns a scalar calculation across all documents for the field specified. Possible calculations include min, max,
+   * sum, average, and unique_count.
+   */
   export interface QueryAggregationQueryCalculationAggregation extends QueryAggregation {
     /** Specifies the calculation type, such as 'average`, `max`, `min`, `sum`, or `unique_count`. */
     type?: string;
@@ -6029,7 +6547,9 @@ namespace DiscoveryV2 {
     value?: number;
   }
 
-  /** A modifier that narrows the document set of the subaggregations it precedes. */
+  /**
+   * A modifier that narrows the document set of the subaggregations it precedes.
+   */
   export interface QueryAggregationQueryFilterAggregation extends QueryAggregation {
     /** Specifies that the aggregation type is `filter`. */
     type?: string;
@@ -6043,7 +6563,9 @@ namespace DiscoveryV2 {
     aggregations?: JsonObject[];
   }
 
-  /** Separates document results into groups that meet the conditions you specify. */
+  /**
+   * Separates document results into groups that meet the conditions you specify.
+   */
   export interface QueryAggregationQueryGroupByAggregation extends QueryAggregation {
     /** Specifies that the aggregation type is `group_by`. */
     type?: string;
@@ -6051,7 +6573,10 @@ namespace DiscoveryV2 {
     results?: QueryGroupByAggregationResult[];
   }
 
-  /** Numeric interval segments to categorize documents by using field values from a single numeric field to describe the category. */
+  /**
+   * Numeric interval segments to categorize documents by using field values from a single numeric field to describe the
+   * category.
+   */
   export interface QueryAggregationQueryHistogramAggregation extends QueryAggregation {
     /** Specifies that the aggregation type is `histogram`. */
     type?: string;
@@ -6065,7 +6590,10 @@ namespace DiscoveryV2 {
     results?: QueryHistogramAggregationResult[];
   }
 
-  /** A restriction that alters the document set that is used by the aggregations that it precedes. Subsequent aggregations are applied to nested documents from the specified field. */
+  /**
+   * A restriction that alters the document set that is used by the aggregations that it precedes. Subsequent
+   * aggregations are applied to nested documents from the specified field.
+   */
   export interface QueryAggregationQueryNestedAggregation extends QueryAggregation {
     /** Specifies that the aggregation type is `nested`. */
     type?: string;
@@ -6077,7 +6605,9 @@ namespace DiscoveryV2 {
     aggregations?: JsonObject[];
   }
 
-  /** Calculates relevancy values using combinations of document sets from results of the specified pair of aggregations. */
+  /**
+   * Calculates relevancy values using combinations of document sets from results of the specified pair of aggregations.
+   */
   export interface QueryAggregationQueryPairAggregation extends QueryAggregation {
     /** Specifies that the aggregation type is `pair`. */
     type?: string;
@@ -6097,7 +6627,9 @@ namespace DiscoveryV2 {
     results?: QueryPairAggregationResult[];
   }
 
-  /** Returns results from the field that is specified. */
+  /**
+   * Returns results from the field that is specified.
+   */
   export interface QueryAggregationQueryTermAggregation extends QueryAggregation {
     /** Specifies that the aggregation type is `term`. */
     type?: string;
@@ -6113,7 +6645,9 @@ namespace DiscoveryV2 {
     results?: QueryTermAggregationResult[];
   }
 
-  /** A specialized histogram aggregation that uses dates to create interval segments. */
+  /**
+   * A specialized histogram aggregation that uses dates to create interval segments.
+   */
   export interface QueryAggregationQueryTimesliceAggregation extends QueryAggregation {
     /** Specifies that the aggregation type is `timeslice`. */
     type?: string;
@@ -6127,7 +6661,9 @@ namespace DiscoveryV2 {
     results?: QueryTimesliceAggregationResult[];
   }
 
-  /** Returns the top documents ranked by the score of the query. */
+  /**
+   * Returns the top documents ranked by the score of the query.
+   */
   export interface QueryAggregationQueryTopHitsAggregation extends QueryAggregation {
     /** Specifies that the aggregation type is `top_hits`. */
     type?: string;
@@ -6139,7 +6675,11 @@ namespace DiscoveryV2 {
     hits?: QueryTopHitsAggregationResult;
   }
 
-  /** Detects how much the frequency of a given facet value deviates from the expected average for the given time period. This aggregation type does not use data from previous time periods. It calculates an index by using the averages of frequency counts of other facet values for the given time period. */
+  /**
+   * Detects how much the frequency of a given facet value deviates from the expected average for the given time period.
+   * This aggregation type does not use data from previous time periods. It calculates an index by using the averages of
+   * frequency counts of other facet values for the given time period.
+   */
   export interface QueryAggregationQueryTopicAggregation extends QueryAggregation {
     /** Specifies that the aggregation type is `topic`. */
     type?: string;
@@ -6155,7 +6695,10 @@ namespace DiscoveryV2 {
     results?: QueryTopicAggregationResult[];
   }
 
-  /** Detects sharp and unexpected changes in the frequency of a facet or facet value over time based on the past history of frequency changes of the facet value. */
+  /**
+   * Detects sharp and unexpected changes in the frequency of a facet or facet value over time based on the past history
+   * of frequency changes of the facet value.
+   */
   export interface QueryAggregationQueryTrendAggregation extends QueryAggregation {
     /** Specifies that the aggregation type is `trend`. */
     type?: string;

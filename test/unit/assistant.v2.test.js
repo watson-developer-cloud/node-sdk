@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2024.
+ * (C) Copyright IBM Corp. 2024.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ const {
   checkUrlAndMethod,
   checkMediaHeaders,
   expectToBePromise,
+  checkUserHeader,
   checkForSuccessfulExecution,
 } = unitTestUtils;
 
@@ -145,6 +146,384 @@ describe('AssistantV2', () => {
         const serviceObj = new AssistantV2(assistantServiceOptions);
         expect(serviceObj).not.toBeNull();
         expect(serviceObj.version).toEqual(assistantServiceOptions.version);
+      });
+    });
+  });
+
+  describe('createProvider', () => {
+    describe('positive tests', () => {
+      // Request models needed by this operation.
+
+      // ProviderSpecificationServersItem
+      const providerSpecificationServersItemModel = {
+        url: 'testString',
+      };
+
+      // ProviderAuthenticationTypeAndValue
+      const providerAuthenticationTypeAndValueModel = {
+        type: 'value',
+        value: 'testString',
+      };
+
+      // ProviderSpecificationComponentsSecuritySchemesBasic
+      const providerSpecificationComponentsSecuritySchemesBasicModel = {
+        username: providerAuthenticationTypeAndValueModel,
+      };
+
+      // ProviderAuthenticationOAuth2PasswordUsername
+      const providerAuthenticationOAuth2PasswordUsernameModel = {
+        type: 'value',
+        value: 'testString',
+      };
+
+      // ProviderAuthenticationOAuth2FlowsProviderAuthenticationOAuth2Password
+      const providerAuthenticationOAuth2FlowsModel = {
+        token_url: 'testString',
+        refresh_url: 'testString',
+        client_auth_type: 'Body',
+        content_type: 'testString',
+        header_prefix: 'testString',
+        username: providerAuthenticationOAuth2PasswordUsernameModel,
+      };
+
+      // ProviderAuthenticationOAuth2
+      const providerAuthenticationOAuth2Model = {
+        preferred_flow: 'password',
+        flows: providerAuthenticationOAuth2FlowsModel,
+      };
+
+      // ProviderSpecificationComponentsSecuritySchemes
+      const providerSpecificationComponentsSecuritySchemesModel = {
+        authentication_method: 'basic',
+        basic: providerSpecificationComponentsSecuritySchemesBasicModel,
+        oauth2: providerAuthenticationOAuth2Model,
+      };
+
+      // ProviderSpecificationComponents
+      const providerSpecificationComponentsModel = {
+        securitySchemes: providerSpecificationComponentsSecuritySchemesModel,
+      };
+
+      // ProviderSpecification
+      const providerSpecificationModel = {
+        servers: [providerSpecificationServersItemModel],
+        components: providerSpecificationComponentsModel,
+      };
+
+      // ProviderPrivateAuthenticationBearerFlow
+      const providerPrivateAuthenticationModel = {
+        token: providerAuthenticationTypeAndValueModel,
+      };
+
+      // ProviderPrivate
+      const providerPrivateModel = {
+        authentication: providerPrivateAuthenticationModel,
+      };
+
+      function __createProviderTest() {
+        // Construct the params object for operation createProvider
+        const providerId = 'testString';
+        const specification = providerSpecificationModel;
+        const private = providerPrivateModel;
+        const createProviderParams = {
+          providerId,
+          specification,
+          private,
+        };
+
+        const createProviderResult = assistantService.createProvider(createProviderParams);
+
+        // all methods should return a Promise
+        expectToBePromise(createProviderResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v2/providers', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'application/json';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.body.provider_id).toEqual(providerId);
+        expect(mockRequestOptions.body.specification).toEqual(specification);
+        expect(mockRequestOptions.body.private).toEqual(private);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createProviderTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __createProviderTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __createProviderTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const createProviderParams = {
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistantService.createProvider(createProviderParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should not have any problems when no parameters are passed in', () => {
+        // invoke the method with no parameters
+        assistantService.createProvider({});
+        checkForSuccessfulExecution(createRequestMock);
+      });
+    });
+  });
+
+  describe('listProviders', () => {
+    describe('positive tests', () => {
+      function __listProvidersTest() {
+        // Construct the params object for operation listProviders
+        const pageLimit = 100;
+        const includeCount = false;
+        const sort = 'name';
+        const cursor = 'testString';
+        const includeAudit = false;
+        const listProvidersParams = {
+          pageLimit,
+          includeCount,
+          sort,
+          cursor,
+          includeAudit,
+        };
+
+        const listProvidersResult = assistantService.listProviders(listProvidersParams);
+
+        // all methods should return a Promise
+        expectToBePromise(listProvidersResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v2/providers', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.page_limit).toEqual(pageLimit);
+        expect(mockRequestOptions.qs.include_count).toEqual(includeCount);
+        expect(mockRequestOptions.qs.sort).toEqual(sort);
+        expect(mockRequestOptions.qs.cursor).toEqual(cursor);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __listProvidersTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __listProvidersTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __listProvidersTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const listProvidersParams = {
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistantService.listProviders(listProvidersParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should not have any problems when no parameters are passed in', () => {
+        // invoke the method with no parameters
+        assistantService.listProviders({});
+        checkForSuccessfulExecution(createRequestMock);
+      });
+    });
+  });
+
+  describe('updateProvider', () => {
+    describe('positive tests', () => {
+      // Request models needed by this operation.
+
+      // ProviderSpecificationServersItem
+      const providerSpecificationServersItemModel = {
+        url: 'testString',
+      };
+
+      // ProviderAuthenticationTypeAndValue
+      const providerAuthenticationTypeAndValueModel = {
+        type: 'value',
+        value: 'testString',
+      };
+
+      // ProviderSpecificationComponentsSecuritySchemesBasic
+      const providerSpecificationComponentsSecuritySchemesBasicModel = {
+        username: providerAuthenticationTypeAndValueModel,
+      };
+
+      // ProviderAuthenticationOAuth2PasswordUsername
+      const providerAuthenticationOAuth2PasswordUsernameModel = {
+        type: 'value',
+        value: 'testString',
+      };
+
+      // ProviderAuthenticationOAuth2FlowsProviderAuthenticationOAuth2Password
+      const providerAuthenticationOAuth2FlowsModel = {
+        token_url: 'testString',
+        refresh_url: 'testString',
+        client_auth_type: 'Body',
+        content_type: 'testString',
+        header_prefix: 'testString',
+        username: providerAuthenticationOAuth2PasswordUsernameModel,
+      };
+
+      // ProviderAuthenticationOAuth2
+      const providerAuthenticationOAuth2Model = {
+        preferred_flow: 'password',
+        flows: providerAuthenticationOAuth2FlowsModel,
+      };
+
+      // ProviderSpecificationComponentsSecuritySchemes
+      const providerSpecificationComponentsSecuritySchemesModel = {
+        authentication_method: 'basic',
+        basic: providerSpecificationComponentsSecuritySchemesBasicModel,
+        oauth2: providerAuthenticationOAuth2Model,
+      };
+
+      // ProviderSpecificationComponents
+      const providerSpecificationComponentsModel = {
+        securitySchemes: providerSpecificationComponentsSecuritySchemesModel,
+      };
+
+      // ProviderSpecification
+      const providerSpecificationModel = {
+        servers: [providerSpecificationServersItemModel],
+        components: providerSpecificationComponentsModel,
+      };
+
+      // ProviderPrivateAuthenticationBearerFlow
+      const providerPrivateAuthenticationModel = {
+        token: providerAuthenticationTypeAndValueModel,
+      };
+
+      // ProviderPrivate
+      const providerPrivateModel = {
+        authentication: providerPrivateAuthenticationModel,
+      };
+
+      function __updateProviderTest() {
+        // Construct the params object for operation updateProvider
+        const providerId = 'testString';
+        const newProviderId = 'testString';
+        const newSpecification = providerSpecificationModel;
+        const newPrivate = providerPrivateModel;
+        const updateProviderParams = {
+          providerId,
+          newProviderId,
+          newSpecification,
+          newPrivate,
+        };
+
+        const updateProviderResult = assistantService.updateProvider(updateProviderParams);
+
+        // all methods should return a Promise
+        expectToBePromise(updateProviderResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v2/providers/{provider_id}', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'application/json';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.body.provider_id).toEqual(newProviderId);
+        expect(mockRequestOptions.body.specification).toEqual(newSpecification);
+        expect(mockRequestOptions.body.private).toEqual(newPrivate);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.path.provider_id).toEqual(providerId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __updateProviderTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __updateProviderTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __updateProviderTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const providerId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const updateProviderParams = {
+          providerId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistantService.updateProvider(updateProviderParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async () => {
+        let err;
+        try {
+          await assistantService.updateProvider({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.updateProvider();
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
@@ -735,12 +1114,14 @@ describe('AssistantV2', () => {
       function __messageTest() {
         // Construct the params object for operation message
         const assistantId = 'testString';
+        const environmentId = 'testString';
         const sessionId = 'testString';
         const input = messageInputModel;
         const context = messageContextModel;
         const userId = 'testString';
         const messageParams = {
           assistantId,
+          environmentId,
           sessionId,
           input,
           context,
@@ -766,6 +1147,7 @@ describe('AssistantV2', () => {
         expect(mockRequestOptions.body.user_id).toEqual(userId);
         expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
         expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
+        expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.session_id).toEqual(sessionId);
       }
 
@@ -787,11 +1169,13 @@ describe('AssistantV2', () => {
       test('should prioritize user-given headers', () => {
         // parameters
         const assistantId = 'testString';
+        const environmentId = 'testString';
         const sessionId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const messageParams = {
           assistantId,
+          environmentId,
           sessionId,
           headers: {
             Accept: userAccept,
@@ -996,11 +1380,13 @@ describe('AssistantV2', () => {
       function __messageStatelessTest() {
         // Construct the params object for operation messageStateless
         const assistantId = 'testString';
+        const environmentId = 'testString';
         const input = statelessMessageInputModel;
         const context = statelessMessageContextModel;
         const userId = 'testString';
         const messageStatelessParams = {
           assistantId,
+          environmentId,
           input,
           context,
           userId,
@@ -1025,6 +1411,7 @@ describe('AssistantV2', () => {
         expect(mockRequestOptions.body.user_id).toEqual(userId);
         expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
         expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
+        expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
       }
 
       test('should pass the right params to createRequest with enable and disable retries', () => {
@@ -1045,10 +1432,12 @@ describe('AssistantV2', () => {
       test('should prioritize user-given headers', () => {
         // parameters
         const assistantId = 'testString';
+        const environmentId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const messageStatelessParams = {
           assistantId,
+          environmentId,
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
@@ -1076,6 +1465,531 @@ describe('AssistantV2', () => {
         let err;
         try {
           await assistantService.messageStateless();
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+    });
+  });
+
+  describe('messageStream', () => {
+    describe('positive tests', () => {
+      // Request models needed by this operation.
+
+      // RuntimeIntent
+      const runtimeIntentModel = {
+        intent: 'testString',
+        confidence: 72.5,
+        skill: 'testString',
+      };
+
+      // CaptureGroup
+      const captureGroupModel = {
+        group: 'testString',
+        location: [38],
+      };
+
+      // RuntimeEntityInterpretation
+      const runtimeEntityInterpretationModel = {
+        calendar_type: 'testString',
+        datetime_link: 'testString',
+        festival: 'testString',
+        granularity: 'day',
+        range_link: 'testString',
+        range_modifier: 'testString',
+        relative_day: 72.5,
+        relative_month: 72.5,
+        relative_week: 72.5,
+        relative_weekend: 72.5,
+        relative_year: 72.5,
+        specific_day: 72.5,
+        specific_day_of_week: 'testString',
+        specific_month: 72.5,
+        specific_quarter: 72.5,
+        specific_year: 72.5,
+        numeric_value: 72.5,
+        subtype: 'testString',
+        part_of_day: 'testString',
+        relative_hour: 72.5,
+        relative_minute: 72.5,
+        relative_second: 72.5,
+        specific_hour: 72.5,
+        specific_minute: 72.5,
+        specific_second: 72.5,
+        timezone: 'testString',
+      };
+
+      // RuntimeEntityAlternative
+      const runtimeEntityAlternativeModel = {
+        value: 'testString',
+        confidence: 72.5,
+      };
+
+      // RuntimeEntityRole
+      const runtimeEntityRoleModel = {
+        type: 'date_from',
+      };
+
+      // RuntimeEntity
+      const runtimeEntityModel = {
+        entity: 'testString',
+        location: [38],
+        value: 'testString',
+        confidence: 72.5,
+        groups: [captureGroupModel],
+        interpretation: runtimeEntityInterpretationModel,
+        alternatives: [runtimeEntityAlternativeModel],
+        role: runtimeEntityRoleModel,
+        skill: 'testString',
+      };
+
+      // MessageInputAttachment
+      const messageInputAttachmentModel = {
+        url: 'testString',
+        media_type: 'testString',
+      };
+
+      // RequestAnalytics
+      const requestAnalyticsModel = {
+        browser: 'testString',
+        device: 'testString',
+        pageUrl: 'testString',
+      };
+
+      // MessageInputOptionsSpelling
+      const messageInputOptionsSpellingModel = {
+        suggestions: true,
+        auto_correct: true,
+      };
+
+      // MessageInputOptions
+      const messageInputOptionsModel = {
+        restart: false,
+        alternate_intents: false,
+        async_callout: false,
+        spelling: messageInputOptionsSpellingModel,
+        debug: false,
+        return_context: false,
+        export: false,
+      };
+
+      // MessageInput
+      const messageInputModel = {
+        message_type: 'text',
+        text: 'testString',
+        intents: [runtimeIntentModel],
+        entities: [runtimeEntityModel],
+        suggestion_id: 'testString',
+        attachments: [messageInputAttachmentModel],
+        analytics: requestAnalyticsModel,
+        options: messageInputOptionsModel,
+      };
+
+      // MessageContextGlobalSystem
+      const messageContextGlobalSystemModel = {
+        timezone: 'testString',
+        user_id: 'testString',
+        turn_count: 38,
+        locale: 'en-us',
+        reference_time: 'testString',
+        session_start_time: 'testString',
+        state: 'testString',
+        skip_user_input: true,
+      };
+
+      // MessageContextGlobal
+      const messageContextGlobalModel = {
+        system: messageContextGlobalSystemModel,
+      };
+
+      // MessageContextSkillSystem
+      const messageContextSkillSystemModel = {
+        state: 'testString',
+        foo: 'testString',
+      };
+
+      // MessageContextDialogSkill
+      const messageContextDialogSkillModel = {
+        user_defined: { anyKey: 'anyValue' },
+        system: messageContextSkillSystemModel,
+      };
+
+      // MessageContextActionSkill
+      const messageContextActionSkillModel = {
+        user_defined: { anyKey: 'anyValue' },
+        system: messageContextSkillSystemModel,
+        action_variables: { anyKey: 'anyValue' },
+        skill_variables: { anyKey: 'anyValue' },
+      };
+
+      // MessageContextSkills
+      const messageContextSkillsModel = {
+        'main skill': messageContextDialogSkillModel,
+        'actions skill': messageContextActionSkillModel,
+      };
+
+      // MessageContext
+      const messageContextModel = {
+        global: messageContextGlobalModel,
+        skills: messageContextSkillsModel,
+        integrations: { anyKey: 'anyValue' },
+      };
+
+      function __messageStreamTest() {
+        // Construct the params object for operation messageStream
+        const assistantId = 'testString';
+        const environmentId = 'testString';
+        const sessionId = 'testString';
+        const input = messageInputModel;
+        const context = messageContextModel;
+        const userId = 'testString';
+        const messageStreamParams = {
+          assistantId,
+          environmentId,
+          sessionId,
+          input,
+          context,
+          userId,
+        };
+
+        const messageStreamResult = assistantService.messageStream(messageStreamParams);
+
+        // all methods should return a Promise
+        expectToBePromise(messageStreamResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/environments/{environment_id}/sessions/{session_id}/message_stream', 'POST');
+        const expectedAccept = 'text/event-stream';
+        const expectedContentType = 'application/json';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.body.input).toEqual(input);
+        expect(mockRequestOptions.body.context).toEqual(context);
+        expect(mockRequestOptions.body.user_id).toEqual(userId);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
+        expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
+        expect(mockRequestOptions.path.session_id).toEqual(sessionId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __messageStreamTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __messageStreamTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __messageStreamTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const assistantId = 'testString';
+        const environmentId = 'testString';
+        const sessionId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const messageStreamParams = {
+          assistantId,
+          environmentId,
+          sessionId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistantService.messageStream(messageStreamParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async () => {
+        let err;
+        try {
+          await assistantService.messageStream({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.messageStream();
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+    });
+  });
+
+  describe('messageStreamStateless', () => {
+    describe('positive tests', () => {
+      // Request models needed by this operation.
+
+      // RuntimeIntent
+      const runtimeIntentModel = {
+        intent: 'testString',
+        confidence: 72.5,
+        skill: 'testString',
+      };
+
+      // CaptureGroup
+      const captureGroupModel = {
+        group: 'testString',
+        location: [38],
+      };
+
+      // RuntimeEntityInterpretation
+      const runtimeEntityInterpretationModel = {
+        calendar_type: 'testString',
+        datetime_link: 'testString',
+        festival: 'testString',
+        granularity: 'day',
+        range_link: 'testString',
+        range_modifier: 'testString',
+        relative_day: 72.5,
+        relative_month: 72.5,
+        relative_week: 72.5,
+        relative_weekend: 72.5,
+        relative_year: 72.5,
+        specific_day: 72.5,
+        specific_day_of_week: 'testString',
+        specific_month: 72.5,
+        specific_quarter: 72.5,
+        specific_year: 72.5,
+        numeric_value: 72.5,
+        subtype: 'testString',
+        part_of_day: 'testString',
+        relative_hour: 72.5,
+        relative_minute: 72.5,
+        relative_second: 72.5,
+        specific_hour: 72.5,
+        specific_minute: 72.5,
+        specific_second: 72.5,
+        timezone: 'testString',
+      };
+
+      // RuntimeEntityAlternative
+      const runtimeEntityAlternativeModel = {
+        value: 'testString',
+        confidence: 72.5,
+      };
+
+      // RuntimeEntityRole
+      const runtimeEntityRoleModel = {
+        type: 'date_from',
+      };
+
+      // RuntimeEntity
+      const runtimeEntityModel = {
+        entity: 'testString',
+        location: [38],
+        value: 'testString',
+        confidence: 72.5,
+        groups: [captureGroupModel],
+        interpretation: runtimeEntityInterpretationModel,
+        alternatives: [runtimeEntityAlternativeModel],
+        role: runtimeEntityRoleModel,
+        skill: 'testString',
+      };
+
+      // MessageInputAttachment
+      const messageInputAttachmentModel = {
+        url: 'testString',
+        media_type: 'testString',
+      };
+
+      // RequestAnalytics
+      const requestAnalyticsModel = {
+        browser: 'testString',
+        device: 'testString',
+        pageUrl: 'testString',
+      };
+
+      // MessageInputOptionsSpelling
+      const messageInputOptionsSpellingModel = {
+        suggestions: true,
+        auto_correct: true,
+      };
+
+      // MessageInputOptions
+      const messageInputOptionsModel = {
+        restart: false,
+        alternate_intents: false,
+        async_callout: false,
+        spelling: messageInputOptionsSpellingModel,
+        debug: false,
+        return_context: false,
+        export: false,
+      };
+
+      // MessageInput
+      const messageInputModel = {
+        message_type: 'text',
+        text: 'testString',
+        intents: [runtimeIntentModel],
+        entities: [runtimeEntityModel],
+        suggestion_id: 'testString',
+        attachments: [messageInputAttachmentModel],
+        analytics: requestAnalyticsModel,
+        options: messageInputOptionsModel,
+      };
+
+      // MessageContextGlobalSystem
+      const messageContextGlobalSystemModel = {
+        timezone: 'testString',
+        user_id: 'testString',
+        turn_count: 38,
+        locale: 'en-us',
+        reference_time: 'testString',
+        session_start_time: 'testString',
+        state: 'testString',
+        skip_user_input: true,
+      };
+
+      // MessageContextGlobal
+      const messageContextGlobalModel = {
+        system: messageContextGlobalSystemModel,
+      };
+
+      // MessageContextSkillSystem
+      const messageContextSkillSystemModel = {
+        state: 'testString',
+        foo: 'testString',
+      };
+
+      // MessageContextDialogSkill
+      const messageContextDialogSkillModel = {
+        user_defined: { anyKey: 'anyValue' },
+        system: messageContextSkillSystemModel,
+      };
+
+      // MessageContextActionSkill
+      const messageContextActionSkillModel = {
+        user_defined: { anyKey: 'anyValue' },
+        system: messageContextSkillSystemModel,
+        action_variables: { anyKey: 'anyValue' },
+        skill_variables: { anyKey: 'anyValue' },
+      };
+
+      // MessageContextSkills
+      const messageContextSkillsModel = {
+        'main skill': messageContextDialogSkillModel,
+        'actions skill': messageContextActionSkillModel,
+      };
+
+      // MessageContext
+      const messageContextModel = {
+        global: messageContextGlobalModel,
+        skills: messageContextSkillsModel,
+        integrations: { anyKey: 'anyValue' },
+      };
+
+      function __messageStreamStatelessTest() {
+        // Construct the params object for operation messageStreamStateless
+        const assistantId = 'testString';
+        const environmentId = 'testString';
+        const input = messageInputModel;
+        const context = messageContextModel;
+        const userId = 'testString';
+        const messageStreamStatelessParams = {
+          assistantId,
+          environmentId,
+          input,
+          context,
+          userId,
+        };
+
+        const messageStreamStatelessResult = assistantService.messageStreamStateless(messageStreamStatelessParams);
+
+        // all methods should return a Promise
+        expectToBePromise(messageStreamStatelessResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/environments/{environment_id}/message_stream', 'POST');
+        const expectedAccept = 'text/event-stream';
+        const expectedContentType = 'application/json';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.body.input).toEqual(input);
+        expect(mockRequestOptions.body.context).toEqual(context);
+        expect(mockRequestOptions.body.user_id).toEqual(userId);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
+        expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __messageStreamStatelessTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __messageStreamStatelessTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __messageStreamStatelessTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const assistantId = 'testString';
+        const environmentId = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const messageStreamStatelessParams = {
+          assistantId,
+          environmentId,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistantService.messageStreamStateless(messageStreamStatelessParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async () => {
+        let err;
+        try {
+          await assistantService.messageStreamStateless({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.messageStreamStateless();
         } catch (e) {
           err = e;
         }
@@ -2147,6 +3061,292 @@ describe('AssistantV2', () => {
     });
   });
 
+  describe('createReleaseExport', () => {
+    describe('positive tests', () => {
+      function __createReleaseExportTest() {
+        // Construct the params object for operation createReleaseExport
+        const includeAudit = false;
+        const createReleaseExportParams = {
+          includeAudit,
+        };
+
+        const createReleaseExportResult = assistantService.createReleaseExport(createReleaseExportParams);
+
+        // all methods should return a Promise
+        expectToBePromise(createReleaseExportResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/releases/{release}/export', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createReleaseExportTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __createReleaseExportTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __createReleaseExportTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const createReleaseExportParams = {
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistantService.createReleaseExport(createReleaseExportParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should not have any problems when no parameters are passed in', () => {
+        // invoke the method with no parameters
+        assistantService.createReleaseExport({});
+        checkForSuccessfulExecution(createRequestMock);
+      });
+    });
+  });
+
+  describe('downloadReleaseExport', () => {
+    describe('positive tests', () => {
+      function __downloadReleaseExportTest() {
+        // Construct the params object for operation downloadReleaseExport
+        const accept = 'application/json';
+        const includeAudit = false;
+        const downloadReleaseExportParams = {
+          accept,
+          includeAudit,
+        };
+
+        const downloadReleaseExportResult = assistantService.downloadReleaseExport(downloadReleaseExportParams);
+
+        // all methods should return a Promise
+        expectToBePromise(downloadReleaseExportResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/releases/{release}/export', 'GET');
+        const expectedAccept = accept;
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        checkUserHeader(createRequestMock, 'Accept', accept);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __downloadReleaseExportTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __downloadReleaseExportTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __downloadReleaseExportTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const downloadReleaseExportParams = {
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistantService.downloadReleaseExport(downloadReleaseExportParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should not have any problems when no parameters are passed in', () => {
+        // invoke the method with no parameters
+        assistantService.downloadReleaseExport({});
+        checkForSuccessfulExecution(createRequestMock);
+      });
+    });
+  });
+
+  describe('createReleaseImport', () => {
+    describe('positive tests', () => {
+      function __createReleaseImportTest() {
+        // Construct the params object for operation createReleaseImport
+        const body = Buffer.from('This is a mock file.');
+        const includeAudit = false;
+        const createReleaseImportParams = {
+          body,
+          includeAudit,
+        };
+
+        const createReleaseImportResult = assistantService.createReleaseImport(createReleaseImportParams);
+
+        // all methods should return a Promise
+        expectToBePromise(createReleaseImportResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/import', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = 'application/octet-stream';
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.body).toEqual(body);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __createReleaseImportTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __createReleaseImportTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __createReleaseImportTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const body = Buffer.from('This is a mock file.');
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const createReleaseImportParams = {
+          body,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistantService.createReleaseImport(createReleaseImportParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async () => {
+        let err;
+        try {
+          await assistantService.createReleaseImport({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.createReleaseImport();
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+    });
+  });
+
+  describe('getReleaseImportStatus', () => {
+    describe('positive tests', () => {
+      function __getReleaseImportStatusTest() {
+        // Construct the params object for operation getReleaseImportStatus
+        const includeAudit = false;
+        const getReleaseImportStatusParams = {
+          includeAudit,
+        };
+
+        const getReleaseImportStatusResult = assistantService.getReleaseImportStatus(getReleaseImportStatusParams);
+
+        // all methods should return a Promise
+        expectToBePromise(getReleaseImportStatusResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/import', 'GET');
+        const expectedAccept = 'application/json';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __getReleaseImportStatusTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __getReleaseImportStatusTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __getReleaseImportStatusTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const getReleaseImportStatusParams = {
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistantService.getReleaseImportStatus(getReleaseImportStatusParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+
+      test('should not have any problems when no parameters are passed in', () => {
+        // invoke the method with no parameters
+        assistantService.getReleaseImportStatus({});
+        checkForSuccessfulExecution(createRequestMock);
+      });
+    });
+  });
+
   describe('getSkill', () => {
     describe('positive tests', () => {
       function __getSkillTest() {
@@ -2274,11 +3474,64 @@ describe('AssistantV2', () => {
         title: 'testString',
       };
 
+      // SearchSettingsElasticSearch
+      const searchSettingsElasticSearchModel = {
+        url: 'testString',
+        port: 'testString',
+        username: 'testString',
+        password: 'testString',
+        index: 'testString',
+        filter: ['testString'],
+        query_body: { anyKey: 'anyValue' },
+        managed_index: 'testString',
+        apikey: 'testString',
+      };
+
+      // SearchSettingsConversationalSearchResponseLength
+      const searchSettingsConversationalSearchResponseLengthModel = {
+        option: 'moderate',
+      };
+
+      // SearchSettingsConversationalSearchSearchConfidence
+      const searchSettingsConversationalSearchSearchConfidenceModel = {
+        threshold: 'less_often',
+      };
+
+      // SearchSettingsConversationalSearch
+      const searchSettingsConversationalSearchModel = {
+        enabled: true,
+        response_length: searchSettingsConversationalSearchResponseLengthModel,
+        search_confidence: searchSettingsConversationalSearchSearchConfidenceModel,
+      };
+
+      // SearchSettingsServerSideSearch
+      const searchSettingsServerSideSearchModel = {
+        url: 'testString',
+        port: 'testString',
+        username: 'testString',
+        password: 'testString',
+        filter: 'testString',
+        metadata: { anyKey: 'anyValue' },
+        apikey: 'testString',
+        no_auth: true,
+        auth_type: 'basic',
+      };
+
+      // SearchSettingsClientSideSearch
+      const searchSettingsClientSideSearchModel = {
+        filter: 'testString',
+        metadata: { anyKey: 'anyValue' },
+      };
+
       // SearchSettings
       const searchSettingsModel = {
         discovery: searchSettingsDiscoveryModel,
         messages: searchSettingsMessagesModel,
         schema_mapping: searchSettingsSchemaMappingModel,
+        elastic_search: searchSettingsElasticSearchModel,
+        conversational_search: searchSettingsConversationalSearchModel,
+        server_side_search: searchSettingsServerSideSearchModel,
+        client_side_search: searchSettingsClientSideSearchModel,
       };
 
       function __updateSkillTest() {
@@ -2509,11 +3762,64 @@ describe('AssistantV2', () => {
         title: 'testString',
       };
 
+      // SearchSettingsElasticSearch
+      const searchSettingsElasticSearchModel = {
+        url: 'testString',
+        port: 'testString',
+        username: 'testString',
+        password: 'testString',
+        index: 'testString',
+        filter: ['testString'],
+        query_body: { anyKey: 'anyValue' },
+        managed_index: 'testString',
+        apikey: 'testString',
+      };
+
+      // SearchSettingsConversationalSearchResponseLength
+      const searchSettingsConversationalSearchResponseLengthModel = {
+        option: 'moderate',
+      };
+
+      // SearchSettingsConversationalSearchSearchConfidence
+      const searchSettingsConversationalSearchSearchConfidenceModel = {
+        threshold: 'less_often',
+      };
+
+      // SearchSettingsConversationalSearch
+      const searchSettingsConversationalSearchModel = {
+        enabled: true,
+        response_length: searchSettingsConversationalSearchResponseLengthModel,
+        search_confidence: searchSettingsConversationalSearchSearchConfidenceModel,
+      };
+
+      // SearchSettingsServerSideSearch
+      const searchSettingsServerSideSearchModel = {
+        url: 'testString',
+        port: 'testString',
+        username: 'testString',
+        password: 'testString',
+        filter: 'testString',
+        metadata: { anyKey: 'anyValue' },
+        apikey: 'testString',
+        no_auth: true,
+        auth_type: 'basic',
+      };
+
+      // SearchSettingsClientSideSearch
+      const searchSettingsClientSideSearchModel = {
+        filter: 'testString',
+        metadata: { anyKey: 'anyValue' },
+      };
+
       // SearchSettings
       const searchSettingsModel = {
         discovery: searchSettingsDiscoveryModel,
         messages: searchSettingsMessagesModel,
         schema_mapping: searchSettingsSchemaMappingModel,
+        elastic_search: searchSettingsElasticSearchModel,
+        conversational_search: searchSettingsConversationalSearchModel,
+        server_side_search: searchSettingsServerSideSearchModel,
+        client_side_search: searchSettingsClientSideSearchModel,
       };
 
       // SkillImport
