@@ -17,7 +17,7 @@
 // need to import the whole package to mock getAuthenticatorFromEnvironment
 const sdkCorePackage = require('ibm-cloud-sdk-core');
 
-const { NoAuthAuthenticator, unitTestUtils } = sdkCorePackage;
+const { NoAuthAuthenticator } = sdkCorePackage;
 const AssistantV2 = require('../../dist/assistant/v2');
 
 const {
@@ -25,9 +25,8 @@ const {
   checkUrlAndMethod,
   checkMediaHeaders,
   expectToBePromise,
-  checkUserHeader,
   checkForSuccessfulExecution,
-} = unitTestUtils;
+} = require('@ibm-cloud/sdk-test-utilities');
 
 const assistantServiceOptions = {
   authenticator: new NoAuthAuthenticator(),
@@ -224,11 +223,11 @@ describe('AssistantV2', () => {
         // Construct the params object for operation createProvider
         const providerId = 'testString';
         const specification = providerSpecificationModel;
-        const private = providerPrivateModel;
+        const _private = providerPrivateModel;
         const createProviderParams = {
           providerId,
           specification,
-          private,
+          _private,
         };
 
         const createProviderResult = assistantService.createProvider(createProviderParams);
@@ -247,7 +246,7 @@ describe('AssistantV2', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.body.provider_id).toEqual(providerId);
         expect(mockRequestOptions.body.specification).toEqual(specification);
-        expect(mockRequestOptions.body.private).toEqual(private);
+        expect(mockRequestOptions.body.private).toEqual(_private);
         expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
       }
 
@@ -268,9 +267,15 @@ describe('AssistantV2', () => {
 
       test('should prioritize user-given headers', () => {
         // parameters
+        const providerId = 'testString';
+        const specification = providerSpecificationModel;
+        const _private = providerPrivateModel;
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const createProviderParams = {
+          providerId,
+          specification,
+          _private,
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
@@ -280,11 +285,29 @@ describe('AssistantV2', () => {
         assistantService.createProvider(createProviderParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
+    });
 
-      test('should not have any problems when no parameters are passed in', () => {
-        // invoke the method with no parameters
-        assistantService.createProvider({});
-        checkForSuccessfulExecution(createRequestMock);
+    describe('negative tests', () => {
+      test('should enforce required parameters', async () => {
+        let err;
+        try {
+          await assistantService.createProvider({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.createProvider();
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
@@ -439,14 +462,12 @@ describe('AssistantV2', () => {
       function __updateProviderTest() {
         // Construct the params object for operation updateProvider
         const providerId = 'testString';
-        const newProviderId = 'testString';
-        const newSpecification = providerSpecificationModel;
-        const newPrivate = providerPrivateModel;
+        const specification = providerSpecificationModel;
+        const _private = providerPrivateModel;
         const updateProviderParams = {
           providerId,
-          newProviderId,
-          newSpecification,
-          newPrivate,
+          specification,
+          _private,
         };
 
         const updateProviderResult = assistantService.updateProvider(updateProviderParams);
@@ -463,9 +484,8 @@ describe('AssistantV2', () => {
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        expect(mockRequestOptions.body.provider_id).toEqual(newProviderId);
-        expect(mockRequestOptions.body.specification).toEqual(newSpecification);
-        expect(mockRequestOptions.body.private).toEqual(newPrivate);
+        expect(mockRequestOptions.body.specification).toEqual(specification);
+        expect(mockRequestOptions.body.private).toEqual(_private);
         expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
         expect(mockRequestOptions.path.provider_id).toEqual(providerId);
       }
@@ -488,10 +508,14 @@ describe('AssistantV2', () => {
       test('should prioritize user-given headers', () => {
         // parameters
         const providerId = 'testString';
+        const specification = providerSpecificationModel;
+        const _private = providerPrivateModel;
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const updateProviderParams = {
           providerId,
+          specification,
+          _private,
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
@@ -1675,6 +1699,7 @@ describe('AssistantV2', () => {
         expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.session_id).toEqual(sessionId);
+        expect(mockRequestOptions.responseType).toBe('stream');
       }
 
       test('should pass the right params to createRequest with enable and disable retries', () => {
@@ -1937,6 +1962,7 @@ describe('AssistantV2', () => {
         expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
         expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
         expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
+        expect(mockRequestOptions.responseType).toBe('stream');
       }
 
       test('should pass the right params to createRequest with enable and disable retries', () => {
@@ -2475,8 +2501,8 @@ describe('AssistantV2', () => {
     describe('positive tests', () => {
       // Request models needed by this operation.
 
-      // BaseEnvironmentOrchestration
-      const baseEnvironmentOrchestrationModel = {
+      // UpdateEnvironmentOrchestration
+      const updateEnvironmentOrchestrationModel = {
         search_skill_fallback: true,
       };
 
@@ -2495,7 +2521,7 @@ describe('AssistantV2', () => {
         const environmentId = 'testString';
         const name = 'testString';
         const description = 'testString';
-        const orchestration = baseEnvironmentOrchestrationModel;
+        const orchestration = updateEnvironmentOrchestrationModel;
         const sessionTimeout = 10;
         const skillReferences = [environmentSkillModel];
         const updateEnvironmentParams = {
@@ -3065,8 +3091,12 @@ describe('AssistantV2', () => {
     describe('positive tests', () => {
       function __createReleaseExportTest() {
         // Construct the params object for operation createReleaseExport
+        const assistantId = 'testString';
+        const release = 'testString';
         const includeAudit = false;
         const createReleaseExportParams = {
+          assistantId,
+          release,
           includeAudit,
         };
 
@@ -3086,6 +3116,8 @@ describe('AssistantV2', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
+        expect(mockRequestOptions.path.release).toEqual(release);
       }
 
       test('should pass the right params to createRequest with enable and disable retries', () => {
@@ -3105,9 +3137,13 @@ describe('AssistantV2', () => {
 
       test('should prioritize user-given headers', () => {
         // parameters
+        const assistantId = 'testString';
+        const release = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const createReleaseExportParams = {
+          assistantId,
+          release,
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
@@ -3117,11 +3153,29 @@ describe('AssistantV2', () => {
         assistantService.createReleaseExport(createReleaseExportParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
+    });
 
-      test('should not have any problems when no parameters are passed in', () => {
-        // invoke the method with no parameters
-        assistantService.createReleaseExport({});
-        checkForSuccessfulExecution(createRequestMock);
+    describe('negative tests', () => {
+      test('should enforce required parameters', async () => {
+        let err;
+        try {
+          await assistantService.createReleaseExport({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.createReleaseExport();
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
@@ -3130,10 +3184,12 @@ describe('AssistantV2', () => {
     describe('positive tests', () => {
       function __downloadReleaseExportTest() {
         // Construct the params object for operation downloadReleaseExport
-        const accept = 'application/json';
+        const assistantId = 'testString';
+        const release = 'testString';
         const includeAudit = false;
         const downloadReleaseExportParams = {
-          accept,
+          assistantId,
+          release,
           includeAudit,
         };
 
@@ -3148,12 +3204,13 @@ describe('AssistantV2', () => {
         const mockRequestOptions = getOptions(createRequestMock);
 
         checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/releases/{release}/export', 'GET');
-        const expectedAccept = accept;
+        const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
-        checkUserHeader(createRequestMock, 'Accept', accept);
         expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
+        expect(mockRequestOptions.path.release).toEqual(release);
       }
 
       test('should pass the right params to createRequest with enable and disable retries', () => {
@@ -3173,9 +3230,13 @@ describe('AssistantV2', () => {
 
       test('should prioritize user-given headers', () => {
         // parameters
+        const assistantId = 'testString';
+        const release = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const downloadReleaseExportParams = {
+          assistantId,
+          release,
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
@@ -3185,11 +3246,123 @@ describe('AssistantV2', () => {
         assistantService.downloadReleaseExport(downloadReleaseExportParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
+    });
 
-      test('should not have any problems when no parameters are passed in', () => {
-        // invoke the method with no parameters
-        assistantService.downloadReleaseExport({});
-        checkForSuccessfulExecution(createRequestMock);
+    describe('negative tests', () => {
+      test('should enforce required parameters', async () => {
+        let err;
+        try {
+          await assistantService.downloadReleaseExport({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.downloadReleaseExport();
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+    });
+  });
+
+  describe('downloadReleaseExportAsStream', () => {
+    describe('positive tests', () => {
+      function __downloadReleaseExportAsStreamTest() {
+        // Construct the params object for operation downloadReleaseExportAsStream
+        const assistantId = 'testString';
+        const release = 'testString';
+        const includeAudit = false;
+        const downloadReleaseExportAsStreamParams = {
+          assistantId,
+          release,
+          includeAudit,
+        };
+
+        const downloadReleaseExportAsStreamResult = assistantService.downloadReleaseExportAsStream(downloadReleaseExportAsStreamParams);
+
+        // all methods should return a Promise
+        expectToBePromise(downloadReleaseExportAsStreamResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/releases/{release}/export', 'GET');
+        const expectedAccept = 'application/octet-stream';
+        const expectedContentType = undefined;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
+        expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
+        expect(mockRequestOptions.path.release).toEqual(release);
+        expect(mockRequestOptions.responseType).toBe('stream');
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __downloadReleaseExportAsStreamTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        assistantService.enableRetries();
+        __downloadReleaseExportAsStreamTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        assistantService.disableRetries();
+        __downloadReleaseExportAsStreamTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const assistantId = 'testString';
+        const release = 'testString';
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const downloadReleaseExportAsStreamParams = {
+          assistantId,
+          release,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        assistantService.downloadReleaseExportAsStream(downloadReleaseExportAsStreamParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async () => {
+        let err;
+        try {
+          await assistantService.downloadReleaseExportAsStream({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.downloadReleaseExportAsStream();
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });
@@ -3198,9 +3371,11 @@ describe('AssistantV2', () => {
     describe('positive tests', () => {
       function __createReleaseImportTest() {
         // Construct the params object for operation createReleaseImport
+        const assistantId = 'testString';
         const body = Buffer.from('This is a mock file.');
         const includeAudit = false;
         const createReleaseImportParams = {
+          assistantId,
           body,
           includeAudit,
         };
@@ -3222,6 +3397,7 @@ describe('AssistantV2', () => {
         expect(mockRequestOptions.body).toEqual(body);
         expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
       }
 
       test('should pass the right params to createRequest with enable and disable retries', () => {
@@ -3241,10 +3417,12 @@ describe('AssistantV2', () => {
 
       test('should prioritize user-given headers', () => {
         // parameters
+        const assistantId = 'testString';
         const body = Buffer.from('This is a mock file.');
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const createReleaseImportParams = {
+          assistantId,
           body,
           headers: {
             Accept: userAccept,
@@ -3286,8 +3464,10 @@ describe('AssistantV2', () => {
     describe('positive tests', () => {
       function __getReleaseImportStatusTest() {
         // Construct the params object for operation getReleaseImportStatus
+        const assistantId = 'testString';
         const includeAudit = false;
         const getReleaseImportStatusParams = {
+          assistantId,
           includeAudit,
         };
 
@@ -3307,6 +3487,7 @@ describe('AssistantV2', () => {
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
         expect(mockRequestOptions.qs.include_audit).toEqual(includeAudit);
+        expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
       }
 
       test('should pass the right params to createRequest with enable and disable retries', () => {
@@ -3326,9 +3507,11 @@ describe('AssistantV2', () => {
 
       test('should prioritize user-given headers', () => {
         // parameters
+        const assistantId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const getReleaseImportStatusParams = {
+          assistantId,
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
@@ -3338,11 +3521,29 @@ describe('AssistantV2', () => {
         assistantService.getReleaseImportStatus(getReleaseImportStatusParams);
         checkMediaHeaders(createRequestMock, userAccept, userContentType);
       });
+    });
 
-      test('should not have any problems when no parameters are passed in', () => {
-        // invoke the method with no parameters
-        assistantService.getReleaseImportStatus({});
-        checkForSuccessfulExecution(createRequestMock);
+    describe('negative tests', () => {
+      test('should enforce required parameters', async () => {
+        let err;
+        try {
+          await assistantService.getReleaseImportStatus({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await assistantService.getReleaseImportStatus();
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
       });
     });
   });

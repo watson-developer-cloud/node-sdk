@@ -15,7 +15,7 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.85.0-75c38f8f-20240206-210220
+ * IBM OpenAPI SDK Code Generator Version: 99-SNAPSHOT-${buildNumber}-${timestamp}
  */
 
 import * as extend from 'extend';
@@ -97,19 +97,19 @@ class AssistantV2 extends BaseService {
    *
    * Create a new conversational skill provider.
    *
-   * @param {Object} [params] - The parameters to send to the service.
-   * @param {string} [params.providerId] - The unique identifier of the provider.
-   * @param {ProviderSpecification} [params.specification] - The specification of the provider.
-   * @param {ProviderPrivate} [params.private] - Private information of the provider.
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.providerId - The unique identifier of the provider.
+   * @param {ProviderSpecification} params.specification - The specification of the provider.
+   * @param {ProviderPrivate} params._private - Private information of the provider.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV2.Response<AssistantV2.ProviderResponse>>}
    */
   public createProvider(
-    params?: AssistantV2.CreateProviderParams
+    params: AssistantV2.CreateProviderParams
   ): Promise<AssistantV2.Response<AssistantV2.ProviderResponse>> {
     const _params = { ...params };
-    const _requiredParams = [];
-    const _validParams = ['providerId', 'specification', 'private', 'headers'];
+    const _requiredParams = ['providerId', 'specification', '_private'];
+    const _validParams = ['providerId', 'specification', '_private', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -118,7 +118,7 @@ class AssistantV2 extends BaseService {
     const body = {
       'provider_id': _params.providerId,
       'specification': _params.specification,
-      'private': _params.private,
+      'private': _params._private,
     };
 
     const query = {
@@ -218,9 +218,8 @@ class AssistantV2 extends BaseService {
    *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.providerId - Unique identifier of the conversational skill provider.
-   * @param {string} [params.newProviderId] - The unique identifier of the provider.
-   * @param {ProviderSpecification} [params.newSpecification] - The specification of the provider.
-   * @param {ProviderPrivate} [params.newPrivate] - Private information of the provider.
+   * @param {ProviderSpecification} params.specification - The specification of the provider.
+   * @param {ProviderPrivate} params._private - Private information of the provider.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV2.Response<AssistantV2.ProviderResponse>>}
    */
@@ -228,17 +227,16 @@ class AssistantV2 extends BaseService {
     params: AssistantV2.UpdateProviderParams
   ): Promise<AssistantV2.Response<AssistantV2.ProviderResponse>> {
     const _params = { ...params };
-    const _requiredParams = ['providerId'];
-    const _validParams = ['providerId', 'newProviderId', 'newSpecification', 'newPrivate', 'headers'];
+    const _requiredParams = ['providerId', 'specification', '_private'];
+    const _validParams = ['providerId', 'specification', '_private', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
     }
 
     const body = {
-      'provider_id': _params.newProviderId,
-      'specification': _params.newSpecification,
-      'private': _params.newPrivate,
+      'specification': _params.specification,
+      'private': _params._private,
     };
 
     const query = {
@@ -830,11 +828,11 @@ class AssistantV2 extends BaseService {
    * **Note:** This property is the same as the **user_id** property in the global system context. If **user_id** is
    * specified in both locations, the value specified at the root is used.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<AssistantV2.Response<AssistantV2.MessageStreamResponse>>}
+   * @returns {Promise<AssistantV2.Response<NodeJS.ReadableStream>>}
    */
   public messageStream(
     params: AssistantV2.MessageStreamParams
-  ): Promise<AssistantV2.Response<AssistantV2.MessageStreamResponse>> {
+  ): Promise<AssistantV2.Response<NodeJS.ReadableStream>> {
     const _params = { ...params };
     const _requiredParams = ['assistantId', 'environmentId', 'sessionId'];
     const _validParams = ['assistantId', 'environmentId', 'sessionId', 'input', 'context', 'userId', 'headers'];
@@ -865,10 +863,10 @@ class AssistantV2 extends BaseService {
       options: {
         url: '/v2/assistants/{assistant_id}/environments/{environment_id}/sessions/{session_id}/message_stream',
         method: 'POST',
-        sseMode: true,
         body,
         qs: query,
         path,
+        responseType: 'stream',
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(
@@ -922,11 +920,11 @@ class AssistantV2 extends BaseService {
    * **Note:** This property is the same as the **user_id** property in the global system context. If **user_id** is
    * specified in both locations, the value specified at the root is used.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
-   * @returns {Promise<AssistantV2.Response<AssistantV2.StatelessMessageStreamResponse>>}
+   * @returns {Promise<AssistantV2.Response<NodeJS.ReadableStream>>}
    */
   public messageStreamStateless(
     params: AssistantV2.MessageStreamStatelessParams
-  ): Promise<AssistantV2.Response<AssistantV2.StatelessMessageStreamResponse>> {
+  ): Promise<AssistantV2.Response<NodeJS.ReadableStream>> {
     const _params = { ...params };
     const _requiredParams = ['assistantId', 'environmentId'];
     const _validParams = ['assistantId', 'environmentId', 'input', 'context', 'userId', 'headers'];
@@ -952,15 +950,14 @@ class AssistantV2 extends BaseService {
 
     const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'messageStreamStateless');
 
-    console.log('Formatting params')
     const parameters = {
       options: {
         url: '/v2/assistants/{assistant_id}/environments/{environment_id}/message_stream',
         method: 'POST',
-        sseMode: true,
         body,
         qs: query,
         path,
+        responseType: 'stream',
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(
@@ -1367,7 +1364,7 @@ class AssistantV2 extends BaseService {
    * API does not support creating environments.
    * @param {string} [params.name] - The name of the environment.
    * @param {string} [params.description] - The description of the environment.
-   * @param {BaseEnvironmentOrchestration} [params.orchestration] - The search skill orchestration settings for the
+   * @param {UpdateEnvironmentOrchestration} [params.orchestration] - The search skill orchestration settings for the
    * environment.
    * @param {number} [params.sessionTimeout] - The session inactivity timeout setting for the environment (in seconds).
    * @param {EnvironmentSkill[]} [params.skillReferences] - An array of objects identifying the skills (such as action
@@ -1804,18 +1801,30 @@ class AssistantV2 extends BaseService {
    * GET endpoint to retrieve the artifact. Once the artifact has been created, it will last for the duration (/scope)
    * of the release.
    *
-   * @param {Object} [params] - The parameters to send to the service.
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
+   * is deployed, depending on the type of request:
+   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+   * deployed.
+   *  - For all other requests, specify the assistant ID of the assistant.
+   *
+   *  To find the environment ID or assistant ID in the watsonx Assistant user interface, open the assistant settings
+   * and scroll to the **Environments** section.
+   *
+   * **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+   * assistant ID in the user interface, open the assistant settings and click API Details.
+   * @param {string} params.release - Unique identifier of the release.
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV2.Response<AssistantV2.CreateReleaseExportWithStatusErrors>>}
    */
   public createReleaseExport(
-    params?: AssistantV2.CreateReleaseExportParams
+    params: AssistantV2.CreateReleaseExportParams
   ): Promise<AssistantV2.Response<AssistantV2.CreateReleaseExportWithStatusErrors>> {
     const _params = { ...params };
-    const _requiredParams = [];
-    const _validParams = ['includeAudit', 'headers'];
+    const _requiredParams = ['assistantId', 'release'];
+    const _validParams = ['assistantId', 'release', 'includeAudit', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1826,6 +1835,11 @@ class AssistantV2 extends BaseService {
       'include_audit': _params.includeAudit,
     };
 
+    const path = {
+      'assistant_id': _params.assistantId,
+      'release': _params.release,
+    };
+
     const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'createReleaseExport');
 
     const parameters = {
@@ -1833,6 +1847,7 @@ class AssistantV2 extends BaseService {
         url: '/v2/assistants/{assistant_id}/releases/{release}/export',
         method: 'POST',
         qs: query,
+        path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(
@@ -1864,19 +1879,30 @@ class AssistantV2 extends BaseService {
    * APIs.</li><li>Extract the contents of the Zip file artifact and individually import the skill JSONs via skill
    * update endpoints.</li></ol>.
    *
-   * @param {Object} [params] - The parameters to send to the service.
-   * @param {string} [params.accept] - The type of the response: application/json or application/zip.
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
+   * is deployed, depending on the type of request:
+   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+   * deployed.
+   *  - For all other requests, specify the assistant ID of the assistant.
+   *
+   *  To find the environment ID or assistant ID in the watsonx Assistant user interface, open the assistant settings
+   * and scroll to the **Environments** section.
+   *
+   * **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+   * assistant ID in the user interface, open the assistant settings and click API Details.
+   * @param {string} params.release - Unique identifier of the release.
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV2.Response<AssistantV2.CreateReleaseExportWithStatusErrors>>}
    */
   public downloadReleaseExport(
-    params?: AssistantV2.DownloadReleaseExportParams
+    params: AssistantV2.DownloadReleaseExportParams
   ): Promise<AssistantV2.Response<AssistantV2.CreateReleaseExportWithStatusErrors>> {
     const _params = { ...params };
-    const _requiredParams = [];
-    const _validParams = ['accept', 'includeAudit', 'headers'];
+    const _requiredParams = ['assistantId', 'release'];
+    const _validParams = ['assistantId', 'release', 'includeAudit', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1887,6 +1913,11 @@ class AssistantV2 extends BaseService {
       'include_audit': _params.includeAudit,
     };
 
+    const path = {
+      'assistant_id': _params.assistantId,
+      'release': _params.release,
+    };
+
     const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'downloadReleaseExport');
 
     const parameters = {
@@ -1894,13 +1925,93 @@ class AssistantV2 extends BaseService {
         url: '/v2/assistants/{assistant_id}/releases/{release}/export',
         method: 'GET',
         qs: query,
+        path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(
           true,
           sdkHeaders,
           {
-            'Accept': _params.accept,
+            'Accept': 'application/json',
+          },
+          _params.headers
+        ),
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
+
+  /**
+   * Get release export as stream.
+   *
+   * A dual function endpoint to either retrieve the Zip file artifact that is associated with an assistant release or,
+   * retrieve the status of the artifact's creation. It is assumed that the artifact creation was already initiated
+   * prior to calling this endpoint. In the event that the artifact is not yet created and ready for download, this
+   * endpoint can be used to poll the system until the creation is completed or has failed. On the other hand, if the
+   * artifact is created, this endpoint will return the Zip file artifact as an octet stream. Once the artifact has been
+   * created, it will last for the duration (/scope) of the release. <br /><br /> When you will have downloaded the Zip
+   * file artifact, you have one of three ways to import it into an assistant's draft environment. These are as follows.
+   * <br /><ol><li>Import the zip package in Tooling via <var>"Assistant Settings" -> "Download/Upload files" ->
+   * "Upload" -> "Assistant only"</var>.</li><li>Import the zip package via "Create release import" endpoint using the
+   * APIs.</li><li>Extract the contents of the Zip file artifact and individually import the skill JSONs via skill
+   * update endpoints.</li></ol>.
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
+   * is deployed, depending on the type of request:
+   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+   * deployed.
+   *  - For all other requests, specify the assistant ID of the assistant.
+   *
+   *  To find the environment ID or assistant ID in the watsonx Assistant user interface, open the assistant settings
+   * and scroll to the **Environments** section.
+   *
+   * **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+   * assistant ID in the user interface, open the assistant settings and click API Details.
+   * @param {string} params.release - Unique identifier of the release.
+   * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
+   * timestamps) in the response.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<AssistantV2.Response<NodeJS.ReadableStream>>}
+   */
+  public downloadReleaseExportAsStream(
+    params: AssistantV2.DownloadReleaseExportAsStreamParams
+  ): Promise<AssistantV2.Response<NodeJS.ReadableStream>> {
+    const _params = { ...params };
+    const _requiredParams = ['assistantId', 'release'];
+    const _validParams = ['assistantId', 'release', 'includeAudit', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const query = {
+      'version': this.version,
+      'include_audit': _params.includeAudit,
+    };
+
+    const path = {
+      'assistant_id': _params.assistantId,
+      'release': _params.release,
+    };
+
+    const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'downloadReleaseExportAsStream');
+
+    const parameters = {
+      options: {
+        url: '/v2/assistants/{assistant_id}/releases/{release}/export',
+        method: 'GET',
+        qs: query,
+        path,
+        responseType: 'stream',
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          {
+            'Accept': 'application/octet-stream',
           },
           _params.headers
         ),
@@ -1924,9 +2035,20 @@ class AssistantV2 extends BaseService {
    * regardless of whether coexistence is enabled on the assistant into which the package is being imported. Lastly, the
    * system will only run one asynchronous import at a time on an assistant. As such, consecutive imports will override
    * previous import's updates to the skills in the draft environment. Once created, you may poll the completion of the
-   * import via the "Get release import Status".
+   * import via the "Get release import Status" endpoint.
    *
    * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
+   * is deployed, depending on the type of request:
+   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+   * deployed.
+   *  - For all other requests, specify the assistant ID of the assistant.
+   *
+   *  To find the environment ID or assistant ID in the watsonx Assistant user interface, open the assistant settings
+   * and scroll to the **Environments** section.
+   *
+   * **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+   * assistant ID in the user interface, open the assistant settings and click API Details.
    * @param {NodeJS.ReadableStream | Buffer} params.body - Request body is an Octet-stream of the artifact Zip file that
    * is being imported.
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
@@ -1938,8 +2060,8 @@ class AssistantV2 extends BaseService {
     params: AssistantV2.CreateReleaseImportParams
   ): Promise<AssistantV2.Response<AssistantV2.CreateAssistantReleaseImportResponse>> {
     const _params = { ...params };
-    const _requiredParams = ['body'];
-    const _validParams = ['body', 'includeAudit', 'headers'];
+    const _requiredParams = ['assistantId', 'body'];
+    const _validParams = ['assistantId', 'body', 'includeAudit', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1951,6 +2073,10 @@ class AssistantV2 extends BaseService {
       'include_audit': _params.includeAudit,
     };
 
+    const path = {
+      'assistant_id': _params.assistantId,
+    };
+
     const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'createReleaseImport');
 
     const parameters = {
@@ -1959,6 +2085,7 @@ class AssistantV2 extends BaseService {
         method: 'POST',
         body,
         qs: query,
+        path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(
@@ -1982,18 +2109,29 @@ class AssistantV2 extends BaseService {
    * Monitor the status of an assistant release import. You may poll this endpoint until the status of the import has
    * either succeeded or failed.
    *
-   * @param {Object} [params] - The parameters to send to the service.
+   * @param {Object} params - The parameters to send to the service.
+   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
+   * is deployed, depending on the type of request:
+   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+   * deployed.
+   *  - For all other requests, specify the assistant ID of the assistant.
+   *
+   *  To find the environment ID or assistant ID in the watsonx Assistant user interface, open the assistant settings
+   * and scroll to the **Environments** section.
+   *
+   * **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+   * assistant ID in the user interface, open the assistant settings and click API Details.
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV2.Response<AssistantV2.MonitorAssistantReleaseImportArtifactResponse>>}
    */
   public getReleaseImportStatus(
-    params?: AssistantV2.GetReleaseImportStatusParams
+    params: AssistantV2.GetReleaseImportStatusParams
   ): Promise<AssistantV2.Response<AssistantV2.MonitorAssistantReleaseImportArtifactResponse>> {
     const _params = { ...params };
-    const _requiredParams = [];
-    const _validParams = ['includeAudit', 'headers'];
+    const _requiredParams = ['assistantId'];
+    const _validParams = ['assistantId', 'includeAudit', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2004,6 +2142,10 @@ class AssistantV2 extends BaseService {
       'include_audit': _params.includeAudit,
     };
 
+    const path = {
+      'assistant_id': _params.assistantId,
+    };
+
     const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'getReleaseImportStatus');
 
     const parameters = {
@@ -2011,6 +2153,7 @@ class AssistantV2 extends BaseService {
         url: '/v2/assistants/{assistant_id}/import',
         method: 'GET',
         qs: query,
+        path,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(
@@ -2451,11 +2594,11 @@ namespace AssistantV2 {
   /** Parameters for the `createProvider` operation. */
   export interface CreateProviderParams {
     /** The unique identifier of the provider. */
-    providerId?: string;
+    providerId: string;
     /** The specification of the provider. */
-    specification?: ProviderSpecification;
+    specification: ProviderSpecification;
     /** Private information of the provider. */
-    private?: ProviderPrivate;
+    _private: ProviderPrivate;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -2491,12 +2634,10 @@ namespace AssistantV2 {
   export interface UpdateProviderParams {
     /** Unique identifier of the conversational skill provider. */
     providerId: string;
-    /** The unique identifier of the provider. */
-    newProviderId?: string;
     /** The specification of the provider. */
-    newSpecification?: ProviderSpecification;
+    specification: ProviderSpecification;
     /** Private information of the provider. */
-    newPrivate?: ProviderPrivate;
+    _private: ProviderPrivate;
     headers?: OutgoingHttpHeaders;
   }
 
@@ -2910,7 +3051,7 @@ namespace AssistantV2 {
     /** The description of the environment. */
     description?: string;
     /** The search skill orchestration settings for the environment. */
-    orchestration?: BaseEnvironmentOrchestration;
+    orchestration?: UpdateEnvironmentOrchestration;
     /** The session inactivity timeout setting for the environment (in seconds). */
     sessionTimeout?: number;
     /** An array of objects identifying the skills (such as action and dialog) that exist in the environment. */
@@ -3047,6 +3188,21 @@ namespace AssistantV2 {
 
   /** Parameters for the `createReleaseExport` operation. */
   export interface CreateReleaseExportParams {
+    /** The assistant ID or the environment ID of the environment where the assistant is deployed, depending on the
+     *  type of request:
+     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+     *  deployed.
+     *   - For all other requests, specify the assistant ID of the assistant.
+     *
+     *   To find the environment ID or assistant ID in the watsonx Assistant user interface, open the assistant settings
+     *  and scroll to the **Environments** section.
+     *
+     *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+     *  assistant ID in the user interface, open the assistant settings and click API Details.
+     */
+    assistantId: string;
+    /** Unique identifier of the release. */
+    release: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
@@ -3054,24 +3210,63 @@ namespace AssistantV2 {
 
   /** Parameters for the `downloadReleaseExport` operation. */
   export interface DownloadReleaseExportParams {
-    /** The type of the response: application/json or application/zip. */
-    accept?: DownloadReleaseExportConstants.Accept | string;
+    /** The assistant ID or the environment ID of the environment where the assistant is deployed, depending on the
+     *  type of request:
+     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+     *  deployed.
+     *   - For all other requests, specify the assistant ID of the assistant.
+     *
+     *   To find the environment ID or assistant ID in the watsonx Assistant user interface, open the assistant settings
+     *  and scroll to the **Environments** section.
+     *
+     *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+     *  assistant ID in the user interface, open the assistant settings and click API Details.
+     */
+    assistantId: string;
+    /** Unique identifier of the release. */
+    release: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
   }
 
-  /** Constants for the `downloadReleaseExport` operation. */
-  export namespace DownloadReleaseExportConstants {
-    /** The type of the response: application/json or application/zip. */
-    export enum Accept {
-      APPLICATION_JSON = 'application/json',
-      APPLICATION_ZIP = 'application/zip',
-    }
+  /** Parameters for the `downloadReleaseExportAsStream` operation. */
+  export interface DownloadReleaseExportAsStreamParams {
+    /** The assistant ID or the environment ID of the environment where the assistant is deployed, depending on the
+     *  type of request:
+     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+     *  deployed.
+     *   - For all other requests, specify the assistant ID of the assistant.
+     *
+     *   To find the environment ID or assistant ID in the watsonx Assistant user interface, open the assistant settings
+     *  and scroll to the **Environments** section.
+     *
+     *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+     *  assistant ID in the user interface, open the assistant settings and click API Details.
+     */
+    assistantId: string;
+    /** Unique identifier of the release. */
+    release: string;
+    /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
+    includeAudit?: boolean;
+    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `createReleaseImport` operation. */
   export interface CreateReleaseImportParams {
+    /** The assistant ID or the environment ID of the environment where the assistant is deployed, depending on the
+     *  type of request:
+     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+     *  deployed.
+     *   - For all other requests, specify the assistant ID of the assistant.
+     *
+     *   To find the environment ID or assistant ID in the watsonx Assistant user interface, open the assistant settings
+     *  and scroll to the **Environments** section.
+     *
+     *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+     *  assistant ID in the user interface, open the assistant settings and click API Details.
+     */
+    assistantId: string;
     /** Request body is an Octet-stream of the artifact Zip file that is being imported. */
     body: NodeJS.ReadableStream | Buffer;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
@@ -3081,6 +3276,19 @@ namespace AssistantV2 {
 
   /** Parameters for the `getReleaseImportStatus` operation. */
   export interface GetReleaseImportStatusParams {
+    /** The assistant ID or the environment ID of the environment where the assistant is deployed, depending on the
+     *  type of request:
+     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
+     *  deployed.
+     *   - For all other requests, specify the assistant ID of the assistant.
+     *
+     *   To find the environment ID or assistant ID in the watsonx Assistant user interface, open the assistant settings
+     *  and scroll to the **Environments** section.
+     *
+     *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID. To find the
+     *  assistant ID in the user interface, open the assistant settings and click API Details.
+     */
+    assistantId: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
     headers?: OutgoingHttpHeaders;
@@ -3212,13 +3420,17 @@ namespace AssistantV2 {
    * model interfaces
    ************************/
 
-  /** AgentAvailabilityMessage. */
+  /**
+   * AgentAvailabilityMessage.
+   */
   export interface AgentAvailabilityMessage {
     /** The text of the message. */
     message?: string;
   }
 
-  /** AssistantCollection. */
+  /**
+   * AssistantCollection.
+   */
   export interface AssistantCollection {
     /** An array of objects describing the assistants associated with the instance. */
     assistants: AssistantData[];
@@ -3228,7 +3440,9 @@ namespace AssistantV2 {
     pagination: Pagination;
   }
 
-  /** AssistantData. */
+  /**
+   * AssistantData.
+   */
   export interface AssistantData {
     /** The unique identifier of the assistant. */
     assistant_id?: string;
@@ -3244,7 +3458,9 @@ namespace AssistantV2 {
     assistant_environments?: EnvironmentReference[];
   }
 
-  /** AssistantSkill. */
+  /**
+   * AssistantSkill.
+   */
   export interface AssistantSkill {
     /** The skill ID of the skill. */
     skill_id: string;
@@ -3262,7 +3478,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** Status information about the skills for the assistant. Included in responses only if **status**=`Available`. */
+  /**
+   * Status information about the skills for the assistant. Included in responses only if **status**=`Available`.
+   */
   export interface AssistantState {
     /** Whether the action skill is disabled in the draft environment. */
     action_disabled: boolean;
@@ -3270,7 +3488,9 @@ namespace AssistantV2 {
     dialog_disabled: boolean;
   }
 
-  /** The search skill orchestration settings for the environment. */
+  /**
+   * The search skill orchestration settings for the environment.
+   */
   export interface BaseEnvironmentOrchestration {
     /** Whether to fall back to a search skill when responding to messages that do not match any intent or action
      *  defined in dialog or action skills. (If no search skill is configured for the environment, this property is
@@ -3279,13 +3499,17 @@ namespace AssistantV2 {
     search_skill_fallback?: boolean;
   }
 
-  /** An object describing the release that is currently deployed in the environment. */
+  /**
+   * An object describing the release that is currently deployed in the environment.
+   */
   export interface BaseEnvironmentReleaseReference {
     /** The name of the deployed release. */
     release?: string;
   }
 
-  /** BulkClassifyOutput. */
+  /**
+   * BulkClassifyOutput.
+   */
   export interface BulkClassifyOutput {
     /** The user input utterance to classify. */
     input?: BulkClassifyUtterance;
@@ -3295,19 +3519,25 @@ namespace AssistantV2 {
     intents?: RuntimeIntent[];
   }
 
-  /** BulkClassifyResponse. */
+  /**
+   * BulkClassifyResponse.
+   */
   export interface BulkClassifyResponse {
     /** An array of objects that contain classification information for the submitted input utterances. */
     output?: BulkClassifyOutput[];
   }
 
-  /** The user input utterance to classify. */
+  /**
+   * The user input utterance to classify.
+   */
   export interface BulkClassifyUtterance {
     /** The text of the input utterance. */
     text: string;
   }
 
-  /** CaptureGroup. */
+  /**
+   * CaptureGroup.
+   */
   export interface CaptureGroup {
     /** A recognized capture group for the entity. */
     group: string;
@@ -3315,7 +3545,9 @@ namespace AssistantV2 {
     location?: number[];
   }
 
-  /** Information used by an integration to transfer the conversation to a different channel. */
+  /**
+   * Information used by an integration to transfer the conversation to a different channel.
+   */
   export interface ChannelTransferInfo {
     /** An object specifying target channels available for the transfer. Each property of this object represents an
      *  available transfer target. Currently, the only supported property is **chat**, representing the web chat
@@ -3324,19 +3556,27 @@ namespace AssistantV2 {
     target: ChannelTransferTarget;
   }
 
-  /** An object specifying target channels available for the transfer. Each property of this object represents an available transfer target. Currently, the only supported property is **chat**, representing the web chat integration. */
+  /**
+   * An object specifying target channels available for the transfer. Each property of this object represents an
+   * available transfer target. Currently, the only supported property is **chat**, representing the web chat
+   * integration.
+   */
   export interface ChannelTransferTarget {
     /** Information for transferring to the web chat integration. */
     chat?: ChannelTransferTargetChat;
   }
 
-  /** Information for transferring to the web chat integration. */
+  /**
+   * Information for transferring to the web chat integration.
+   */
   export interface ChannelTransferTargetChat {
     /** The URL of the target web chat. */
     url?: string;
   }
 
-  /** CreateAssistantReleaseImportResponse. */
+  /**
+   * CreateAssistantReleaseImportResponse.
+   */
   export interface CreateAssistantReleaseImportResponse {
     /** The current status of the artifact import process:
      *   - **Failed**: The asynchronous artifact import process has failed.
@@ -3371,7 +3611,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** CreateReleaseExportWithStatusErrors. */
+  /**
+   * CreateReleaseExportWithStatusErrors.
+   */
   export interface CreateReleaseExportWithStatusErrors {
     /** The current status of the release export creation process:
      *   - **Available**: The release export package is available for download.
@@ -3408,7 +3650,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** Dialog log message details. */
+  /**
+   * Dialog log message details.
+   */
   export interface DialogLogMessage {
     /** The severity of the log message. */
     level: DialogLogMessage.Constants.Level | string;
@@ -3430,7 +3674,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** DialogNodeAction. */
+  /**
+   * DialogNodeAction.
+   */
   export interface DialogNodeAction {
     /** The name of the action. */
     name: string;
@@ -3455,12 +3701,16 @@ namespace AssistantV2 {
     }
   }
 
-  /** Routing or other contextual information to be used by target service desk systems. */
+  /**
+   * Routing or other contextual information to be used by target service desk systems.
+   */
   export interface DialogNodeOutputConnectToAgentTransferInfo {
     target?: JsonObject;
   }
 
-  /** DialogNodeOutputOptionsElement. */
+  /**
+   * DialogNodeOutputOptionsElement.
+   */
   export interface DialogNodeOutputOptionsElement {
     /** The user-facing label for the option. */
     label: string;
@@ -3470,13 +3720,18 @@ namespace AssistantV2 {
     value: DialogNodeOutputOptionsElementValue;
   }
 
-  /** An object defining the message input to be sent to the assistant if the user selects the corresponding option. */
+  /**
+   * An object defining the message input to be sent to the assistant if the user selects the corresponding option.
+   */
   export interface DialogNodeOutputOptionsElementValue {
     /** An input object that includes the input text. */
     input?: MessageInput;
   }
 
-  /** An objects containing detailed diagnostic information about a dialog node that was visited during processing of the input message. */
+  /**
+   * An objects containing detailed diagnostic information about a dialog node that was visited during processing of the
+   * input message.
+   */
   export interface DialogNodeVisited {
     /** A dialog node that was visited during processing of the input message. */
     dialog_node?: string;
@@ -3486,7 +3741,9 @@ namespace AssistantV2 {
     conditions?: string;
   }
 
-  /** DialogSuggestion. */
+  /**
+   * DialogSuggestion.
+   */
   export interface DialogSuggestion {
     /** The user-facing label for the suggestion. This label is taken from the **title** or **user_label** property
      *  of the corresponding dialog node, depending on the disambiguation options.
@@ -3505,13 +3762,21 @@ namespace AssistantV2 {
     output?: JsonObject;
   }
 
-  /** An object defining the message input to be sent to the assistant if the user selects the corresponding disambiguation option. **Note:** This entire message input object must be included in the request body of the next message sent to the assistant. Do not modify or remove any of the included properties. */
+  /**
+   * An object defining the message input to be sent to the assistant if the user selects the corresponding
+   * disambiguation option.
+   *
+   *  **Note:** This entire message input object must be included in the request body of the next message sent to the
+   * assistant. Do not modify or remove any of the included properties.
+   */
   export interface DialogSuggestionValue {
     /** An input object that includes the input text. */
     input?: MessageInput;
   }
 
-  /** Environment. */
+  /**
+   * Environment.
+   */
   export interface Environment {
     /** The name of the environment. */
     name?: string;
@@ -3541,7 +3806,9 @@ namespace AssistantV2 {
     updated?: string;
   }
 
-  /** EnvironmentCollection. */
+  /**
+   * EnvironmentCollection.
+   */
   export interface EnvironmentCollection {
     /** An array of objects describing the environments associated with an assistant. */
     environments: Environment[];
@@ -3551,7 +3818,9 @@ namespace AssistantV2 {
     pagination: Pagination;
   }
 
-  /** EnvironmentReference. */
+  /**
+   * EnvironmentReference.
+   */
   export interface EnvironmentReference {
     /** The name of the environment. */
     name?: string;
@@ -3573,7 +3842,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** EnvironmentSkill. */
+  /**
+   * EnvironmentSkill.
+   */
   export interface EnvironmentSkill {
     /** The skill ID of the skill. */
     skill_id: string;
@@ -3601,7 +3872,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** IntegrationReference. */
+  /**
+   * IntegrationReference.
+   */
   export interface IntegrationReference {
     /** The integration ID of the integration. */
     integration_id?: string;
@@ -3609,7 +3882,9 @@ namespace AssistantV2 {
     type?: string;
   }
 
-  /** Log. */
+  /**
+   * Log.
+   */
   export interface Log {
     /** A unique identifier for the logged event. */
     log_id: string;
@@ -3635,7 +3910,9 @@ namespace AssistantV2 {
     customer_id?: string;
   }
 
-  /** LogCollection. */
+  /**
+   * LogCollection.
+   */
   export interface LogCollection {
     /** An array of objects describing log events. */
     logs: Log[];
@@ -3645,11 +3922,16 @@ namespace AssistantV2 {
     pagination: LogPagination;
   }
 
-  /** An object that identifies the dialog element that generated the error message. */
+  /**
+   * An object that identifies the dialog element that generated the error message.
+   */
   export interface LogMessageSource {
   }
 
-  /** The pagination data for the returned objects. For more information about using pagination, see [Pagination](#pagination). */
+  /**
+   * The pagination data for the returned objects. For more information about using pagination, see
+   * [Pagination](#pagination).
+   */
   export interface LogPagination {
     /** The URL that will return the next page of results, if any. */
     next_url?: string;
@@ -3659,7 +3941,9 @@ namespace AssistantV2 {
     next_cursor?: string;
   }
 
-  /** A message request formatted for the watsonx Assistant service. */
+  /**
+   * A message request formatted for the watsonx Assistant service.
+   */
   export interface LogRequest {
     /** An input object that includes the input text. All private data is masked or removed. */
     input?: LogRequestInput;
@@ -3681,7 +3965,9 @@ namespace AssistantV2 {
     user_id?: string;
   }
 
-  /** An input object that includes the input text. All private data is masked or removed. */
+  /**
+   * An input object that includes the input text. All private data is masked or removed.
+   */
   export interface LogRequestInput {
     /** The type of the message:
      *
@@ -3726,7 +4012,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** A response from the watsonx Assistant service. */
+  /**
+   * A response from the watsonx Assistant service.
+   */
   export interface LogResponse {
     /** Assistant output to be rendered or processed by the client. All private data is masked or removed. */
     output: LogResponseOutput;
@@ -3748,7 +4036,9 @@ namespace AssistantV2 {
     user_id: string;
   }
 
-  /** Assistant output to be rendered or processed by the client. All private data is masked or removed. */
+  /**
+   * Assistant output to be rendered or processed by the client. All private data is masked or removed.
+   */
   export interface LogResponseOutput {
     /** Output intended for any channel. It is the responsibility of the client application to implement the
      *  supported response types.
@@ -3770,7 +4060,9 @@ namespace AssistantV2 {
     spelling?: MessageOutputSpelling;
   }
 
-  /** MessageContext. */
+  /**
+   * MessageContext.
+   */
   export interface MessageContext {
     /** Session context data that is shared by all skills used by the assistant. */
     global?: MessageContextGlobal;
@@ -3782,7 +4074,9 @@ namespace AssistantV2 {
     integrations?: JsonObject;
   }
 
-  /** Context variables that are used by the action skill. Private variables are persisted, but not shown. */
+  /**
+   * Context variables that are used by the action skill. Private variables are persisted, but not shown.
+   */
   export interface MessageContextActionSkill {
     /** An object containing any arbitrary variables that can be read and written by a particular skill. */
     user_defined?: JsonObject;
@@ -3798,7 +4092,9 @@ namespace AssistantV2 {
     skill_variables?: JsonObject;
   }
 
-  /** Context variables that are used by the dialog skill. */
+  /**
+   * Context variables that are used by the dialog skill.
+   */
   export interface MessageContextDialogSkill {
     /** An object containing any arbitrary variables that can be read and written by a particular skill. */
     user_defined?: JsonObject;
@@ -3806,7 +4102,9 @@ namespace AssistantV2 {
     system?: MessageContextSkillSystem;
   }
 
-  /** Session context data that is shared by all skills used by the assistant. */
+  /**
+   * Session context data that is shared by all skills used by the assistant.
+   */
   export interface MessageContextGlobal {
     /** Built-in system properties that apply to all skills used by the assistant. */
     system?: MessageContextGlobalSystem;
@@ -3814,7 +4112,9 @@ namespace AssistantV2 {
     session_id?: string;
   }
 
-  /** Built-in system properties that apply to all skills used by the assistant. */
+  /**
+   * Built-in system properties that apply to all skills used by the assistant.
+   */
   export interface MessageContextGlobalSystem {
     /** The user time zone. The assistant uses the time zone to correctly resolve relative time references. */
     timezone?: string;
@@ -3892,7 +4192,11 @@ namespace AssistantV2 {
     }
   }
 
-  /** System context data used by the skill. */
+  /**
+   * System context data used by the skill.
+   *
+   * This type supports additional properties of type any. For internal use only.
+   */
   export interface MessageContextSkillSystem {
     /** An encoded string that represents the current conversation state. By saving this value and then sending it
      *  in the context of a subsequent message request, you can return to an earlier point in the conversation. If you
@@ -3900,11 +4204,16 @@ namespace AssistantV2 {
      *  session is expired.
      */
     state?: string;
-    /** MessageContextSkillSystem accepts additional properties. */
+
+    /**
+     * MessageContextSkillSystem accepts additional properties of type any. For internal use only.
+     */
     [propName: string]: any;
   }
 
-  /** Context data specific to particular skills used by the assistant. */
+  /**
+   * Context data specific to particular skills used by the assistant.
+   */
   export interface MessageContextSkills {
     /** Context variables that are used by the dialog skill. */
     'main skill'?: MessageContextDialogSkill;
@@ -3912,7 +4221,9 @@ namespace AssistantV2 {
     'actions skill'?: MessageContextActionSkill;
   }
 
-  /** An input object that includes the input text. */
+  /**
+   * An input object that includes the input text.
+   */
   export interface MessageInput {
     /** The type of the message:
      *
@@ -3957,7 +4268,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** A reference to a media file to be sent as an attachment with the message. */
+  /**
+   * A reference to a media file to be sent as an attachment with the message.
+   */
   export interface MessageInputAttachment {
     /** The URL of the media file. */
     url: string;
@@ -3965,7 +4278,9 @@ namespace AssistantV2 {
     media_type?: string;
   }
 
-  /** Optional properties that control how the assistant responds. */
+  /**
+   * Optional properties that control how the assistant responds.
+   */
   export interface MessageInputOptions {
     /** Whether to restart dialog processing at the root of the dialog, regardless of any previously visited nodes.
      *  **Note:** This does not affect `turn_count` or any other context variables.
@@ -4002,7 +4317,10 @@ namespace AssistantV2 {
     export?: boolean;
   }
 
-  /** Spelling correction options for the message. Any options specified on an individual message override the settings configured for the skill. */
+  /**
+   * Spelling correction options for the message. Any options specified on an individual message override the settings
+   * configured for the skill.
+   */
   export interface MessageInputOptionsSpelling {
     /** Whether to use spelling correction when processing the input. If spelling correction is used and
      *  **auto_correct** is `true`, any spelling corrections are automatically applied to the user input. If
@@ -4020,7 +4338,9 @@ namespace AssistantV2 {
     auto_correct?: boolean;
   }
 
-  /** Assistant output to be rendered or processed by the client. */
+  /**
+   * Assistant output to be rendered or processed by the client.
+   */
   export interface MessageOutput {
     /** Output intended for any channel. It is the responsibility of the client application to implement the
      *  supported response types.
@@ -4042,7 +4362,9 @@ namespace AssistantV2 {
     spelling?: MessageOutputSpelling;
   }
 
-  /** Additional detailed information about a message response and how it was generated. */
+  /**
+   * Additional detailed information about a message response and how it was generated.
+   */
   export interface MessageOutputDebug {
     /** An array of objects containing detailed diagnostic information about dialog nodes that were visited during
      *  processing of the input message.
@@ -4073,11 +4395,15 @@ namespace AssistantV2 {
     }
   }
 
-  /** MessageOutputDebugTurnEvent. */
+  /**
+   * MessageOutputDebugTurnEvent.
+   */
   export interface MessageOutputDebugTurnEvent {
   }
 
-  /** Properties describing any spelling corrections in the user input that was received. */
+  /**
+   * Properties describing any spelling corrections in the user input that was received.
+   */
   export interface MessageOutputSpelling {
     /** The user input text that was used to generate the response. If spelling autocorrection is enabled, this text
      *  reflects any spelling corrections that were applied.
@@ -4093,91 +4419,17 @@ namespace AssistantV2 {
     suggested_text?: string;
   }
 
-  /** Contains meta-information about the item(s) being streamed. */
-  export interface MessageStreamMetadata {
+  /**
+   * Contains meta-information about the item(s) being streamed.
+   */
+  export interface Metadata {
     /** Identifies the index and sequence of the current streamed response item. */
     id?: number;
   }
 
-  /** Message response partial item content. */
-  export interface MessageStreamPartialItemPartialItem {
-    /** The type of response returned by the dialog node. The specified response type must be supported by the
-     *  client application or channel.
-     */
-    response_type?: string;
-    /** The text within the partial chunk of the message stream response. */
-    text: string;
-    /** Contains meta-information about the item(s) being streamed. */
-    streaming_metadata: MessageStreamMetadata;
-  }
-
-  /** A streamed response from the watsonx Assistant service. */
-  export interface MessageStreamResponse {
-  }
-
-  /** Message response partial item content. */
-  export interface MessageStreamResponseMessageStreamPartialItemPartialItem {
-    /** The type of response returned by the dialog node. The specified response type must be supported by the
-     *  client application or channel.
-     */
-    response_type?: string;
-    /** The text within the partial chunk of the message stream response. */
-    text: string;
-    /** Contains meta-information about the item(s) being streamed. */
-    streaming_metadata: MessageStreamMetadata;
-  }
-
-  /** Message final response content. */
-  export interface MessageStreamResponseStatefulMessageStreamFinalResponseFinalResponse {
-    /** Assistant output to be rendered or processed by the client. */
-    output?: MessageStreamResponseStatefulMessageStreamFinalResponseFinalResponseOutput;
-    /** Context data for the conversation. You can use this property to access context variables. The context is
-     *  stored by the assistant on a per-session basis.
-     *
-     *  **Note:** The context is included in message responses only if **return_context**=`true` in the message request.
-     *  Full context is always included in logs.
-     */
-    context?: MessageContext;
-    /** A string value that identifies the user who is interacting with the assistant. The client must provide a
-     *  unique identifier for each individual end user who accesses the application. For user-based plans, this user ID
-     *  is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or
-     *  tab characters. If no value is specified in the input, **user_id** is automatically set to the value of
-     *  **context.global.session_id**.
-     *
-     *  **Note:** This property is the same as the **user_id** property in the global system context.
-     */
-    user_id?: string;
-    /** Assistant output to be rendered or processed by the client. All private data is masked or removed. */
-    masked_output?: MessageOutput;
-    /** An input object that includes the input text. All private data is masked or removed. */
-    masked_input?: MessageInput;
-  }
-
-  /** Assistant output to be rendered or processed by the client. */
-  export interface MessageStreamResponseStatefulMessageStreamFinalResponseFinalResponseOutput {
-    /** Output intended for any channel. It is the responsibility of the client application to implement the
-     *  supported response types.
-     */
-    generic?: RuntimeResponseGeneric[];
-    /** An array of intents recognized in the user input, sorted in descending order of confidence. */
-    intents?: RuntimeIntent[];
-    /** An array of entities identified in the user input. */
-    entities?: RuntimeEntity[];
-    /** An array of objects describing any actions requested by the dialog node. */
-    actions?: DialogNodeAction[];
-    /** Additional detailed information about a message response and how it was generated. */
-    debug?: MessageOutputDebug;
-    /** An object containing any custom properties included in the response. This object includes any arbitrary
-     *  properties defined in the dialog JSON editor as part of the dialog node output.
-     */
-    user_defined?: JsonObject;
-    /** Properties describing any spelling corrections in the user input that was received. */
-    spelling?: MessageOutputSpelling;
-    /** Contains meta-information about the item(s) being streamed. */
-    streaming_metadata: MessageStreamMetadata;
-  }
-
-  /** MonitorAssistantReleaseImportArtifactResponse. */
+  /**
+   * MonitorAssistantReleaseImportArtifactResponse.
+   */
   export interface MonitorAssistantReleaseImportArtifactResponse {
     /** The current status of the release import process:
      *   - **Completed**: The artifact import has completed.
@@ -4220,7 +4472,10 @@ namespace AssistantV2 {
     }
   }
 
-  /** The pagination data for the returned objects. For more information about using pagination, see [Pagination](#pagination). */
+  /**
+   * The pagination data for the returned objects. For more information about using pagination, see
+   * [Pagination](#pagination).
+   */
   export interface Pagination {
     /** The URL that will return the same page of results. */
     refresh_url: string;
@@ -4238,7 +4493,9 @@ namespace AssistantV2 {
     next_cursor?: string;
   }
 
-  /** Non-private settings for oauth2 authentication. */
+  /**
+   * Non-private settings for oauth2 authentication.
+   */
   export interface ProviderAuthenticationOAuth2 {
     /** The preferred "flow" or "grant type" for the API client to fetch an access token from the authorization
      *  server.
@@ -4259,60 +4516,15 @@ namespace AssistantV2 {
     }
   }
 
-  /** A unique property name for OAuth2 authentication. The object key must be prefixed with "x-". */
-  export interface ProviderAuthenticationOAuth2CustomCustomOauth2Property {
-    /** The token URL. */
-    token_url?: string;
-    /** The refresh token URL. */
-    refresh_url?: string;
-    /** The client authorization type. */
-    client_auth_type?: ProviderAuthenticationOAuth2CustomCustomOauth2Property.Constants.ClientAuthType | string;
-    /** The content type. */
-    content_type?: string;
-    /** The prefix fo the header. */
-    header_prefix?: string;
-    /** The grant type. */
-    grant_type?: string;
-    /** The parameters for a custom oauth2 flow. */
-    params?: ProviderAuthenticationOAuth2CustomCustomOauth2PropertyParams;
-  }
-  export namespace ProviderAuthenticationOAuth2CustomCustomOauth2Property {
-    export namespace Constants {
-      /** The client authorization type. */
-      export enum ClientAuthType {
-        BODY = 'Body',
-        BASICAUTHHEADER = 'BasicAuthHeader',
-      }
-    }
-  }
-
-  /** The parameters for a custom oauth2 flow. */
-  export interface ProviderAuthenticationOAuth2CustomCustomOauth2PropertyParams {
-    /** A unique parameter name for the custom OAuth2 flow. */
-    '<$custom_oauth2_parameter>'?: ProviderAuthenticationOAuth2CustomCustomOauth2PropertyParamsCustomOauth2Parameter;
-  }
-
-  /** A unique parameter name for the custom OAuth2 flow. */
-  export interface ProviderAuthenticationOAuth2CustomCustomOauth2PropertyParamsCustomOauth2Parameter {
-    /** The type of property observed in "value". */
-    type?: ProviderAuthenticationOAuth2CustomCustomOauth2PropertyParamsCustomOauth2Parameter.Constants.Type | string;
-    /** The stored information of the value. */
-    value?: string;
-  }
-  export namespace ProviderAuthenticationOAuth2CustomCustomOauth2PropertyParamsCustomOauth2Parameter {
-    export namespace Constants {
-      /** The type of property observed in "value". */
-      export enum Type {
-        VALUE = 'value',
-      }
-    }
-  }
-
-  /** Scenarios performed by the API client to fetch an access token from the authorization server. */
+  /**
+   * Scenarios performed by the API client to fetch an access token from the authorization server.
+   */
   export interface ProviderAuthenticationOAuth2Flows {
   }
 
-  /** The username for oauth2 authentication when the preferred flow is "password". */
+  /**
+   * The username for oauth2 authentication when the preferred flow is "password".
+   */
   export interface ProviderAuthenticationOAuth2PasswordUsername {
     /** The type of property observed in "value". */
     type?: ProviderAuthenticationOAuth2PasswordUsername.Constants.Type | string;
@@ -4328,7 +4540,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** ProviderAuthenticationTypeAndValue. */
+  /**
+   * ProviderAuthenticationTypeAndValue.
+   */
   export interface ProviderAuthenticationTypeAndValue {
     /** The type of property observed in "value". */
     type?: ProviderAuthenticationTypeAndValue.Constants.Type | string;
@@ -4344,7 +4558,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** ProviderCollection. */
+  /**
+   * ProviderCollection.
+   */
   export interface ProviderCollection {
     /** An array of objects describing the conversational skill providers associated with the instance. */
     conversational_skill_providers: ProviderResponse[];
@@ -4354,76 +4570,29 @@ namespace AssistantV2 {
     pagination: Pagination;
   }
 
-  /** Private information of the provider. */
+  /**
+   * Private information of the provider.
+   */
   export interface ProviderPrivate {
     /** Private authentication information of the provider. */
-    authentication?: ProviderPrivateAuthentication;
+    authentication: ProviderPrivateAuthentication;
   }
 
-  /** Private authentication information of the provider. */
+  /**
+   * Private authentication information of the provider.
+   */
   export interface ProviderPrivateAuthentication {
   }
 
-  /** The name of the api key for api_key authentication. */
-  export interface ProviderPrivateAuthenticationAPIKeyFlowCustomApiKeyName {
-    /** The type of property observed in "value". */
-    type?: ProviderPrivateAuthenticationAPIKeyFlowCustomApiKeyName.Constants.Type | string;
-    /** The stored information of the value. */
-    value?: string;
-    /** Where the api key should be sent for out-bound requests. */
-    in?: ProviderPrivateAuthenticationAPIKeyFlowCustomApiKeyName.Constants.In | string;
-  }
-  export namespace ProviderPrivateAuthenticationAPIKeyFlowCustomApiKeyName {
-    export namespace Constants {
-      /** The type of property observed in "value". */
-      export enum Type {
-        VALUE = 'value',
-      }
-      /** Where the api key should be sent for out-bound requests. */
-      export enum In {
-        QUERY = 'query',
-        HEADER = 'header',
-      }
-    }
-  }
-
-  /** A unique property name for OAuth2 authentication. The object key must be prefixed with "x-". */
-  export interface ProviderPrivateAuthenticationOAuth2CustomCustomOauth2Property {
-    /** The access token. */
-    access_token?: string;
-    /** The refresh token. */
-    refresh_token?: string;
-    /** The custom secrets for a custom oauth2 flow. */
-    custom_secrets?: ProviderPrivateAuthenticationOAuth2CustomCustomOauth2PropertyCustomSecrets;
-  }
-
-  /** The custom secrets for a custom oauth2 flow. */
-  export interface ProviderPrivateAuthenticationOAuth2CustomCustomOauth2PropertyCustomSecrets {
-    /** A unique secret name for the custom OAuth2 flow. */
-    '<$custom_oauth2_secret>'?: ProviderPrivateAuthenticationOAuth2CustomCustomOauth2PropertyCustomSecretsCustomOauth2Secret;
-  }
-
-  /** A unique secret name for the custom OAuth2 flow. */
-  export interface ProviderPrivateAuthenticationOAuth2CustomCustomOauth2PropertyCustomSecretsCustomOauth2Secret {
-    /** The type of property observed in "value". */
-    type?: ProviderPrivateAuthenticationOAuth2CustomCustomOauth2PropertyCustomSecretsCustomOauth2Secret.Constants.Type | string;
-    /** The stored information of the value. */
-    value?: string;
-  }
-  export namespace ProviderPrivateAuthenticationOAuth2CustomCustomOauth2PropertyCustomSecretsCustomOauth2Secret {
-    export namespace Constants {
-      /** The type of property observed in "value". */
-      export enum Type {
-        VALUE = 'value',
-      }
-    }
-  }
-
-  /** Scenarios performed by the API client to fetch an access token from the authorization server. */
+  /**
+   * Scenarios performed by the API client to fetch an access token from the authorization server.
+   */
   export interface ProviderPrivateAuthenticationOAuth2FlowFlows {
   }
 
-  /** The password for oauth2 authentication when the preferred flow is "password". */
+  /**
+   * The password for oauth2 authentication when the preferred flow is "password".
+   */
   export interface ProviderPrivateAuthenticationOAuth2PasswordPassword {
     /** The type of property observed in "value". */
     type?: ProviderPrivateAuthenticationOAuth2PasswordPassword.Constants.Type | string;
@@ -4439,7 +4608,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** ProviderResponse. */
+  /**
+   * ProviderResponse.
+   */
   export interface ProviderResponse {
     /** The unique identifier of the provider. */
     provider_id?: string;
@@ -4447,7 +4618,9 @@ namespace AssistantV2 {
     specification?: ProviderResponseSpecification;
   }
 
-  /** The specification of the provider. */
+  /**
+   * The specification of the provider.
+   */
   export interface ProviderResponseSpecification {
     /** An array of objects defining all endpoints of the provider.
      *
@@ -4458,13 +4631,17 @@ namespace AssistantV2 {
     components?: ProviderResponseSpecificationComponents;
   }
 
-  /** An object defining various reusable definitions of the provider. */
+  /**
+   * An object defining various reusable definitions of the provider.
+   */
   export interface ProviderResponseSpecificationComponents {
     /** The definition of the security scheme for the provider. */
     securitySchemes?: ProviderResponseSpecificationComponentsSecuritySchemes;
   }
 
-  /** The definition of the security scheme for the provider. */
+  /**
+   * The definition of the security scheme for the provider.
+   */
   export interface ProviderResponseSpecificationComponentsSecuritySchemes {
     /** The authentication method required for requests made from watsonx Assistant to the conversational skill
      *  provider.
@@ -4488,36 +4665,46 @@ namespace AssistantV2 {
     }
   }
 
-  /** Non-private settings for basic access authentication. */
+  /**
+   * Non-private settings for basic access authentication.
+   */
   export interface ProviderResponseSpecificationComponentsSecuritySchemesBasic {
     /** The username for basic access authentication. */
     username?: ProviderAuthenticationTypeAndValue;
   }
 
-  /** ProviderResponseSpecificationServersItem. */
+  /**
+   * ProviderResponseSpecificationServersItem.
+   */
   export interface ProviderResponseSpecificationServersItem {
     /** The URL of the conversational skill provider. */
     url?: string;
   }
 
-  /** The specification of the provider. */
+  /**
+   * The specification of the provider.
+   */
   export interface ProviderSpecification {
     /** An array of objects defining all endpoints of the provider.
      *
      *   **Note:** Multiple array items are reserved for future use.
      */
-    servers?: ProviderSpecificationServersItem[];
+    servers: ProviderSpecificationServersItem[];
     /** An object defining various reusable definitions of the provider. */
     components?: ProviderSpecificationComponents;
   }
 
-  /** An object defining various reusable definitions of the provider. */
+  /**
+   * An object defining various reusable definitions of the provider.
+   */
   export interface ProviderSpecificationComponents {
     /** The definition of the security scheme for the provider. */
     securitySchemes?: ProviderSpecificationComponentsSecuritySchemes;
   }
 
-  /** The definition of the security scheme for the provider. */
+  /**
+   * The definition of the security scheme for the provider.
+   */
   export interface ProviderSpecificationComponentsSecuritySchemes {
     /** The authentication method required for requests made from watsonx Assistant to the conversational skill
      *  provider.
@@ -4541,19 +4728,25 @@ namespace AssistantV2 {
     }
   }
 
-  /** Non-private settings for basic access authentication. */
+  /**
+   * Non-private settings for basic access authentication.
+   */
   export interface ProviderSpecificationComponentsSecuritySchemesBasic {
     /** The username for basic access authentication. */
     username?: ProviderAuthenticationTypeAndValue;
   }
 
-  /** ProviderSpecificationServersItem. */
+  /**
+   * ProviderSpecificationServersItem.
+   */
   export interface ProviderSpecificationServersItem {
     /** The URL of the conversational skill provider. */
     url?: string;
   }
 
-  /** Release. */
+  /**
+   * Release.
+   */
   export interface Release {
     /** The name of the release. The name is the version number (an integer), returned as a string. */
     release?: string;
@@ -4587,7 +4780,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** ReleaseCollection. */
+  /**
+   * ReleaseCollection.
+   */
   export interface ReleaseCollection {
     /** An array of objects describing the releases associated with an assistant. */
     releases: Release[];
@@ -4597,13 +4792,17 @@ namespace AssistantV2 {
     pagination: Pagination;
   }
 
-  /** An object identifying the versionable content objects (such as skill snapshots) that are included in the release. */
+  /**
+   * An object identifying the versionable content objects (such as skill snapshots) that are included in the release.
+   */
   export interface ReleaseContent {
     /** The skill snapshots that are included in the release. */
     skills?: ReleaseSkill[];
   }
 
-  /** ReleaseSkill. */
+  /**
+   * ReleaseSkill.
+   */
   export interface ReleaseSkill {
     /** The skill ID of the skill. */
     skill_id: string;
@@ -4623,7 +4822,10 @@ namespace AssistantV2 {
     }
   }
 
-  /** An optional object containing analytics data. Currently, this data is used only for events sent to the Segment extension. */
+  /**
+   * An optional object containing analytics data. Currently, this data is used only for events sent to the Segment
+   * extension.
+   */
   export interface RequestAnalytics {
     /** The browser that was used to send the message that triggered the event. */
     browser?: string;
@@ -4633,13 +4835,17 @@ namespace AssistantV2 {
     pageUrl?: string;
   }
 
-  /** ResponseGenericChannel. */
+  /**
+   * ResponseGenericChannel.
+   */
   export interface ResponseGenericChannel {
     /** A channel for which the response is intended. */
     channel?: string;
   }
 
-  /** The entity value that was recognized in the user input. */
+  /**
+   * The entity value that was recognized in the user input.
+   */
   export interface RuntimeEntity {
     /** An entity detected in the input. */
     entity: string;
@@ -4680,7 +4886,9 @@ namespace AssistantV2 {
     skill?: string;
   }
 
-  /** An alternative value for the recognized entity. */
+  /**
+   * An alternative value for the recognized entity.
+   */
   export interface RuntimeEntityAlternative {
     /** The entity value that was recognized in the user input. */
     value?: string;
@@ -4688,7 +4896,9 @@ namespace AssistantV2 {
     confidence?: number;
   }
 
-  /** RuntimeEntityInterpretation. */
+  /**
+   * RuntimeEntityInterpretation.
+   */
   export interface RuntimeEntityInterpretation {
     /** The calendar used to represent a recognized date (for example, `Gregorian`). */
     calendar_type?: string;
@@ -4794,7 +5004,10 @@ namespace AssistantV2 {
     }
   }
 
-  /** An object describing the role played by a system entity that is specifies the beginning or end of a range recognized in the user input. This property is included only if the new system entities are enabled for the skill. */
+  /**
+   * An object describing the role played by a system entity that is specifies the beginning or end of a range
+   * recognized in the user input. This property is included only if the new system entities are enabled for the skill.
+   */
   export interface RuntimeEntityRole {
     /** The relationship of the entity to the range. */
     type?: RuntimeEntityRole.Constants.Type | string;
@@ -4813,7 +5026,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** An intent identified in the user input. */
+  /**
+   * An intent identified in the user input.
+   */
   export interface RuntimeIntent {
     /** The name of the recognized intent. */
     intent: string;
@@ -4829,11 +5044,15 @@ namespace AssistantV2 {
     skill?: string;
   }
 
-  /** RuntimeResponseGeneric. */
+  /**
+   * RuntimeResponseGeneric.
+   */
   export interface RuntimeResponseGeneric {
   }
 
-  /** SearchResult. */
+  /**
+   * SearchResult.
+   */
   export interface SearchResult {
     /** The unique identifier of the document in the Discovery service collection.
      *
@@ -4867,7 +5086,9 @@ namespace AssistantV2 {
     answers?: SearchResultAnswer[];
   }
 
-  /** An object specifing a segment of text that was identified as a direct answer to the search query. */
+  /**
+   * An object specifing a segment of text that was identified as a direct answer to the search query.
+   */
   export interface SearchResultAnswer {
     /** The text of the answer. */
     text: string;
@@ -4875,7 +5096,14 @@ namespace AssistantV2 {
     confidence: number;
   }
 
-  /** An object containing segments of text from search results with query-matching text highlighted using HTML `<em>` tags. */
+  /**
+   * An object containing segments of text from search results with query-matching text highlighted using HTML `<em>`
+   * tags.
+   *
+   * This type supports additional properties of type string[]. An array of strings containing segments taken from a
+   * field in the search results that is not mapped to the `body`, `title`, or `url` property, with query-matching
+   * substrings highlighted. The property name is the name of the field in the Discovery collection.
+   */
   export interface SearchResultHighlight {
     /** An array of strings containing segments taken from body text in the search results, with query-matching
      *  substrings highlighted.
@@ -4889,11 +5117,18 @@ namespace AssistantV2 {
      *  substrings highlighted.
      */
     url?: string[];
-    /** SearchResultHighlight accepts additional properties. */
+
+    /**
+     * SearchResultHighlight accepts additional properties of type string[]. An array of strings containing segments
+     * taken from a field in the search results that is not mapped to the `body`, `title`, or `url` property, with
+     * query-matching substrings highlighted. The property name is the name of the field in the Discovery collection.
+     */
     [propName: string]: any;
   }
 
-  /** An object containing search result metadata from the Discovery service. */
+  /**
+   * An object containing search result metadata from the Discovery service.
+   */
   export interface SearchResultMetadata {
     /** The confidence score for the given result, as returned by the Discovery service. */
     confidence?: number;
@@ -4903,7 +5138,12 @@ namespace AssistantV2 {
     score?: number;
   }
 
-  /** An object describing the search skill configuration. **Note:** Search settings are not supported in **Import skills** requests, and are not included in **Export skills** responses. */
+  /**
+   * An object describing the search skill configuration.
+   *
+   * **Note:** Search settings are not supported in **Import skills** requests, and are not included in **Export
+   * skills** responses.
+   */
   export interface SearchSettings {
     /** Configuration settings for the Watson Discovery service instance used by the search integration. */
     discovery: SearchSettingsDiscovery;
@@ -4927,7 +5167,10 @@ namespace AssistantV2 {
     client_side_search?: SearchSettingsClientSideSearch;
   }
 
-  /** Configuration settings for the client-side search service or server-side search service used by the search integration. */
+  /**
+   * Configuration settings for the client-side search service or server-side search service used by the search
+   * integration.
+   */
   export interface SearchSettingsClientSideSearch {
     /** The filter string that is applied to the search results. */
     filter?: string;
@@ -4935,7 +5178,9 @@ namespace AssistantV2 {
     metadata?: JsonObject;
   }
 
-  /** Configuration settings for conversational search. */
+  /**
+   * Configuration settings for conversational search.
+   */
   export interface SearchSettingsConversationalSearch {
     /** Whether to enable conversational search. */
     enabled: boolean;
@@ -4943,7 +5188,9 @@ namespace AssistantV2 {
     search_confidence?: SearchSettingsConversationalSearchSearchConfidence;
   }
 
-  /** SearchSettingsConversationalSearchResponseLength. */
+  /**
+   * SearchSettingsConversationalSearchResponseLength.
+   */
   export interface SearchSettingsConversationalSearchResponseLength {
     /** The response length option. It controls the length of the generated response. */
     option?: SearchSettingsConversationalSearchResponseLength.Constants.Option | string;
@@ -4959,7 +5206,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** SearchSettingsConversationalSearchSearchConfidence. */
+  /**
+   * SearchSettingsConversationalSearchSearchConfidence.
+   */
   export interface SearchSettingsConversationalSearchSearchConfidence {
     /** The search confidence threshold.
      *   It controls the tendency for conversational search to produce “I don't know” answers.
@@ -4978,7 +5227,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** Configuration settings for the Watson Discovery service instance used by the search integration. */
+  /**
+   * Configuration settings for the Watson Discovery service instance used by the search integration.
+   */
   export interface SearchSettingsDiscovery {
     /** The ID for the Watson Discovery service instance. */
     instance_id: string;
@@ -5012,7 +5263,12 @@ namespace AssistantV2 {
     authentication: SearchSettingsDiscoveryAuthentication;
   }
 
-  /** Authentication information for the Watson Discovery service. For more information, see the [Watson Discovery documentation](https://cloud.ibm.com/apidocs/discovery-data#authentication). **Note:** You must specify either **basic** or **bearer**, but not both. */
+  /**
+   * Authentication information for the Watson Discovery service. For more information, see the [Watson Discovery
+   * documentation](https://cloud.ibm.com/apidocs/discovery-data#authentication).
+   *
+   *  **Note:** You must specify either **basic** or **bearer**, but not both.
+   */
   export interface SearchSettingsDiscoveryAuthentication {
     /** The HTTP basic authentication credentials for Watson Discovery. Specify your Watson Discovery API key in the
      *  format `apikey:{apikey}`.
@@ -5022,7 +5278,10 @@ namespace AssistantV2 {
     bearer?: string;
   }
 
-  /** Configuration settings for the Elasticsearch service used by the search integration. You can provide either basic auth or apiKey auth. */
+  /**
+   * Configuration settings for the Elasticsearch service used by the search integration. You can provide either basic
+   * auth or apiKey auth.
+   */
   export interface SearchSettingsElasticSearch {
     /** The URL for the Elasticsearch service. */
     url: string;
@@ -5056,7 +5315,9 @@ namespace AssistantV2 {
     apikey?: string;
   }
 
-  /** The messages included with responses from the search integration. */
+  /**
+   * The messages included with responses from the search integration.
+   */
   export interface SearchSettingsMessages {
     /** The message to include in the response to a successful query. */
     success: string;
@@ -5066,7 +5327,9 @@ namespace AssistantV2 {
     no_result: string;
   }
 
-  /** The mapping between fields in the Watson Discovery collection and properties in the search response. */
+  /**
+   * The mapping between fields in the Watson Discovery collection and properties in the search response.
+   */
   export interface SearchSettingsSchemaMapping {
     /** The field in the collection to map to the **url** property of the response. */
     url: string;
@@ -5076,7 +5339,10 @@ namespace AssistantV2 {
     title: string;
   }
 
-  /** Configuration settings for the server-side search service used by the search integration. You can provide either basic auth, apiKey auth or none. */
+  /**
+   * Configuration settings for the server-side search service used by the search integration. You can provide either
+   * basic auth, apiKey auth or none.
+   */
   export interface SearchSettingsServerSideSearch {
     /** The URL of the server-side search service. */
     url: string;
@@ -5108,7 +5374,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** A warning describing an error in the search skill configuration. */
+  /**
+   * A warning describing an error in the search skill configuration.
+   */
   export interface SearchSkillWarning {
     /** The error code. */
     code?: string;
@@ -5118,13 +5386,17 @@ namespace AssistantV2 {
     message?: string;
   }
 
-  /** SessionResponse. */
+  /**
+   * SessionResponse.
+   */
   export interface SessionResponse {
     /** The session ID. */
     session_id: string;
   }
 
-  /** Skill. */
+  /**
+   * Skill.
+   */
   export interface Skill {
     /** The name of the skill. This string cannot contain carriage return, newline, or tab characters. */
     name?: string;
@@ -5200,7 +5472,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** SkillImport. */
+  /**
+   * SkillImport.
+   */
   export interface SkillImport {
     /** The name of the skill. This string cannot contain carriage return, newline, or tab characters. */
     name?: string;
@@ -5275,7 +5549,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** SkillsAsyncRequestStatus. */
+  /**
+   * SkillsAsyncRequestStatus.
+   */
   export interface SkillsAsyncRequestStatus {
     /** The assistant ID of the assistant. */
     assistant_id?: string;
@@ -5306,7 +5582,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** SkillsExport. */
+  /**
+   * SkillsExport.
+   */
   export interface SkillsExport {
     /** An array of objects describing the skills for the assistant. Included in responses only if
      *  **status**=`Available`.
@@ -5316,7 +5594,9 @@ namespace AssistantV2 {
     assistant_state: AssistantState;
   }
 
-  /** A response from the watsonx Assistant service. */
+  /**
+   * A response from the watsonx Assistant service.
+   */
   export interface StatefulMessageResponse {
     /** Assistant output to be rendered or processed by the client. */
     output: MessageOutput;
@@ -5342,7 +5622,9 @@ namespace AssistantV2 {
     masked_input?: MessageInput;
   }
 
-  /** StatelessMessageContext. */
+  /**
+   * StatelessMessageContext.
+   */
   export interface StatelessMessageContext {
     /** Session context data that is shared by all skills used by the assistant. */
     global?: StatelessMessageContextGlobal;
@@ -5354,7 +5636,9 @@ namespace AssistantV2 {
     integrations?: JsonObject;
   }
 
-  /** Session context data that is shared by all skills used by the assistant. */
+  /**
+   * Session context data that is shared by all skills used by the assistant.
+   */
   export interface StatelessMessageContextGlobal {
     /** Built-in system properties that apply to all skills used by the assistant. */
     system?: MessageContextGlobalSystem;
@@ -5362,7 +5646,9 @@ namespace AssistantV2 {
     session_id?: string;
   }
 
-  /** Context data specific to particular skills used by the assistant. */
+  /**
+   * Context data specific to particular skills used by the assistant.
+   */
   export interface StatelessMessageContextSkills {
     /** Context variables that are used by the dialog skill. */
     'main skill'?: MessageContextDialogSkill;
@@ -5370,7 +5656,9 @@ namespace AssistantV2 {
     'actions skill'?: StatelessMessageContextSkillsActionsSkill;
   }
 
-  /** Context variables that are used by the action skill. */
+  /**
+   * Context variables that are used by the action skill.
+   */
   export interface StatelessMessageContextSkillsActionsSkill {
     /** An object containing any arbitrary variables that can be read and written by a particular skill. */
     user_defined?: JsonObject;
@@ -5395,7 +5683,9 @@ namespace AssistantV2 {
     private_skill_variables?: JsonObject;
   }
 
-  /** An input object that includes the input text. */
+  /**
+   * An input object that includes the input text.
+   */
   export interface StatelessMessageInput {
     /** The type of the message:
      *
@@ -5440,7 +5730,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** Optional properties that control how the assistant responds. */
+  /**
+   * Optional properties that control how the assistant responds.
+   */
   export interface StatelessMessageInputOptions {
     /** Whether to restart dialog processing at the root of the dialog, regardless of any previously visited nodes.
      *  **Note:** This does not affect `turn_count` or any other context variables.
@@ -5465,7 +5757,9 @@ namespace AssistantV2 {
     debug?: boolean;
   }
 
-  /** A stateless response from the watsonx Assistant service. */
+  /**
+   * A stateless response from the watsonx Assistant service.
+   */
   export interface StatelessMessageResponse {
     /** Assistant output to be rendered or processed by the client. */
     output: MessageOutput;
@@ -5488,62 +5782,17 @@ namespace AssistantV2 {
     user_id?: string;
   }
 
-  /** Message final response content. */
-  export interface StatelessMessageStreamFinalResponseFinalResponse {
-    /** Assistant output to be rendered or processed by the client. */
-    output?: StatelessMessageStreamFinalResponseFinalResponseOutput;
-    /** Context data for the conversation. You can use this property to access context variables. The context is
-     *  stored by the assistant on a per-session basis.
-     *
-     *  **Note:** The context is included in message responses only if **return_context**=`true` in the message request.
-     *  Full context is always included in logs.
-     */
-    context?: StatelessMessageContext;
-    /** A string value that identifies the user who is interacting with the assistant. The client must provide a
-     *  unique identifier for each individual end user who accesses the application. For user-based plans, this user ID
-     *  is used to identify unique users for billing purposes. This string cannot contain carriage return, newline, or
-     *  tab characters. If no value is specified in the input, **user_id** is automatically set to the value of
-     *  **context.global.session_id**.
-     *
-     *  **Note:** This property is the same as the **user_id** property in the global system context.
-     */
-    user_id?: string;
-  }
-
-  /** Assistant output to be rendered or processed by the client. */
-  export interface StatelessMessageStreamFinalResponseFinalResponseOutput {
-    /** Output intended for any channel. It is the responsibility of the client application to implement the
-     *  supported response types.
-     */
-    generic?: RuntimeResponseGeneric[];
-    /** An array of intents recognized in the user input, sorted in descending order of confidence. */
-    intents?: RuntimeIntent[];
-    /** An array of entities identified in the user input. */
-    entities?: RuntimeEntity[];
-    /** An array of objects describing any actions requested by the dialog node. */
-    actions?: DialogNodeAction[];
-    /** Additional detailed information about a message response and how it was generated. */
-    debug?: MessageOutputDebug;
-    /** An object containing any custom properties included in the response. This object includes any arbitrary
-     *  properties defined in the dialog JSON editor as part of the dialog node output.
-     */
-    user_defined?: JsonObject;
-    /** Properties describing any spelling corrections in the user input that was received. */
-    spelling?: MessageOutputSpelling;
-    streaming_metadata: StatelessMessageContext;
-  }
-
-  /** A stateless streamed response form the watsonx Assistant service. */
-  export interface StatelessMessageStreamResponse {
-  }
-
-  /** An object describing an error that occurred during processing of an asynchronous operation. */
+  /**
+   * An object describing an error that occurred during processing of an asynchronous operation.
+   */
   export interface StatusError {
     /** The text of the error message. */
     message?: string;
   }
 
-  /** TurnEventActionSource. */
+  /**
+   * TurnEventActionSource.
+   */
   export interface TurnEventActionSource {
     /** The type of turn event. */
     type?: TurnEventActionSource.Constants.Type | string;
@@ -5563,7 +5812,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** TurnEventCalloutCallout. */
+  /**
+   * TurnEventCalloutCallout.
+   */
   export interface TurnEventCalloutCallout {
     /** The type of callout. Currently, the only supported value is `integration_interaction` (for calls to
      *  extensions).
@@ -5587,7 +5838,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** TurnEventCalloutCalloutRequest. */
+  /**
+   * TurnEventCalloutCalloutRequest.
+   */
   export interface TurnEventCalloutCalloutRequest {
     /** The REST method of the request. */
     method?: TurnEventCalloutCalloutRequest.Constants.Method | string;
@@ -5617,7 +5870,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** TurnEventCalloutCalloutResponse. */
+  /**
+   * TurnEventCalloutCalloutResponse.
+   */
   export interface TurnEventCalloutCalloutResponse {
     /** The final response string. This response is a composition of every partial chunk received from the stream. */
     body?: string;
@@ -5627,13 +5882,17 @@ namespace AssistantV2 {
     last_event?: JsonObject;
   }
 
-  /** TurnEventCalloutError. */
+  /**
+   * TurnEventCalloutError.
+   */
   export interface TurnEventCalloutError {
     /** Any error message returned by a failed call to an external service. */
     message?: string;
   }
 
-  /** TurnEventNodeSource. */
+  /**
+   * TurnEventNodeSource.
+   */
   export interface TurnEventNodeSource {
     /** The type of turn event. */
     type?: TurnEventNodeSource.Constants.Type | string;
@@ -5653,13 +5912,43 @@ namespace AssistantV2 {
     }
   }
 
-  /** TurnEventSearchError. */
+  /**
+   * TurnEventSearchError.
+   */
   export interface TurnEventSearchError {
     /** Any error message returned by a failed call to a search skill. */
     message?: string;
   }
 
-  /** An object that identifies the dialog element that generated the error message. */
+  /**
+   * The search skill orchestration settings for the environment.
+   */
+  export interface UpdateEnvironmentOrchestration {
+    /** Whether to fall back to a search skill when responding to messages that do not match any intent or action
+     *  defined in dialog or action skills. (If no search skill is configured for the environment, this property is
+     *  ignored.).
+     */
+    search_skill_fallback?: boolean;
+  }
+
+  /**
+   * An object describing the release that is currently deployed in the environment.
+   */
+  export interface UpdateEnvironmentReleaseReference {
+    /** The name of the deployed release. */
+    release?: string;
+  }
+
+  /**
+   * CompleteItem.
+   */
+  export interface CompleteItem extends RuntimeResponseGeneric {
+    streaming_metadata: Metadata;
+  }
+
+  /**
+   * An object that identifies the dialog element that generated the error message.
+   */
   export interface LogMessageSourceAction extends LogMessageSource {
     /** A string that indicates the type of dialog element that generated the error message. */
     type: string;
@@ -5667,7 +5956,9 @@ namespace AssistantV2 {
     action: string;
   }
 
-  /** An object that identifies the dialog element that generated the error message. */
+  /**
+   * An object that identifies the dialog element that generated the error message.
+   */
   export interface LogMessageSourceDialogNode extends LogMessageSource {
     /** A string that indicates the type of dialog element that generated the error message. */
     type: string;
@@ -5675,7 +5966,9 @@ namespace AssistantV2 {
     dialog_node: string;
   }
 
-  /** An object that identifies the dialog element that generated the error message. */
+  /**
+   * An object that identifies the dialog element that generated the error message.
+   */
   export interface LogMessageSourceHandler extends LogMessageSource {
     /** A string that indicates the type of dialog element that generated the error message. */
     type: string;
@@ -5687,7 +5980,9 @@ namespace AssistantV2 {
     handler: string;
   }
 
-  /** An object that identifies the dialog element that generated the error message. */
+  /**
+   * An object that identifies the dialog element that generated the error message.
+   */
   export interface LogMessageSourceStep extends LogMessageSource {
     /** A string that indicates the type of dialog element that generated the error message. */
     type: string;
@@ -5697,7 +5992,9 @@ namespace AssistantV2 {
     step: string;
   }
 
-  /** MessageOutputDebugTurnEventTurnEventActionFinished. */
+  /**
+   * MessageOutputDebugTurnEventTurnEventActionFinished.
+   */
   export interface MessageOutputDebugTurnEventTurnEventActionFinished extends MessageOutputDebugTurnEvent {
     /** The type of turn event. */
     event?: string;
@@ -5731,7 +6028,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** MessageOutputDebugTurnEventTurnEventActionVisited. */
+  /**
+   * MessageOutputDebugTurnEventTurnEventActionVisited.
+   */
   export interface MessageOutputDebugTurnEventTurnEventActionVisited extends MessageOutputDebugTurnEvent {
     /** The type of turn event. */
     event?: string;
@@ -5770,7 +6069,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** MessageOutputDebugTurnEventTurnEventCallout. */
+  /**
+   * MessageOutputDebugTurnEventTurnEventCallout.
+   */
   export interface MessageOutputDebugTurnEventTurnEventCallout extends MessageOutputDebugTurnEvent {
     /** The type of turn event. */
     event?: string;
@@ -5779,7 +6080,9 @@ namespace AssistantV2 {
     error?: TurnEventCalloutError;
   }
 
-  /** MessageOutputDebugTurnEventTurnEventHandlerVisited. */
+  /**
+   * MessageOutputDebugTurnEventTurnEventHandlerVisited.
+   */
   export interface MessageOutputDebugTurnEventTurnEventHandlerVisited extends MessageOutputDebugTurnEvent {
     /** The type of turn event. */
     event?: string;
@@ -5788,7 +6091,9 @@ namespace AssistantV2 {
     action_start_time?: string;
   }
 
-  /** MessageOutputDebugTurnEventTurnEventNodeVisited. */
+  /**
+   * MessageOutputDebugTurnEventTurnEventNodeVisited.
+   */
   export interface MessageOutputDebugTurnEventTurnEventNodeVisited extends MessageOutputDebugTurnEvent {
     /** The type of turn event. */
     event?: string;
@@ -5810,7 +6115,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** MessageOutputDebugTurnEventTurnEventSearch. */
+  /**
+   * MessageOutputDebugTurnEventTurnEventSearch.
+   */
   export interface MessageOutputDebugTurnEventTurnEventSearch extends MessageOutputDebugTurnEvent {
     /** The type of turn event. */
     event?: string;
@@ -5818,7 +6125,9 @@ namespace AssistantV2 {
     error?: TurnEventSearchError;
   }
 
-  /** MessageOutputDebugTurnEventTurnEventStepAnswered. */
+  /**
+   * MessageOutputDebugTurnEventTurnEventStepAnswered.
+   */
   export interface MessageOutputDebugTurnEventTurnEventStepAnswered extends MessageOutputDebugTurnEvent {
     /** The type of turn event. */
     event?: string;
@@ -5843,7 +6152,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** MessageOutputDebugTurnEventTurnEventStepVisited. */
+  /**
+   * MessageOutputDebugTurnEventTurnEventStepVisited.
+   */
   export interface MessageOutputDebugTurnEventTurnEventStepVisited extends MessageOutputDebugTurnEvent {
     /** The type of turn event. */
     event?: string;
@@ -5866,28 +6177,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** MessageStreamCompleteItemCompleteItem. */
-  export interface MessageStreamCompleteItemCompleteItem extends RuntimeResponseGeneric {
-  }
-
-  /** A completed response item. A complete item is a composition of every streamed partial item with the same streaming_metadata.id, and each complete item contains its own unique streaming_metadata.id. */
-  export interface MessageStreamResponseMessageStreamCompleteItem extends MessageStreamResponse {
-    complete_item?: MessageStreamCompleteItemCompleteItem;
-  }
-
-  /** A chunk of the streamed message response. */
-  export interface MessageStreamResponseMessageStreamPartialItem extends MessageStreamResponse {
-    /** Message response partial item content. */
-    partial_item?: MessageStreamResponseMessageStreamPartialItemPartialItem;
-  }
-
-  /** The final and stateful message response. */
-  export interface MessageStreamResponseStatefulMessageStreamFinalResponse extends MessageStreamResponse {
-    /** Message final response content. */
-    final_response?: MessageStreamResponseStatefulMessageStreamFinalResponseFinalResponse;
-  }
-
-  /** Non-private authentication settings for authorization-code flow. */
+  /**
+   * Non-private authentication settings for authorization-code flow.
+   */
   export interface ProviderAuthenticationOAuth2FlowsProviderAuthenticationOAuth2AuthorizationCode extends ProviderAuthenticationOAuth2Flows {
     /** The token URL. */
     token_url?: string;
@@ -5914,7 +6206,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** ProviderAuthenticationOAuth2FlowsProviderAuthenticationOAuth2ClientCredentials. */
+  /**
+   * ProviderAuthenticationOAuth2FlowsProviderAuthenticationOAuth2ClientCredentials.
+   */
   export interface ProviderAuthenticationOAuth2FlowsProviderAuthenticationOAuth2ClientCredentials extends ProviderAuthenticationOAuth2Flows {
     /** The token URL. */
     token_url?: string;
@@ -5937,13 +6231,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** ProviderAuthenticationOAuth2FlowsProviderAuthenticationOAuth2Custom. */
-  export interface ProviderAuthenticationOAuth2FlowsProviderAuthenticationOAuth2Custom extends ProviderAuthenticationOAuth2Flows {
-    /** A unique property name for OAuth2 authentication. The object key must be prefixed with "x-". */
-    '<$custom_oauth2_property>'?: ProviderAuthenticationOAuth2CustomCustomOauth2Property;
-  }
-
-  /** Non-private authentication settings for resource owner password flow. */
+  /**
+   * Non-private authentication settings for resource owner password flow.
+   */
   export interface ProviderAuthenticationOAuth2FlowsProviderAuthenticationOAuth2Password extends ProviderAuthenticationOAuth2Flows {
     /** The token URL. */
     token_url?: string;
@@ -5968,31 +6258,33 @@ namespace AssistantV2 {
     }
   }
 
-  /** The private data for api_key authentication. */
-  export interface ProviderPrivateAuthenticationAPIKeyFlow extends ProviderPrivateAuthentication {
-    /** The name of the api key for api_key authentication. */
-    '<$custom_api_key_name>'?: ProviderPrivateAuthenticationAPIKeyFlowCustomApiKeyName;
-  }
-
-  /** The private data for basic authentication. */
+  /**
+   * The private data for basic authentication.
+   */
   export interface ProviderPrivateAuthenticationBasicFlow extends ProviderPrivateAuthentication {
     /** The password for bearer authentication. */
     password?: ProviderAuthenticationTypeAndValue;
   }
 
-  /** The private data for bearer authentication. */
+  /**
+   * The private data for bearer authentication.
+   */
   export interface ProviderPrivateAuthenticationBearerFlow extends ProviderPrivateAuthentication {
     /** The token for bearer authentication. */
     token?: ProviderAuthenticationTypeAndValue;
   }
 
-  /** The private data for oauth2 authentication. */
+  /**
+   * The private data for oauth2 authentication.
+   */
   export interface ProviderPrivateAuthenticationOAuth2Flow extends ProviderPrivateAuthentication {
     /** Scenarios performed by the API client to fetch an access token from the authorization server. */
     flows?: ProviderPrivateAuthenticationOAuth2FlowFlows;
   }
 
-  /** Private authentication settings for client credentials flow. */
+  /**
+   * Private authentication settings for client credentials flow.
+   */
   export interface ProviderPrivateAuthenticationOAuth2FlowFlowsProviderPrivateAuthenticationOAuth2AuthorizationCode extends ProviderPrivateAuthenticationOAuth2FlowFlows {
     /** The client ID. */
     client_id?: string;
@@ -6006,7 +6298,9 @@ namespace AssistantV2 {
     authorization_code?: string;
   }
 
-  /** ProviderPrivateAuthenticationOAuth2FlowFlowsProviderPrivateAuthenticationOAuth2ClientCredentials. */
+  /**
+   * ProviderPrivateAuthenticationOAuth2FlowFlowsProviderPrivateAuthenticationOAuth2ClientCredentials.
+   */
   export interface ProviderPrivateAuthenticationOAuth2FlowFlowsProviderPrivateAuthenticationOAuth2ClientCredentials extends ProviderPrivateAuthenticationOAuth2FlowFlows {
     /** The client ID. */
     client_id?: string;
@@ -6018,13 +6312,9 @@ namespace AssistantV2 {
     refresh_token?: string;
   }
 
-  /** ProviderPrivateAuthenticationOAuth2FlowFlowsProviderPrivateAuthenticationOAuth2Custom. */
-  export interface ProviderPrivateAuthenticationOAuth2FlowFlowsProviderPrivateAuthenticationOAuth2Custom extends ProviderPrivateAuthenticationOAuth2FlowFlows {
-    /** A unique property name for OAuth2 authentication. The object key must be prefixed with "x-". */
-    '<$custom_oauth2_property>'?: ProviderPrivateAuthenticationOAuth2CustomCustomOauth2Property;
-  }
-
-  /** Private authentication settings for resource owner password flow. */
+  /**
+   * Private authentication settings for resource owner password flow.
+   */
   export interface ProviderPrivateAuthenticationOAuth2FlowFlowsProviderPrivateAuthenticationOAuth2Password extends ProviderPrivateAuthenticationOAuth2FlowFlows {
     /** The client ID. */
     client_id?: string;
@@ -6038,7 +6328,9 @@ namespace AssistantV2 {
     password?: ProviderPrivateAuthenticationOAuth2PasswordPassword;
   }
 
-  /** RuntimeResponseGenericRuntimeResponseTypeAudio. */
+  /**
+   * RuntimeResponseGenericRuntimeResponseTypeAudio.
+   */
   export interface RuntimeResponseGenericRuntimeResponseTypeAudio extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6062,7 +6354,9 @@ namespace AssistantV2 {
     alt_text?: string;
   }
 
-  /** RuntimeResponseGenericRuntimeResponseTypeChannelTransfer. */
+  /**
+   * RuntimeResponseGenericRuntimeResponseTypeChannelTransfer.
+   */
   export interface RuntimeResponseGenericRuntimeResponseTypeChannelTransfer extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6080,7 +6374,9 @@ namespace AssistantV2 {
     channels?: ResponseGenericChannel[];
   }
 
-  /** RuntimeResponseGenericRuntimeResponseTypeConnectToAgent. */
+  /**
+   * RuntimeResponseGenericRuntimeResponseTypeConnectToAgent.
+   */
   export interface RuntimeResponseGenericRuntimeResponseTypeConnectToAgent extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6108,7 +6404,9 @@ namespace AssistantV2 {
     channels?: ResponseGenericChannel[];
   }
 
-  /** RuntimeResponseGenericRuntimeResponseTypeDate. */
+  /**
+   * RuntimeResponseGenericRuntimeResponseTypeDate.
+   */
   export interface RuntimeResponseGenericRuntimeResponseTypeDate extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6116,7 +6414,9 @@ namespace AssistantV2 {
     response_type: string;
   }
 
-  /** RuntimeResponseGenericRuntimeResponseTypeIframe. */
+  /**
+   * RuntimeResponseGenericRuntimeResponseTypeIframe.
+   */
   export interface RuntimeResponseGenericRuntimeResponseTypeIframe extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6136,7 +6436,9 @@ namespace AssistantV2 {
     channels?: ResponseGenericChannel[];
   }
 
-  /** RuntimeResponseGenericRuntimeResponseTypeImage. */
+  /**
+   * RuntimeResponseGenericRuntimeResponseTypeImage.
+   */
   export interface RuntimeResponseGenericRuntimeResponseTypeImage extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6156,7 +6458,9 @@ namespace AssistantV2 {
     alt_text?: string;
   }
 
-  /** RuntimeResponseGenericRuntimeResponseTypeOption. */
+  /**
+   * RuntimeResponseGenericRuntimeResponseTypeOption.
+   */
   export interface RuntimeResponseGenericRuntimeResponseTypeOption extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6185,7 +6489,9 @@ namespace AssistantV2 {
     }
   }
 
-  /** RuntimeResponseGenericRuntimeResponseTypePause. */
+  /**
+   * RuntimeResponseGenericRuntimeResponseTypePause.
+   */
   export interface RuntimeResponseGenericRuntimeResponseTypePause extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6201,7 +6507,9 @@ namespace AssistantV2 {
     channels?: ResponseGenericChannel[];
   }
 
-  /** RuntimeResponseGenericRuntimeResponseTypeSearch. */
+  /**
+   * RuntimeResponseGenericRuntimeResponseTypeSearch.
+   */
   export interface RuntimeResponseGenericRuntimeResponseTypeSearch extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6221,7 +6529,9 @@ namespace AssistantV2 {
     channels?: ResponseGenericChannel[];
   }
 
-  /** RuntimeResponseGenericRuntimeResponseTypeSuggestion. */
+  /**
+   * RuntimeResponseGenericRuntimeResponseTypeSuggestion.
+   */
   export interface RuntimeResponseGenericRuntimeResponseTypeSuggestion extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6237,7 +6547,9 @@ namespace AssistantV2 {
     channels?: ResponseGenericChannel[];
   }
 
-  /** RuntimeResponseGenericRuntimeResponseTypeText. */
+  /**
+   * RuntimeResponseGenericRuntimeResponseTypeText.
+   */
   export interface RuntimeResponseGenericRuntimeResponseTypeText extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6251,7 +6563,9 @@ namespace AssistantV2 {
     channels?: ResponseGenericChannel[];
   }
 
-  /** RuntimeResponseGenericRuntimeResponseTypeUserDefined. */
+  /**
+   * RuntimeResponseGenericRuntimeResponseTypeUserDefined.
+   */
   export interface RuntimeResponseGenericRuntimeResponseTypeUserDefined extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6265,7 +6579,9 @@ namespace AssistantV2 {
     channels?: ResponseGenericChannel[];
   }
 
-  /** RuntimeResponseGenericRuntimeResponseTypeVideo. */
+  /**
+   * RuntimeResponseGenericRuntimeResponseTypeVideo.
+   */
   export interface RuntimeResponseGenericRuntimeResponseTypeVideo extends RuntimeResponseGeneric {
     /** The type of response returned by the dialog node. The specified response type must be supported by the
      *  client application or channel.
@@ -6285,23 +6601,6 @@ namespace AssistantV2 {
     channel_options?: JsonObject;
     /** Descriptive text that can be used for screen readers or other situations where the video cannot be seen. */
     alt_text?: string;
-  }
-
-  /** A completed response item. A complete item is a composition of every streamed partial item with the same streaming_metadata.id, and each complete item contains its own unique streaming_metadata.id. */
-  export interface StatelessMessageStreamResponseMessageStreamCompleteItem extends StatelessMessageStreamResponse {
-    complete_item?: MessageStreamCompleteItemCompleteItem;
-  }
-
-  /** A chunk of the streamed message response. */
-  export interface StatelessMessageStreamResponseMessageStreamPartialItem extends StatelessMessageStreamResponse {
-    /** Message response partial item content. */
-    partial_item?: MessageStreamPartialItemPartialItem;
-  }
-
-  /** The final and stateless message response. */
-  export interface StatelessMessageStreamResponseStatelessMessageStreamFinalResponse extends StatelessMessageStreamResponse {
-    /** Message final response content. */
-    final_response?: StatelessMessageStreamFinalResponseFinalResponse;
   }
 }
 
