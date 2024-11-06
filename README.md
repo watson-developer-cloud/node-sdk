@@ -16,7 +16,7 @@ Node.js client library to use the Watson APIs.
 * You need an [IBM Cloud][ibm-cloud-onboarding] account.
 
 ## Prerequisites
-- **Node >=16**: This SDK is tested with Node versions 16 and up. It may work on previous versions but this is not officially supported.
+- **Node >= 20**: This SDK is tested with Node versions 16 and up. It may work on previous versions but this is not officially supported.
 
 ## Installation
 
