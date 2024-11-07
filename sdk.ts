@@ -19,8 +19,6 @@
  * Provide the entire sdk in one module in order to be browserified
  */
 
-export import AuthorizationV1 = require('./authorization/v1');
-
 export import AssistantV1 = require('./assistant/v1');
 
 export import AssistantV2 = require('./assistant/v2');
