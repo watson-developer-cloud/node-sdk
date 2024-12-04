@@ -1,3 +1,30 @@
+# [10.0.0](https://github.com/watson-developer-cloud/node-sdk/compare/v9.1.0...v10.0.0) (2024-12-04)
+
+
+### Code Refactoring
+
+* **auth:** remove deprecated AuthorizationV1 class ([3f8addb](https://github.com/watson-developer-cloud/node-sdk/commit/3f8addb469c7e7ec97bb39b4f8552cda4f8fa040))
+
+
+### Features
+
+* **discov1:** remove discoV1 ([936edc1](https://github.com/watson-developer-cloud/node-sdk/commit/936edc130ea73760932a30444b8ad8c146a07b56))
+* **discov2:** add functions for new batches api ([5f81415](https://github.com/watson-developer-cloud/node-sdk/commit/5f814151a3dd7be7ae8c6c16bc7e06942c3ceb45))
+* **lt:** remove lt and other deprecated resources ([6478da6](https://github.com/watson-developer-cloud/node-sdk/commit/6478da6791df6fc2bd03056eb6cbdef1a1567af5))
+* **stt:** add new speech models ([c4105ca](https://github.com/watson-developer-cloud/node-sdk/commit/c4105cac719a15791fbde45edfed740914bb5693))
+* **WxA:** add new functions and update required params ([b710609](https://github.com/watson-developer-cloud/node-sdk/commit/b71060916e44604543b54f2d42368a18fd4d18df))
+
+
+### BREAKING CHANGES
+
+* **auth:** AuthorizationV1 is removed in favor of the long supported node-sdk-core authenticators located in /auth
+* **WxA:** `environmentId` now required for `message` and `messageStateless` functions
+
+Add support for message streaming and new APIs
+New functions: createProviders, listProviders, updateProviders, createReleaseExport, downloadReleaseExport, createReleaseImport, getReleaseImportStatus, messageStream, messageStreamStateless
+* **lt:** LanguageTranslator functionality has been removed
+* **discov1:** DiscoveryV1 functionality has been removed
+
 # [9.1.0](https://github.com/watson-developer-cloud/node-sdk/compare/v9.0.1...v9.1.0) (2024-05-17)
 
 
