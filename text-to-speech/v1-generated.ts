@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,13 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.96.1-5136e54a-20241108-203028
+ * IBM OpenAPI SDK Code Generator Version: 3.105.0-3c13b041-20250605-193116
  */
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import {
+  AbortSignal,
   Authenticator,
   BaseService,
   UserOptions,
@@ -111,7 +112,7 @@ class TextToSpeechV1 extends BaseService {
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Voices>> {
     const _params = { ...params };
     const _requiredParams = [];
-    const _validParams = ['headers'];
+    const _validParams = ['signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -128,11 +129,15 @@ class TextToSpeechV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -163,7 +168,7 @@ class TextToSpeechV1 extends BaseService {
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Voice>> {
     const _params = { ...params };
     const _requiredParams = ['voice'];
-    const _validParams = ['voice', 'customizationId', 'headers'];
+    const _validParams = ['voice', 'customizationId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -190,11 +195,15 @@ class TextToSpeechV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -231,25 +240,29 @@ class TextToSpeechV1 extends BaseService {
    * (`audio/ogg;codecs=opus`). The service always returns single-channel audio.
    * * `audio/alaw` - You must specify the `rate` of the audio.
    * * `audio/basic` - The service returns audio with a sampling rate of 8000 Hz.
-   * * `audio/flac` - You can optionally specify the `rate` of the audio. The default sampling rate is 22,050 Hz.
+   * * `audio/flac` - You can optionally specify the `rate` of the audio. The default sampling rate is 24,000 Hz for
+   * Natural voices and 22,050 Hz for all other voices.
    * * `audio/l16` - You must specify the `rate` of the audio. You can optionally specify the `endianness` of the audio.
    * The default endianness is `little-endian`.
-   * * `audio/mp3` - You can optionally specify the `rate` of the audio. The default sampling rate is 22,050 Hz.
-   * * `audio/mpeg` - You can optionally specify the `rate` of the audio. The default sampling rate is 22,050 Hz.
+   * * `audio/mp3` - You can optionally specify the `rate` of the audio. The default sampling rate is 24,000 Hz for
+   * Natural voices and 22,050 Hz for for all other voices.
+   * * `audio/mpeg` - You can optionally specify the `rate` of the audio. The default sampling rate is 24,000 Hz for
+   * Natural voices and 22,050 Hz for all other voices.
    * * `audio/mulaw` - You must specify the `rate` of the audio.
    * * `audio/ogg` - The service returns the audio in the `vorbis` codec. You can optionally specify the `rate` of the
-   * audio. The default sampling rate is 22,050 Hz.
+   * audio. The default sampling rate is 48,000 Hz.
    * * `audio/ogg;codecs=opus` - You can optionally specify the `rate` of the audio. Only the following values are valid
    * sampling rates: `48000`, `24000`, `16000`, `12000`, or `8000`. If you specify a value other than one of these, the
    * service returns an error. The default sampling rate is 48,000 Hz.
    * * `audio/ogg;codecs=vorbis` - You can optionally specify the `rate` of the audio. The default sampling rate is
-   * 22,050 Hz.
-   * * `audio/wav` - You can optionally specify the `rate` of the audio. The default sampling rate is 22,050 Hz.
+   * 48,000 Hz.
+   * * `audio/wav` - You can optionally specify the `rate` of the audio. The default sampling rate is 24,000 Hz for
+   * Natural voices and 22,050 Hz for all other voices.
    * * `audio/webm` - The service returns the audio in the `opus` codec. The service returns audio with a sampling rate
    * of 48,000 Hz.
    * * `audio/webm;codecs=opus` - The service returns audio with a sampling rate of 48,000 Hz.
    * * `audio/webm;codecs=vorbis` - You can optionally specify the `rate` of the audio. The default sampling rate is
-   * 22,050 Hz.
+   * 48,000 Hz.
    *
    * For more information about specifying an audio format, including additional details about some of the formats, see
    * [Using audio formats](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-audio-formats).
@@ -329,7 +342,7 @@ class TextToSpeechV1 extends BaseService {
   ): Promise<TextToSpeechV1.Response<NodeJS.ReadableStream>> {
     const _params = { ...params };
     const _requiredParams = ['text'];
-    const _validParams = ['text', 'accept', 'voice', 'customizationId', 'spellOutMode', 'ratePercentage', 'pitchPercentage', 'headers'];
+    const _validParams = ['text', 'accept', 'voice', 'customizationId', 'spellOutMode', 'ratePercentage', 'pitchPercentage', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -361,12 +374,16 @@ class TextToSpeechV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Content-Type': 'application/json',
             'Accept': _params.accept,
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -412,7 +429,7 @@ class TextToSpeechV1 extends BaseService {
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Pronunciation>> {
     const _params = { ...params };
     const _requiredParams = ['text'];
-    const _validParams = ['text', 'voice', 'format', 'customizationId', 'headers'];
+    const _validParams = ['text', 'voice', 'format', 'customizationId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -437,11 +454,15 @@ class TextToSpeechV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -481,7 +502,7 @@ class TextToSpeechV1 extends BaseService {
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.CustomModel>> {
     const _params = { ...params };
     const _requiredParams = ['name'];
-    const _validParams = ['name', 'language', 'description', 'headers'];
+    const _validParams = ['name', 'language', 'description', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -505,12 +526,16 @@ class TextToSpeechV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -539,7 +564,7 @@ class TextToSpeechV1 extends BaseService {
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.CustomModels>> {
     const _params = { ...params };
     const _requiredParams = [];
-    const _validParams = ['language', 'headers'];
+    const _validParams = ['language', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -561,11 +586,15 @@ class TextToSpeechV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -613,7 +642,7 @@ class TextToSpeechV1 extends BaseService {
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId'];
-    const _validParams = ['customizationId', 'name', 'description', 'words', 'headers'];
+    const _validParams = ['customizationId', 'name', 'description', 'words', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -642,12 +671,16 @@ class TextToSpeechV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -676,7 +709,7 @@ class TextToSpeechV1 extends BaseService {
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.CustomModel>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId'];
-    const _validParams = ['customizationId', 'headers'];
+    const _validParams = ['customizationId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -698,11 +731,15 @@ class TextToSpeechV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -729,7 +766,7 @@ class TextToSpeechV1 extends BaseService {
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId'];
-    const _validParams = ['customizationId', 'headers'];
+    const _validParams = ['customizationId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -751,10 +788,14 @@ class TextToSpeechV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -807,7 +848,7 @@ class TextToSpeechV1 extends BaseService {
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId', 'words'];
-    const _validParams = ['customizationId', 'words', 'headers'];
+    const _validParams = ['customizationId', 'words', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -834,12 +875,16 @@ class TextToSpeechV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -867,7 +912,7 @@ class TextToSpeechV1 extends BaseService {
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Words>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId'];
-    const _validParams = ['customizationId', 'headers'];
+    const _validParams = ['customizationId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -889,11 +934,15 @@ class TextToSpeechV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -946,7 +995,7 @@ class TextToSpeechV1 extends BaseService {
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId', 'word', 'translation'];
-    const _validParams = ['customizationId', 'word', 'translation', 'partOfSpeech', 'headers'];
+    const _validParams = ['customizationId', 'word', 'translation', 'partOfSpeech', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -975,11 +1024,15 @@ class TextToSpeechV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1008,7 +1061,7 @@ class TextToSpeechV1 extends BaseService {
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Translation>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId', 'word'];
-    const _validParams = ['customizationId', 'word', 'headers'];
+    const _validParams = ['customizationId', 'word', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1031,11 +1084,15 @@ class TextToSpeechV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1063,7 +1120,7 @@ class TextToSpeechV1 extends BaseService {
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId', 'word'];
-    const _validParams = ['customizationId', 'word', 'headers'];
+    const _validParams = ['customizationId', 'word', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1086,10 +1143,14 @@ class TextToSpeechV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1123,7 +1184,7 @@ class TextToSpeechV1 extends BaseService {
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Prompts>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId'];
-    const _validParams = ['customizationId', 'headers'];
+    const _validParams = ['customizationId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1145,11 +1206,15 @@ class TextToSpeechV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1254,7 +1319,7 @@ class TextToSpeechV1 extends BaseService {
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Prompt>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId', 'promptId', 'metadata', 'file'];
-    const _validParams = ['customizationId', 'promptId', 'metadata', 'file', 'headers'];
+    const _validParams = ['customizationId', 'promptId', 'metadata', 'file', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1280,18 +1345,22 @@ class TextToSpeechV1 extends BaseService {
         url: '/v1/customizations/{customization_id}/prompts/{prompt_id}',
         method: 'POST',
         path,
-        formData
+        formData,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'multipart/form-data',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1321,7 +1390,7 @@ class TextToSpeechV1 extends BaseService {
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Prompt>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId', 'promptId'];
-    const _validParams = ['customizationId', 'promptId', 'headers'];
+    const _validParams = ['customizationId', 'promptId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1344,11 +1413,15 @@ class TextToSpeechV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1381,7 +1454,7 @@ class TextToSpeechV1 extends BaseService {
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customizationId', 'promptId'];
-    const _validParams = ['customizationId', 'promptId', 'headers'];
+    const _validParams = ['customizationId', 'promptId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1404,10 +1477,14 @@ class TextToSpeechV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1437,7 +1514,7 @@ class TextToSpeechV1 extends BaseService {
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.Speakers>> {
     const _params = { ...params };
     const _requiredParams = [];
-    const _validParams = ['headers'];
+    const _validParams = ['signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1454,11 +1531,15 @@ class TextToSpeechV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1526,7 +1607,7 @@ class TextToSpeechV1 extends BaseService {
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.SpeakerModel>> {
     const _params = { ...params };
     const _requiredParams = ['speakerName', 'audio'];
-    const _validParams = ['speakerName', 'audio', 'headers'];
+    const _validParams = ['speakerName', 'audio', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1550,12 +1631,16 @@ class TextToSpeechV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'audio/wav',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1586,7 +1671,7 @@ class TextToSpeechV1 extends BaseService {
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.SpeakerCustomModels>> {
     const _params = { ...params };
     const _requiredParams = ['speakerId'];
-    const _validParams = ['speakerId', 'headers'];
+    const _validParams = ['speakerId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1608,11 +1693,15 @@ class TextToSpeechV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1646,7 +1735,7 @@ class TextToSpeechV1 extends BaseService {
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['speakerId'];
-    const _validParams = ['speakerId', 'headers'];
+    const _validParams = ['speakerId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1668,10 +1757,14 @@ class TextToSpeechV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1707,7 +1800,7 @@ class TextToSpeechV1 extends BaseService {
   ): Promise<TextToSpeechV1.Response<TextToSpeechV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customerId'];
-    const _validParams = ['customerId', 'headers'];
+    const _validParams = ['customerId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1729,10 +1822,14 @@ class TextToSpeechV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1768,13 +1865,17 @@ namespace TextToSpeechV1 {
    * request interfaces
    ************************/
 
+   interface DefaultParams {
+     headers?: OutgoingHttpHeaders;
+     signal?: AbortSignal;
+   }
+
   /** Parameters for the `listVoices` operation. */
-  export interface ListVoicesParams {
-    headers?: OutgoingHttpHeaders;
+  export interface ListVoicesParams extends DefaultParams {
   }
 
   /** Parameters for the `getVoice` operation. */
-  export interface GetVoiceParams {
+  export interface GetVoiceParams extends DefaultParams {
     /** The voice for which information is to be returned. */
     voice: GetVoiceConstants.Voice | string;
     /** The customization ID (GUID) of a custom model for which information is to be returned. You must make the
@@ -1782,7 +1883,6 @@ namespace TextToSpeechV1 {
      *  information about the specified voice with no customization.
      */
     customizationId?: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `getVoice` operation. */
@@ -1795,10 +1895,12 @@ namespace TextToSpeechV1 {
       EN_AU_HEIDIEXPRESSIVE = 'en-AU_HeidiExpressive',
       EN_AU_JACKEXPRESSIVE = 'en-AU_JackExpressive',
       EN_GB_CHARLOTTEV3VOICE = 'en-GB_CharlotteV3Voice',
+      EN_GB_GEORGEEXPRESSIVE = 'en-GB_GeorgeExpressive',
       EN_GB_JAMESV3VOICE = 'en-GB_JamesV3Voice',
       EN_GB_KATEV3VOICE = 'en-GB_KateV3Voice',
       EN_US_ALLISONEXPRESSIVE = 'en-US_AllisonExpressive',
       EN_US_ALLISONV3VOICE = 'en-US_AllisonV3Voice',
+      EN_US_ELLIENATURAL = 'en-US_EllieNatural',
       EN_US_EMILYV3VOICE = 'en-US_EmilyV3Voice',
       EN_US_EMMAEXPRESSIVE = 'en-US_EmmaExpressive',
       EN_US_HENRYV3VOICE = 'en-US_HenryV3Voice',
@@ -1810,6 +1912,7 @@ namespace TextToSpeechV1 {
       EN_US_OLIVIAV3VOICE = 'en-US_OliviaV3Voice',
       ES_ES_ENRIQUEV3VOICE = 'es-ES_EnriqueV3Voice',
       ES_ES_LAURAV3VOICE = 'es-ES_LauraV3Voice',
+      ES_LA_DANIELAEXPRESSIVE = 'es-LA_DanielaExpressive',
       ES_LA_SOFIAV3VOICE = 'es-LA_SofiaV3Voice',
       ES_US_SOFIAV3VOICE = 'es-US_SofiaV3Voice',
       FR_CA_LOUISEV3VOICE = 'fr-CA_LouiseV3Voice',
@@ -1820,11 +1923,12 @@ namespace TextToSpeechV1 {
       KO_KR_JINV3VOICE = 'ko-KR_JinV3Voice',
       NL_NL_MERELV3VOICE = 'nl-NL_MerelV3Voice',
       PT_BR_ISABELAV3VOICE = 'pt-BR_IsabelaV3Voice',
+      PT_BR_LUCASEXPRESSIVE = 'pt-BR_LucasExpressive',
     }
   }
 
   /** Parameters for the `synthesize` operation. */
-  export interface SynthesizeParams {
+  export interface SynthesizeParams extends DefaultParams {
     /** The text to synthesize. */
     text: string;
     /** The requested format (MIME type) of the audio. You can use the `Accept` header or the `accept` parameter to
@@ -1892,7 +1996,6 @@ namespace TextToSpeechV1 {
      *  pitch](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-synthesis-params#params-pitch-percentage).
      */
     pitchPercentage?: number;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `synthesize` operation. */
@@ -1922,10 +2025,12 @@ namespace TextToSpeechV1 {
       EN_AU_HEIDIEXPRESSIVE = 'en-AU_HeidiExpressive',
       EN_AU_JACKEXPRESSIVE = 'en-AU_JackExpressive',
       EN_GB_CHARLOTTEV3VOICE = 'en-GB_CharlotteV3Voice',
+      EN_GB_GEORGEEXPRESSIVE = 'en-GB_GeorgeExpressive',
       EN_GB_JAMESV3VOICE = 'en-GB_JamesV3Voice',
       EN_GB_KATEV3VOICE = 'en-GB_KateV3Voice',
       EN_US_ALLISONEXPRESSIVE = 'en-US_AllisonExpressive',
       EN_US_ALLISONV3VOICE = 'en-US_AllisonV3Voice',
+      EN_US_ELLIENATURAL = 'en-US_EllieNatural',
       EN_US_EMILYV3VOICE = 'en-US_EmilyV3Voice',
       EN_US_EMMAEXPRESSIVE = 'en-US_EmmaExpressive',
       EN_US_HENRYV3VOICE = 'en-US_HenryV3Voice',
@@ -1937,6 +2042,7 @@ namespace TextToSpeechV1 {
       EN_US_OLIVIAV3VOICE = 'en-US_OliviaV3Voice',
       ES_ES_ENRIQUEV3VOICE = 'es-ES_EnriqueV3Voice',
       ES_ES_LAURAV3VOICE = 'es-ES_LauraV3Voice',
+      ES_LA_DANIELAEXPRESSIVE = 'es-LA_DanielaExpressive',
       ES_LA_SOFIAV3VOICE = 'es-LA_SofiaV3Voice',
       ES_US_SOFIAV3VOICE = 'es-US_SofiaV3Voice',
       FR_CA_LOUISEV3VOICE = 'fr-CA_LouiseV3Voice',
@@ -1947,6 +2053,7 @@ namespace TextToSpeechV1 {
       KO_KR_JINV3VOICE = 'ko-KR_JinV3Voice',
       NL_NL_MERELV3VOICE = 'nl-NL_MerelV3Voice',
       PT_BR_ISABELAV3VOICE = 'pt-BR_IsabelaV3Voice',
+      PT_BR_LUCASEXPRESSIVE = 'pt-BR_LucasExpressive',
     }
     /** *For German voices,* indicates how the service is to spell out strings of individual letters. To indicate the pace of the spelling, specify one of the following values: * `default` - The service reads the characters at the rate at which it synthesizes speech for the request. You can also omit the parameter entirely to achieve the default behavior. * `singles` - The service reads the characters one at a time, with a brief pause between each character. * `pairs` - The service reads the characters two at a time, with a brief pause between each pair. * `triples` - The service reads the characters three at a time, with a brief pause between each triplet. For more information, see [Specifying how strings are spelled out](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-synthesis-params#params-spell-out-mode). */
     export enum SpellOutMode {
@@ -1958,7 +2065,7 @@ namespace TextToSpeechV1 {
   }
 
   /** Parameters for the `getPronunciation` operation. */
-  export interface GetPronunciationParams {
+  export interface GetPronunciationParams extends DefaultParams {
     /** The word for which the pronunciation is requested. */
     text: string;
     /** A voice that specifies the language in which the pronunciation is to be returned. If you omit the `voice`
@@ -1983,7 +2090,6 @@ namespace TextToSpeechV1 {
      *  to see the translation for the specified voice with no customization.
      */
     customizationId?: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `getPronunciation` operation. */
@@ -1996,10 +2102,12 @@ namespace TextToSpeechV1 {
       EN_AU_HEIDIEXPRESSIVE = 'en-AU_HeidiExpressive',
       EN_AU_JACKEXPRESSIVE = 'en-AU_JackExpressive',
       EN_GB_CHARLOTTEV3VOICE = 'en-GB_CharlotteV3Voice',
+      EN_GB_GEORGEEXPRESSIVE = 'en-GB_GeorgeExpressive',
       EN_GB_JAMESV3VOICE = 'en-GB_JamesV3Voice',
       EN_GB_KATEV3VOICE = 'en-GB_KateV3Voice',
       EN_US_ALLISONEXPRESSIVE = 'en-US_AllisonExpressive',
       EN_US_ALLISONV3VOICE = 'en-US_AllisonV3Voice',
+      EN_US_ELLIENATURAL = 'en-US_EllieNatural',
       EN_US_EMILYV3VOICE = 'en-US_EmilyV3Voice',
       EN_US_EMMAEXPRESSIVE = 'en-US_EmmaExpressive',
       EN_US_HENRYV3VOICE = 'en-US_HenryV3Voice',
@@ -2011,6 +2119,7 @@ namespace TextToSpeechV1 {
       EN_US_OLIVIAV3VOICE = 'en-US_OliviaV3Voice',
       ES_ES_ENRIQUEV3VOICE = 'es-ES_EnriqueV3Voice',
       ES_ES_LAURAV3VOICE = 'es-ES_LauraV3Voice',
+      ES_LA_DANIELAEXPRESSIVE = 'es-LA_DanielaExpressive',
       ES_LA_SOFIAV3VOICE = 'es-LA_SofiaV3Voice',
       ES_US_SOFIAV3VOICE = 'es-US_SofiaV3Voice',
       FR_CA_LOUISEV3VOICE = 'fr-CA_LouiseV3Voice',
@@ -2021,6 +2130,7 @@ namespace TextToSpeechV1 {
       KO_KR_JINV3VOICE = 'ko-KR_JinV3Voice',
       NL_NL_MERELV3VOICE = 'nl-NL_MerelV3Voice',
       PT_BR_ISABELAV3VOICE = 'pt-BR_IsabelaV3Voice',
+      PT_BR_LUCASEXPRESSIVE = 'pt-BR_LucasExpressive',
     }
     /** The phoneme format in which to return the pronunciation. Omit the parameter to obtain the pronunciation in the default format. */
     export enum Format {
@@ -2030,7 +2140,7 @@ namespace TextToSpeechV1 {
   }
 
   /** Parameters for the `createCustomModel` operation. */
-  export interface CreateCustomModelParams {
+  export interface CreateCustomModelParams extends DefaultParams {
     /** The name of the new custom model. Use a localized name that matches the language of the custom model. Use a
      *  name that describes the purpose of the custom model, such as `Medical custom model` or `Legal custom model`. Use
      *  a name that is unique among all custom models that you own.
@@ -2048,7 +2158,6 @@ namespace TextToSpeechV1 {
      *  the custom model. Include a maximum of 128 characters in the description.
      */
     description?: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `createCustomModel` operation. */
@@ -2072,12 +2181,11 @@ namespace TextToSpeechV1 {
   }
 
   /** Parameters for the `listCustomModels` operation. */
-  export interface ListCustomModelsParams {
+  export interface ListCustomModelsParams extends DefaultParams {
     /** The language for which custom models that are owned by the requesting credentials are to be returned. Omit
      *  the parameter to see all custom models that are owned by the requester.
      */
     language?: ListCustomModelsConstants.Language | string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `listCustomModels` operation. */
@@ -2101,7 +2209,7 @@ namespace TextToSpeechV1 {
   }
 
   /** Parameters for the `updateCustomModel` operation. */
-  export interface UpdateCustomModelParams {
+  export interface UpdateCustomModelParams extends DefaultParams {
     /** The customization ID (GUID) of the custom model. You must make the request with credentials for the instance
      *  of the service that owns the custom model.
      */
@@ -2114,29 +2222,26 @@ namespace TextToSpeechV1 {
      *  for the custom model. Pass an empty array to make no additions or updates.
      */
     words?: Word[];
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `getCustomModel` operation. */
-  export interface GetCustomModelParams {
+  export interface GetCustomModelParams extends DefaultParams {
     /** The customization ID (GUID) of the custom model. You must make the request with credentials for the instance
      *  of the service that owns the custom model.
      */
     customizationId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `deleteCustomModel` operation. */
-  export interface DeleteCustomModelParams {
+  export interface DeleteCustomModelParams extends DefaultParams {
     /** The customization ID (GUID) of the custom model. You must make the request with credentials for the instance
      *  of the service that owns the custom model.
      */
     customizationId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `addWords` operation. */
-  export interface AddWordsParams {
+  export interface AddWordsParams extends DefaultParams {
     /** The customization ID (GUID) of the custom model. You must make the request with credentials for the instance
      *  of the service that owns the custom model.
      */
@@ -2149,20 +2254,18 @@ namespace TextToSpeechV1 {
      *  before lowercase letters. The array is empty if the custom model contains no words.
      */
     words: Word[];
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listWords` operation. */
-  export interface ListWordsParams {
+  export interface ListWordsParams extends DefaultParams {
     /** The customization ID (GUID) of the custom model. You must make the request with credentials for the instance
      *  of the service that owns the custom model.
      */
     customizationId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `addWord` operation. */
-  export interface AddWordParams {
+  export interface AddWordParams extends DefaultParams {
     /** The customization ID (GUID) of the custom model. You must make the request with credentials for the instance
      *  of the service that owns the custom model.
      */
@@ -2181,7 +2284,6 @@ namespace TextToSpeechV1 {
      *  entries](https://cloud.ibm.com/docs/text-to-speech?topic=text-to-speech-rules#jaNotes).
      */
     partOfSpeech?: AddWordConstants.PartOfSpeech | string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `addWord` operation. */
@@ -2209,38 +2311,35 @@ namespace TextToSpeechV1 {
   }
 
   /** Parameters for the `getWord` operation. */
-  export interface GetWordParams {
+  export interface GetWordParams extends DefaultParams {
     /** The customization ID (GUID) of the custom model. You must make the request with credentials for the instance
      *  of the service that owns the custom model.
      */
     customizationId: string;
     /** The word that is to be queried from the custom model. */
     word: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `deleteWord` operation. */
-  export interface DeleteWordParams {
+  export interface DeleteWordParams extends DefaultParams {
     /** The customization ID (GUID) of the custom model. You must make the request with credentials for the instance
      *  of the service that owns the custom model.
      */
     customizationId: string;
     /** The word that is to be deleted from the custom model. */
     word: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listCustomPrompts` operation. */
-  export interface ListCustomPromptsParams {
+  export interface ListCustomPromptsParams extends DefaultParams {
     /** The customization ID (GUID) of the custom model. You must make the request with credentials for the instance
      *  of the service that owns the custom model.
      */
     customizationId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `addCustomPrompt` operation. */
-  export interface AddCustomPromptParams {
+  export interface AddCustomPromptParams extends DefaultParams {
     /** The customization ID (GUID) of the custom model. You must make the request with credentials for the instance
      *  of the service that owns the custom model.
      */
@@ -2267,38 +2366,34 @@ namespace TextToSpeechV1 {
      *  * The length of the prompt audio is limited to 30 seconds.
      */
     file: NodeJS.ReadableStream | Buffer;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `getCustomPrompt` operation. */
-  export interface GetCustomPromptParams {
+  export interface GetCustomPromptParams extends DefaultParams {
     /** The customization ID (GUID) of the custom model. You must make the request with credentials for the instance
      *  of the service that owns the custom model.
      */
     customizationId: string;
     /** The identifier (name) of the prompt. */
     promptId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `deleteCustomPrompt` operation. */
-  export interface DeleteCustomPromptParams {
+  export interface DeleteCustomPromptParams extends DefaultParams {
     /** The customization ID (GUID) of the custom model. You must make the request with credentials for the instance
      *  of the service that owns the custom model.
      */
     customizationId: string;
     /** The identifier (name) of the prompt that is to be deleted. */
     promptId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listSpeakerModels` operation. */
-  export interface ListSpeakerModelsParams {
-    headers?: OutgoingHttpHeaders;
+  export interface ListSpeakerModelsParams extends DefaultParams {
   }
 
   /** Parameters for the `createSpeakerModel` operation. */
-  export interface CreateSpeakerModelParams {
+  export interface CreateSpeakerModelParams extends DefaultParams {
     /** The name of the speaker that is to be added to the service instance.
      *  * Include a maximum of 49 characters in the name.
      *  * Include only alphanumeric characters and `_` (underscores) in the name.
@@ -2314,32 +2409,28 @@ namespace TextToSpeechV1 {
      *  five to ten sentences is recommended.
      */
     audio: NodeJS.ReadableStream | Buffer;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `getSpeakerModel` operation. */
-  export interface GetSpeakerModelParams {
+  export interface GetSpeakerModelParams extends DefaultParams {
     /** The speaker ID (GUID) of the speaker model. You must make the request with service credentials for the
      *  instance of the service that owns the speaker model.
      */
     speakerId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `deleteSpeakerModel` operation. */
-  export interface DeleteSpeakerModelParams {
+  export interface DeleteSpeakerModelParams extends DefaultParams {
     /** The speaker ID (GUID) of the speaker model. You must make the request with service credentials for the
      *  instance of the service that owns the speaker model.
      */
     speakerId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `deleteUserData` operation. */
-  export interface DeleteUserDataParams {
+  export interface DeleteUserDataParams extends DefaultParams {
     /** The customer ID for which all data is to be deleted. */
     customerId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /*************************
