@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2024.
+ * (C) Copyright IBM Corp. 2018, 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,13 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.96.1-5136e54a-20241108-203028
+ * IBM OpenAPI SDK Code Generator Version: 3.105.0-3c13b041-20250605-193116
  */
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import {
+  AbortSignal,
   Authenticator,
   BaseService,
   UserOptions,
@@ -129,7 +130,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.MessageResponse>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId'];
-    const _validParams = ['workspaceId', 'input', 'intents', 'entities', 'alternateIntents', 'context', 'output', 'userId', 'nodesVisitedDetails', 'headers'];
+    const _validParams = ['workspaceId', 'input', 'intents', 'entities', 'alternateIntents', 'context', 'output', 'userId', 'nodesVisitedDetails', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -168,12 +169,16 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -202,7 +207,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.BulkClassifyResponse>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId'];
-    const _validParams = ['workspaceId', 'input', 'headers'];
+    const _validParams = ['workspaceId', 'input', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -234,12 +239,16 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -272,7 +281,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.WorkspaceCollection>> {
     const _params = { ...params };
     const _requiredParams = [];
-    const _validParams = ['pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'headers'];
+    const _validParams = ['pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -299,11 +308,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -346,7 +359,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.Workspace>> {
     const _params = { ...params };
     const _requiredParams = [];
-    const _validParams = ['name', 'description', 'language', 'dialogNodes', 'counterexamples', 'metadata', 'learningOptOut', 'systemSettings', 'webhooks', 'intents', 'entities', 'includeAudit', 'headers'];
+    const _validParams = ['name', 'description', 'language', 'dialogNodes', 'counterexamples', 'metadata', 'learningOptOut', 'systemSettings', 'webhooks', 'intents', 'entities', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -384,12 +397,16 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -419,7 +436,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.Workspace>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId'];
-    const _validParams = ['workspaceId', '_export', 'includeAudit', 'sort', 'headers'];
+    const _validParams = ['workspaceId', '_export', 'includeAudit', 'sort', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -449,11 +466,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -504,7 +525,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.Workspace>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId'];
-    const _validParams = ['workspaceId', 'name', 'description', 'language', 'dialogNodes', 'counterexamples', 'metadata', 'learningOptOut', 'systemSettings', 'webhooks', 'intents', 'entities', 'append', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'name', 'description', 'language', 'dialogNodes', 'counterexamples', 'metadata', 'learningOptOut', 'systemSettings', 'webhooks', 'intents', 'entities', 'append', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -548,12 +569,16 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -575,7 +600,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId'];
-    const _validParams = ['workspaceId', 'headers'];
+    const _validParams = ['workspaceId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -602,11 +627,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -648,7 +677,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.Workspace>> {
     const _params = { ...params };
     const _requiredParams = [];
-    const _validParams = ['name', 'description', 'language', 'dialogNodes', 'counterexamples', 'metadata', 'learningOptOut', 'systemSettings', 'webhooks', 'intents', 'entities', 'headers'];
+    const _validParams = ['name', 'description', 'language', 'dialogNodes', 'counterexamples', 'metadata', 'learningOptOut', 'systemSettings', 'webhooks', 'intents', 'entities', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -685,12 +714,16 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -740,7 +773,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.Workspace>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId'];
-    const _validParams = ['workspaceId', 'name', 'description', 'language', 'dialogNodes', 'counterexamples', 'metadata', 'learningOptOut', 'systemSettings', 'webhooks', 'intents', 'entities', 'append', 'headers'];
+    const _validParams = ['workspaceId', 'name', 'description', 'language', 'dialogNodes', 'counterexamples', 'metadata', 'learningOptOut', 'systemSettings', 'webhooks', 'intents', 'entities', 'append', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -783,12 +816,16 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -821,7 +858,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.Workspace>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId'];
-    const _validParams = ['workspaceId', 'includeAudit', 'sort', 'verbose', 'headers'];
+    const _validParams = ['workspaceId', 'includeAudit', 'sort', 'verbose', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -851,11 +888,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -892,7 +933,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.IntentCollection>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId'];
-    const _validParams = ['workspaceId', '_export', 'pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', '_export', 'pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -925,11 +966,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -962,7 +1007,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.Intent>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'intent'];
-    const _validParams = ['workspaceId', 'intent', 'description', 'examples', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'intent', 'description', 'examples', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -997,12 +1042,16 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1030,7 +1079,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.Intent>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'intent'];
-    const _validParams = ['workspaceId', 'intent', '_export', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'intent', '_export', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1060,11 +1109,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1107,7 +1160,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.Intent>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'intent'];
-    const _validParams = ['workspaceId', 'intent', 'newIntent', 'newDescription', 'newExamples', 'append', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'intent', 'newIntent', 'newDescription', 'newExamples', 'append', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1144,12 +1197,16 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1172,7 +1229,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'intent'];
-    const _validParams = ['workspaceId', 'intent', 'headers'];
+    const _validParams = ['workspaceId', 'intent', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1200,11 +1257,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1239,7 +1300,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.ExampleCollection>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'intent'];
-    const _validParams = ['workspaceId', 'intent', 'pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'intent', 'pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1272,11 +1333,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1309,7 +1374,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.Example>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'intent', 'text'];
-    const _validParams = ['workspaceId', 'intent', 'text', 'mentions', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'intent', 'text', 'mentions', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1344,12 +1409,16 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1375,7 +1444,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.Example>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'intent', 'text'];
-    const _validParams = ['workspaceId', 'intent', 'text', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'intent', 'text', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1405,11 +1474,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1443,7 +1516,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.Example>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'intent', 'text'];
-    const _validParams = ['workspaceId', 'intent', 'text', 'newText', 'newMentions', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'intent', 'text', 'newText', 'newMentions', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1479,12 +1552,16 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1508,7 +1585,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'intent', 'text'];
-    const _validParams = ['workspaceId', 'intent', 'text', 'headers'];
+    const _validParams = ['workspaceId', 'intent', 'text', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1537,11 +1614,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1575,7 +1656,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.CounterexampleCollection>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId'];
-    const _validParams = ['workspaceId', 'pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1607,11 +1688,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1642,7 +1727,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.Counterexample>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'text'];
-    const _validParams = ['workspaceId', 'text', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'text', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1675,12 +1760,16 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1705,7 +1794,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.Counterexample>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'text'];
-    const _validParams = ['workspaceId', 'text', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'text', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1734,11 +1823,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1767,7 +1860,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.Counterexample>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'text'];
-    const _validParams = ['workspaceId', 'text', 'newText', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'text', 'newText', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1801,12 +1894,16 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1829,7 +1926,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'text'];
-    const _validParams = ['workspaceId', 'text', 'headers'];
+    const _validParams = ['workspaceId', 'text', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1857,11 +1954,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1898,7 +1999,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.EntityCollection>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId'];
-    const _validParams = ['workspaceId', '_export', 'pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', '_export', 'pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1931,11 +2032,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1971,7 +2076,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.Entity>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'entity'];
-    const _validParams = ['workspaceId', 'entity', 'description', 'metadata', 'fuzzyMatch', 'values', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'entity', 'description', 'metadata', 'fuzzyMatch', 'values', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2008,12 +2113,16 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2041,7 +2150,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.Entity>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'entity'];
-    const _validParams = ['workspaceId', 'entity', '_export', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'entity', '_export', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2071,11 +2180,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2120,7 +2233,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.Entity>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'entity'];
-    const _validParams = ['workspaceId', 'entity', 'newEntity', 'newDescription', 'newMetadata', 'newFuzzyMatch', 'newValues', 'append', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'entity', 'newEntity', 'newDescription', 'newMetadata', 'newFuzzyMatch', 'newValues', 'append', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2159,12 +2272,16 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2187,7 +2304,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'entity'];
-    const _validParams = ['workspaceId', 'entity', 'headers'];
+    const _validParams = ['workspaceId', 'entity', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2215,11 +2332,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2251,7 +2372,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.EntityMentionCollection>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'entity'];
-    const _validParams = ['workspaceId', 'entity', '_export', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'entity', '_export', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2281,11 +2402,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2323,7 +2448,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.ValueCollection>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'entity'];
-    const _validParams = ['workspaceId', 'entity', '_export', 'pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'entity', '_export', 'pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2357,11 +2482,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2404,7 +2533,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.Value>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'entity', 'value'];
-    const _validParams = ['workspaceId', 'entity', 'value', 'metadata', 'type', 'synonyms', 'patterns', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'entity', 'value', 'metadata', 'type', 'synonyms', 'patterns', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2442,12 +2571,16 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2476,7 +2609,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.Value>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'entity', 'value'];
-    const _validParams = ['workspaceId', 'entity', 'value', '_export', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'entity', 'value', '_export', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2507,11 +2640,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2563,7 +2700,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.Value>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'entity', 'value'];
-    const _validParams = ['workspaceId', 'entity', 'value', 'newValue', 'newMetadata', 'newType', 'newSynonyms', 'newPatterns', 'append', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'entity', 'value', 'newValue', 'newMetadata', 'newType', 'newSynonyms', 'newPatterns', 'append', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2603,12 +2740,16 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2632,7 +2773,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'entity', 'value'];
-    const _validParams = ['workspaceId', 'entity', 'value', 'headers'];
+    const _validParams = ['workspaceId', 'entity', 'value', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2661,11 +2802,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2701,7 +2846,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.SynonymCollection>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'entity', 'value'];
-    const _validParams = ['workspaceId', 'entity', 'value', 'pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'entity', 'value', 'pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2735,11 +2880,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2771,7 +2920,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.Synonym>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
-    const _validParams = ['workspaceId', 'entity', 'value', 'synonym', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'entity', 'value', 'synonym', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2806,12 +2955,16 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2838,7 +2991,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.Synonym>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
-    const _validParams = ['workspaceId', 'entity', 'value', 'synonym', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'entity', 'value', 'synonym', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2869,11 +3022,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2907,7 +3064,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.Synonym>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
-    const _validParams = ['workspaceId', 'entity', 'value', 'synonym', 'newSynonym', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'entity', 'value', 'synonym', 'newSynonym', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2943,12 +3100,16 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2973,7 +3134,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'entity', 'value', 'synonym'];
-    const _validParams = ['workspaceId', 'entity', 'value', 'synonym', 'headers'];
+    const _validParams = ['workspaceId', 'entity', 'value', 'synonym', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -3003,11 +3164,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -3041,7 +3206,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.DialogNodeCollection>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId'];
-    const _validParams = ['workspaceId', 'pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'pageLimit', 'includeCount', 'sort', 'cursor', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -3073,11 +3238,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -3141,7 +3310,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.DialogNode>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'dialogNode'];
-    const _validParams = ['workspaceId', 'dialogNode', 'description', 'conditions', 'parent', 'previousSibling', 'output', 'context', 'metadata', 'nextStep', 'title', 'type', 'eventName', 'variable', 'actions', 'digressIn', 'digressOut', 'digressOutSlots', 'userLabel', 'disambiguationOptOut', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'dialogNode', 'description', 'conditions', 'parent', 'previousSibling', 'output', 'context', 'metadata', 'nextStep', 'title', 'type', 'eventName', 'variable', 'actions', 'digressIn', 'digressOut', 'digressOutSlots', 'userLabel', 'disambiguationOptOut', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -3192,12 +3361,16 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -3222,7 +3395,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.DialogNode>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'dialogNode'];
-    const _validParams = ['workspaceId', 'dialogNode', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'dialogNode', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -3251,11 +3424,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -3321,7 +3498,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.DialogNode>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'dialogNode'];
-    const _validParams = ['workspaceId', 'dialogNode', 'newDialogNode', 'newDescription', 'newConditions', 'newParent', 'newPreviousSibling', 'newOutput', 'newContext', 'newMetadata', 'newNextStep', 'newTitle', 'newType', 'newEventName', 'newVariable', 'newActions', 'newDigressIn', 'newDigressOut', 'newDigressOutSlots', 'newUserLabel', 'newDisambiguationOptOut', 'includeAudit', 'headers'];
+    const _validParams = ['workspaceId', 'dialogNode', 'newDialogNode', 'newDescription', 'newConditions', 'newParent', 'newPreviousSibling', 'newOutput', 'newContext', 'newMetadata', 'newNextStep', 'newTitle', 'newType', 'newEventName', 'newVariable', 'newActions', 'newDigressIn', 'newDigressOut', 'newDigressOutSlots', 'newUserLabel', 'newDisambiguationOptOut', 'includeAudit', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -3373,12 +3550,16 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -3401,7 +3582,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId', 'dialogNode'];
-    const _validParams = ['workspaceId', 'dialogNode', 'headers'];
+    const _validParams = ['workspaceId', 'dialogNode', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -3429,11 +3610,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -3473,7 +3658,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.LogCollection>> {
     const _params = { ...params };
     const _requiredParams = ['workspaceId'];
-    const _validParams = ['workspaceId', 'sort', 'filter', 'pageLimit', 'cursor', 'headers'];
+    const _validParams = ['workspaceId', 'sort', 'filter', 'pageLimit', 'cursor', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -3504,11 +3689,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -3542,7 +3731,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.LogCollection>> {
     const _params = { ...params };
     const _requiredParams = ['filter'];
-    const _validParams = ['filter', 'sort', 'pageLimit', 'cursor', 'headers'];
+    const _validParams = ['filter', 'sort', 'pageLimit', 'cursor', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -3568,11 +3757,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -3607,7 +3800,7 @@ class AssistantV1 extends BaseService {
   ): Promise<AssistantV1.Response<AssistantV1.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customerId'];
-    const _validParams = ['customerId', 'headers'];
+    const _validParams = ['customerId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -3630,11 +3823,15 @@ class AssistantV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -3678,8 +3875,13 @@ namespace AssistantV1 {
    * request interfaces
    ************************/
 
+   interface DefaultParams {
+     headers?: OutgoingHttpHeaders;
+     signal?: AbortSignal;
+   }
+
   /** Parameters for the `message` operation. */
-  export interface MessageParams {
+  export interface MessageParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** An input object that includes the input text. */
@@ -3714,20 +3916,18 @@ namespace AssistantV1 {
      *  processing of the message.
      */
     nodesVisitedDetails?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `bulkClassify` operation. */
-  export interface BulkClassifyParams {
+  export interface BulkClassifyParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** An array of input utterances to classify. */
     input?: BulkClassifyUtterance[];
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listWorkspaces` operation. */
-  export interface ListWorkspacesParams {
+  export interface ListWorkspacesParams extends DefaultParams {
     /** The number of records to return in each page of results. */
     pageLimit?: number;
     /** Whether to include information about the number of records that satisfy the request, regardless of the page
@@ -3742,7 +3942,6 @@ namespace AssistantV1 {
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `listWorkspaces` operation. */
@@ -3755,7 +3954,7 @@ namespace AssistantV1 {
   }
 
   /** Parameters for the `createWorkspace` operation. */
-  export interface CreateWorkspaceParams {
+  export interface CreateWorkspaceParams extends DefaultParams {
     /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters. */
     name?: string;
     /** The description of the workspace. This string cannot contain carriage return, newline, or tab characters. */
@@ -3781,11 +3980,10 @@ namespace AssistantV1 {
     entities?: CreateEntity[];
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `getWorkspace` operation. */
-  export interface GetWorkspaceParams {
+  export interface GetWorkspaceParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** Whether to include all element content in the returned data. If **export**=`false`, the returned data
@@ -3799,7 +3997,6 @@ namespace AssistantV1 {
      *  Specify `sort=stable` to sort all workspace objects by unique identifier, in ascending alphabetical order.
      */
     sort?: GetWorkspaceConstants.Sort | string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `getWorkspace` operation. */
@@ -3811,7 +4008,7 @@ namespace AssistantV1 {
   }
 
   /** Parameters for the `updateWorkspace` operation. */
-  export interface UpdateWorkspaceParams {
+  export interface UpdateWorkspaceParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters. */
@@ -3848,18 +4045,16 @@ namespace AssistantV1 {
     append?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `deleteWorkspace` operation. */
-  export interface DeleteWorkspaceParams {
+  export interface DeleteWorkspaceParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `createWorkspaceAsync` operation. */
-  export interface CreateWorkspaceAsyncParams {
+  export interface CreateWorkspaceAsyncParams extends DefaultParams {
     /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters. */
     name?: string;
     /** The description of the workspace. This string cannot contain carriage return, newline, or tab characters. */
@@ -3883,11 +4078,10 @@ namespace AssistantV1 {
     intents?: CreateIntent[];
     /** An array of objects describing the entities for the workspace. */
     entities?: CreateEntity[];
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `updateWorkspaceAsync` operation. */
-  export interface UpdateWorkspaceAsyncParams {
+  export interface UpdateWorkspaceAsyncParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The name of the workspace. This string cannot contain carriage return, newline, or tab characters. */
@@ -3922,11 +4116,10 @@ namespace AssistantV1 {
      *  new data collide with existing elements, the update request fails.
      */
     append?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `exportWorkspaceAsync` operation. */
-  export interface ExportWorkspaceAsyncParams {
+  export interface ExportWorkspaceAsyncParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
@@ -3939,7 +4132,6 @@ namespace AssistantV1 {
      *  as intents and entities) the workspace contains.
      */
     verbose?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `exportWorkspaceAsync` operation. */
@@ -3951,7 +4143,7 @@ namespace AssistantV1 {
   }
 
   /** Parameters for the `listIntents` operation. */
-  export interface ListIntentsParams {
+  export interface ListIntentsParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** Whether to include all element content in the returned data. If **export**=`false`, the returned data
@@ -3973,7 +4165,6 @@ namespace AssistantV1 {
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `listIntents` operation. */
@@ -3986,7 +4177,7 @@ namespace AssistantV1 {
   }
 
   /** Parameters for the `createIntent` operation. */
-  export interface CreateIntentParams {
+  export interface CreateIntentParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The name of the intent. This string must conform to the following restrictions:
@@ -4000,11 +4191,10 @@ namespace AssistantV1 {
     examples?: Example[];
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `getIntent` operation. */
-  export interface GetIntentParams {
+  export interface GetIntentParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The intent name. */
@@ -4016,11 +4206,10 @@ namespace AssistantV1 {
     _export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `updateIntent` operation. */
-  export interface UpdateIntentParams {
+  export interface UpdateIntentParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The intent name. */
@@ -4045,20 +4234,18 @@ namespace AssistantV1 {
     append?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `deleteIntent` operation. */
-  export interface DeleteIntentParams {
+  export interface DeleteIntentParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The intent name. */
     intent: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listExamples` operation. */
-  export interface ListExamplesParams {
+  export interface ListExamplesParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The intent name. */
@@ -4077,7 +4264,6 @@ namespace AssistantV1 {
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `listExamples` operation. */
@@ -4090,7 +4276,7 @@ namespace AssistantV1 {
   }
 
   /** Parameters for the `createExample` operation. */
-  export interface CreateExampleParams {
+  export interface CreateExampleParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The intent name. */
@@ -4104,11 +4290,10 @@ namespace AssistantV1 {
     mentions?: Mention[];
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `getExample` operation. */
-  export interface GetExampleParams {
+  export interface GetExampleParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The intent name. */
@@ -4117,11 +4302,10 @@ namespace AssistantV1 {
     text: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `updateExample` operation. */
-  export interface UpdateExampleParams {
+  export interface UpdateExampleParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The intent name. */
@@ -4137,22 +4321,20 @@ namespace AssistantV1 {
     newMentions?: Mention[];
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `deleteExample` operation. */
-  export interface DeleteExampleParams {
+  export interface DeleteExampleParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The intent name. */
     intent: string;
     /** The text of the user input example. */
     text: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listCounterexamples` operation. */
-  export interface ListCounterexamplesParams {
+  export interface ListCounterexamplesParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The number of records to return in each page of results. */
@@ -4169,7 +4351,6 @@ namespace AssistantV1 {
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `listCounterexamples` operation. */
@@ -4182,7 +4363,7 @@ namespace AssistantV1 {
   }
 
   /** Parameters for the `createCounterexample` operation. */
-  export interface CreateCounterexampleParams {
+  export interface CreateCounterexampleParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The text of a user input marked as irrelevant input. This string must conform to the following restrictions:
@@ -4192,22 +4373,20 @@ namespace AssistantV1 {
     text: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `getCounterexample` operation. */
-  export interface GetCounterexampleParams {
+  export interface GetCounterexampleParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The text of a user input counterexample (for example, `What are you wearing?`). */
     text: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `updateCounterexample` operation. */
-  export interface UpdateCounterexampleParams {
+  export interface UpdateCounterexampleParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The text of a user input counterexample (for example, `What are you wearing?`). */
@@ -4219,20 +4398,18 @@ namespace AssistantV1 {
     newText?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `deleteCounterexample` operation. */
-  export interface DeleteCounterexampleParams {
+  export interface DeleteCounterexampleParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The text of a user input counterexample (for example, `What are you wearing?`). */
     text: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listEntities` operation. */
-  export interface ListEntitiesParams {
+  export interface ListEntitiesParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** Whether to include all element content in the returned data. If **export**=`false`, the returned data
@@ -4254,7 +4431,6 @@ namespace AssistantV1 {
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `listEntities` operation. */
@@ -4267,7 +4443,7 @@ namespace AssistantV1 {
   }
 
   /** Parameters for the `createEntity` operation. */
-  export interface CreateEntityParams {
+  export interface CreateEntityParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The name of the entity. This string must conform to the following restrictions:
@@ -4286,11 +4462,10 @@ namespace AssistantV1 {
     values?: CreateValue[];
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `getEntity` operation. */
-  export interface GetEntityParams {
+  export interface GetEntityParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The name of the entity. */
@@ -4302,11 +4477,10 @@ namespace AssistantV1 {
     _export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `updateEntity` operation. */
-  export interface UpdateEntityParams {
+  export interface UpdateEntityParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The name of the entity. */
@@ -4335,20 +4509,18 @@ namespace AssistantV1 {
     append?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `deleteEntity` operation. */
-  export interface DeleteEntityParams {
+  export interface DeleteEntityParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The name of the entity. */
     entity: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listMentions` operation. */
-  export interface ListMentionsParams {
+  export interface ListMentionsParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The name of the entity. */
@@ -4360,11 +4532,10 @@ namespace AssistantV1 {
     _export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listValues` operation. */
-  export interface ListValuesParams {
+  export interface ListValuesParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The name of the entity. */
@@ -4388,7 +4559,6 @@ namespace AssistantV1 {
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `listValues` operation. */
@@ -4401,7 +4571,7 @@ namespace AssistantV1 {
   }
 
   /** Parameters for the `createValue` operation. */
-  export interface CreateValueParams {
+  export interface CreateValueParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The name of the entity. */
@@ -4429,7 +4599,6 @@ namespace AssistantV1 {
     patterns?: string[];
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `createValue` operation. */
@@ -4442,7 +4611,7 @@ namespace AssistantV1 {
   }
 
   /** Parameters for the `getValue` operation. */
-  export interface GetValueParams {
+  export interface GetValueParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The name of the entity. */
@@ -4456,11 +4625,10 @@ namespace AssistantV1 {
     _export?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `updateValue` operation. */
-  export interface UpdateValueParams {
+  export interface UpdateValueParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The name of the entity. */
@@ -4499,7 +4667,6 @@ namespace AssistantV1 {
     append?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `updateValue` operation. */
@@ -4512,18 +4679,17 @@ namespace AssistantV1 {
   }
 
   /** Parameters for the `deleteValue` operation. */
-  export interface DeleteValueParams {
+  export interface DeleteValueParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The name of the entity. */
     entity: string;
     /** The text of the entity value. */
     value: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listSynonyms` operation. */
-  export interface ListSynonymsParams {
+  export interface ListSynonymsParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The name of the entity. */
@@ -4544,7 +4710,6 @@ namespace AssistantV1 {
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `listSynonyms` operation. */
@@ -4557,7 +4722,7 @@ namespace AssistantV1 {
   }
 
   /** Parameters for the `createSynonym` operation. */
-  export interface CreateSynonymParams {
+  export interface CreateSynonymParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The name of the entity. */
@@ -4571,11 +4736,10 @@ namespace AssistantV1 {
     synonym: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `getSynonym` operation. */
-  export interface GetSynonymParams {
+  export interface GetSynonymParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The name of the entity. */
@@ -4586,11 +4750,10 @@ namespace AssistantV1 {
     synonym: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `updateSynonym` operation. */
-  export interface UpdateSynonymParams {
+  export interface UpdateSynonymParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The name of the entity. */
@@ -4606,11 +4769,10 @@ namespace AssistantV1 {
     newSynonym?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `deleteSynonym` operation. */
-  export interface DeleteSynonymParams {
+  export interface DeleteSynonymParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The name of the entity. */
@@ -4619,11 +4781,10 @@ namespace AssistantV1 {
     value: string;
     /** The text of the synonym. */
     synonym: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listDialogNodes` operation. */
-  export interface ListDialogNodesParams {
+  export interface ListDialogNodesParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The number of records to return in each page of results. */
@@ -4640,7 +4801,6 @@ namespace AssistantV1 {
     cursor?: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `listDialogNodes` operation. */
@@ -4653,7 +4813,7 @@ namespace AssistantV1 {
   }
 
   /** Parameters for the `createDialogNode` operation. */
-  export interface CreateDialogNodeParams {
+  export interface CreateDialogNodeParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The unique ID of the dialog node. This is an internal identifier used to refer to the dialog node from other
@@ -4716,7 +4876,6 @@ namespace AssistantV1 {
     disambiguationOptOut?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `createDialogNode` operation. */
@@ -4763,18 +4922,17 @@ namespace AssistantV1 {
   }
 
   /** Parameters for the `getDialogNode` operation. */
-  export interface GetDialogNodeParams {
+  export interface GetDialogNodeParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The dialog node ID (for example, `node_1_1479323581900`). */
     dialogNode: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `updateDialogNode` operation. */
-  export interface UpdateDialogNodeParams {
+  export interface UpdateDialogNodeParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The dialog node ID (for example, `node_1_1479323581900`). */
@@ -4839,7 +4997,6 @@ namespace AssistantV1 {
     newDisambiguationOptOut?: boolean;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
     includeAudit?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `updateDialogNode` operation. */
@@ -4886,16 +5043,15 @@ namespace AssistantV1 {
   }
 
   /** Parameters for the `deleteDialogNode` operation. */
-  export interface DeleteDialogNodeParams {
+  export interface DeleteDialogNodeParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** The dialog node ID (for example, `node_1_1479323581900`). */
     dialogNode: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listLogs` operation. */
-  export interface ListLogsParams {
+  export interface ListLogsParams extends DefaultParams {
     /** Unique identifier of the workspace. */
     workspaceId: string;
     /** How to sort the returned log events. You can sort by **request_timestamp**. To reverse the sort order,
@@ -4913,11 +5069,10 @@ namespace AssistantV1 {
     pageLimit?: number;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listAllLogs` operation. */
-  export interface ListAllLogsParams {
+  export interface ListAllLogsParams extends DefaultParams {
     /** A cacheable parameter that limits the results to those matching the specified filter. You must specify a
      *  filter query that includes a value for `language`, as well as a value for `request.context.system.assistant_id`,
      *  `workspace_id`, or `request.context.metadata.deployment`. These required filters must be specified using the
@@ -4933,14 +5088,12 @@ namespace AssistantV1 {
     pageLimit?: number;
     /** A token identifying the page of results to retrieve. */
     cursor?: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `deleteUserData` operation. */
-  export interface DeleteUserDataParams {
+  export interface DeleteUserDataParams extends DefaultParams {
     /** The customer ID for which all data is to be deleted. */
     customerId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /*************************

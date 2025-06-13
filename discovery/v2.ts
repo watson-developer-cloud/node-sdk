@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2019, 2024.
+ * (C) Copyright IBM Corp. 2019, 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,13 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.96.1-5136e54a-20241108-203028
+ * IBM OpenAPI SDK Code Generator Version: 3.105.0-3c13b041-20250605-193116
  */
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import {
+  AbortSignal,
   Authenticator,
   BaseService,
   UserOptions,
@@ -103,7 +104,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.ListProjectsResponse>> {
     const _params = { ...params };
     const _requiredParams = [];
-    const _validParams = ['headers'];
+    const _validParams = ['signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -125,11 +126,15 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -161,7 +166,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>> {
     const _params = { ...params };
     const _requiredParams = ['name', 'type'];
-    const _validParams = ['name', 'type', 'defaultQueryParameters', 'headers'];
+    const _validParams = ['name', 'type', 'defaultQueryParameters', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -190,12 +195,16 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -218,7 +227,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>> {
     const _params = { ...params };
     const _requiredParams = ['projectId'];
-    const _validParams = ['projectId', 'headers'];
+    const _validParams = ['projectId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -245,11 +254,15 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -273,7 +286,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.ProjectDetails>> {
     const _params = { ...params };
     const _requiredParams = ['projectId'];
-    const _validParams = ['projectId', 'name', 'headers'];
+    const _validParams = ['projectId', 'name', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -305,12 +318,16 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -336,7 +353,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['projectId'];
-    const _validParams = ['projectId', 'headers'];
+    const _validParams = ['projectId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -363,10 +380,14 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -391,7 +412,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.ListFieldsResponse>> {
     const _params = { ...params };
     const _requiredParams = ['projectId'];
-    const _validParams = ['projectId', 'collectionIds', 'headers'];
+    const _validParams = ['projectId', 'collectionIds', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -419,11 +440,15 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -449,7 +474,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.ListCollectionsResponse>> {
     const _params = { ...params };
     const _requiredParams = ['projectId'];
-    const _validParams = ['projectId', 'headers'];
+    const _validParams = ['projectId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -476,11 +501,15 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -515,7 +544,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'name'];
-    const _validParams = ['projectId', 'name', 'description', 'language', 'ocrEnabled', 'enrichments', 'headers'];
+    const _validParams = ['projectId', 'name', 'description', 'language', 'ocrEnabled', 'enrichments', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -551,12 +580,16 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -580,7 +613,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'collectionId'];
-    const _validParams = ['projectId', 'collectionId', 'headers'];
+    const _validParams = ['projectId', 'collectionId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -608,11 +641,15 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -652,7 +689,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.CollectionDetails>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'collectionId'];
-    const _validParams = ['projectId', 'collectionId', 'name', 'description', 'ocrEnabled', 'enrichments', 'headers'];
+    const _validParams = ['projectId', 'collectionId', 'name', 'description', 'ocrEnabled', 'enrichments', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -688,12 +725,16 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -718,7 +759,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'collectionId'];
-    const _validParams = ['projectId', 'collectionId', 'headers'];
+    const _validParams = ['projectId', 'collectionId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -746,10 +787,14 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -812,7 +857,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.ListDocumentsResponse>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'collectionId'];
-    const _validParams = ['projectId', 'collectionId', 'count', 'status', 'hasNotices', 'isParent', 'parentDocumentId', 'sha256', 'headers'];
+    const _validParams = ['projectId', 'collectionId', 'count', 'status', 'hasNotices', 'isParent', 'parentDocumentId', 'sha256', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -846,11 +891,15 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -920,7 +969,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentAccepted>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'collectionId'];
-    const _validParams = ['projectId', 'collectionId', 'file', 'filename', 'fileContentType', 'metadata', 'xWatsonDiscoveryForce', 'headers'];
+    const _validParams = ['projectId', 'collectionId', 'file', 'filename', 'fileContentType', 'metadata', 'xWatsonDiscoveryForce', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -952,12 +1001,13 @@ class DiscoveryV2 extends BaseService {
         method: 'POST',
         qs: query,
         path,
-        formData
+        formData,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'multipart/form-data',
@@ -965,6 +1015,9 @@ class DiscoveryV2 extends BaseService {
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -993,7 +1046,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentDetails>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'collectionId', 'documentId'];
-    const _validParams = ['projectId', 'collectionId', 'documentId', 'headers'];
+    const _validParams = ['projectId', 'collectionId', 'documentId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1022,11 +1075,15 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1087,7 +1144,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentAccepted>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'collectionId', 'documentId'];
-    const _validParams = ['projectId', 'collectionId', 'documentId', 'file', 'filename', 'fileContentType', 'metadata', 'xWatsonDiscoveryForce', 'headers'];
+    const _validParams = ['projectId', 'collectionId', 'documentId', 'file', 'filename', 'fileContentType', 'metadata', 'xWatsonDiscoveryForce', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1120,12 +1177,13 @@ class DiscoveryV2 extends BaseService {
         method: 'POST',
         qs: query,
         path,
-        formData
+        formData,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'multipart/form-data',
@@ -1133,6 +1191,9 @@ class DiscoveryV2 extends BaseService {
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1152,6 +1213,22 @@ class DiscoveryV2 extends BaseService {
    * collection. To remove subdocuments that are generated by an uploaded file, delete the original document instead.
    * You can get the document ID of the original document from the `parent_document_id` of the subdocument result.
    *
+   * If the document with the given document ID exists, Watson Discovery first marks or tags the document as deleted
+   * when it sends the 200 response code. At a later time (within a couple of minutes unless the document has many child
+   * documents), it removes the document from the collection.
+   *
+   * There is no bulk document delete API. Documents must be deleted one at a time using this API. However, you can
+   * delete a collection, and all the documents from the collection are removed along with the collection.
+   *
+   * The document will be deleted from the given collection only, not from the corresponding data source. Wherever
+   * relevant, an incremental crawl will not bring back the document into Watson Discovery from the data source. Only a
+   * full crawl will retrieve the deleted document back from the data source provided it is still present in the same
+   * data source.
+   *
+   * Finally, if multiple collections share the same dataset, deleting a document from a collection will remove it from
+   * that collection only (in other remaining collections the document will still exist). The document will be removed
+   * from the dataset, if this document is deleted from all the collections that share the same dataset.
+   *
    * @param {Object} params - The parameters to send to the service.
    * @param {string} params.projectId - The Universally Unique Identifier (UUID) of the project. This information can be
    * found from the *Integrate and Deploy* page in Discovery.
@@ -1167,7 +1244,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.DeleteDocumentResponse>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'collectionId', 'documentId'];
-    const _validParams = ['projectId', 'collectionId', 'documentId', 'xWatsonDiscoveryForce', 'headers'];
+    const _validParams = ['projectId', 'collectionId', 'documentId', 'xWatsonDiscoveryForce', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1196,12 +1273,16 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'X-Watson-Discovery-Force': _params.xWatsonDiscoveryForce,
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1283,7 +1364,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.QueryResponse>> {
     const _params = { ...params };
     const _requiredParams = ['projectId'];
-    const _validParams = ['projectId', 'collectionIds', 'filter', 'query', 'naturalLanguageQuery', 'aggregation', 'count', '_return', 'offset', 'sort', 'highlight', 'spellingSuggestions', 'tableResults', 'suggestedRefinements', 'passages', 'similar', 'headers'];
+    const _validParams = ['projectId', 'collectionIds', 'filter', 'query', 'naturalLanguageQuery', 'aggregation', 'count', '_return', 'offset', 'sort', 'highlight', 'spellingSuggestions', 'tableResults', 'suggestedRefinements', 'passages', 'similar', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1329,12 +1410,16 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1367,7 +1452,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.Completions>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'prefix'];
-    const _validParams = ['projectId', 'prefix', 'collectionIds', 'field', 'count', 'headers'];
+    const _validParams = ['projectId', 'prefix', 'collectionIds', 'field', 'count', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1398,11 +1483,15 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1442,7 +1531,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.QueryNoticesResponse>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'collectionId'];
-    const _validParams = ['projectId', 'collectionId', 'filter', 'query', 'naturalLanguageQuery', 'count', 'offset', 'headers'];
+    const _validParams = ['projectId', 'collectionId', 'filter', 'query', 'naturalLanguageQuery', 'count', 'offset', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1475,11 +1564,15 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1519,7 +1612,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.QueryNoticesResponse>> {
     const _params = { ...params };
     const _requiredParams = ['projectId'];
-    const _validParams = ['projectId', 'filter', 'query', 'naturalLanguageQuery', 'count', 'offset', 'headers'];
+    const _validParams = ['projectId', 'filter', 'query', 'naturalLanguageQuery', 'count', 'offset', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1551,11 +1644,15 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1584,7 +1681,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.StopWordList>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'collectionId'];
-    const _validParams = ['projectId', 'collectionId', 'headers'];
+    const _validParams = ['projectId', 'collectionId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1612,11 +1709,15 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1650,7 +1751,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.StopWordList>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'collectionId'];
-    const _validParams = ['projectId', 'collectionId', 'stopwords', 'headers'];
+    const _validParams = ['projectId', 'collectionId', 'stopwords', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1683,12 +1784,16 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1713,7 +1818,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'collectionId'];
-    const _validParams = ['projectId', 'collectionId', 'headers'];
+    const _validParams = ['projectId', 'collectionId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1741,10 +1846,14 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1769,7 +1878,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.Expansions>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'collectionId'];
-    const _validParams = ['projectId', 'collectionId', 'headers'];
+    const _validParams = ['projectId', 'collectionId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1797,11 +1906,15 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1839,7 +1952,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.Expansions>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'collectionId', 'expansions'];
-    const _validParams = ['projectId', 'collectionId', 'expansions', 'headers'];
+    const _validParams = ['projectId', 'collectionId', 'expansions', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1872,12 +1985,16 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1902,7 +2019,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'collectionId'];
-    const _validParams = ['projectId', 'collectionId', 'headers'];
+    const _validParams = ['projectId', 'collectionId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1930,10 +2047,14 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -1959,7 +2080,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.ComponentSettingsResponse>> {
     const _params = { ...params };
     const _requiredParams = ['projectId'];
-    const _validParams = ['projectId', 'headers'];
+    const _validParams = ['projectId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1986,11 +2107,15 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2016,7 +2141,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuerySet>> {
     const _params = { ...params };
     const _requiredParams = ['projectId'];
-    const _validParams = ['projectId', 'headers'];
+    const _validParams = ['projectId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2043,11 +2168,15 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2070,7 +2199,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['projectId'];
-    const _validParams = ['projectId', 'headers'];
+    const _validParams = ['projectId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2097,10 +2226,14 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2131,7 +2264,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'naturalLanguageQuery', 'examples'];
-    const _validParams = ['projectId', 'naturalLanguageQuery', 'examples', 'filter', 'headers'];
+    const _validParams = ['projectId', 'naturalLanguageQuery', 'examples', 'filter', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2165,12 +2298,16 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2194,7 +2331,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'queryId'];
-    const _validParams = ['projectId', 'queryId', 'headers'];
+    const _validParams = ['projectId', 'queryId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2222,11 +2359,15 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2256,7 +2397,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.TrainingQuery>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'queryId', 'naturalLanguageQuery', 'examples'];
-    const _validParams = ['projectId', 'queryId', 'naturalLanguageQuery', 'examples', 'filter', 'headers'];
+    const _validParams = ['projectId', 'queryId', 'naturalLanguageQuery', 'examples', 'filter', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2291,12 +2432,16 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2323,7 +2468,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'queryId'];
-    const _validParams = ['projectId', 'queryId', 'headers'];
+    const _validParams = ['projectId', 'queryId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2351,10 +2496,14 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2381,7 +2530,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.Enrichments>> {
     const _params = { ...params };
     const _requiredParams = ['projectId'];
-    const _validParams = ['projectId', 'headers'];
+    const _validParams = ['projectId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2408,11 +2557,15 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2445,7 +2598,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.Enrichment>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'enrichment'];
-    const _validParams = ['projectId', 'enrichment', 'file', 'headers'];
+    const _validParams = ['projectId', 'enrichment', 'file', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2475,18 +2628,22 @@ class DiscoveryV2 extends BaseService {
         method: 'POST',
         qs: query,
         path,
-        formData
+        formData,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'multipart/form-data',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2510,7 +2667,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.Enrichment>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'enrichmentId'];
-    const _validParams = ['projectId', 'enrichmentId', 'headers'];
+    const _validParams = ['projectId', 'enrichmentId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2538,11 +2695,15 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2568,7 +2729,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.Enrichment>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'enrichmentId', 'name'];
-    const _validParams = ['projectId', 'enrichmentId', 'name', 'description', 'headers'];
+    const _validParams = ['projectId', 'enrichmentId', 'name', 'description', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2602,12 +2763,16 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2633,7 +2798,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'enrichmentId'];
-    const _validParams = ['projectId', 'enrichmentId', 'headers'];
+    const _validParams = ['projectId', 'enrichmentId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2661,10 +2826,14 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2702,7 +2871,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.ListBatchesResponse>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'collectionId'];
-    const _validParams = ['projectId', 'collectionId', 'headers'];
+    const _validParams = ['projectId', 'collectionId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2730,11 +2899,15 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2762,7 +2935,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.PullBatchesResponse>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'collectionId', 'batchId'];
-    const _validParams = ['projectId', 'collectionId', 'batchId', 'headers'];
+    const _validParams = ['projectId', 'collectionId', 'batchId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2791,11 +2964,15 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2830,7 +3007,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<boolean>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'collectionId', 'batchId'];
-    const _validParams = ['projectId', 'collectionId', 'batchId', 'file', 'filename', 'headers'];
+    const _validParams = ['projectId', 'collectionId', 'batchId', 'file', 'filename', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2862,18 +3039,22 @@ class DiscoveryV2 extends BaseService {
         method: 'POST',
         qs: query,
         path,
-        formData
+        formData,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'multipart/form-data',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2900,7 +3081,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifiers>> {
     const _params = { ...params };
     const _requiredParams = ['projectId'];
-    const _validParams = ['projectId', 'headers'];
+    const _validParams = ['projectId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -2927,11 +3108,15 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -2969,7 +3154,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifier>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'trainingData', 'classifier'];
-    const _validParams = ['projectId', 'trainingData', 'classifier', 'testData', 'headers'];
+    const _validParams = ['projectId', 'trainingData', 'classifier', 'testData', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -3003,18 +3188,22 @@ class DiscoveryV2 extends BaseService {
         method: 'POST',
         qs: query,
         path,
-        formData
+        formData,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'multipart/form-data',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -3038,7 +3227,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifier>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'classifierId'];
-    const _validParams = ['projectId', 'classifierId', 'headers'];
+    const _validParams = ['projectId', 'classifierId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -3066,11 +3255,15 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -3104,7 +3297,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifier>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'classifierId', 'classifier'];
-    const _validParams = ['projectId', 'classifierId', 'classifier', 'trainingData', 'testData', 'headers'];
+    const _validParams = ['projectId', 'classifierId', 'classifier', 'trainingData', 'testData', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -3139,18 +3332,22 @@ class DiscoveryV2 extends BaseService {
         method: 'POST',
         qs: query,
         path,
-        formData
+        formData,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'multipart/form-data',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -3174,7 +3371,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'classifierId'];
-    const _validParams = ['projectId', 'classifierId', 'headers'];
+    const _validParams = ['projectId', 'classifierId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -3202,10 +3399,14 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -3233,7 +3434,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifierModels>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'classifierId'];
-    const _validParams = ['projectId', 'classifierId', 'headers'];
+    const _validParams = ['projectId', 'classifierId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -3261,11 +3462,15 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -3309,7 +3514,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifierModel>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'classifierId', 'name'];
-    const _validParams = ['projectId', 'classifierId', 'name', 'description', 'learningRate', 'l1RegularizationStrengths', 'l2RegularizationStrengths', 'trainingMaxSteps', 'improvementRatio', 'headers'];
+    const _validParams = ['projectId', 'classifierId', 'name', 'description', 'learningRate', 'l1RegularizationStrengths', 'l2RegularizationStrengths', 'trainingMaxSteps', 'improvementRatio', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -3348,12 +3553,16 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -3378,7 +3587,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifierModel>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'classifierId', 'modelId'];
-    const _validParams = ['projectId', 'classifierId', 'modelId', 'headers'];
+    const _validParams = ['projectId', 'classifierId', 'modelId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -3407,11 +3616,15 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -3438,7 +3651,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.DocumentClassifierModel>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'classifierId', 'modelId'];
-    const _validParams = ['projectId', 'classifierId', 'modelId', 'name', 'description', 'headers'];
+    const _validParams = ['projectId', 'classifierId', 'modelId', 'name', 'description', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -3473,12 +3686,16 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -3503,7 +3720,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'classifierId', 'modelId'];
-    const _validParams = ['projectId', 'classifierId', 'modelId', 'headers'];
+    const _validParams = ['projectId', 'classifierId', 'modelId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -3532,10 +3749,14 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -3594,7 +3815,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.AnalyzedDocument>> {
     const _params = { ...params };
     const _requiredParams = ['projectId', 'collectionId'];
-    const _validParams = ['projectId', 'collectionId', 'file', 'filename', 'fileContentType', 'metadata', 'headers'];
+    const _validParams = ['projectId', 'collectionId', 'file', 'filename', 'fileContentType', 'metadata', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -3626,18 +3847,22 @@ class DiscoveryV2 extends BaseService {
         method: 'POST',
         qs: query,
         path,
-        formData
+        formData,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'multipart/form-data',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -3669,7 +3894,7 @@ class DiscoveryV2 extends BaseService {
   ): Promise<DiscoveryV2.Response<DiscoveryV2.EmptyObject>> {
     const _params = { ...params };
     const _requiredParams = ['customerId'];
-    const _validParams = ['customerId', 'headers'];
+    const _validParams = ['customerId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -3692,10 +3917,14 @@ class DiscoveryV2 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -3739,13 +3968,17 @@ namespace DiscoveryV2 {
    * request interfaces
    ************************/
 
+   interface DefaultParams {
+     headers?: OutgoingHttpHeaders;
+     signal?: AbortSignal;
+   }
+
   /** Parameters for the `listProjects` operation. */
-  export interface ListProjectsParams {
-    headers?: OutgoingHttpHeaders;
+  export interface ListProjectsParams extends DefaultParams {
   }
 
   /** Parameters for the `createProject` operation. */
-  export interface CreateProjectParams {
+  export interface CreateProjectParams extends DefaultParams {
     /** The human readable name of this project. */
     name: string;
     /** The type of project.
@@ -3761,7 +3994,6 @@ namespace DiscoveryV2 {
     type: CreateProjectConstants.Type | string;
     /** Default query parameters for this project. */
     defaultQueryParameters?: DefaultQueryParams;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `createProject` operation. */
@@ -3778,36 +4010,33 @@ namespace DiscoveryV2 {
   }
 
   /** Parameters for the `getProject` operation. */
-  export interface GetProjectParams {
+  export interface GetProjectParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
     projectId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `updateProject` operation. */
-  export interface UpdateProjectParams {
+  export interface UpdateProjectParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
     projectId: string;
     /** The new name to give this project. */
     name?: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `deleteProject` operation. */
-  export interface DeleteProjectParams {
+  export interface DeleteProjectParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
     projectId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listFields` operation. */
-  export interface ListFieldsParams {
+  export interface ListFieldsParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -3816,20 +4045,18 @@ namespace DiscoveryV2 {
      *  project are used.
      */
     collectionIds?: string[];
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listCollections` operation. */
-  export interface ListCollectionsParams {
+  export interface ListCollectionsParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
     projectId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `createCollection` operation. */
-  export interface CreateCollectionParams {
+  export interface CreateCollectionParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -3854,22 +4081,20 @@ namespace DiscoveryV2 {
      *  documentation](/docs/discovery-data?topic=discovery-data-project-defaults).
      */
     enrichments?: CollectionEnrichment[];
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `getCollection` operation. */
-  export interface GetCollectionParams {
+  export interface GetCollectionParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
     projectId: string;
     /** The Universally Unique Identifier (UUID) of the collection. */
     collectionId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `updateCollection` operation. */
-  export interface UpdateCollectionParams {
+  export interface UpdateCollectionParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -3886,22 +4111,20 @@ namespace DiscoveryV2 {
     ocrEnabled?: boolean;
     /** An array of enrichments that are applied to this collection. */
     enrichments?: CollectionEnrichment[];
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `deleteCollection` operation. */
-  export interface DeleteCollectionParams {
+  export interface DeleteCollectionParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
     projectId: string;
     /** The Universally Unique Identifier (UUID) of the collection. */
     collectionId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listDocuments` operation. */
-  export interface ListDocumentsParams {
+  export interface ListDocumentsParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -3951,11 +4174,10 @@ namespace DiscoveryV2 {
      *  hexadecimal string.
      */
     sha256?: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `addDocument` operation. */
-  export interface AddDocumentParams {
+  export interface AddDocumentParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -3992,7 +4214,6 @@ namespace DiscoveryV2 {
      *  with other collections.
      */
     xWatsonDiscoveryForce?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `addDocument` operation. */
@@ -4009,7 +4230,7 @@ namespace DiscoveryV2 {
   }
 
   /** Parameters for the `getDocument` operation. */
-  export interface GetDocumentParams {
+  export interface GetDocumentParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -4018,11 +4239,10 @@ namespace DiscoveryV2 {
     collectionId: string;
     /** The ID of the document. */
     documentId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `updateDocument` operation. */
-  export interface UpdateDocumentParams {
+  export interface UpdateDocumentParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -4061,7 +4281,6 @@ namespace DiscoveryV2 {
      *  with other collections.
      */
     xWatsonDiscoveryForce?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `updateDocument` operation. */
@@ -4078,7 +4297,7 @@ namespace DiscoveryV2 {
   }
 
   /** Parameters for the `deleteDocument` operation. */
-  export interface DeleteDocumentParams {
+  export interface DeleteDocumentParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -4091,11 +4310,10 @@ namespace DiscoveryV2 {
      *  with other collections.
      */
     xWatsonDiscoveryForce?: boolean;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `query` operation. */
-  export interface QueryParams {
+  export interface QueryParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -4171,11 +4389,10 @@ namespace DiscoveryV2 {
      *  **natural_language_query** parameter.
      */
     similar?: QueryLargeSimilar;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `getAutocompletion` operation. */
-  export interface GetAutocompletionParams {
+  export interface GetAutocompletionParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -4192,11 +4409,10 @@ namespace DiscoveryV2 {
     field?: string;
     /** The number of autocompletion suggestions to return. */
     count?: number;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `queryCollectionNotices` operation. */
-  export interface QueryCollectionNoticesParams {
+  export interface QueryCollectionNoticesParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -4228,11 +4444,10 @@ namespace DiscoveryV2 {
      *  **offset** values together in any one query is **10000**.
      */
     offset?: number;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `queryNotices` operation. */
-  export interface QueryNoticesParams {
+  export interface QueryNoticesParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -4262,22 +4477,20 @@ namespace DiscoveryV2 {
      *  **offset** values together in any one query is **10000**.
      */
     offset?: number;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `getStopwordList` operation. */
-  export interface GetStopwordListParams {
+  export interface GetStopwordListParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
     projectId: string;
     /** The Universally Unique Identifier (UUID) of the collection. */
     collectionId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `createStopwordList` operation. */
-  export interface CreateStopwordListParams {
+  export interface CreateStopwordListParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -4286,33 +4499,30 @@ namespace DiscoveryV2 {
     collectionId: string;
     /** List of stop words. */
     stopwords?: string[];
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `deleteStopwordList` operation. */
-  export interface DeleteStopwordListParams {
+  export interface DeleteStopwordListParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
     projectId: string;
     /** The Universally Unique Identifier (UUID) of the collection. */
     collectionId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listExpansions` operation. */
-  export interface ListExpansionsParams {
+  export interface ListExpansionsParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
     projectId: string;
     /** The Universally Unique Identifier (UUID) of the collection. */
     collectionId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `createExpansions` operation. */
-  export interface CreateExpansionsParams {
+  export interface CreateExpansionsParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -4333,49 +4543,44 @@ namespace DiscoveryV2 {
      *  in the expanded terms list.
      */
     expansions: Expansion[];
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `deleteExpansions` operation. */
-  export interface DeleteExpansionsParams {
+  export interface DeleteExpansionsParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
     projectId: string;
     /** The Universally Unique Identifier (UUID) of the collection. */
     collectionId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `getComponentSettings` operation. */
-  export interface GetComponentSettingsParams {
+  export interface GetComponentSettingsParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
     projectId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listTrainingQueries` operation. */
-  export interface ListTrainingQueriesParams {
+  export interface ListTrainingQueriesParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
     projectId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `deleteTrainingQueries` operation. */
-  export interface DeleteTrainingQueriesParams {
+  export interface DeleteTrainingQueriesParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
     projectId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `createTrainingQuery` operation. */
-  export interface CreateTrainingQueryParams {
+  export interface CreateTrainingQueryParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -4390,22 +4595,20 @@ namespace DiscoveryV2 {
      *  for optimal ranking results.
      */
     filter?: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `getTrainingQuery` operation. */
-  export interface GetTrainingQueryParams {
+  export interface GetTrainingQueryParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
     projectId: string;
     /** The ID of the query used for training. */
     queryId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `updateTrainingQuery` operation. */
-  export interface UpdateTrainingQueryParams {
+  export interface UpdateTrainingQueryParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -4422,31 +4625,28 @@ namespace DiscoveryV2 {
      *  for optimal ranking results.
      */
     filter?: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `deleteTrainingQuery` operation. */
-  export interface DeleteTrainingQueryParams {
+  export interface DeleteTrainingQueryParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
     projectId: string;
     /** The ID of the query used for training. */
     queryId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listEnrichments` operation. */
-  export interface ListEnrichmentsParams {
+  export interface ListEnrichmentsParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
     projectId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `createEnrichment` operation. */
-  export interface CreateEnrichmentParams {
+  export interface CreateEnrichmentParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -4462,22 +4662,20 @@ namespace DiscoveryV2 {
      *  * ZIP for `watson_knowledge_studio_model` and `rule_based` (Studio Advanced Rule Editor).
      */
     file?: NodeJS.ReadableStream | Buffer;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `getEnrichment` operation. */
-  export interface GetEnrichmentParams {
+  export interface GetEnrichmentParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
     projectId: string;
     /** The Universally Unique Identifier (UUID) of the enrichment. */
     enrichmentId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `updateEnrichment` operation. */
-  export interface UpdateEnrichmentParams {
+  export interface UpdateEnrichmentParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -4488,33 +4686,30 @@ namespace DiscoveryV2 {
     name: string;
     /** A new description for the enrichment. */
     description?: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `deleteEnrichment` operation. */
-  export interface DeleteEnrichmentParams {
+  export interface DeleteEnrichmentParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
     projectId: string;
     /** The Universally Unique Identifier (UUID) of the enrichment. */
     enrichmentId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listBatches` operation. */
-  export interface ListBatchesParams {
+  export interface ListBatchesParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
     projectId: string;
     /** The Universally Unique Identifier (UUID) of the collection. */
     collectionId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `pullBatches` operation. */
-  export interface PullBatchesParams {
+  export interface PullBatchesParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -4523,11 +4718,10 @@ namespace DiscoveryV2 {
     collectionId: string;
     /** The Universally Unique Identifier (UUID) of the document batch that is being requested from Discovery. */
     batchId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `pushBatches` operation. */
-  export interface PushBatchesParams {
+  export interface PushBatchesParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -4546,20 +4740,18 @@ namespace DiscoveryV2 {
     file?: NodeJS.ReadableStream | Buffer;
     /** The filename for file. */
     filename?: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listDocumentClassifiers` operation. */
-  export interface ListDocumentClassifiersParams {
+  export interface ListDocumentClassifiersParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
     projectId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `createDocumentClassifier` operation. */
-  export interface CreateDocumentClassifierParams {
+  export interface CreateDocumentClassifierParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -4578,22 +4770,20 @@ namespace DiscoveryV2 {
      *  training and test data.
      */
     testData?: NodeJS.ReadableStream | Buffer;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `getDocumentClassifier` operation. */
-  export interface GetDocumentClassifierParams {
+  export interface GetDocumentClassifierParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
     projectId: string;
     /** The Universally Unique Identifier (UUID) of the classifier. */
     classifierId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `updateDocumentClassifier` operation. */
-  export interface UpdateDocumentClassifierParams {
+  export interface UpdateDocumentClassifierParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -4616,33 +4806,30 @@ namespace DiscoveryV2 {
      *  training and test data.
      */
     testData?: NodeJS.ReadableStream | Buffer;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `deleteDocumentClassifier` operation. */
-  export interface DeleteDocumentClassifierParams {
+  export interface DeleteDocumentClassifierParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
     projectId: string;
     /** The Universally Unique Identifier (UUID) of the classifier. */
     classifierId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listDocumentClassifierModels` operation. */
-  export interface ListDocumentClassifierModelsParams {
+  export interface ListDocumentClassifierModelsParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
     projectId: string;
     /** The Universally Unique Identifier (UUID) of the classifier. */
     classifierId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `createDocumentClassifierModel` operation. */
-  export interface CreateDocumentClassifierModelParams {
+  export interface CreateDocumentClassifierModelParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -4676,11 +4863,10 @@ namespace DiscoveryV2 {
      *  point. The default value is `0.00001`.
      */
     improvementRatio?: number;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `getDocumentClassifierModel` operation. */
-  export interface GetDocumentClassifierModelParams {
+  export interface GetDocumentClassifierModelParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -4689,11 +4875,10 @@ namespace DiscoveryV2 {
     classifierId: string;
     /** The Universally Unique Identifier (UUID) of the classifier model. */
     modelId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `updateDocumentClassifierModel` operation. */
-  export interface UpdateDocumentClassifierModelParams {
+  export interface UpdateDocumentClassifierModelParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -4706,11 +4891,10 @@ namespace DiscoveryV2 {
     name?: string;
     /** A new description for the enrichment. */
     description?: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `deleteDocumentClassifierModel` operation. */
-  export interface DeleteDocumentClassifierModelParams {
+  export interface DeleteDocumentClassifierModelParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -4719,11 +4903,10 @@ namespace DiscoveryV2 {
     classifierId: string;
     /** The Universally Unique Identifier (UUID) of the classifier model. */
     modelId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `analyzeDocument` operation. */
-  export interface AnalyzeDocumentParams {
+  export interface AnalyzeDocumentParams extends DefaultParams {
     /** The Universally Unique Identifier (UUID) of the project. This information can be found from the *Integrate
      *  and Deploy* page in Discovery.
      */
@@ -4756,7 +4939,6 @@ namespace DiscoveryV2 {
      *   }.
      */
     metadata?: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `analyzeDocument` operation. */
@@ -4773,10 +4955,9 @@ namespace DiscoveryV2 {
   }
 
   /** Parameters for the `deleteUserData` operation. */
-  export interface DeleteUserDataParams {
+  export interface DeleteUserDataParams extends DefaultParams {
     /** The customer ID for which all data is to be deleted. */
     customerId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /*************************
