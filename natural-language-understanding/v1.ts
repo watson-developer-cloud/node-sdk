@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2017, 2024.
+ * (C) Copyright IBM Corp. 2017, 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,13 @@
  */
 
 /**
- * IBM OpenAPI SDK Code Generator Version: 3.96.1-5136e54a-20241108-203028
+ * IBM OpenAPI SDK Code Generator Version: 3.105.0-3c13b041-20250605-193116
  */
 
 import * as extend from 'extend';
 import { IncomingHttpHeaders, OutgoingHttpHeaders } from 'http';
 import {
+  AbortSignal,
   Authenticator,
   BaseService,
   UserOptions,
@@ -142,7 +143,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.AnalysisResults>> {
     const _params = { ...params };
     const _requiredParams = ['features'];
-    const _validParams = ['features', 'text', 'html', 'url', 'clean', 'xpath', 'fallbackToRaw', 'returnAnalyzedText', 'language', 'limitTextCharacters', 'headers'];
+    const _validParams = ['features', 'text', 'html', 'url', 'clean', 'xpath', 'fallbackToRaw', 'returnAnalyzedText', 'language', 'limitTextCharacters', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -178,12 +179,16 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -209,7 +214,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ListModelsResults>> {
     const _params = { ...params };
     const _requiredParams = [];
-    const _validParams = ['headers'];
+    const _validParams = ['signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -231,11 +236,15 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -257,7 +266,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>> {
     const _params = { ...params };
     const _requiredParams = ['modelId'];
-    const _validParams = ['modelId', 'headers'];
+    const _validParams = ['modelId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -284,11 +293,15 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -325,7 +338,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModel>> {
     const _params = { ...params };
     const _requiredParams = ['language', 'trainingData'];
-    const _validParams = ['language', 'trainingData', 'trainingDataContentType', 'name', 'userMetadata', 'description', 'modelVersion', 'workspaceId', 'versionDescription', 'headers'];
+    const _validParams = ['language', 'trainingData', 'trainingDataContentType', 'name', 'userMetadata', 'description', 'modelVersion', 'workspaceId', 'versionDescription', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -356,18 +369,22 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         url: '/v1/models/categories',
         method: 'POST',
         qs: query,
-        formData
+        formData,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'multipart/form-data',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -388,7 +405,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModelList>> {
     const _params = { ...params };
     const _requiredParams = [];
-    const _validParams = ['headers'];
+    const _validParams = ['signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -410,11 +427,15 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -436,7 +457,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModel>> {
     const _params = { ...params };
     const _requiredParams = ['modelId'];
-    const _validParams = ['modelId', 'headers'];
+    const _validParams = ['modelId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -463,11 +484,15 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -502,7 +527,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.CategoriesModel>> {
     const _params = { ...params };
     const _requiredParams = ['modelId', 'language', 'trainingData'];
-    const _validParams = ['modelId', 'language', 'trainingData', 'trainingDataContentType', 'name', 'userMetadata', 'description', 'modelVersion', 'workspaceId', 'versionDescription', 'headers'];
+    const _validParams = ['modelId', 'language', 'trainingData', 'trainingDataContentType', 'name', 'userMetadata', 'description', 'modelVersion', 'workspaceId', 'versionDescription', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -538,18 +563,22 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         method: 'PUT',
         qs: query,
         path,
-        formData
+        formData,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'multipart/form-data',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -572,7 +601,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>> {
     const _params = { ...params };
     const _requiredParams = ['modelId'];
-    const _validParams = ['modelId', 'headers'];
+    const _validParams = ['modelId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -599,11 +628,15 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -642,7 +675,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModel>> {
     const _params = { ...params };
     const _requiredParams = ['language', 'trainingData'];
-    const _validParams = ['language', 'trainingData', 'trainingDataContentType', 'name', 'userMetadata', 'description', 'modelVersion', 'workspaceId', 'versionDescription', 'trainingParameters', 'headers'];
+    const _validParams = ['language', 'trainingData', 'trainingDataContentType', 'name', 'userMetadata', 'description', 'modelVersion', 'workspaceId', 'versionDescription', 'trainingParameters', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -674,18 +707,22 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         url: '/v1/models/classifications',
         method: 'POST',
         qs: query,
-        formData
+        formData,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'multipart/form-data',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -706,7 +743,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModelList>> {
     const _params = { ...params };
     const _requiredParams = [];
-    const _validParams = ['headers'];
+    const _validParams = ['signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -728,11 +765,15 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -754,7 +795,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModel>> {
     const _params = { ...params };
     const _requiredParams = ['modelId'];
-    const _validParams = ['modelId', 'headers'];
+    const _validParams = ['modelId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -781,11 +822,15 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -822,7 +867,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.ClassificationsModel>> {
     const _params = { ...params };
     const _requiredParams = ['modelId', 'language', 'trainingData'];
-    const _validParams = ['modelId', 'language', 'trainingData', 'trainingDataContentType', 'name', 'userMetadata', 'description', 'modelVersion', 'workspaceId', 'versionDescription', 'trainingParameters', 'headers'];
+    const _validParams = ['modelId', 'language', 'trainingData', 'trainingDataContentType', 'name', 'userMetadata', 'description', 'modelVersion', 'workspaceId', 'versionDescription', 'trainingParameters', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -859,18 +904,22 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         method: 'PUT',
         qs: query,
         path,
-        formData
+        formData,
       },
       defaultOptions: extend(true, {}, this.baseOptions, {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
             'Content-Type': 'multipart/form-data',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -893,7 +942,7 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
   ): Promise<NaturalLanguageUnderstandingV1.Response<NaturalLanguageUnderstandingV1.DeleteModelResults>> {
     const _params = { ...params };
     const _requiredParams = ['modelId'];
-    const _validParams = ['modelId', 'headers'];
+    const _validParams = ['modelId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -920,11 +969,15 @@ class NaturalLanguageUnderstandingV1 extends BaseService {
         headers: extend(
           true,
           sdkHeaders,
+          this.baseOptions.headers,
           {
             'Accept': 'application/json',
           },
           _params.headers
         ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
       }),
     };
 
@@ -968,8 +1021,13 @@ namespace NaturalLanguageUnderstandingV1 {
    * request interfaces
    ************************/
 
+   interface DefaultParams {
+     headers?: OutgoingHttpHeaders;
+     signal?: AbortSignal;
+   }
+
   /** Parameters for the `analyze` operation. */
-  export interface AnalyzeParams {
+  export interface AnalyzeParams extends DefaultParams {
     /** Specific features to analyze the document for. */
     features: Features;
     /** The plain text to analyze. One of the `text`, `html`, or `url` parameters is required. */
@@ -1000,23 +1058,20 @@ namespace NaturalLanguageUnderstandingV1 {
     language?: string;
     /** Sets the maximum number of characters that are processed by the service. */
     limitTextCharacters?: number;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `listModels` operation. */
-  export interface ListModelsParams {
-    headers?: OutgoingHttpHeaders;
+  export interface ListModelsParams extends DefaultParams {
   }
 
   /** Parameters for the `deleteModel` operation. */
-  export interface DeleteModelParams {
+  export interface DeleteModelParams extends DefaultParams {
     /** Model ID of the model to delete. */
     modelId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `createCategoriesModel` operation. */
-  export interface CreateCategoriesModelParams {
+  export interface CreateCategoriesModelParams extends DefaultParams {
     /** The 2-letter language code of this model. */
     language: string;
     /** Training data in JSON format. For more information, see [Categories training data
@@ -1037,7 +1092,6 @@ namespace NaturalLanguageUnderstandingV1 {
     workspaceId?: string;
     /** The description of the version. */
     versionDescription?: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `createCategoriesModel` operation. */
@@ -1050,19 +1104,17 @@ namespace NaturalLanguageUnderstandingV1 {
   }
 
   /** Parameters for the `listCategoriesModels` operation. */
-  export interface ListCategoriesModelsParams {
-    headers?: OutgoingHttpHeaders;
+  export interface ListCategoriesModelsParams extends DefaultParams {
   }
 
   /** Parameters for the `getCategoriesModel` operation. */
-  export interface GetCategoriesModelParams {
+  export interface GetCategoriesModelParams extends DefaultParams {
     /** ID of the model. */
     modelId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `updateCategoriesModel` operation. */
-  export interface UpdateCategoriesModelParams {
+  export interface UpdateCategoriesModelParams extends DefaultParams {
     /** ID of the model. */
     modelId: string;
     /** The 2-letter language code of this model. */
@@ -1085,7 +1137,6 @@ namespace NaturalLanguageUnderstandingV1 {
     workspaceId?: string;
     /** The description of the version. */
     versionDescription?: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `updateCategoriesModel` operation. */
@@ -1098,14 +1149,13 @@ namespace NaturalLanguageUnderstandingV1 {
   }
 
   /** Parameters for the `deleteCategoriesModel` operation. */
-  export interface DeleteCategoriesModelParams {
+  export interface DeleteCategoriesModelParams extends DefaultParams {
     /** ID of the model. */
     modelId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `createClassificationsModel` operation. */
-  export interface CreateClassificationsModelParams {
+  export interface CreateClassificationsModelParams extends DefaultParams {
     /** The 2-letter language code of this model. */
     language: string;
     /** Training data in JSON format. For more information, see [Classifications training data
@@ -1128,7 +1178,6 @@ namespace NaturalLanguageUnderstandingV1 {
     versionDescription?: string;
     /** Optional classifications training parameters along with model train requests. */
     trainingParameters?: ClassificationsTrainingParameters;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `createClassificationsModel` operation. */
@@ -1141,19 +1190,17 @@ namespace NaturalLanguageUnderstandingV1 {
   }
 
   /** Parameters for the `listClassificationsModels` operation. */
-  export interface ListClassificationsModelsParams {
-    headers?: OutgoingHttpHeaders;
+  export interface ListClassificationsModelsParams extends DefaultParams {
   }
 
   /** Parameters for the `getClassificationsModel` operation. */
-  export interface GetClassificationsModelParams {
+  export interface GetClassificationsModelParams extends DefaultParams {
     /** ID of the model. */
     modelId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Parameters for the `updateClassificationsModel` operation. */
-  export interface UpdateClassificationsModelParams {
+  export interface UpdateClassificationsModelParams extends DefaultParams {
     /** ID of the model. */
     modelId: string;
     /** The 2-letter language code of this model. */
@@ -1178,7 +1225,6 @@ namespace NaturalLanguageUnderstandingV1 {
     versionDescription?: string;
     /** Optional classifications training parameters along with model train requests. */
     trainingParameters?: ClassificationsTrainingParameters;
-    headers?: OutgoingHttpHeaders;
   }
 
   /** Constants for the `updateClassificationsModel` operation. */
@@ -1191,10 +1237,9 @@ namespace NaturalLanguageUnderstandingV1 {
   }
 
   /** Parameters for the `deleteClassificationsModel` operation. */
-  export interface DeleteClassificationsModelParams {
+  export interface DeleteClassificationsModelParams extends DefaultParams {
     /** ID of the model. */
     modelId: string;
-    headers?: OutgoingHttpHeaders;
   }
 
   /*************************
