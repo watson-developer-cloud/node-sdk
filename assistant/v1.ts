@@ -43,7 +43,7 @@ import { getSdkHeaders } from '../lib/common';
 class AssistantV1 extends BaseService {
   static DEFAULT_SERVICE_URL: string = 'https://api.us-south.assistant.watson.cloud.ibm.com';
 
-  static DEFAULT_SERVICE_NAME: string = 'conversation';
+  static DEFAULT_SERVICE_NAME: string = 'assistant';
 
   /** Release date of the API version you want to use. Specify dates in YYYY-MM-DD format. The current version is
    *  `2021-11-27`.
