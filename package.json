@@ -1,6 +1,6 @@
 {
   "name": "ibm-watson",
-  "version": "10.0.0",
+  "version": "11.0.0",
   "description": "Client library to use the IBM Watson Services",
   "repository": {
     "type": "git",

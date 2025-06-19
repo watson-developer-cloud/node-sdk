@@ -1,3 +1,24 @@
+# [11.0.0](https://github.com/watson-developer-cloud/node-sdk/compare/v10.0.0...v11.0.0) (2025-06-19)
+
+
+### Bug Fixes
+
+* **wa v1&v2:** update default service name ([5d472cf](https://github.com/watson-developer-cloud/node-sdk/commit/5d472cf7c263a4a2afa7a11a0b03aad1320403b0))
+
+
+### Features
+
+* **nlu:** add signal to axios options ([8c88e3e](https://github.com/watson-developer-cloud/node-sdk/commit/8c88e3e4e679609b534a7d63b9c3ddd3e520267d))
+* **sdk-core:** update the ibm-cloud-sdk-core to 5.4.0 ([bc24dd2](https://github.com/watson-developer-cloud/node-sdk/commit/bc24dd2f7c855ac5a48b25068280cdd093b6dd58))
+* **tts&stt:** Add new model enum values; add signal to axios ([eb919a5](https://github.com/watson-developer-cloud/node-sdk/commit/eb919a5c85409a190c4687857878487b56d0b66e))
+* **wav1&discv2:** add signal to axios options ([32c5a0a](https://github.com/watson-developer-cloud/node-sdk/commit/32c5a0afc0b22bffd28656bbd9e4ccec9fcde849))
+* **wav2:** Add turn events and required properties; add signal to axios properties ([00bac4b](https://github.com/watson-developer-cloud/node-sdk/commit/00bac4bc1c699b2688a65821a12f3fafa4fbcdfa))
+
+
+### BREAKING CHANGES
+
+* **wav2:** add required conversational_search param to SearchSettings interface
+
 # [10.0.0](https://github.com/watson-developer-cloud/node-sdk/compare/v9.1.0...v10.0.0) (2024-12-04)
 
 
