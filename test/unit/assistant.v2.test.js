@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -799,9 +799,11 @@ describe('AssistantV2', () => {
       function __createSessionTest() {
         // Construct the params object for operation createSession
         const assistantId = 'testString';
+        const environmentId = 'testString';
         const analytics = requestAnalyticsModel;
         const createSessionParams = {
           assistantId,
+          environmentId,
           analytics,
         };
 
@@ -815,13 +817,14 @@ describe('AssistantV2', () => {
 
         const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/sessions', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/environments/{environment_id}/sessions', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.body.analytics).toEqual(analytics);
         expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
         expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
+        expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
       }
 
       test('should pass the right params to createRequest with enable and disable retries', () => {
@@ -842,10 +845,12 @@ describe('AssistantV2', () => {
       test('should prioritize user-given headers', () => {
         // parameters
         const assistantId = 'testString';
+        const environmentId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const createSessionParams = {
           assistantId,
+          environmentId,
           headers: {
             Accept: userAccept,
             'Content-Type': userContentType,
