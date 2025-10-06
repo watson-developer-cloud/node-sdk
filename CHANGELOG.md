@@ -1,3 +1,15 @@
+# [12.0.0](https://github.com/watson-developer-cloud/node-sdk/compare/v11.0.0...v12.0.0) (2025-10-06)
+
+
+### Features
+
+* **wa-v2:** update required params for createSession ([7b9a5cd](https://github.com/watson-developer-cloud/node-sdk/commit/7b9a5cdacea5b426e94ab99f6ad4a359c2b96c00))
+
+
+### BREAKING CHANGES
+
+* **wa-v2:** `environmentId` now required for `createSession` function
+
 # [11.0.0](https://github.com/watson-developer-cloud/node-sdk/compare/v10.0.0...v11.0.0) (2025-06-19)
 
 
