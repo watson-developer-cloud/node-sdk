@@ -516,6 +516,9 @@ class AssistantV2 extends BaseService {
    *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
    *
    *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.environmentId - Unique identifier of the environment. To find the environment ID in the
+   * watsonx Assistant user interface, open the environment settings and click **API Details**. **Note:** Currently, the
+   * API does not support creating environments.
    * @param {RequestAnalytics} [params.analytics] - An optional object containing analytics data. Currently, this data
    * is used only for events sent to the Segment extension.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -525,8 +528,8 @@ class AssistantV2 extends BaseService {
     params: AssistantV2.CreateSessionParams
   ): Promise<AssistantV2.Response<AssistantV2.SessionResponse>> {
     const _params = { ...params };
-    const _requiredParams = ['assistantId'];
-    const _validParams = ['assistantId', 'analytics', 'signal', 'headers'];
+    const _requiredParams = ['assistantId', 'environmentId'];
+    const _validParams = ['assistantId', 'environmentId', 'analytics', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -542,13 +545,14 @@ class AssistantV2 extends BaseService {
 
     const path = {
       'assistant_id': _params.assistantId,
+      'environment_id': _params.environmentId,
     };
 
     const sdkHeaders = getSdkHeaders(AssistantV2.DEFAULT_SERVICE_NAME, 'v2', 'createSession');
 
     const parameters = {
       options: {
-        url: '/v2/assistants/{assistant_id}/sessions',
+        url: '/v2/assistants/{assistant_id}/environments/{environment_id}/sessions',
         method: 'POST',
         body,
         qs: query,
@@ -2963,6 +2967,11 @@ namespace AssistantV2 {
      *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
      */
     assistantId: string;
+    /** Unique identifier of the environment. To find the environment ID in the watsonx Assistant user interface,
+     *  open the environment settings and click **API Details**. **Note:** Currently, the API does not support creating
+     *  environments.
+     */
+    environmentId: string;
     /** An optional object containing analytics data. Currently, this data is used only for events sent to the
      *  Segment extension.
      */
