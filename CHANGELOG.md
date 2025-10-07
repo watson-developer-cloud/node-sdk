@@ -1,3 +1,10 @@
+## [12.0.1](https://github.com/watson-developer-cloud/node-sdk/compare/v12.0.0...v12.0.1) (2025-10-07)
+
+
+### Bug Fixes
+
+* **wa-v2:** add environmentId param to more functions ([e9a6b38](https://github.com/watson-developer-cloud/node-sdk/commit/e9a6b38396d043772bb4618ff071046c94f6ea48))
+
 # [12.0.0](https://github.com/watson-developer-cloud/node-sdk/compare/v11.0.0...v12.0.0) (2025-10-06)
 
 
