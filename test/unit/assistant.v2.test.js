@@ -892,9 +892,11 @@ describe('AssistantV2', () => {
       function __deleteSessionTest() {
         // Construct the params object for operation deleteSession
         const assistantId = 'testString';
+        const environmentId = 'testString';
         const sessionId = 'testString';
         const deleteSessionParams = {
           assistantId,
+          environmentId,
           sessionId,
         };
 
@@ -908,12 +910,13 @@ describe('AssistantV2', () => {
 
         const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/sessions/{session_id}', 'DELETE');
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/environments/{environment_id}/sessions/{session_id}', 'DELETE');
         const expectedAccept = 'application/json';
         const expectedContentType = undefined;
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
         expect(mockRequestOptions.qs.version).toEqual(assistantServiceOptions.version);
         expect(mockRequestOptions.path.assistant_id).toEqual(assistantId);
+        expect(mockRequestOptions.path.environment_id).toEqual(environmentId);
         expect(mockRequestOptions.path.session_id).toEqual(sessionId);
       }
 
@@ -935,11 +938,13 @@ describe('AssistantV2', () => {
       test('should prioritize user-given headers', () => {
         // parameters
         const assistantId = 'testString';
+        const environmentId = 'testString';
         const sessionId = 'testString';
         const userAccept = 'fake/accept';
         const userContentType = 'fake/contentType';
         const deleteSessionParams = {
           assistantId,
+          environmentId,
           sessionId,
           headers: {
             Accept: userAccept,
@@ -1167,7 +1172,7 @@ describe('AssistantV2', () => {
 
         const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/sessions/{session_id}/message', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/environments/{environment_id}/sessions/{session_id}/message', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
@@ -1431,7 +1436,7 @@ describe('AssistantV2', () => {
 
         const mockRequestOptions = getOptions(createRequestMock);
 
-        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/message', 'POST');
+        checkUrlAndMethod(mockRequestOptions, '/v2/assistants/{assistant_id}/environments/{environment_id}/message', 'POST');
         const expectedAccept = 'application/json';
         const expectedContentType = 'application/json';
         checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);

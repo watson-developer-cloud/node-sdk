@@ -600,6 +600,9 @@ class AssistantV2 extends BaseService {
    *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
    *
    *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.environmentId - Unique identifier of the environment. To find the environment ID in the
+   * watsonx Assistant user interface, open the environment settings and click **API Details**. **Note:** Currently, the
+   * API does not support creating environments.
    * @param {string} params.sessionId - Unique identifier of the session.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV2.Response<AssistantV2.EmptyObject>>}
@@ -608,8 +611,8 @@ class AssistantV2 extends BaseService {
     params: AssistantV2.DeleteSessionParams
   ): Promise<AssistantV2.Response<AssistantV2.EmptyObject>> {
     const _params = { ...params };
-    const _requiredParams = ['assistantId', 'sessionId'];
-    const _validParams = ['assistantId', 'sessionId', 'signal', 'headers'];
+    const _requiredParams = ['assistantId', 'environmentId', 'sessionId'];
+    const _validParams = ['assistantId', 'environmentId', 'sessionId', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -621,6 +624,7 @@ class AssistantV2 extends BaseService {
 
     const path = {
       'assistant_id': _params.assistantId,
+      'environment_id': _params.environmentId,
       'session_id': _params.sessionId,
     };
 
@@ -628,7 +632,7 @@ class AssistantV2 extends BaseService {
 
     const parameters = {
       options: {
-        url: '/v2/assistants/{assistant_id}/sessions/{session_id}',
+        url: '/v2/assistants/{assistant_id}/environments/{environment_id}/sessions/{session_id}',
         method: 'DELETE',
         qs: query,
         path,
@@ -729,7 +733,7 @@ class AssistantV2 extends BaseService {
 
     const parameters = {
       options: {
-        url: '/v2/assistants/{assistant_id}/sessions/{session_id}/message',
+        url: '/v2/assistants/{assistant_id}/environments/{environment_id}/sessions/{session_id}/message',
         method: 'POST',
         body,
         qs: query,
@@ -827,7 +831,7 @@ class AssistantV2 extends BaseService {
 
     const parameters = {
       options: {
-        url: '/v2/assistants/{assistant_id}/message',
+        url: '/v2/assistants/{assistant_id}/environments/{environment_id}/message',
         method: 'POST',
         body,
         qs: query,
@@ -2996,6 +3000,11 @@ namespace AssistantV2 {
      *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
      */
     assistantId: string;
+    /** Unique identifier of the environment. To find the environment ID in the watsonx Assistant user interface,
+     *  open the environment settings and click **API Details**. **Note:** Currently, the API does not support creating
+     *  environments.
+     */
+    environmentId: string;
     /** Unique identifier of the session. */
     sessionId: string;
   }
