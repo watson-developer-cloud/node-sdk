@@ -1,9 +1,15 @@
-## [12.0.1](https://github.com/watson-developer-cloud/node-sdk/compare/v12.0.0...v12.0.1) (2025-10-07)
+## [12.0.1](https://github.com/watson-developer-cloud/node-sdk/compare/v12.0.0...v12.0.1) (2025-10-07)  ([e9a6b38](https://github.com/watson-developer-cloud/node-sdk/commit/e9a6b38396d043772bb4618ff071046c94f6ea48))
 
+#### **wa-v2** – Patch Release Notes ####
 
-### Bug Fixes
+This release addresses several issues identified in version 12.0.0:
 
-* **wa-v2:** add environmentId param to more functions ([e9a6b38](https://github.com/watson-developer-cloud/node-sdk/commit/e9a6b38396d043772bb4618ff071046c94f6ea48))
+- Fixed missing parameter in HTTP request creation:
+The environments path parameter was previously omitted from the message and messageStateless functions when generating HTTP requests. This parameter has now been properly included to ensure consistent request behavior.
+
+- Added required environmentId parameter to session deletion:
+The `deleteSession` function now correctly requires the `environmentId` parameter. This change was originally intended for the 12.0.0 release and has been implemented as part of this update.
+
 
 # [12.0.0](https://github.com/watson-developer-cloud/node-sdk/compare/v11.0.0...v12.0.0) (2025-10-06)
 
@@ -15,7 +21,7 @@
 
 ### BREAKING CHANGES
 
-* **wa-v2:** `environmentId` now required for `createSession` function
+* **wa-v2:** `assistantId` and `environmentId` are now required parameters for the `createSession` function
 
 # [11.0.0](https://github.com/watson-developer-cloud/node-sdk/compare/v10.0.0...v11.0.0) (2025-06-19)
 
