@@ -339,8 +339,9 @@ class SpeechToTextV1 extends BaseService {
    * @param {boolean} [params.speechBeginEvent] - If `true`, the service returns a response object `SpeechActivity`
    * which contains the time when a speech activity is detected in the stream. This can be used both in standard and low
    * latency mode. This feature enables client applications to know that some words/speech has been detected and the
-   * service is in the process of decoding. This can be used in lieu of interim results in standard mode. See [Using
-   * speech recognition
+   * service is in the process of decoding. This can be used in lieu of interim results in standard mode. Use
+   * `sad_module: 2` to increase accuracy and performance in detecting speech boundaries within the audio stream. See
+   * [Using speech recognition
    * parameters](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-service-features#features-parameters).
    * @param {string} [params.languageCustomizationId] - The customization ID (GUID) of a custom language model that is
    * to be used with the recognition request. The base model of the specified custom language model must match the model
@@ -508,6 +509,13 @@ class SpeechToTextV1 extends BaseService {
    * sensitivity](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#detection-parameters-sensitivity)
    * and [Language model
    * support](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#detection-support).
+   * @param {number} [params.sadModule] - Detects speech boundaries within the audio stream with better performance,
+   * improved noise suppression, faster responsiveness, and increased accuracy.
+   *
+   * Specify `sad_module: 2`
+   *
+   *  See [Speech Activity Detection
+   * (SAD)](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#sad).
    * @param {number} [params.backgroundAudioSuppression] - The level to which the service is to suppress background
    * audio based on its volume to prevent it from being transcribed as speech. Use the parameter to suppress side
    * conversations or background noise.
@@ -561,7 +569,7 @@ class SpeechToTextV1 extends BaseService {
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechRecognitionResults>> {
     const _params = { ...params };
     const _requiredParams = ['audio'];
-    const _validParams = ['audio', 'contentType', 'model', 'speechBeginEvent', 'languageCustomizationId', 'acousticCustomizationId', 'baseModelVersion', 'customizationWeight', 'inactivityTimeout', 'keywords', 'keywordsThreshold', 'maxAlternatives', 'wordAlternativesThreshold', 'wordConfidence', 'timestamps', 'profanityFilter', 'smartFormatting', 'smartFormattingVersion', 'speakerLabels', 'grammarName', 'redaction', 'audioMetrics', 'endOfPhraseSilenceTime', 'splitTranscriptAtPhraseEnd', 'speechDetectorSensitivity', 'backgroundAudioSuppression', 'lowLatency', 'characterInsertionBias', 'signal', 'headers'];
+    const _validParams = ['audio', 'contentType', 'model', 'speechBeginEvent', 'languageCustomizationId', 'acousticCustomizationId', 'baseModelVersion', 'customizationWeight', 'inactivityTimeout', 'keywords', 'keywordsThreshold', 'maxAlternatives', 'wordAlternativesThreshold', 'wordConfidence', 'timestamps', 'profanityFilter', 'smartFormatting', 'smartFormattingVersion', 'speakerLabels', 'grammarName', 'redaction', 'audioMetrics', 'endOfPhraseSilenceTime', 'splitTranscriptAtPhraseEnd', 'speechDetectorSensitivity', 'sadModule', 'backgroundAudioSuppression', 'lowLatency', 'characterInsertionBias', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -592,6 +600,7 @@ class SpeechToTextV1 extends BaseService {
       'end_of_phrase_silence_time': _params.endOfPhraseSilenceTime,
       'split_transcript_at_phrase_end': _params.splitTranscriptAtPhraseEnd,
       'speech_detector_sensitivity': _params.speechDetectorSensitivity,
+      'sad_module': _params.sadModule,
       'background_audio_suppression': _params.backgroundAudioSuppression,
       'low_latency': _params.lowLatency,
       'character_insertion_bias': _params.characterInsertionBias,
@@ -1116,6 +1125,13 @@ class SpeechToTextV1 extends BaseService {
    * sensitivity](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#detection-parameters-sensitivity)
    * and [Language model
    * support](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#detection-support).
+   * @param {number} [params.sadModule] - Detects speech boundaries within the audio stream with better performance,
+   * improved noise suppression, faster responsiveness, and increased accuracy.
+   *
+   * Specify `sad_module: 2`
+   *
+   *  See [Speech Activity Detection
+   * (SAD)](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#sad).
    * @param {number} [params.backgroundAudioSuppression] - The level to which the service is to suppress background
    * audio based on its volume to prevent it from being transcribed as speech. Use the parameter to suppress side
    * conversations or background noise.
@@ -1169,7 +1185,7 @@ class SpeechToTextV1 extends BaseService {
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.RecognitionJob>> {
     const _params = { ...params };
     const _requiredParams = ['audio'];
-    const _validParams = ['audio', 'contentType', 'model', 'callbackUrl', 'events', 'userToken', 'resultsTtl', 'languageCustomizationId', 'acousticCustomizationId', 'baseModelVersion', 'customizationWeight', 'inactivityTimeout', 'keywords', 'keywordsThreshold', 'maxAlternatives', 'wordAlternativesThreshold', 'wordConfidence', 'timestamps', 'profanityFilter', 'smartFormatting', 'smartFormattingVersion', 'speakerLabels', 'grammarName', 'redaction', 'processingMetrics', 'processingMetricsInterval', 'audioMetrics', 'endOfPhraseSilenceTime', 'splitTranscriptAtPhraseEnd', 'speechDetectorSensitivity', 'backgroundAudioSuppression', 'lowLatency', 'characterInsertionBias', 'signal', 'headers'];
+    const _validParams = ['audio', 'contentType', 'model', 'callbackUrl', 'events', 'userToken', 'resultsTtl', 'languageCustomizationId', 'acousticCustomizationId', 'baseModelVersion', 'customizationWeight', 'inactivityTimeout', 'keywords', 'keywordsThreshold', 'maxAlternatives', 'wordAlternativesThreshold', 'wordConfidence', 'timestamps', 'profanityFilter', 'smartFormatting', 'smartFormattingVersion', 'speakerLabels', 'grammarName', 'redaction', 'processingMetrics', 'processingMetricsInterval', 'audioMetrics', 'endOfPhraseSilenceTime', 'splitTranscriptAtPhraseEnd', 'speechDetectorSensitivity', 'sadModule', 'backgroundAudioSuppression', 'lowLatency', 'characterInsertionBias', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1205,6 +1221,7 @@ class SpeechToTextV1 extends BaseService {
       'end_of_phrase_silence_time': _params.endOfPhraseSilenceTime,
       'split_transcript_at_phrase_end': _params.splitTranscriptAtPhraseEnd,
       'speech_detector_sensitivity': _params.speechDetectorSensitivity,
+      'sad_module': _params.sadModule,
       'background_audio_suppression': _params.backgroundAudioSuppression,
       'low_latency': _params.lowLatency,
       'character_insertion_bias': _params.characterInsertionBias,
@@ -4334,7 +4351,8 @@ namespace SpeechToTextV1 {
     /** If `true`, the service returns a response object `SpeechActivity` which contains the time when a speech
      *  activity is detected in the stream. This can be used both in standard and low latency mode. This feature enables
      *  client applications to know that some words/speech has been detected and the service is in the process of
-     *  decoding. This can be used in lieu of interim results in standard mode. See [Using speech recognition
+     *  decoding. This can be used in lieu of interim results in standard mode. Use `sad_module: 2` to increase accuracy
+     *  and performance in detecting speech boundaries within the audio stream. See [Using speech recognition
      *  parameters](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-service-features#features-parameters).
      */
     speechBeginEvent?: boolean;
@@ -4541,6 +4559,15 @@ namespace SpeechToTextV1 {
      *  support](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#detection-support).
      */
     speechDetectorSensitivity?: number;
+    /** Detects speech boundaries within the audio stream with better performance, improved noise suppression,
+     *  faster responsiveness, and increased accuracy.
+     *
+     *  Specify `sad_module: 2`
+     *
+     *   See [Speech Activity Detection
+     *  (SAD)](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#sad).
+     */
+    sadModule?: number;
     /** The level to which the service is to suppress background audio based on its volume to prevent it from being
      *  transcribed as speech. Use the parameter to suppress side conversations or background noise.
      *
@@ -5009,6 +5036,15 @@ namespace SpeechToTextV1 {
      *  support](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#detection-support).
      */
     speechDetectorSensitivity?: number;
+    /** Detects speech boundaries within the audio stream with better performance, improved noise suppression,
+     *  faster responsiveness, and increased accuracy.
+     *
+     *  Specify `sad_module: 2`
+     *
+     *   See [Speech Activity Detection
+     *  (SAD)](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-detection#sad).
+     */
+    sadModule?: number;
     /** The level to which the service is to suppress background audio based on its volume to prevent it from being
      *  transcribed as speech. Use the parameter to suppress side conversations or background noise.
      *

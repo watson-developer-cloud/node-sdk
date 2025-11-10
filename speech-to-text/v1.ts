@@ -286,6 +286,7 @@ namespace SpeechToTextV1 {
     speechDetectorSensitivity?: number;
     backgroundAudioSuppression?: number;
     characterInsertionBias?: number;
+    sadModule?: number;
   }
 }
 
