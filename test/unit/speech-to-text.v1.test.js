@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2018, 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -295,6 +295,7 @@ describe('SpeechToTextV1', () => {
         const endOfPhraseSilenceTime = 0.8;
         const splitTranscriptAtPhraseEnd = false;
         const speechDetectorSensitivity = 0.5;
+        const sadModule = 1;
         const backgroundAudioSuppression = 0.0;
         const lowLatency = false;
         const characterInsertionBias = 0.0;
@@ -324,6 +325,7 @@ describe('SpeechToTextV1', () => {
           endOfPhraseSilenceTime,
           splitTranscriptAtPhraseEnd,
           speechDetectorSensitivity,
+          sadModule,
           backgroundAudioSuppression,
           lowLatency,
           characterInsertionBias,
@@ -368,6 +370,7 @@ describe('SpeechToTextV1', () => {
         expect(mockRequestOptions.qs.end_of_phrase_silence_time).toEqual(endOfPhraseSilenceTime);
         expect(mockRequestOptions.qs.split_transcript_at_phrase_end).toEqual(splitTranscriptAtPhraseEnd);
         expect(mockRequestOptions.qs.speech_detector_sensitivity).toEqual(speechDetectorSensitivity);
+        expect(mockRequestOptions.qs.sad_module).toEqual(sadModule);
         expect(mockRequestOptions.qs.background_audio_suppression).toEqual(backgroundAudioSuppression);
         expect(mockRequestOptions.qs.low_latency).toEqual(lowLatency);
         expect(mockRequestOptions.qs.character_insertion_bias).toEqual(characterInsertionBias);
@@ -636,6 +639,7 @@ describe('SpeechToTextV1', () => {
         const endOfPhraseSilenceTime = 0.8;
         const splitTranscriptAtPhraseEnd = false;
         const speechDetectorSensitivity = 0.5;
+        const sadModule = 1;
         const backgroundAudioSuppression = 0.0;
         const lowLatency = false;
         const characterInsertionBias = 0.0;
@@ -670,6 +674,7 @@ describe('SpeechToTextV1', () => {
           endOfPhraseSilenceTime,
           splitTranscriptAtPhraseEnd,
           speechDetectorSensitivity,
+          sadModule,
           backgroundAudioSuppression,
           lowLatency,
           characterInsertionBias,
@@ -719,6 +724,7 @@ describe('SpeechToTextV1', () => {
         expect(mockRequestOptions.qs.end_of_phrase_silence_time).toEqual(endOfPhraseSilenceTime);
         expect(mockRequestOptions.qs.split_transcript_at_phrase_end).toEqual(splitTranscriptAtPhraseEnd);
         expect(mockRequestOptions.qs.speech_detector_sensitivity).toEqual(speechDetectorSensitivity);
+        expect(mockRequestOptions.qs.sad_module).toEqual(sadModule);
         expect(mockRequestOptions.qs.background_audio_suppression).toEqual(backgroundAudioSuppression);
         expect(mockRequestOptions.qs.low_latency).toEqual(lowLatency);
         expect(mockRequestOptions.qs.character_insertion_bias).toEqual(characterInsertionBias);

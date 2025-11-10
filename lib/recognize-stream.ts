@@ -106,6 +106,7 @@ class RecognizeStream extends Duplex {
    * @param {number} [options.speechDetectorSensitivity] - The sensitivity of speech activity detection that the service is to perform
    * @param {number} [options.backgroundAudioSuppression] - The level to which the service is to suppress background audio based on its volume to prevent it from being transcribed as speech
    * @param {boolean} [params.lowLatency] - If `true` for next-generation `Multimedia` and `Telephony` models that support low latency, directs the service to produce results even more quickly than it usually does
+   * @param {number} [params.sadModule] - Detects speech boundaries within the audio stream with better performance, improved noise suppression, faster responsiveness, and increased accuracy.
    * @constructor
    */
   constructor(options: RecognizeStream.Options) {
@@ -182,7 +183,8 @@ class RecognizeStream extends Duplex {
       'split_transcript_at_phrase_end',
       'speech_detector_sensitivity',
       'background_audio_suppression',
-      'low_latency'
+      'low_latency',
+      'sad_module'
     ];
     const openingMessage = processUserParameters(options, openingMessageParamsAllowed);
     openingMessage.action = 'start';
