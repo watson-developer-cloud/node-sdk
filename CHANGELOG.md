@@ -1,3 +1,11 @@
+# [12.1.0](https://github.com/watson-developer-cloud/node-sdk/compare/v12.0.1...v12.1.0) (2025-11-11)
+
+
+### Features
+
+* **stt:** add new sad_module param to recognize functions ([eda5976](https://github.com/watson-developer-cloud/node-sdk/commit/eda597600ae3250739963acc72b1b8495c0a328a))
+* **tts:** add new voice models ([3660b3a](https://github.com/watson-developer-cloud/node-sdk/commit/3660b3a1f3102fa2e7ac71c667d301597012515f))
+
 ## [12.0.1](https://github.com/watson-developer-cloud/node-sdk/compare/v12.0.0...v12.0.1) (2025-10-07)  ([e9a6b38](https://github.com/watson-developer-cloud/node-sdk/commit/e9a6b38396d043772bb4618ff071046c94f6ea48))
 
 #### **wa-v2** – Patch Release Notes ####
