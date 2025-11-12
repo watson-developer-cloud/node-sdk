@@ -95,6 +95,7 @@ class RecognizeStream extends Duplex {
    * @param {boolean} [options.timestamps] - If true, the service returns time alignment for each word (default=false)
    * @param {boolean} [options.profanityFilter] - If true, the service filters profanity from all output except for keyword results by replacing inappropriate words with a series of asterisks (default=true)
    * @param {boolean} [options.smartFormatting] - If true, the service converts dates, times, series of digits and numbers, phone numbers, currency values, and internet addresses into more readable, conventional representations (default=false)
+   * @param {number} [params.smartFormattingVersion] - Smart formatting version for large speech models and next-generation models
    * @param {boolean} [options.speakerLabels] - If true, the response includes labels that identify which words were spoken by which participants in a multi-person exchange (default=false)
    * @param {string} [options.grammarName] - The name of a grammar that is to be used with the recognition request
    * @param {boolean} [options.redaction] - If true, the service redacts, or masks, numeric data from final transcripts (default=false)
@@ -176,6 +177,7 @@ class RecognizeStream extends Duplex {
       'word_alternatives_threshold',
       'profanity_filter',
       'smart_formatting',
+      'smart_formatting_version',
       'speaker_labels',
       'grammar_name',
       'redaction',
