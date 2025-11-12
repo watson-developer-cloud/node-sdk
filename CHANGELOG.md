@@ -1,3 +1,10 @@
+## [12.1.1](https://github.com/watson-developer-cloud/node-sdk/compare/v12.1.0...v12.1.1) (2025-11-12)
+
+
+### Bug Fixes
+
+* **stt:** add missing smart_formatting_version param ([13fb2ab](https://github.com/watson-developer-cloud/node-sdk/commit/13fb2ab25b4f8a1cba83260051e414a042d555de))
+
 # [12.1.0](https://github.com/watson-developer-cloud/node-sdk/compare/v12.0.1...v12.1.0) (2025-11-11)
 
 
