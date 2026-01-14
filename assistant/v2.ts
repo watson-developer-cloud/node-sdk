@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2025.
+ * (C) Copyright IBM Corp. 2026.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -424,21 +424,9 @@ class AssistantV2 extends BaseService {
    * Delete an assistant.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
-   * is deployed.
-   *  Set the value for this ID depending on the type of request:
-   *
-   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-   * deployed.
-   *
-   *   - For all other requests, specify the assistant ID of the assistant.
-   *
-   *  To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-   * settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-   *
-   *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-   *
-   *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To get the **assistant ID** in the watsonx
+   * Assistant interface, open the **Assistant settings** page, and scroll to the **Assistant IDs and API details**
+   * section and click **View Details**.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV2.Response<AssistantV2.EmptyObject>>}
    */
@@ -501,21 +489,9 @@ class AssistantV2 extends BaseService {
    * [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-settings).).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
-   * is deployed.
-   *  Set the value for this ID depending on the type of request:
-   *
-   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-   * deployed.
-   *
-   *   - For all other requests, specify the assistant ID of the assistant.
-   *
-   *  To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-   * settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-   *
-   *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-   *
-   *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To get the **assistant ID** in the watsonx
+   * Assistant interface, open the **Assistant settings** page, and scroll to the **Assistant IDs and API details**
+   * section and click **View Details**.
    * @param {string} params.environmentId - Unique identifier of the environment. To find the environment ID in the
    * watsonx Assistant user interface, open the environment settings and click **API Details**. **Note:** Currently, the
    * API does not support creating environments.
@@ -585,21 +561,9 @@ class AssistantV2 extends BaseService {
    * the [documentation](https://cloud.ibm.com/docs/assistant?topic=assistant-assistant-settings)).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
-   * is deployed.
-   *  Set the value for this ID depending on the type of request:
-   *
-   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-   * deployed.
-   *
-   *   - For all other requests, specify the assistant ID of the assistant.
-   *
-   *  To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-   * settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-   *
-   *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-   *
-   *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To get the **assistant ID** in the watsonx
+   * Assistant interface, open the **Assistant settings** page, and scroll to the **Assistant IDs and API details**
+   * section and click **View Details**.
    * @param {string} params.environmentId - Unique identifier of the environment. To find the environment ID in the
    * watsonx Assistant user interface, open the environment settings and click **API Details**. **Note:** Currently, the
    * API does not support creating environments.
@@ -666,21 +630,9 @@ class AssistantV2 extends BaseService {
    * watsonx Assistant for the duration of the session.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
-   * is deployed.
-   *  Set the value for this ID depending on the type of request:
-   *
-   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-   * deployed.
-   *
-   *   - For all other requests, specify the assistant ID of the assistant.
-   *
-   *  To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-   * settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-   *
-   *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-   *
-   *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To get the **assistant ID** in the watsonx
+   * Assistant interface, open the **Assistant settings** page, and scroll to the **Assistant IDs and API details**
+   * section and click **View Details**.
    * @param {string} params.environmentId - Unique identifier of the environment. To find the environment ID in the
    * watsonx Assistant user interface, open the environment settings and click **API Details**. **Note:** Currently, the
    * API does not support creating environments.
@@ -766,21 +718,9 @@ class AssistantV2 extends BaseService {
    * your application.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
-   * is deployed.
-   *  Set the value for this ID depending on the type of request:
-   *
-   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-   * deployed.
-   *
-   *   - For all other requests, specify the assistant ID of the assistant.
-   *
-   *  To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-   * settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-   *
-   *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-   *
-   *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To get the **assistant ID** in the watsonx
+   * Assistant interface, open the **Assistant settings** page, and scroll to the **Assistant IDs and API details**
+   * section and click **View Details**.
    * @param {string} params.environmentId - Unique identifier of the environment. To find the environment ID in the
    * watsonx Assistant user interface, open the environment settings and click **API Details**. **Note:** Currently, the
    * API does not support creating environments.
@@ -867,21 +807,9 @@ class AssistantV2 extends BaseService {
    * stored by watsonx Assistant for the duration of the session.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
-   * is deployed.
-   *  Set the value for this ID depending on the type of request:
-   *
-   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-   * deployed.
-   *
-   *   - For all other requests, specify the assistant ID of the assistant.
-   *
-   *  To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-   * settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-   *
-   *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-   *
-   *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To get the **assistant ID** in the watsonx
+   * Assistant interface, open the **Assistant settings** page, and scroll to the **Assistant IDs and API details**
+   * section and click **View Details**.
    * @param {string} params.environmentId - Unique identifier of the environment. To find the environment ID in the
    * watsonx Assistant user interface, open the environment settings and click **API Details**. **Note:** Currently, the
    * API does not support creating environments.
@@ -968,21 +896,9 @@ class AssistantV2 extends BaseService {
    * your application.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
-   * is deployed.
-   *  Set the value for this ID depending on the type of request:
-   *
-   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-   * deployed.
-   *
-   *   - For all other requests, specify the assistant ID of the assistant.
-   *
-   *  To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-   * settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-   *
-   *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-   *
-   *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To get the **assistant ID** in the watsonx
+   * Assistant interface, open the **Assistant settings** page, and scroll to the **Assistant IDs and API details**
+   * section and click **View Details**.
    * @param {string} params.environmentId - Unique identifier of the environment. To find the environment ID in the
    * watsonx Assistant user interface, open the environment settings and click **API Details**. **Note:** Currently, the
    * API does not support creating environments.
@@ -1302,21 +1218,9 @@ class AssistantV2 extends BaseService {
    * List the environments associated with an assistant.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
-   * is deployed.
-   *  Set the value for this ID depending on the type of request:
-   *
-   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-   * deployed.
-   *
-   *   - For all other requests, specify the assistant ID of the assistant.
-   *
-   *  To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-   * settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-   *
-   *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-   *
-   *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To get the **assistant ID** in the watsonx
+   * Assistant interface, open the **Assistant settings** page, and scroll to the **Assistant IDs and API details**
+   * section and click **View Details**.
    * @param {number} [params.pageLimit] - The number of records to return in each page of results.
    * @param {boolean} [params.includeCount] - Whether to include information about the number of records that satisfy
    * the request, regardless of the page limit. If this parameter is `true`, the `pagination` object in the response
@@ -1388,21 +1292,9 @@ class AssistantV2 extends BaseService {
    * [Environments](https://cloud.ibm.com/docs/watson-assistant?topic=watson-assistant-publish-overview#environments).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
-   * is deployed.
-   *  Set the value for this ID depending on the type of request:
-   *
-   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-   * deployed.
-   *
-   *   - For all other requests, specify the assistant ID of the assistant.
-   *
-   *  To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-   * settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-   *
-   *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-   *
-   *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To get the **assistant ID** in the watsonx
+   * Assistant interface, open the **Assistant settings** page, and scroll to the **Assistant IDs and API details**
+   * section and click **View Details**.
    * @param {string} params.environmentId - Unique identifier of the environment. To find the environment ID in the
    * watsonx Assistant user interface, open the environment settings and click **API Details**. **Note:** Currently, the
    * API does not support creating environments.
@@ -1467,21 +1359,9 @@ class AssistantV2 extends BaseService {
    * [Environments](https://cloud.ibm.com/docs/watson-assistant?topic=watson-assistant-publish-overview#environments).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
-   * is deployed.
-   *  Set the value for this ID depending on the type of request:
-   *
-   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-   * deployed.
-   *
-   *   - For all other requests, specify the assistant ID of the assistant.
-   *
-   *  To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-   * settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-   *
-   *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-   *
-   *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To get the **assistant ID** in the watsonx
+   * Assistant interface, open the **Assistant settings** page, and scroll to the **Assistant IDs and API details**
+   * section and click **View Details**.
    * @param {string} params.environmentId - Unique identifier of the environment. To find the environment ID in the
    * watsonx Assistant user interface, open the environment settings and click **API Details**. **Note:** Currently, the
    * API does not support creating environments.
@@ -1563,21 +1443,9 @@ class AssistantV2 extends BaseService {
    * watsonx Assistant user interface, a release is called a *version*.).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
-   * is deployed.
-   *  Set the value for this ID depending on the type of request:
-   *
-   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-   * deployed.
-   *
-   *   - For all other requests, specify the assistant ID of the assistant.
-   *
-   *  To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-   * settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-   *
-   *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-   *
-   *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To get the **assistant ID** in the watsonx
+   * Assistant interface, open the **Assistant settings** page, and scroll to the **Assistant IDs and API details**
+   * section and click **View Details**.
    * @param {string} [params.description] - The description of the release.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV2.Response<AssistantV2.Release>>}
@@ -1642,21 +1510,9 @@ class AssistantV2 extends BaseService {
    * *version*.).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
-   * is deployed.
-   *  Set the value for this ID depending on the type of request:
-   *
-   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-   * deployed.
-   *
-   *   - For all other requests, specify the assistant ID of the assistant.
-   *
-   *  To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-   * settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-   *
-   *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-   *
-   *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To get the **assistant ID** in the watsonx
+   * Assistant interface, open the **Assistant settings** page, and scroll to the **Assistant IDs and API details**
+   * section and click **View Details**.
    * @param {number} [params.pageLimit] - The number of records to return in each page of results.
    * @param {boolean} [params.includeCount] - Whether to include information about the number of records that satisfy
    * the request, regardless of the page limit. If this parameter is `true`, the `pagination` object in the response
@@ -1731,21 +1587,9 @@ class AssistantV2 extends BaseService {
    * processing has completed, the request returns the release data.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
-   * is deployed.
-   *  Set the value for this ID depending on the type of request:
-   *
-   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-   * deployed.
-   *
-   *   - For all other requests, specify the assistant ID of the assistant.
-   *
-   *  To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-   * settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-   *
-   *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-   *
-   *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To get the **assistant ID** in the watsonx
+   * Assistant interface, open the **Assistant settings** page, and scroll to the **Assistant IDs and API details**
+   * section and click **View Details**.
    * @param {string} params.release - Unique identifier of the release.
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
@@ -1807,21 +1651,9 @@ class AssistantV2 extends BaseService {
    * Delete a release. (In the watsonx Assistant user interface, a release is called a *version*.).
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
-   * is deployed.
-   *  Set the value for this ID depending on the type of request:
-   *
-   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-   * deployed.
-   *
-   *   - For all other requests, specify the assistant ID of the assistant.
-   *
-   *  To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-   * settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-   *
-   *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-   *
-   *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To get the **assistant ID** in the watsonx
+   * Assistant interface, open the **Assistant settings** page, and scroll to the **Assistant IDs and API details**
+   * section and click **View Details**.
    * @param {string} params.release - Unique identifier of the release.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV2.Response<AssistantV2.EmptyObject>>}
@@ -1881,21 +1713,9 @@ class AssistantV2 extends BaseService {
    * the environment.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
-   * is deployed.
-   *  Set the value for this ID depending on the type of request:
-   *
-   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-   * deployed.
-   *
-   *   - For all other requests, specify the assistant ID of the assistant.
-   *
-   *  To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-   * settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-   *
-   *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-   *
-   *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To get the **assistant ID** in the watsonx
+   * Assistant interface, open the **Assistant settings** page, and scroll to the **Assistant IDs and API details**
+   * section and click **View Details**.
    * @param {string} params.release - Unique identifier of the release.
    * @param {string} params.environmentId - The environment ID of the environment where the release is to be deployed.
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
@@ -1969,21 +1789,9 @@ class AssistantV2 extends BaseService {
    * of the release.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
-   * is deployed.
-   *  Set the value for this ID depending on the type of request:
-   *
-   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-   * deployed.
-   *
-   *   - For all other requests, specify the assistant ID of the assistant.
-   *
-   *  To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-   * settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-   *
-   *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-   *
-   *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To get the **assistant ID** in the watsonx
+   * Assistant interface, open the **Assistant settings** page, and scroll to the **Assistant IDs and API details**
+   * section and click **View Details**.
    * @param {string} params.release - Unique identifier of the release.
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
@@ -2055,21 +1863,9 @@ class AssistantV2 extends BaseService {
    * update endpoints.</li></ol>.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
-   * is deployed.
-   *  Set the value for this ID depending on the type of request:
-   *
-   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-   * deployed.
-   *
-   *   - For all other requests, specify the assistant ID of the assistant.
-   *
-   *  To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-   * settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-   *
-   *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-   *
-   *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To get the **assistant ID** in the watsonx
+   * Assistant interface, open the **Assistant settings** page, and scroll to the **Assistant IDs and API details**
+   * section and click **View Details**.
    * @param {string} params.release - Unique identifier of the release.
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
@@ -2141,21 +1937,9 @@ class AssistantV2 extends BaseService {
    * update endpoints.</li></ol>.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
-   * is deployed.
-   *  Set the value for this ID depending on the type of request:
-   *
-   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-   * deployed.
-   *
-   *   - For all other requests, specify the assistant ID of the assistant.
-   *
-   *  To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-   * settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-   *
-   *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-   *
-   *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To get the **assistant ID** in the watsonx
+   * Assistant interface, open the **Assistant settings** page, and scroll to the **Assistant IDs and API details**
+   * section and click **View Details**.
    * @param {string} params.release - Unique identifier of the release.
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
@@ -2229,21 +2013,9 @@ class AssistantV2 extends BaseService {
    * import via the "Get release import Status" endpoint.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
-   * is deployed.
-   *  Set the value for this ID depending on the type of request:
-   *
-   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-   * deployed.
-   *
-   *   - For all other requests, specify the assistant ID of the assistant.
-   *
-   *  To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-   * settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-   *
-   *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-   *
-   *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To get the **assistant ID** in the watsonx
+   * Assistant interface, open the **Assistant settings** page, and scroll to the **Assistant IDs and API details**
+   * section and click **View Details**.
    * @param {NodeJS.ReadableStream | Buffer} params.body - Request body is an Octet-stream of the artifact Zip file that
    * is being imported.
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
@@ -2309,21 +2081,9 @@ class AssistantV2 extends BaseService {
    * either succeeded or failed.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
-   * is deployed.
-   *  Set the value for this ID depending on the type of request:
-   *
-   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-   * deployed.
-   *
-   *   - For all other requests, specify the assistant ID of the assistant.
-   *
-   *  To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-   * settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-   *
-   *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-   *
-   *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To get the **assistant ID** in the watsonx
+   * Assistant interface, open the **Assistant settings** page, and scroll to the **Assistant IDs and API details**
+   * section and click **View Details**.
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -2386,21 +2146,9 @@ class AssistantV2 extends BaseService {
    * Get information about a skill.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
-   * is deployed.
-   *  Set the value for this ID depending on the type of request:
-   *
-   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-   * deployed.
-   *
-   *   - For all other requests, specify the assistant ID of the assistant.
-   *
-   *  To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-   * settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-   *
-   *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-   *
-   *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To get the **assistant ID** in the watsonx
+   * Assistant interface, open the **Assistant settings** page, and scroll to the **Assistant IDs and API details**
+   * section and click **View Details**.
    * @param {string} params.skillId - Unique identifier of the skill. To find the action or dialog skill ID in the
    * watsonx Assistant user interface, open the skill settings and click **API Details**. To find the search skill ID,
    * use the Get environment API to retrieve the skill references for an environment and it will include the search
@@ -2465,21 +2213,9 @@ class AssistantV2 extends BaseService {
    * skill** method and checking the value of the **status** property.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
-   * is deployed.
-   *  Set the value for this ID depending on the type of request:
-   *
-   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-   * deployed.
-   *
-   *   - For all other requests, specify the assistant ID of the assistant.
-   *
-   *  To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-   * settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-   *
-   *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-   *
-   *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To get the **assistant ID** in the watsonx
+   * Assistant interface, open the **Assistant settings** page, and scroll to the **Assistant IDs and API details**
+   * section and click **View Details**.
    * @param {string} params.skillId - Unique identifier of the skill. To find the action or dialog skill ID in the
    * watsonx Assistant user interface, open the skill settings and click **API Details**. To find the search skill ID,
    * use the Get environment API to retrieve the skill references for an environment and it will include the search
@@ -2575,21 +2311,9 @@ class AssistantV2 extends BaseService {
    * apply.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
-   * is deployed.
-   *  Set the value for this ID depending on the type of request:
-   *
-   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-   * deployed.
-   *
-   *   - For all other requests, specify the assistant ID of the assistant.
-   *
-   *  To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-   * settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-   *
-   *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-   *
-   *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To get the **assistant ID** in the watsonx
+   * Assistant interface, open the **Assistant settings** page, and scroll to the **Assistant IDs and API details**
+   * section and click **View Details**.
    * @param {boolean} [params.includeAudit] - Whether to include the audit properties (`created` and `updated`
    * timestamps) in the response.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
@@ -2657,21 +2381,9 @@ class AssistantV2 extends BaseService {
    * **Get status of skills import** method.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
-   * is deployed.
-   *  Set the value for this ID depending on the type of request:
-   *
-   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-   * deployed.
-   *
-   *   - For all other requests, specify the assistant ID of the assistant.
-   *
-   *  To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-   * settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-   *
-   *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-   *
-   *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To get the **assistant ID** in the watsonx
+   * Assistant interface, open the **Assistant settings** page, and scroll to the **Assistant IDs and API details**
+   * section and click **View Details**.
    * @param {SkillImport[]} params.assistantSkills - An array of objects describing the skills for the assistant.
    * Included in responses only if **status**=`Available`.
    * @param {AssistantState} params.assistantState - Status information about the skills for the assistant. Included in
@@ -2742,21 +2454,9 @@ class AssistantV2 extends BaseService {
    * Retrieve the status of an asynchronous import operation previously initiated by using the **Import skills** method.
    *
    * @param {Object} params - The parameters to send to the service.
-   * @param {string} params.assistantId - The assistant ID or the environment ID of the environment where the assistant
-   * is deployed.
-   *  Set the value for this ID depending on the type of request:
-   *
-   *  - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-   * deployed.
-   *
-   *   - For all other requests, specify the assistant ID of the assistant.
-   *
-   *  To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-   * settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-   *
-   *  **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-   *
-   *  To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+   * @param {string} params.assistantId - Unique identifier of the assistant. To get the **assistant ID** in the watsonx
+   * Assistant interface, open the **Assistant settings** page, and scroll to the **Assistant IDs and API details**
+   * section and click **View Details**.
    * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
    * @returns {Promise<AssistantV2.Response<AssistantV2.SkillsAsyncRequestStatus>>}
    */
@@ -2935,40 +2635,18 @@ namespace AssistantV2 {
 
   /** Parameters for the `deleteAssistant` operation. */
   export interface DeleteAssistantParams extends DefaultParams {
-    /** The assistant ID or the environment ID of the environment where the assistant is deployed.
-     *   Set the value for this ID depending on the type of request:
-     *
-     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-     *  deployed.
-     *
-     *    - For all other requests, specify the assistant ID of the assistant.
-     *
-     *   To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-     *  settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-     *
-     *   **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-     *
-     *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+    /** Unique identifier of the assistant. To get the **assistant ID** in the watsonx Assistant interface, open the
+     *  **Assistant settings** page, and scroll to the **Assistant IDs and API details** section and click **View
+     *  Details**.
      */
     assistantId: string;
   }
 
   /** Parameters for the `createSession` operation. */
   export interface CreateSessionParams extends DefaultParams {
-    /** The assistant ID or the environment ID of the environment where the assistant is deployed.
-     *   Set the value for this ID depending on the type of request:
-     *
-     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-     *  deployed.
-     *
-     *    - For all other requests, specify the assistant ID of the assistant.
-     *
-     *   To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-     *  settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-     *
-     *   **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-     *
-     *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+    /** Unique identifier of the assistant. To get the **assistant ID** in the watsonx Assistant interface, open the
+     *  **Assistant settings** page, and scroll to the **Assistant IDs and API details** section and click **View
+     *  Details**.
      */
     assistantId: string;
     /** Unique identifier of the environment. To find the environment ID in the watsonx Assistant user interface,
@@ -2984,20 +2662,9 @@ namespace AssistantV2 {
 
   /** Parameters for the `deleteSession` operation. */
   export interface DeleteSessionParams extends DefaultParams {
-    /** The assistant ID or the environment ID of the environment where the assistant is deployed.
-     *   Set the value for this ID depending on the type of request:
-     *
-     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-     *  deployed.
-     *
-     *    - For all other requests, specify the assistant ID of the assistant.
-     *
-     *   To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-     *  settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-     *
-     *   **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-     *
-     *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+    /** Unique identifier of the assistant. To get the **assistant ID** in the watsonx Assistant interface, open the
+     *  **Assistant settings** page, and scroll to the **Assistant IDs and API details** section and click **View
+     *  Details**.
      */
     assistantId: string;
     /** Unique identifier of the environment. To find the environment ID in the watsonx Assistant user interface,
@@ -3011,20 +2678,9 @@ namespace AssistantV2 {
 
   /** Parameters for the `message` operation. */
   export interface MessageParams extends DefaultParams {
-    /** The assistant ID or the environment ID of the environment where the assistant is deployed.
-     *   Set the value for this ID depending on the type of request:
-     *
-     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-     *  deployed.
-     *
-     *    - For all other requests, specify the assistant ID of the assistant.
-     *
-     *   To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-     *  settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-     *
-     *   **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-     *
-     *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+    /** Unique identifier of the assistant. To get the **assistant ID** in the watsonx Assistant interface, open the
+     *  **Assistant settings** page, and scroll to the **Assistant IDs and API details** section and click **View
+     *  Details**.
      */
     assistantId: string;
     /** Unique identifier of the environment. To find the environment ID in the watsonx Assistant user interface,
@@ -3056,20 +2712,9 @@ namespace AssistantV2 {
 
   /** Parameters for the `messageStateless` operation. */
   export interface MessageStatelessParams extends DefaultParams {
-    /** The assistant ID or the environment ID of the environment where the assistant is deployed.
-     *   Set the value for this ID depending on the type of request:
-     *
-     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-     *  deployed.
-     *
-     *    - For all other requests, specify the assistant ID of the assistant.
-     *
-     *   To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-     *  settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-     *
-     *   **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-     *
-     *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+    /** Unique identifier of the assistant. To get the **assistant ID** in the watsonx Assistant interface, open the
+     *  **Assistant settings** page, and scroll to the **Assistant IDs and API details** section and click **View
+     *  Details**.
      */
     assistantId: string;
     /** Unique identifier of the environment. To find the environment ID in the watsonx Assistant user interface,
@@ -3100,20 +2745,9 @@ namespace AssistantV2 {
 
   /** Parameters for the `messageStream` operation. */
   export interface MessageStreamParams extends DefaultParams {
-    /** The assistant ID or the environment ID of the environment where the assistant is deployed.
-     *   Set the value for this ID depending on the type of request:
-     *
-     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-     *  deployed.
-     *
-     *    - For all other requests, specify the assistant ID of the assistant.
-     *
-     *   To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-     *  settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-     *
-     *   **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-     *
-     *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+    /** Unique identifier of the assistant. To get the **assistant ID** in the watsonx Assistant interface, open the
+     *  **Assistant settings** page, and scroll to the **Assistant IDs and API details** section and click **View
+     *  Details**.
      */
     assistantId: string;
     /** Unique identifier of the environment. To find the environment ID in the watsonx Assistant user interface,
@@ -3145,20 +2779,9 @@ namespace AssistantV2 {
 
   /** Parameters for the `messageStreamStateless` operation. */
   export interface MessageStreamStatelessParams extends DefaultParams {
-    /** The assistant ID or the environment ID of the environment where the assistant is deployed.
-     *   Set the value for this ID depending on the type of request:
-     *
-     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-     *  deployed.
-     *
-     *    - For all other requests, specify the assistant ID of the assistant.
-     *
-     *   To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-     *  settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-     *
-     *   **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-     *
-     *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+    /** Unique identifier of the assistant. To get the **assistant ID** in the watsonx Assistant interface, open the
+     *  **Assistant settings** page, and scroll to the **Assistant IDs and API details** section and click **View
+     *  Details**.
      */
     assistantId: string;
     /** Unique identifier of the environment. To find the environment ID in the watsonx Assistant user interface,
@@ -3241,20 +2864,9 @@ namespace AssistantV2 {
 
   /** Parameters for the `listEnvironments` operation. */
   export interface ListEnvironmentsParams extends DefaultParams {
-    /** The assistant ID or the environment ID of the environment where the assistant is deployed.
-     *   Set the value for this ID depending on the type of request:
-     *
-     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-     *  deployed.
-     *
-     *    - For all other requests, specify the assistant ID of the assistant.
-     *
-     *   To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-     *  settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-     *
-     *   **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-     *
-     *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+    /** Unique identifier of the assistant. To get the **assistant ID** in the watsonx Assistant interface, open the
+     *  **Assistant settings** page, and scroll to the **Assistant IDs and API details** section and click **View
+     *  Details**.
      */
     assistantId: string;
     /** The number of records to return in each page of results. */
@@ -3284,20 +2896,9 @@ namespace AssistantV2 {
 
   /** Parameters for the `getEnvironment` operation. */
   export interface GetEnvironmentParams extends DefaultParams {
-    /** The assistant ID or the environment ID of the environment where the assistant is deployed.
-     *   Set the value for this ID depending on the type of request:
-     *
-     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-     *  deployed.
-     *
-     *    - For all other requests, specify the assistant ID of the assistant.
-     *
-     *   To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-     *  settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-     *
-     *   **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-     *
-     *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+    /** Unique identifier of the assistant. To get the **assistant ID** in the watsonx Assistant interface, open the
+     *  **Assistant settings** page, and scroll to the **Assistant IDs and API details** section and click **View
+     *  Details**.
      */
     assistantId: string;
     /** Unique identifier of the environment. To find the environment ID in the watsonx Assistant user interface,
@@ -3311,20 +2912,9 @@ namespace AssistantV2 {
 
   /** Parameters for the `updateEnvironment` operation. */
   export interface UpdateEnvironmentParams extends DefaultParams {
-    /** The assistant ID or the environment ID of the environment where the assistant is deployed.
-     *   Set the value for this ID depending on the type of request:
-     *
-     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-     *  deployed.
-     *
-     *    - For all other requests, specify the assistant ID of the assistant.
-     *
-     *   To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-     *  settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-     *
-     *   **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-     *
-     *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+    /** Unique identifier of the assistant. To get the **assistant ID** in the watsonx Assistant interface, open the
+     *  **Assistant settings** page, and scroll to the **Assistant IDs and API details** section and click **View
+     *  Details**.
      */
     assistantId: string;
     /** Unique identifier of the environment. To find the environment ID in the watsonx Assistant user interface,
@@ -3346,20 +2936,9 @@ namespace AssistantV2 {
 
   /** Parameters for the `createRelease` operation. */
   export interface CreateReleaseParams extends DefaultParams {
-    /** The assistant ID or the environment ID of the environment where the assistant is deployed.
-     *   Set the value for this ID depending on the type of request:
-     *
-     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-     *  deployed.
-     *
-     *    - For all other requests, specify the assistant ID of the assistant.
-     *
-     *   To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-     *  settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-     *
-     *   **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-     *
-     *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+    /** Unique identifier of the assistant. To get the **assistant ID** in the watsonx Assistant interface, open the
+     *  **Assistant settings** page, and scroll to the **Assistant IDs and API details** section and click **View
+     *  Details**.
      */
     assistantId: string;
     /** The description of the release. */
@@ -3368,20 +2947,9 @@ namespace AssistantV2 {
 
   /** Parameters for the `listReleases` operation. */
   export interface ListReleasesParams extends DefaultParams {
-    /** The assistant ID or the environment ID of the environment where the assistant is deployed.
-     *   Set the value for this ID depending on the type of request:
-     *
-     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-     *  deployed.
-     *
-     *    - For all other requests, specify the assistant ID of the assistant.
-     *
-     *   To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-     *  settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-     *
-     *   **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-     *
-     *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+    /** Unique identifier of the assistant. To get the **assistant ID** in the watsonx Assistant interface, open the
+     *  **Assistant settings** page, and scroll to the **Assistant IDs and API details** section and click **View
+     *  Details**.
      */
     assistantId: string;
     /** The number of records to return in each page of results. */
@@ -3411,20 +2979,9 @@ namespace AssistantV2 {
 
   /** Parameters for the `getRelease` operation. */
   export interface GetReleaseParams extends DefaultParams {
-    /** The assistant ID or the environment ID of the environment where the assistant is deployed.
-     *   Set the value for this ID depending on the type of request:
-     *
-     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-     *  deployed.
-     *
-     *    - For all other requests, specify the assistant ID of the assistant.
-     *
-     *   To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-     *  settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-     *
-     *   **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-     *
-     *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+    /** Unique identifier of the assistant. To get the **assistant ID** in the watsonx Assistant interface, open the
+     *  **Assistant settings** page, and scroll to the **Assistant IDs and API details** section and click **View
+     *  Details**.
      */
     assistantId: string;
     /** Unique identifier of the release. */
@@ -3435,20 +2992,9 @@ namespace AssistantV2 {
 
   /** Parameters for the `deleteRelease` operation. */
   export interface DeleteReleaseParams extends DefaultParams {
-    /** The assistant ID or the environment ID of the environment where the assistant is deployed.
-     *   Set the value for this ID depending on the type of request:
-     *
-     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-     *  deployed.
-     *
-     *    - For all other requests, specify the assistant ID of the assistant.
-     *
-     *   To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-     *  settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-     *
-     *   **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-     *
-     *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+    /** Unique identifier of the assistant. To get the **assistant ID** in the watsonx Assistant interface, open the
+     *  **Assistant settings** page, and scroll to the **Assistant IDs and API details** section and click **View
+     *  Details**.
      */
     assistantId: string;
     /** Unique identifier of the release. */
@@ -3457,20 +3003,9 @@ namespace AssistantV2 {
 
   /** Parameters for the `deployRelease` operation. */
   export interface DeployReleaseParams extends DefaultParams {
-    /** The assistant ID or the environment ID of the environment where the assistant is deployed.
-     *   Set the value for this ID depending on the type of request:
-     *
-     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-     *  deployed.
-     *
-     *    - For all other requests, specify the assistant ID of the assistant.
-     *
-     *   To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-     *  settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-     *
-     *   **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-     *
-     *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+    /** Unique identifier of the assistant. To get the **assistant ID** in the watsonx Assistant interface, open the
+     *  **Assistant settings** page, and scroll to the **Assistant IDs and API details** section and click **View
+     *  Details**.
      */
     assistantId: string;
     /** Unique identifier of the release. */
@@ -3483,20 +3018,9 @@ namespace AssistantV2 {
 
   /** Parameters for the `createReleaseExport` operation. */
   export interface CreateReleaseExportParams extends DefaultParams {
-    /** The assistant ID or the environment ID of the environment where the assistant is deployed.
-     *   Set the value for this ID depending on the type of request:
-     *
-     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-     *  deployed.
-     *
-     *    - For all other requests, specify the assistant ID of the assistant.
-     *
-     *   To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-     *  settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-     *
-     *   **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-     *
-     *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+    /** Unique identifier of the assistant. To get the **assistant ID** in the watsonx Assistant interface, open the
+     *  **Assistant settings** page, and scroll to the **Assistant IDs and API details** section and click **View
+     *  Details**.
      */
     assistantId: string;
     /** Unique identifier of the release. */
@@ -3507,20 +3031,9 @@ namespace AssistantV2 {
 
   /** Parameters for the `downloadReleaseExport` operation. */
   export interface DownloadReleaseExportParams extends DefaultParams {
-    /** The assistant ID or the environment ID of the environment where the assistant is deployed.
-     *   Set the value for this ID depending on the type of request:
-     *
-     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-     *  deployed.
-     *
-     *    - For all other requests, specify the assistant ID of the assistant.
-     *
-     *   To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-     *  settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-     *
-     *   **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-     *
-     *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+    /** Unique identifier of the assistant. To get the **assistant ID** in the watsonx Assistant interface, open the
+     *  **Assistant settings** page, and scroll to the **Assistant IDs and API details** section and click **View
+     *  Details**.
      */
     assistantId: string;
     /** Unique identifier of the release. */
@@ -3531,20 +3044,9 @@ namespace AssistantV2 {
 
   /** Parameters for the `downloadReleaseExportAsStream` operation. */
   export interface DownloadReleaseExportAsStreamParams extends DefaultParams {
-    /** The assistant ID or the environment ID of the environment where the assistant is deployed.
-     *   Set the value for this ID depending on the type of request:
-     *
-     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-     *  deployed.
-     *
-     *    - For all other requests, specify the assistant ID of the assistant.
-     *
-     *   To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-     *  settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-     *
-     *   **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-     *
-     *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+    /** Unique identifier of the assistant. To get the **assistant ID** in the watsonx Assistant interface, open the
+     *  **Assistant settings** page, and scroll to the **Assistant IDs and API details** section and click **View
+     *  Details**.
      */
     assistantId: string;
     /** Unique identifier of the release. */
@@ -3555,20 +3057,9 @@ namespace AssistantV2 {
 
   /** Parameters for the `createReleaseImport` operation. */
   export interface CreateReleaseImportParams extends DefaultParams {
-    /** The assistant ID or the environment ID of the environment where the assistant is deployed.
-     *   Set the value for this ID depending on the type of request:
-     *
-     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-     *  deployed.
-     *
-     *    - For all other requests, specify the assistant ID of the assistant.
-     *
-     *   To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-     *  settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-     *
-     *   **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-     *
-     *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+    /** Unique identifier of the assistant. To get the **assistant ID** in the watsonx Assistant interface, open the
+     *  **Assistant settings** page, and scroll to the **Assistant IDs and API details** section and click **View
+     *  Details**.
      */
     assistantId: string;
     /** Request body is an Octet-stream of the artifact Zip file that is being imported. */
@@ -3579,20 +3070,9 @@ namespace AssistantV2 {
 
   /** Parameters for the `getReleaseImportStatus` operation. */
   export interface GetReleaseImportStatusParams extends DefaultParams {
-    /** The assistant ID or the environment ID of the environment where the assistant is deployed.
-     *   Set the value for this ID depending on the type of request:
-     *
-     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-     *  deployed.
-     *
-     *    - For all other requests, specify the assistant ID of the assistant.
-     *
-     *   To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-     *  settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-     *
-     *   **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-     *
-     *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+    /** Unique identifier of the assistant. To get the **assistant ID** in the watsonx Assistant interface, open the
+     *  **Assistant settings** page, and scroll to the **Assistant IDs and API details** section and click **View
+     *  Details**.
      */
     assistantId: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
@@ -3601,20 +3081,9 @@ namespace AssistantV2 {
 
   /** Parameters for the `getSkill` operation. */
   export interface GetSkillParams extends DefaultParams {
-    /** The assistant ID or the environment ID of the environment where the assistant is deployed.
-     *   Set the value for this ID depending on the type of request:
-     *
-     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-     *  deployed.
-     *
-     *    - For all other requests, specify the assistant ID of the assistant.
-     *
-     *   To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-     *  settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-     *
-     *   **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-     *
-     *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+    /** Unique identifier of the assistant. To get the **assistant ID** in the watsonx Assistant interface, open the
+     *  **Assistant settings** page, and scroll to the **Assistant IDs and API details** section and click **View
+     *  Details**.
      */
     assistantId: string;
     /** Unique identifier of the skill. To find the action or dialog skill ID in the watsonx Assistant user
@@ -3627,20 +3096,9 @@ namespace AssistantV2 {
 
   /** Parameters for the `updateSkill` operation. */
   export interface UpdateSkillParams extends DefaultParams {
-    /** The assistant ID or the environment ID of the environment where the assistant is deployed.
-     *   Set the value for this ID depending on the type of request:
-     *
-     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-     *  deployed.
-     *
-     *    - For all other requests, specify the assistant ID of the assistant.
-     *
-     *   To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-     *  settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-     *
-     *   **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-     *
-     *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+    /** Unique identifier of the assistant. To get the **assistant ID** in the watsonx Assistant interface, open the
+     *  **Assistant settings** page, and scroll to the **Assistant IDs and API details** section and click **View
+     *  Details**.
      */
     assistantId: string;
     /** Unique identifier of the skill. To find the action or dialog skill ID in the watsonx Assistant user
@@ -3667,20 +3125,9 @@ namespace AssistantV2 {
 
   /** Parameters for the `exportSkills` operation. */
   export interface ExportSkillsParams extends DefaultParams {
-    /** The assistant ID or the environment ID of the environment where the assistant is deployed.
-     *   Set the value for this ID depending on the type of request:
-     *
-     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-     *  deployed.
-     *
-     *    - For all other requests, specify the assistant ID of the assistant.
-     *
-     *   To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-     *  settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-     *
-     *   **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-     *
-     *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+    /** Unique identifier of the assistant. To get the **assistant ID** in the watsonx Assistant interface, open the
+     *  **Assistant settings** page, and scroll to the **Assistant IDs and API details** section and click **View
+     *  Details**.
      */
     assistantId: string;
     /** Whether to include the audit properties (`created` and `updated` timestamps) in the response. */
@@ -3689,20 +3136,9 @@ namespace AssistantV2 {
 
   /** Parameters for the `importSkills` operation. */
   export interface ImportSkillsParams extends DefaultParams {
-    /** The assistant ID or the environment ID of the environment where the assistant is deployed.
-     *   Set the value for this ID depending on the type of request:
-     *
-     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-     *  deployed.
-     *
-     *    - For all other requests, specify the assistant ID of the assistant.
-     *
-     *   To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-     *  settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-     *
-     *   **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-     *
-     *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+    /** Unique identifier of the assistant. To get the **assistant ID** in the watsonx Assistant interface, open the
+     *  **Assistant settings** page, and scroll to the **Assistant IDs and API details** section and click **View
+     *  Details**.
      */
     assistantId: string;
     /** An array of objects describing the skills for the assistant. Included in responses only if
@@ -3717,20 +3153,9 @@ namespace AssistantV2 {
 
   /** Parameters for the `importSkillsStatus` operation. */
   export interface ImportSkillsStatusParams extends DefaultParams {
-    /** The assistant ID or the environment ID of the environment where the assistant is deployed.
-     *   Set the value for this ID depending on the type of request:
-     *
-     *   - For message, session, and log requests, specify the environment ID of the environment where the assistant is
-     *  deployed.
-     *
-     *    - For all other requests, specify the assistant ID of the assistant.
-     *
-     *   To get the **assistant ID** and **environment ID** in the watsonx Assistant interface, open the **Assistant
-     *  settings** page, and scroll to the **Assistant IDs and API details** section and click **View Details**.
-     *
-     *   **Note:** If you are using the classic Watson Assistant experience, always use the assistant ID.
-     *
-     *   To find the **assistant ID** in the user interface, open the **Assistant settings** and click **API Details**.
+    /** Unique identifier of the assistant. To get the **assistant ID** in the watsonx Assistant interface, open the
+     *  **Assistant settings** page, and scroll to the **Assistant IDs and API details** section and click **View
+     *  Details**.
      */
     assistantId: string;
   }
@@ -4116,6 +3541,27 @@ namespace AssistantV2 {
   export interface DialogSuggestionValue {
     /** An input object that includes the input text. */
     input?: MessageInput;
+  }
+
+  /**
+   * DtmfCommandInfo.
+   */
+  export interface DtmfCommandInfo {
+    /** Specifies the type of DTMF command for the phone integration. */
+    type: DtmfCommandInfo.Constants.Type | string;
+    /** Parameters specified by the command type. */
+    parameters?: JsonObject;
+  }
+  export namespace DtmfCommandInfo {
+    export namespace Constants {
+      /** Specifies the type of DTMF command for the phone integration. */
+      export enum Type {
+        COLLECT = 'collect',
+        DISABLE_BARGE_IN = 'disable_barge_in',
+        ENABLE_BARGE_IN = 'enable_barge_in',
+        SEND = 'send',
+      }
+    }
   }
 
   /**
@@ -7394,6 +6840,33 @@ namespace AssistantV2 {
      *  client application or channel.
      */
     response_type: string;
+  }
+
+  /**
+   * RuntimeResponseGenericRuntimeResponseTypeDtmf.
+   */
+  export interface RuntimeResponseGenericRuntimeResponseTypeDtmf extends RuntimeResponseGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     */
+    response_type: string;
+    command_info?: DtmfCommandInfo;
+    /** An array of objects specifying channels for which the response is intended. If **channels** is present, the
+     *  response is intended for a built-in integration and should not be handled by an API client.
+     */
+    channels?: ResponseGenericChannel[];
+  }
+
+  /**
+   * RuntimeResponseGenericRuntimeResponseTypeEndSession.
+   */
+  export interface RuntimeResponseGenericRuntimeResponseTypeEndSession extends RuntimeResponseGeneric {
+    /** The type of response returned by the dialog node. The specified response type must be supported by the
+     *  client application or channel.
+     */
+    response_type: string;
+    /** For internal use only. */
+    channel_options?: JsonObject;
   }
 
   /**
