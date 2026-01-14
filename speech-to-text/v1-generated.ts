@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2025.
+s * (C) Copyright IBM Corp. 2026.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -343,6 +343,13 @@ class SpeechToTextV1 extends BaseService {
    * `sad_module: 2` to increase accuracy and performance in detecting speech boundaries within the audio stream. See
    * [Using speech recognition
    * parameters](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-service-features#features-parameters).
+   * @param {string} [params.enrichments] - Speech transcript enrichment improves readability of raw ASR transcripts by
+   * adding punctuation (periods, commas, question marks, exclamation points) and intelligent capitalization (sentence
+   * beginnings, proper nouns, acronyms, brand names). To enable enrichment, add the `enrichments=punctuation` parameter
+   * to your recognition request. Supported languages include English (US, UK, Australia, India), French (France,
+   * Canada), German, Italian, Portuguese (Brazil, Portugal), Spanish (Spain, Latin America, Argentina, Chile, Colombia,
+   * Mexico, Peru), and Japanese. See [Speech transcript
+   * enrichment](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-speech-transcript-enrichment).
    * @param {string} [params.languageCustomizationId] - The customization ID (GUID) of a custom language model that is
    * to be used with the recognition request. The base model of the specified custom language model must match the model
    * specified with the `model` parameter. You must make the request with credentials for the instance of the service
@@ -569,7 +576,7 @@ class SpeechToTextV1 extends BaseService {
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.SpeechRecognitionResults>> {
     const _params = { ...params };
     const _requiredParams = ['audio'];
-    const _validParams = ['audio', 'contentType', 'model', 'speechBeginEvent', 'languageCustomizationId', 'acousticCustomizationId', 'baseModelVersion', 'customizationWeight', 'inactivityTimeout', 'keywords', 'keywordsThreshold', 'maxAlternatives', 'wordAlternativesThreshold', 'wordConfidence', 'timestamps', 'profanityFilter', 'smartFormatting', 'smartFormattingVersion', 'speakerLabels', 'grammarName', 'redaction', 'audioMetrics', 'endOfPhraseSilenceTime', 'splitTranscriptAtPhraseEnd', 'speechDetectorSensitivity', 'sadModule', 'backgroundAudioSuppression', 'lowLatency', 'characterInsertionBias', 'signal', 'headers'];
+    const _validParams = ['audio', 'contentType', 'model', 'speechBeginEvent', 'enrichments', 'languageCustomizationId', 'acousticCustomizationId', 'baseModelVersion', 'customizationWeight', 'inactivityTimeout', 'keywords', 'keywordsThreshold', 'maxAlternatives', 'wordAlternativesThreshold', 'wordConfidence', 'timestamps', 'profanityFilter', 'smartFormatting', 'smartFormattingVersion', 'speakerLabels', 'grammarName', 'redaction', 'audioMetrics', 'endOfPhraseSilenceTime', 'splitTranscriptAtPhraseEnd', 'speechDetectorSensitivity', 'sadModule', 'backgroundAudioSuppression', 'lowLatency', 'characterInsertionBias', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -579,6 +586,7 @@ class SpeechToTextV1 extends BaseService {
     const query = {
       'model': _params.model,
       'speech_begin_event': _params.speechBeginEvent,
+      'enrichments': _params.enrichments,
       'language_customization_id': _params.languageCustomizationId,
       'acoustic_customization_id': _params.acousticCustomizationId,
       'base_model_version': _params.baseModelVersion,
@@ -939,6 +947,20 @@ class SpeechToTextV1 extends BaseService {
    * @param {number} [params.resultsTtl] - The number of minutes for which the results are to be available after the job
    * has finished. If not delivered via a callback, the results must be retrieved within this time. Omit the parameter
    * to use a time to live of one week. The parameter is valid with or without a callback URL.
+   * @param {boolean} [params.speechBeginEvent] - If `true`, the service returns a response object `SpeechActivity`
+   * which contains the time when a speech activity is detected in the stream. This can be used both in standard and low
+   * latency mode. This feature enables client applications to know that some words/speech has been detected and the
+   * service is in the process of decoding. This can be used in lieu of interim results in standard mode. Use
+   * `sad_module: 2` to increase accuracy and performance in detecting speech boundaries within the audio stream. See
+   * [Using speech recognition
+   * parameters](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-service-features#features-parameters).
+   * @param {string} [params.enrichments] - Speech transcript enrichment improves readability of raw ASR transcripts by
+   * adding punctuation (periods, commas, question marks, exclamation points) and intelligent capitalization (sentence
+   * beginnings, proper nouns, acronyms, brand names). To enable enrichment, add the `enrichments=punctuation` parameter
+   * to your recognition request. Supported languages include English (US, UK, Australia, India), French (France,
+   * Canada), German, Italian, Portuguese (Brazil, Portugal), Spanish (Spain, Latin America, Argentina, Chile, Colombia,
+   * Mexico, Peru), and Japanese. See [Speech transcript
+   * enrichment](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-speech-transcript-enrichment).
    * @param {string} [params.languageCustomizationId] - The customization ID (GUID) of a custom language model that is
    * to be used with the recognition request. The base model of the specified custom language model must match the model
    * specified with the `model` parameter. You must make the request with credentials for the instance of the service
@@ -1185,7 +1207,7 @@ class SpeechToTextV1 extends BaseService {
   ): Promise<SpeechToTextV1.Response<SpeechToTextV1.RecognitionJob>> {
     const _params = { ...params };
     const _requiredParams = ['audio'];
-    const _validParams = ['audio', 'contentType', 'model', 'callbackUrl', 'events', 'userToken', 'resultsTtl', 'languageCustomizationId', 'acousticCustomizationId', 'baseModelVersion', 'customizationWeight', 'inactivityTimeout', 'keywords', 'keywordsThreshold', 'maxAlternatives', 'wordAlternativesThreshold', 'wordConfidence', 'timestamps', 'profanityFilter', 'smartFormatting', 'smartFormattingVersion', 'speakerLabels', 'grammarName', 'redaction', 'processingMetrics', 'processingMetricsInterval', 'audioMetrics', 'endOfPhraseSilenceTime', 'splitTranscriptAtPhraseEnd', 'speechDetectorSensitivity', 'sadModule', 'backgroundAudioSuppression', 'lowLatency', 'characterInsertionBias', 'signal', 'headers'];
+    const _validParams = ['audio', 'contentType', 'model', 'callbackUrl', 'events', 'userToken', 'resultsTtl', 'speechBeginEvent', 'enrichments', 'languageCustomizationId', 'acousticCustomizationId', 'baseModelVersion', 'customizationWeight', 'inactivityTimeout', 'keywords', 'keywordsThreshold', 'maxAlternatives', 'wordAlternativesThreshold', 'wordConfidence', 'timestamps', 'profanityFilter', 'smartFormatting', 'smartFormattingVersion', 'speakerLabels', 'grammarName', 'redaction', 'processingMetrics', 'processingMetricsInterval', 'audioMetrics', 'endOfPhraseSilenceTime', 'splitTranscriptAtPhraseEnd', 'speechDetectorSensitivity', 'sadModule', 'backgroundAudioSuppression', 'lowLatency', 'characterInsertionBias', 'signal', 'headers'];
     const _validationErrors = validateParams(_params, _requiredParams, _validParams);
     if (_validationErrors) {
       return Promise.reject(_validationErrors);
@@ -1198,6 +1220,8 @@ class SpeechToTextV1 extends BaseService {
       'events': _params.events,
       'user_token': _params.userToken,
       'results_ttl': _params.resultsTtl,
+      'speech_begin_event': _params.speechBeginEvent,
+      'enrichments': _params.enrichments,
       'language_customization_id': _params.languageCustomizationId,
       'acoustic_customization_id': _params.acousticCustomizationId,
       'base_model_version': _params.baseModelVersion,
@@ -4187,6 +4211,70 @@ class SpeechToTextV1 extends BaseService {
 
     return this.createRequest(parameters);
   }
+  /*************************
+   * languageIdentification
+   ************************/
+
+  /**
+   * Spoken language identification.
+   *
+   * Detects the spoken language in audio streams. The endpoint is `/v1/detect_language` and user can optionally include
+   * `lid_confidence` parameter to set a custom confidence threshold for detection. The model continuously processes
+   * incoming audio and returns the identified language when it reaches a confidence level higher than the specified
+   * threshold (0.99 by default). See [Spoken language
+   * identification](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-speech-language-identification).
+   *
+   * @param {Object} params - The parameters to send to the service.
+   * @param {number} params.lidConfidence - Set a custom confidence threshold for detection.
+   * @param {NodeJS.ReadableStream | Buffer} params.audio - The audio to transcribe.
+   * @param {string} [params.contentType] - The type of the input.
+   * @param {OutgoingHttpHeaders} [params.headers] - Custom request headers
+   * @returns {Promise<SpeechToTextV1.Response<SpeechToTextV1.LanguageDetectionResults>>}
+   */
+  public detectLanguage(
+    params: SpeechToTextV1.DetectLanguageParams
+  ): Promise<SpeechToTextV1.Response<SpeechToTextV1.LanguageDetectionResults>> {
+    const _params = { ...params };
+    const _requiredParams = ['lidConfidence', 'audio'];
+    const _validParams = ['lidConfidence', 'audio', 'contentType', 'signal', 'headers'];
+    const _validationErrors = validateParams(_params, _requiredParams, _validParams);
+    if (_validationErrors) {
+      return Promise.reject(_validationErrors);
+    }
+
+    const body = _params.audio;
+    const query = {
+      'lid_confidence': _params.lidConfidence,
+    };
+
+    const sdkHeaders = getSdkHeaders(SpeechToTextV1.DEFAULT_SERVICE_NAME, 'v1', 'detectLanguage');
+
+    const parameters = {
+      options: {
+        url: '/v1/detect_language',
+        method: 'POST',
+        body,
+        qs: query,
+      },
+      defaultOptions: extend(true, {}, this.baseOptions, {
+        headers: extend(
+          true,
+          sdkHeaders,
+          this.baseOptions.headers,
+          {
+            'Accept': 'application/json',
+            'Content-Type': _params.contentType,
+          },
+          _params.headers
+        ),
+        axiosOptions: {
+          signal: _params.signal,
+        },
+      }),
+    };
+
+    return this.createRequest(parameters);
+  }
 }
 
 /*************************
@@ -4356,6 +4444,15 @@ namespace SpeechToTextV1 {
      *  parameters](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-service-features#features-parameters).
      */
     speechBeginEvent?: boolean;
+    /** Speech transcript enrichment improves readability of raw ASR transcripts by adding punctuation (periods,
+     *  commas, question marks, exclamation points) and intelligent capitalization (sentence beginnings, proper nouns,
+     *  acronyms, brand names). To enable enrichment, add the `enrichments=punctuation` parameter to your recognition
+     *  request. Supported languages include English (US, UK, Australia, India), French (France, Canada), German,
+     *  Italian, Portuguese (Brazil, Portugal), Spanish (Spain, Latin America, Argentina, Chile, Colombia, Mexico,
+     *  Peru), and Japanese. See [Speech transcript
+     *  enrichment](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-speech-transcript-enrichment).
+     */
+    enrichments?: string;
     /** The customization ID (GUID) of a custom language model that is to be used with the recognition request. The
      *  base model of the specified custom language model must match the model specified with the `model` parameter. You
      *  must make the request with credentials for the instance of the service that owns the custom model. By default,
@@ -4810,6 +4907,23 @@ namespace SpeechToTextV1 {
      *  week. The parameter is valid with or without a callback URL.
      */
     resultsTtl?: number;
+    /** If `true`, the service returns a response object `SpeechActivity` which contains the time when a speech
+     *  activity is detected in the stream. This can be used both in standard and low latency mode. This feature enables
+     *  client applications to know that some words/speech has been detected and the service is in the process of
+     *  decoding. This can be used in lieu of interim results in standard mode. Use `sad_module: 2` to increase accuracy
+     *  and performance in detecting speech boundaries within the audio stream. See [Using speech recognition
+     *  parameters](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-service-features#features-parameters).
+     */
+    speechBeginEvent?: boolean;
+    /** Speech transcript enrichment improves readability of raw ASR transcripts by adding punctuation (periods,
+     *  commas, question marks, exclamation points) and intelligent capitalization (sentence beginnings, proper nouns,
+     *  acronyms, brand names). To enable enrichment, add the `enrichments=punctuation` parameter to your recognition
+     *  request. Supported languages include English (US, UK, Australia, India), French (France, Canada), German,
+     *  Italian, Portuguese (Brazil, Portugal), Spanish (Spain, Latin America, Argentina, Chile, Colombia, Mexico,
+     *  Peru), and Japanese. See [Speech transcript
+     *  enrichment](https://cloud.ibm.com/docs/speech-to-text?topic=speech-to-text-speech-transcript-enrichment).
+     */
+    enrichments?: string;
     /** The customization ID (GUID) of a custom language model that is to be used with the recognition request. The
      *  base model of the specified custom language model must match the model specified with the `model` parameter. You
      *  must make the request with credentials for the instance of the service that owns the custom model. By default,
@@ -6096,6 +6210,39 @@ namespace SpeechToTextV1 {
     customerId: string;
   }
 
+  /** Parameters for the `detectLanguage` operation. */
+  export interface DetectLanguageParams extends DefaultParams {
+    /** Set a custom confidence threshold for detection. */
+    lidConfidence: number;
+    /** The audio to transcribe. */
+    audio: NodeJS.ReadableStream | Buffer;
+    /** The type of the input. */
+    contentType?: DetectLanguageConstants.ContentType | string;
+  }
+
+  /** Constants for the `detectLanguage` operation. */
+  export namespace DetectLanguageConstants {
+    /** The type of the input. */
+    export enum ContentType {
+      APPLICATION_OCTET_STREAM = 'application/octet-stream',
+      AUDIO_ALAW = 'audio/alaw',
+      AUDIO_BASIC = 'audio/basic',
+      AUDIO_FLAC = 'audio/flac',
+      AUDIO_G729 = 'audio/g729',
+      AUDIO_L16 = 'audio/l16',
+      AUDIO_MP3 = 'audio/mp3',
+      AUDIO_MPEG = 'audio/mpeg',
+      AUDIO_MULAW = 'audio/mulaw',
+      AUDIO_OGG = 'audio/ogg',
+      AUDIO_OGG_CODECS_OPUS = 'audio/ogg;codecs=opus',
+      AUDIO_OGG_CODECS_VORBIS = 'audio/ogg;codecs=vorbis',
+      AUDIO_WAV = 'audio/wav',
+      AUDIO_WEBM = 'audio/webm',
+      AUDIO_WEBM_CODECS_OPUS = 'audio/webm;codecs=opus',
+      AUDIO_WEBM_CODECS_VORBIS = 'audio/webm;codecs=vorbis',
+    }
+  }
+
   /*************************
    * model interfaces
    ************************/
@@ -6486,6 +6633,44 @@ namespace SpeechToTextV1 {
   }
 
   /**
+   * If enriched results are requested, transcription with inserted punctuation marks such as periods, commas, question
+   * marks, and exclamation points.
+   */
+  export interface EnrichedResults {
+    /** If enriched results are requested, transcription with inserted punctuation marks such as periods, commas,
+     *  question marks, and exclamation points.
+     */
+    transcript?: EnrichedResultsTranscript;
+    /** The status of the enriched transcription. */
+    status?: string;
+  }
+
+  /**
+   * If enriched results are requested, transcription with inserted punctuation marks such as periods, commas, question
+   * marks, and exclamation points.
+   */
+  export interface EnrichedResultsTranscript {
+    /** The transcript text. */
+    text?: string;
+    /** The speaking time from the beginning of the transcript to the end. */
+    timestamp?: EnrichedResultsTranscriptTimestamp;
+  }
+
+  /**
+   * The speaking time from the beginning of the transcript to the end.
+   */
+  export interface EnrichedResultsTranscriptTimestamp {
+    /** The start time of a word from the transcript. The value matches the start time of a word from the
+     *  `timestamps` array.
+     */
+    from?: number;
+    /** The end time of a word from the transcript. The value matches the end time of a word from the `timestamps`
+     *  array.
+     */
+    to?: number;
+  }
+
+  /**
    * Information about a grammar from a custom language model.
    */
   export interface Grammar {
@@ -6546,6 +6731,42 @@ namespace SpeechToTextV1 {
     end_time: number;
     /** A confidence score for the keyword match in the range of 0.0 to 1.0. */
     confidence: number;
+  }
+
+  /**
+   * Language detection results.
+   */
+  export interface LanguageDetectionResult {
+    /** An array of `LanguageInfo` objects. */
+    language_info?: LanguageInfo[];
+  }
+
+  /**
+   * Language detection results.
+   */
+  export interface LanguageDetectionResults {
+    /** An array of `LanguageDetectionResult` objects. */
+    results?: LanguageDetectionResult[];
+    /** An index that indicates a change point in the `results` array. The service increments the index for
+     *  additional results that it sends for new audio for the same request. All results with the same index are
+     *  delivered at the same time. The same index can include multiple final results that are delivered with the same
+     *  response.
+     */
+    result_index?: number;
+  }
+
+  /**
+   * Language detection info such as confidence and language detected.
+   */
+  export interface LanguageInfo {
+    /** A score that indicates the service's confidence in its identification of the language in the range of 0.0 to
+     *  1.0.
+     */
+    confidence?: number;
+    /** The language detected in standard abbreviated ISO 639 format. */
+    language?: string;
+    /** The timestamp of the detected language. */
+    timestamp?: number;
   }
 
   /**
@@ -6880,8 +7101,7 @@ namespace SpeechToTextV1 {
      *  * If `false`, the results are interim. They can be updated with further interim results until final results are
      *  eventually sent.
      *
-     *  **Note:** Because `final` is a reserved word in Java and Swift, the field is renamed `xFinal` in Java and is
-     *  escaped with back quotes in Swift.
+     *  **Note:** Because `final` is a reserved word in Java, the field is renamed `xFinal` in Java.
      */
     final: boolean;
     /** An array of alternative transcripts. The `alternatives` array can include additional requested output such
@@ -6969,6 +7189,10 @@ namespace SpeechToTextV1 {
      *  In both cases, the request succeeds despite the warnings.
      */
     warnings?: string[];
+    /** If enriched results are requested, transcription with inserted punctuation marks such as periods, commas,
+     *  question marks, and exclamation points.
+     */
+    enriched_results?: EnrichedResults;
   }
 
   /**
