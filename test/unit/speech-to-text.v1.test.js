@@ -1,5 +1,5 @@
 /**
- * (C) Copyright IBM Corp. 2025.
+ * (C) Copyright IBM Corp. 2026.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -274,6 +274,7 @@ describe('SpeechToTextV1', () => {
         const contentType = 'application/octet-stream';
         const model = 'en-US_BroadbandModel';
         const speechBeginEvent = false;
+        const enrichments = 'testString';
         const languageCustomizationId = 'testString';
         const acousticCustomizationId = 'testString';
         const baseModelVersion = 'testString';
@@ -304,6 +305,7 @@ describe('SpeechToTextV1', () => {
           contentType,
           model,
           speechBeginEvent,
+          enrichments,
           languageCustomizationId,
           acousticCustomizationId,
           baseModelVersion,
@@ -349,6 +351,7 @@ describe('SpeechToTextV1', () => {
         expect(mockRequestOptions.body).toEqual(audio);
         expect(mockRequestOptions.qs.model).toEqual(model);
         expect(mockRequestOptions.qs.speech_begin_event).toEqual(speechBeginEvent);
+        expect(mockRequestOptions.qs.enrichments).toEqual(enrichments);
         expect(mockRequestOptions.qs.language_customization_id).toEqual(languageCustomizationId);
         expect(mockRequestOptions.qs.acoustic_customization_id).toEqual(acousticCustomizationId);
         expect(mockRequestOptions.qs.base_model_version).toEqual(baseModelVersion);
@@ -616,6 +619,8 @@ describe('SpeechToTextV1', () => {
         const events = 'recognitions.started';
         const userToken = 'testString';
         const resultsTtl = 38;
+        const speechBeginEvent = false;
+        const enrichments = 'testString';
         const languageCustomizationId = 'testString';
         const acousticCustomizationId = 'testString';
         const baseModelVersion = 'testString';
@@ -651,6 +656,8 @@ describe('SpeechToTextV1', () => {
           events,
           userToken,
           resultsTtl,
+          speechBeginEvent,
+          enrichments,
           languageCustomizationId,
           acousticCustomizationId,
           baseModelVersion,
@@ -701,6 +708,8 @@ describe('SpeechToTextV1', () => {
         expect(mockRequestOptions.qs.events).toEqual(events);
         expect(mockRequestOptions.qs.user_token).toEqual(userToken);
         expect(mockRequestOptions.qs.results_ttl).toEqual(resultsTtl);
+        expect(mockRequestOptions.qs.speech_begin_event).toEqual(speechBeginEvent);
+        expect(mockRequestOptions.qs.enrichments).toEqual(enrichments);
         expect(mockRequestOptions.qs.language_customization_id).toEqual(languageCustomizationId);
         expect(mockRequestOptions.qs.acoustic_customization_id).toEqual(acousticCustomizationId);
         expect(mockRequestOptions.qs.base_model_version).toEqual(baseModelVersion);
@@ -3827,6 +3836,98 @@ describe('SpeechToTextV1', () => {
         let err;
         try {
           await speechToTextService.deleteUserData();
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+    });
+  });
+
+  describe('detectLanguage', () => {
+    describe('positive tests', () => {
+      function __detectLanguageTest() {
+        // Construct the params object for operation detectLanguage
+        const lidConfidence = 36.0;
+        const audio = Buffer.from('This is a mock file.');
+        const contentType = 'application/octet-stream';
+        const detectLanguageParams = {
+          lidConfidence,
+          audio,
+          contentType,
+        };
+
+        const detectLanguageResult = speechToTextService.detectLanguage(detectLanguageParams);
+
+        // all methods should return a Promise
+        expectToBePromise(detectLanguageResult);
+
+        // assert that create request was called
+        expect(createRequestMock).toHaveBeenCalledTimes(1);
+
+        const mockRequestOptions = getOptions(createRequestMock);
+
+        checkUrlAndMethod(mockRequestOptions, '/v1/detect_language', 'POST');
+        const expectedAccept = 'application/json';
+        const expectedContentType = contentType;
+        checkMediaHeaders(createRequestMock, expectedAccept, expectedContentType);
+        checkUserHeader(createRequestMock, 'Content-Type', contentType);
+        expect(mockRequestOptions.body).toEqual(audio);
+        expect(mockRequestOptions.qs.lid_confidence).toEqual(lidConfidence);
+      }
+
+      test('should pass the right params to createRequest with enable and disable retries', () => {
+        // baseline test
+        __detectLanguageTest();
+
+        // enable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.enableRetries();
+        __detectLanguageTest();
+
+        // disable retries and test again
+        createRequestMock.mockClear();
+        speechToTextService.disableRetries();
+        __detectLanguageTest();
+      });
+
+      test('should prioritize user-given headers', () => {
+        // parameters
+        const lidConfidence = 36.0;
+        const audio = Buffer.from('This is a mock file.');
+        const userAccept = 'fake/accept';
+        const userContentType = 'fake/contentType';
+        const detectLanguageParams = {
+          lidConfidence,
+          audio,
+          headers: {
+            Accept: userAccept,
+            'Content-Type': userContentType,
+          },
+        };
+
+        speechToTextService.detectLanguage(detectLanguageParams);
+        checkMediaHeaders(createRequestMock, userAccept, userContentType);
+      });
+    });
+
+    describe('negative tests', () => {
+      test('should enforce required parameters', async () => {
+        let err;
+        try {
+          await speechToTextService.detectLanguage({});
+        } catch (e) {
+          err = e;
+        }
+
+        expect(err.message).toMatch(/Missing required parameters/);
+      });
+
+      test('should reject promise when required params are not given', async () => {
+        let err;
+        try {
+          await speechToTextService.detectLanguage();
         } catch (e) {
           err = e;
         }
