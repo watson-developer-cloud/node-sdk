@@ -1,3 +1,11 @@
+# [12.2.0](https://github.com/watson-developer-cloud/node-sdk/compare/v12.1.1...v12.2.0) (2026-01-22)
+
+
+### Features
+
+* **stt:** add recognize enrichments, add new function detectLanguage ([cb10121](https://github.com/watson-developer-cloud/node-sdk/commit/cb10121c08be465122648be7006ed3eb71e0a58c))
+* **wa-v2:** add dtmf and end_session response types ([98b4622](https://github.com/watson-developer-cloud/node-sdk/commit/98b4622005400875ee9cd50dd02e81e579d6e21f))
+
 ## [12.1.1](https://github.com/watson-developer-cloud/node-sdk/compare/v12.1.0...v12.1.1) (2025-11-12)
 
 
